@@ -6,7 +6,6 @@ public class CubicMover : MonoBehaviour, IDragHandler, IEndDragHandler
     [SerializeField] private Cubic _cubic;
     [SerializeField] private float _speed;
     [SerializeField] private float _shiftPerSwipe;
-    [SerializeField] private float _sideShiftSpeed;
 
     private float _leftPositionZ;
     private float _centerPositionZ;
