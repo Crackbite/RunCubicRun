@@ -1,17 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-
+[RequireComponent(typeof(MeshRenderer))]
 public class ColorBlock : MonoBehaviour
 {
-    private Color _color;
-    private Vector3 _size;
+    private MeshRenderer _meshRenderer;
 
-    public Color CurrentColor => _color;
-    public Vector3 Size => _size;
+    public Material CurrentMaterial => _meshRenderer.sharedMaterial;
 
-    private void Start()
+    private void Awake()
     {
-        _size = Vector3.Scale(transform.localScale, GetComponent<MeshFilter>().mesh.bounds.size);
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 }
