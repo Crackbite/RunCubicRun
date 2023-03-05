@@ -6,7 +6,9 @@ public class BlockStackerAnimator : MonoBehaviour
 {
     [SerializeField] private float _scatter = 30f;
     [SerializeField] private float _speed = .1f;
+    [SerializeField] private Ease _ease = Ease.Flash;
     [SerializeField] private int _loops = 4;
+    [SerializeField] private LoopType _loopType = LoopType.Yoyo;
 
     private BlockStacker _blockStacker;
 
@@ -34,6 +36,6 @@ public class BlockStackerAnimator : MonoBehaviour
         float scaleZ = blockScale.z * scatter;
         var newScale = new Vector3(scaleX, blockScale.y, scaleZ);
 
-        block.DOScale(newScale, _speed).SetEase(Ease.Flash).SetLoops(_loops, LoopType.Yoyo);
+        block.DOScale(newScale, _speed).SetEase(_ease).SetLoops(_loops, _loopType);
     }
 }
