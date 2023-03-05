@@ -3,12 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(CubicMovement))]
 public class SwipeInput : MonoBehaviour
 {
+    private CubicMovement _cubicMovement;
     private Vector3 _mousePreviousPosition;
-    private CubicMovement _ñubicMovement;
 
     private void Start()
     {
-        _ñubicMovement = GetComponent<CubicMovement>();
+        _cubicMovement = GetComponent<CubicMovement>();
     }
 
     private void Update()
@@ -29,11 +29,11 @@ public class SwipeInput : MonoBehaviour
 
         if (mousePosition.x > _mousePreviousPosition.x)
         {
-            _ñubicMovement.MoveRight();
+            _cubicMovement.MoveRight();
         }
         else
         {
-            _ñubicMovement.MoveLeft();
+            _cubicMovement.MoveLeft();
         }
     }
 }

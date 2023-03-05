@@ -3,22 +3,22 @@ using UnityEngine;
 [RequireComponent(typeof(CubicMovement))]
 public class KeyboardInput : MonoBehaviour
 {
-    private CubicMovement _ñubicMovement;
+    private CubicMovement _cubicMovement;
 
     private void Start()
     {
-        _ñubicMovement = GetComponent<CubicMovement>();
+        _cubicMovement = GetComponent<CubicMovement>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            _ñubicMovement.MoveLeft();
+            _cubicMovement.MoveLeft();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            _ñubicMovement.MoveRight();
+            _cubicMovement.MoveRight();
         }
     }
 }
