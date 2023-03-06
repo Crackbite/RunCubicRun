@@ -9,6 +9,10 @@ public class TrapCrasher : MonoBehaviour
     [SerializeField] private GameObject _wholeObject;
     [SerializeField] private GameObject _fragmentedObject;
     [SerializeField] private float _crashForce;
+    [SerializeField] private float _minRotation = -360f;
+    [SerializeField] private float _maxRotation = 360f;
+    [SerializeField] private float _minRotationDuration = 1f;
+    [SerializeField] private float _maxRotationDuration = 3f;
 
     private Rigidbody[] _pieces;
 
@@ -25,7 +29,6 @@ public class TrapCrasher : MonoBehaviour
 
     private void Start()
     {
-       // Time.timeScale = 0.1f;
         _pieces = _fragmentedObject.GetComponentsInChildren<Rigidbody>();
         _fragmentedObject.SetActive(false);
     }
@@ -48,8 +51,13 @@ public class TrapCrasher : MonoBehaviour
             force = (piece.transform.position - _fragmentedObject.transform.position).normalized;
             force = new Vector3(Mathf.Abs(force.x), force.y, force.z);
             piece.AddForce(force * _crashForce, ForceMode.Force);
-            piece.transform.DORotate(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)), Random.Range(1,3));
+            piece.transform.DORotate(new Vector3(GetAxisRotation(), GetAxisRotation(), GetAxisRotation()), Random.Range(_minRotationDuration,_maxRotationDuration));
             Destroy(piece, 3);
         }
+    }
+
+    private float GetAxisRotation()
+    {
+        return Random.Range(_minRotation, _maxRotation);
     }
 }
