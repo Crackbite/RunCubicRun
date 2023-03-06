@@ -6,14 +6,9 @@ public class BlockStacker : MonoBehaviour
     [SerializeField] private float _gap = .02f;
     [SerializeField] private BlocksContainer _blocksContainer;
 
-    private Vector3 _initialStackPosition;
+    private float _stackYPosition;
 
-    public event Action<Transform> BlockAdded;
-
-    private void Start()
-    {
-        _initialStackPosition = _blocksContainer.transform.localPosition;
-    }
+    public event Action<ColorBlock> ColorBlockAdded;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -28,14 +23,19 @@ public class BlockStacker : MonoBehaviour
 
         blockTransform.SetParent(gameObject.transform);
 
+        if (_stackYPosition == 0)
+        {
+            _stackYPosition = colorBlock.transform.localScale.y / 2 + transform.localScale.y / 2 + _gap;
+        }
+
         containerTransform.position = new Vector3(
             containerPosition.x,
             containerPosition.y + blockTransform.localScale.y + _gap,
             containerPosition.z);
 
-        blockTransform.localPosition = _initialStackPosition;
+        blockTransform.localPosition = new Vector3(0f, _stackYPosition, 0f);
         blockTransform.SetParent(containerTransform);
 
-        BlockAdded?.Invoke(blockTransform);
+        ColorBlockAdded?.Invoke(colorBlock);
     }
 }

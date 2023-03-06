@@ -19,23 +19,23 @@ public class BlockStackerAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        _blockStacker.BlockAdded += OnBlockAdded;
+        _blockStacker.ColorBlockAdded += OnColorBlockAdded;
     }
 
     private void OnDisable()
     {
-        _blockStacker.BlockAdded -= OnBlockAdded;
+        _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
     }
 
-    private void OnBlockAdded(Transform block)
+    private void OnColorBlockAdded(ColorBlock colorBlock)
     {
-        Vector3 blockScale = block.localScale;
+        Vector3 blockScale = colorBlock.transform.localScale;
 
         float scatter = 1f + (_scatter / 100f);
         float scaleX = blockScale.x * scatter;
         float scaleZ = blockScale.z * scatter;
         var newScale = new Vector3(scaleX, blockScale.y, scaleZ);
 
-        block.DOScale(newScale, _speed).SetEase(_ease).SetLoops(_loops, _loopType);
+        colorBlock.transform.DOScale(newScale, _speed).SetEase(_ease).SetLoops(_loops, _loopType);
     }
 }
