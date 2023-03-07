@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
-
 public class ColorBlock : MonoBehaviour
 {
     [SerializeField] private float _followSpeed = 350f;
@@ -9,9 +8,10 @@ public class ColorBlock : MonoBehaviour
     private bool _follow;
     private Transform _followed;
     private MeshRenderer _meshRenderer;
-    private float _heightPosition;
 
     public Material CurrentMaterial => _meshRenderer.sharedMaterial;
+
+    public float StackPosition { get; set; }
 
     private void Awake()
     {
@@ -25,20 +25,18 @@ public class ColorBlock : MonoBehaviour
             return;
         }
 
+        Vector3 currentPosition = transform.position;
+        float interpolation = _followSpeed / StackPosition * Time.deltaTime;
+
         transform.position = new Vector3(
-             transform.position.x,
-             transform.position.y,
-             Mathf.Lerp(transform.position.z, _followed.position.z, _followSpeed / _heightPosition * Time.deltaTime));
+            currentPosition.x,
+            currentPosition.y,
+            Mathf.Lerp(currentPosition.z, _followed.position.z, interpolation));
     }
 
     public void EnableFollow(Transform followed)
     {
         _followed = followed;
         _follow = true;
-    }
-
-    public void SetHeightPosition(float newHeightPosition)
-    {
-        _heightPosition = newHeightPosition;
     }
 }

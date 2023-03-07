@@ -14,13 +14,11 @@ public class BlocksContainer : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(
-            _blockStacker.transform.position.x,
-            transform.position.y,
-            transform.position.z);
+        Vector3 currentPosition = transform.position;
+        transform.position = new Vector3(_blockStacker.transform.position.x, currentPosition.y, currentPosition.z);
     }
 
-    private void OnDisable() 
+    private void OnDisable()
     {
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
     }
@@ -32,7 +30,7 @@ public class BlocksContainer : MonoBehaviour
 
         for (int i = 0; i < _blocks.Count; i++)
         {
-            _blocks[i].SetHeightPosition(_blocks.Count - i);
+            _blocks[i].StackPosition = _blocks.Count - i;
         }
     }
 }
