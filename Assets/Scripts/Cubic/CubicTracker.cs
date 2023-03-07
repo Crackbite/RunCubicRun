@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CubicTracker : MonoBehaviour
 {
-    [SerializeField] private Transform _cubic;
+    [SerializeField] private Cubic _cubic;
     [SerializeField] private float _damping;
     [SerializeField] private float _xOffset;
     [SerializeField] private float _xLeftLimit;
@@ -18,7 +18,10 @@ public class CubicTracker : MonoBehaviour
 
     private void SetTargetPosition()
     {
-        _targetPosition = new Vector3(_cubic.position.x + _xOffset, transform.position.y, transform.position.z);
-        _targetPosition.x = Mathf.Clamp(_targetPosition.x, _xLeftLimit, _xRightLimit + _cubic.transform.position.x);
+        Vector3 trackerPosition = transform.position;
+        Vector3 cubicPosition = _cubic.transform.position;
+
+        _targetPosition = new Vector3(cubicPosition.x + _xOffset, trackerPosition.y, trackerPosition.z);
+        _targetPosition.x = Mathf.Clamp(_targetPosition.x, _xLeftLimit, _xRightLimit + cubicPosition.x);
     }
 }
