@@ -20,7 +20,7 @@ public class BlocksContainer : MonoBehaviour
             transform.position.z);
     }
 
-    private void OnDisable()
+    private void OnDisable() 
     {
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
     }
@@ -28,12 +28,11 @@ public class BlocksContainer : MonoBehaviour
     private void OnColorBlockAdded(ColorBlock colorBlock)
     {
         _blocks.Add(colorBlock);
-
-        if (_blocks.Count > 1)
-        {
-            _blocks[_blocks.Count - 2].EnableFollow(colorBlock.transform);
-        }
-
         colorBlock.EnableFollow(_blockStacker.transform);
+
+        for (int i = 0; i < _blocks.Count; i++)
+        {
+            _blocks[i].SetHeightPosition(_blocks.Count - i);
+        }
     }
 }
