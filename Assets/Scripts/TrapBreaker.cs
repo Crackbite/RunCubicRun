@@ -31,7 +31,7 @@ public class TrapBreaker : MonoBehaviour
     private void Start()
     {
         _pieces = _crushedObject.GetComponentsInChildren<Rigidbody>();
-        _crushedObject.SetActive(false);
+        //_crushedObject.SetActive(false);
     }
 
     private void OnTrapDestoying()
