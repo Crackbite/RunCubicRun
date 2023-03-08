@@ -15,7 +15,6 @@ public class Trap : MonoBehaviour
                 Destroying.Invoke();
                 _animator.enabled = false;
             }
-
         }
     }
 }
