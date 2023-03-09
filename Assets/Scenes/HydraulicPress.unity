@@ -6769,6 +6769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7379467182129432686}
+  - component: {fileID: 7379467182129432687}
   m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
@@ -7264,6 +7265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3467096820021026986}
+  - component: {fileID: 4275686933021932049}
   m_Layer: 0
   m_Name: HydraulicPress
   m_TagString: Untagged
@@ -7271,6 +7273,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4275686933021932049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275686933021932048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8f27509a5f5c647aa71bec2dc5d68a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blocksContainer: {fileID: 1761122229}
+  _pressTop: {fileID: 7379467182129432687}
+  _pressTopInitOffset: 10
+  _cubicMovement: {fileID: 296935712}
 --- !u!1 &4282820204796109772
 GameObject:
   m_ObjectHideFlags: 0
@@ -11507,7 +11525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3803386507093142401}
   m_LocalRotation: {x: 7.89492e-15, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.223696, z: 0}
+  m_LocalPosition: {x: 0, y: 4.65, z: 0}
   m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11516,6 +11534,20 @@ Transform:
   m_Father: {fileID: 3467096820021026986}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7379467182129432687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803386507093142401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77e9af65c56c6d49a673b1a82d1ea89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fallSpeed: 0.3
+  _fallEase: 35
 --- !u!114 &7383005710708216273
 MonoBehaviour:
   m_ObjectHideFlags: 0

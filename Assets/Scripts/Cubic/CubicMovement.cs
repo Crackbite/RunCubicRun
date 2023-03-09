@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class CubicMovement : MonoBehaviour
 
     private float _maxPositionZ;
     private float _minPositionZ;
+
+    public event Action CubicOnStand;
 
     private void Awake()
     {
@@ -73,7 +76,7 @@ public class CubicMovement : MonoBehaviour
         Vector3 standCenter = pressStand.GetComponent<Collider>().bounds.center;
         var nextPosition = new Vector3(standCenter.x, _cubic.transform.position.y, standCenter.z);
 
-        _cubic.transform.DOMove(nextPosition, _stopAtPressStandSpeed);
+        _cubic.transform.DOMove(nextPosition, _stopAtPressStandSpeed).OnComplete(() => CubicOnStand?.Invoke());
     }
 
     private IEnumerator MoveToPositionZ(float positionZ)

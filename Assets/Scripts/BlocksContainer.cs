@@ -23,6 +23,8 @@ public class BlocksContainer : MonoBehaviour
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
     }
 
+    public ColorBlock GetBlockByIndex(int index) => _blocks[index];
+
     private void OnColorBlockAdded(ColorBlock colorBlock)
     {
         _blocks.Add(colorBlock);
