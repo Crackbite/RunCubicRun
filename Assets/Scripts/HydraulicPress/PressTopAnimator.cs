@@ -13,9 +13,9 @@ public class PressTopAnimator : MonoBehaviour
     public void EnableFallAnimation()
     {
         ColorBlock highestBlock = _blocksContainer.GetBlockByIndex(0);
-        float highestBlockHeight = highestBlock.transform.position.y;
+        float highestBlockY = highestBlock.GetComponent<Collider>().bounds.max.y;
 
-        transform.DOMoveY(highestBlockHeight, _fallSpeed).SetEase(_ease).OnComplete(EnableDivergenceAnimation);
+        transform.DOMoveY(highestBlockY, _fallSpeed).SetEase(_ease).OnComplete(EnableDivergenceAnimation);
     }
 
     private void EnableDivergenceAnimation()

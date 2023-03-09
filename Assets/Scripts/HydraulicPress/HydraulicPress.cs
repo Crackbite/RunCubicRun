@@ -25,10 +25,10 @@ public class HydraulicPress : MonoBehaviour
     private void CubicOnStand()
     {
         ColorBlock highestBlock = _blocksContainer.GetBlockByIndex(0);
-        float highestBlockHeight = highestBlock.transform.position.y;
+        float highestBlockY = highestBlock.GetComponent<Collider>().bounds.max.y;
 
         Vector3 currentPosition = _pressTop.transform.position;
-        var newPosition = new Vector3(currentPosition.x, highestBlockHeight + _pressTopInitOffset, currentPosition.z);
+        var newPosition = new Vector3(currentPosition.x, highestBlockY + _pressTopInitOffset, currentPosition.z);
         _pressTop.transform.position = newPosition;
 
         _pressTop.gameObject.SetActive(true);
