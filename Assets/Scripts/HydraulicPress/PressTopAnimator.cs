@@ -1,0 +1,45 @@
+using DG.Tweening;
+using UnityEngine;
+
+public class PressTopAnimator : MonoBehaviour
+{
+    [SerializeField] private float _fallSpeed = .3f;
+    [SerializeField] private float _divergenceSpeed = .1f;
+    [SerializeField] private float _initDivergenceOffset = .2f;
+    [SerializeField] private float _stepDivergenceOffset = .01f;
+    [SerializeField] private Ease _ease = Ease.InOutFlash;
+    [SerializeField] private BlocksContainer _blocksContainer;
+
+    public void EnableFallAnimation()
+    {
+        ColorBlock highestBlock = _blocksContainer.GetBlockByIndex(0);
+        float highestBlockHeight = highestBlock.transform.position.y;
+
+        transform.DOMoveY(highestBlockHeight, _fallSpeed).SetEase(_ease).OnComplete(EnableDivergenceAnimation);
+    }
+
+    private void EnableDivergenceAnimation()
+    {
+        float zOffset = _initDivergenceOffset;
+
+        for (int i = 0; i < _blocksContainer.BlocksCount - 1; i++)
+        {
+            ColorBlock colorBlock = _blocksContainer.GetBlockByIndex(i);
+            float endValue;
+
+            if (i % 2 == 0)
+            {
+                endValue = colorBlock.transform.position.z - zOffset;
+            }
+            else
+            {
+                endValue = colorBlock.transform.position.z + zOffset;
+            }
+
+            colorBlock.transform.DOMoveZ(endValue, _divergenceSpeed).SetEase(_ease);
+
+            zOffset -= _stepDivergenceOffset;
+            zOffset = zOffset < 0 ? 0 : zOffset;
+        }
+    }
+}

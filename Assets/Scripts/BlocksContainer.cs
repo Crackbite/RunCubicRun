@@ -7,6 +7,8 @@ public class BlocksContainer : MonoBehaviour
 
     private readonly List<ColorBlock> _blocks = new();
 
+    public int BlocksCount => _blocks.Count;
+
     private void OnEnable()
     {
         _blockStacker.ColorBlockAdded += OnColorBlockAdded;

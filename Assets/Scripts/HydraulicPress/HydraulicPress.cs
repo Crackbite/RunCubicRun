@@ -32,6 +32,6 @@ public class HydraulicPress : MonoBehaviour
         _pressTop.transform.position = newPosition;
 
         _pressTop.gameObject.SetActive(true);
-        _pressTop.EnableFallAnimation(highestBlockHeight);
+        _pressTop.Init();
     }
 }
