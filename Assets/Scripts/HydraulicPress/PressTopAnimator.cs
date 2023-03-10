@@ -25,18 +25,12 @@ public class PressTopAnimator : MonoBehaviour
         for (int i = 0; i < _blocksContainer.BlocksCount - 1; i++)
         {
             ColorBlock colorBlock = _blocksContainer.GetBlockByIndex(i);
-            float endValue;
 
-            if (i % 2 == 0)
-            {
-                endValue = colorBlock.transform.position.z - zOffset;
-            }
-            else
-            {
-                endValue = colorBlock.transform.position.z + zOffset;
-            }
-
-            colorBlock.transform.DOMoveZ(endValue, _divergenceSpeed).SetEase(_ease);
+            var strength = new Vector3(zOffset, 0f, zOffset);
+            colorBlock.transform.DOShakePosition(
+                _divergenceSpeed,
+                strength,
+                randomnessMode: ShakeRandomnessMode.Harmonic);
 
             zOffset -= _stepDivergenceOffset;
             zOffset = zOffset < 0 ? 0 : zOffset;
