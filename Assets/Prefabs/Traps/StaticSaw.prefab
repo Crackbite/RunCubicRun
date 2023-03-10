@@ -439,7 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4882333996850426964}
   m_Layer: 0
-  m_Name: CrushedSaw
+  m_Name: SplitSaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,7 +826,6 @@ GameObject:
   - component: {fileID: 7388386413144233945}
   - component: {fileID: 809608494509176411}
   - component: {fileID: 4783107503262233444}
-  - component: {fileID: 5716035870768098953}
   - component: {fileID: 5272851657175265204}
   m_Layer: 0
   m_Name: WholeSaw
@@ -914,27 +913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3517080686816452736}
---- !u!114 &5716035870768098953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6552621481731179849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 4783107503262233444}
-  _wholeObject: {fileID: 6552621481731179849}
-  _crushedObject: {fileID: 5227087399341092590}
-  _breakForce: 300
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 0.6
+  _splitBody: {fileID: 5227087399341092590}
 --- !u!65 &5272851657175265204
 BoxCollider:
   m_ObjectHideFlags: 0

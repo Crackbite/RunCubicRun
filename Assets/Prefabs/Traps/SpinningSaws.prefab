@@ -676,7 +676,6 @@ GameObject:
   - component: {fileID: 2674505245938427180}
   - component: {fileID: 2674505245938427183}
   - component: {fileID: 2674505245938427181}
-  - component: {fileID: 2674505245938427178}
   m_Layer: 0
   m_Name: Saw2
   m_TagString: Untagged
@@ -791,27 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 2616769481009714634}
---- !u!114 &2674505245938427178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3695122569820220350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 2674505245938427181}
-  _wholeObject: {fileID: 3695122569820220350}
-  _crushedObject: {fileID: 3266000378844047598}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 1
+  _splitBody: {fileID: 3266000378844047598}
 --- !u!1 &4133005144102491774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5526587582594096531}
   m_Layer: 0
-  m_Name: CrushedSaw2
+  m_Name: SplitSaw2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1746,7 +1725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6099546950952782175}
   m_Layer: 0
-  m_Name: CrushedSaw2
+  m_Name: SplitSaw2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1933,7 +1912,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6099546951111435942}
   m_Layer: 0
-  m_Name: CrushedFrame
+  m_Name: SplitFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2167,7 +2146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6099546951507801585}
   m_Layer: 0
-  m_Name: CrushedFrame
+  m_Name: SplitFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2206,7 +2185,6 @@ GameObject:
   - component: {fileID: 6099546951663946009}
   - component: {fileID: 6099546951663946006}
   - component: {fileID: 6099546951663946007}
-  - component: {fileID: 6099546951663946004}
   m_Layer: 0
   m_Name: Saw2
   m_TagString: Untagged
@@ -2321,27 +2299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 6099546952198445901}
---- !u!114 &6099546951663946004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6099546951663946002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 6099546951663946007}
-  _wholeObject: {fileID: 6099546951663946002}
-  _crushedObject: {fileID: 6099546951108575600}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 0.7
+  _splitBody: {fileID: 6099546951108575600}
 --- !u!1 &6099546951909291750
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,7 +2310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6099546951909291753}
   m_Layer: 0
-  m_Name: CrushedSaw1
+  m_Name: SplitSaw1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2848,7 +2806,6 @@ GameObject:
   - component: {fileID: 6099546952038273902}
   - component: {fileID: 6099546952038273903}
   - component: {fileID: 6099546952038273900}
-  - component: {fileID: 6099546952038273901}
   m_Layer: 0
   m_Name: Saw1
   m_TagString: Untagged
@@ -2963,27 +2920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 6099546952198445901}
---- !u!114 &6099546952038273901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6099546952038273899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 6099546952038273900}
-  _wholeObject: {fileID: 6099546952038273899}
-  _crushedObject: {fileID: 6099546951108575600}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 0.7
+  _splitBody: {fileID: 6099546951108575600}
 --- !u!1 &6099546952128338422
 GameObject:
   m_ObjectHideFlags: 0
@@ -3708,7 +3645,6 @@ GameObject:
   - component: {fileID: 972560204533348213}
   - component: {fileID: 972560204533348214}
   - component: {fileID: 972560204533348215}
-  - component: {fileID: 972560204533348212}
   m_Layer: 0
   m_Name: Saw1
   m_TagString: Untagged
@@ -3823,27 +3759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 2616769481009714634}
---- !u!114 &972560204533348212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6426595586147855022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 972560204533348215}
-  _wholeObject: {fileID: 6426595586147855022}
-  _crushedObject: {fileID: 3266000378844047598}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 1
+  _splitBody: {fileID: 3266000378844047598}
 --- !u!1 &6470939713330222526
 GameObject:
   m_ObjectHideFlags: 0
@@ -3854,7 +3770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5946640254805233412}
   m_Layer: 0
-  m_Name: CrushedSaw1
+  m_Name: SplitSaw1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4577,6 +4493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StaticSaw
       objectReference: {fileID: 0}
+    - target: {fileID: 4783107503262233444, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
+      propertyPath: _splitBody
+      value: 
+      objectReference: {fileID: 2859341133526464942}
     - target: {fileID: 4787927625593140071, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -4621,8 +4541,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5227087399341092590, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
+      propertyPath: m_Name
+      value: SplitSaw
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5716035870768098953, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
+--- !u!1 &2859341133526464942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5227087399341092590, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
+  m_PrefabInstance: {fileID: 8008583036220512064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3266817382028846119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4787927625593140071, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}

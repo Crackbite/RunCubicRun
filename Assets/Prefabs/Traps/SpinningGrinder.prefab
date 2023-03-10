@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 552541704785606267}
   m_Layer: 0
-  m_Name: CrashedGrinder
+  m_Name: SplitGrinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,7 +550,6 @@ GameObject:
   - component: {fileID: 8643491651162166187}
   - component: {fileID: 5411300477370614660}
   - component: {fileID: 6533478466939114023}
-  - component: {fileID: 7536346340168321368}
   - component: {fileID: 5147305125322279812}
   m_Layer: 0
   m_Name: WholeGrinder
@@ -638,27 +637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 2699624948343608914}
---- !u!114 &7536346340168321368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080360762348780948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 6533478466939114023}
-  _wholeObject: {fileID: 2080360762348780948}
-  _crushedObject: {fileID: 927976184680410305}
-  _breakForce: 300
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 2
-  _maxRotationDuration: 6
-  _minBreakDirectionX: 0.9
+  _splitBody: {fileID: 927976184680410305}
 --- !u!136 &5147305125322279812
 CapsuleCollider:
   m_ObjectHideFlags: 0

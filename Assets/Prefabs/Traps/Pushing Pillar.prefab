@@ -527,7 +527,6 @@ GameObject:
   - component: {fileID: 6060259899603981251}
   - component: {fileID: 924287778911332479}
   - component: {fileID: 8813608016350299081}
-  - component: {fileID: 5551891153516258072}
   m_Layer: 0
   m_Name: WholePillar
   m_TagString: Untagged
@@ -627,27 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 112193515389317060}
---- !u!114 &5551891153516258072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4710745008771575250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 8813608016350299081}
-  _wholeObject: {fileID: 4710745008771575250}
-  _crushedObject: {fileID: 4806849230061187662}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 1
-  _maxRotationDuration: 3
-  _minBreakDirectionX: 0.5
+  _splitBody: {fileID: 4806849230061187662}
 --- !u!1 &4806849230061187662
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5331852136048781556}
   m_Layer: 0
-  m_Name: CrashedPillar
+  m_Name: SplitPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

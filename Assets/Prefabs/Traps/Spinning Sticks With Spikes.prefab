@@ -355,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 229565069733570357}
   m_Layer: 0
-  m_Name: CrushedBase
+  m_Name: SplitBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -565,7 +565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6903473217261701955}
   m_Layer: 0
-  m_Name: CrushedStick
+  m_Name: SplitStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2221,7 +2221,6 @@ GameObject:
   - component: {fileID: 6485398269501842355}
   - component: {fileID: 4582435901396488919}
   - component: {fileID: 6485398269501842354}
-  - component: {fileID: 6485398269501842365}
   m_Layer: 0
   m_Name: WholeStick
   m_TagString: Untagged
@@ -2338,27 +2337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 461124911240470748}
---- !u!114 &6485398269501842365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4683813076149502569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 6485398269501842354}
-  _wholeObject: {fileID: 4683813076149502569}
-  _crushedObject: {fileID: 6227935412148183786}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 2
-  _maxRotationDuration: 6
-  _minBreakDirectionX: 1
+  _splitBody: {fileID: 6227935412148183786}
 --- !u!1 &4777012814872333523
 GameObject:
   m_ObjectHideFlags: 0
@@ -3398,7 +3377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6711985148190750800}
   m_Layer: 0
-  m_Name: CrushedStick
+  m_Name: SplitStick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3937,7 +3916,6 @@ GameObject:
   - component: {fileID: 7363372550032634290}
   - component: {fileID: 3703923089155943900}
   - component: {fileID: 7363372550032634301}
-  - component: {fileID: 7363372550032634300}
   m_Layer: 0
   m_Name: WholeStick
   m_TagString: Untagged
@@ -4054,27 +4032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 461124911240470748}
---- !u!114 &7363372550032634300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7363372550032634302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 7363372550032634301}
-  _wholeObject: {fileID: 7363372550032634302}
-  _crushedObject: {fileID: 1162792472854214885}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 2
-  _maxRotationDuration: 6
-  _minBreakDirectionX: 1
+  _splitBody: {fileID: 1162792472854214885}
 --- !u!1 &7363372550809243554
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,7 +4079,6 @@ GameObject:
   - component: {fileID: 47232322390415169}
   - component: {fileID: 47232322390415172}
   - component: {fileID: 47232322390415175}
-  - component: {fileID: 47232322390415174}
   m_Layer: 0
   m_Name: WholeBase
   m_TagString: Untagged
@@ -4221,27 +4178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 461124911240470748}
---- !u!114 &47232322390415174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7394991003528715395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68ea56a2e65ffa4ab2743e5e1b9b937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _trap: {fileID: 47232322390415175}
-  _wholeObject: {fileID: 7394991003528715395}
-  _crushedObject: {fileID: 767678435505043849}
-  _breakForce: 400
-  _minRotation: -360
-  _maxRotation: 360
-  _minRotationDuration: 2
-  _maxRotationDuration: 6
-  _minBreakDirectionX: 0.7
+  _splitBody: {fileID: 604683679951682959}
 --- !u!1 &7463673459409877334
 GameObject:
   m_ObjectHideFlags: 0
