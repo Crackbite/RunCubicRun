@@ -27,7 +27,7 @@ public class CubicMovement : MonoBehaviour
 
     private void Update()
     {
-        _cubic.transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
+       _cubic.transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
     }
 
     public void MoveLeft()
