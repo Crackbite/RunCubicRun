@@ -12,10 +12,11 @@ public class Trap : MonoBehaviour
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
     }
 
-    private void Break()
+    public void Break()
     {
         float pieceLifeTime = 10;
 
+        Stop();
         gameObject.SetActive(false);
         _splitBody.SetActive(true);
 
@@ -26,15 +27,8 @@ public class Trap : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void Stop()
     {
-        if(other.TryGetComponent<Cubic>(out Cubic cubic))
-        {
-            if (cubic.CanDestroy)
-            {
-                _animator.enabled = false;
-                Break();
-            }
-        }
+        _animator.enabled = false;
     }
 }
