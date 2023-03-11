@@ -942,7 +942,9 @@ GameObject:
   - component: {fileID: 5287717624304162371}
   - component: {fileID: 5287717624304162381}
   - component: {fileID: 5287717624304162370}
-  - component: {fileID: 4732329019366360740}
+  - component: {fileID: 7234873497087785980}
+  - component: {fileID: 3983511741799508836}
+  - component: {fileID: 7820885141559840966}
   - component: {fileID: 1220966529587944293}
   m_Layer: 0
   m_Name: WholeSaw
@@ -1017,7 +1019,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4732329019366360740
+--- !u!136 &7234873497087785980
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287717624304162368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.037866954
+  m_Height: 0.45296752
+  m_Direction: 2
+  m_Center: {x: -0.0044892556, y: 0.0023091522, z: 0.0010536398}
+--- !u!136 &3983511741799508836
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287717624304162368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.037866954
+  m_Height: 0.4489334
+  m_Direction: 1
+  m_Center: {x: -0.0044892556, y: -0.00067217014, z: 7.619657e-18}
+--- !u!65 &7820885141559840966
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1028,8 +1058,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0677739, y: 0.45404613, z: 0.45404607}
-  m_Center: {x: -0.00077955204, y: 0.0000000510897, z: -1.7631768e-18}
+  m_Size: {x: 0.05204724, y: 0.29965684, z: 0.33541217}
+  m_Center: {x: 0.000002778002, y: -0.0016231197, z: 0.00045825753}
 --- !u!114 &1220966529587944293
 MonoBehaviour:
   m_ObjectHideFlags: 0

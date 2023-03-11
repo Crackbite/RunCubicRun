@@ -525,8 +525,8 @@ GameObject:
   - component: {fileID: 1777790826445941726}
   - component: {fileID: 6471382924220200493}
   - component: {fileID: 6060259899603981251}
-  - component: {fileID: 924287778911332479}
   - component: {fileID: 8813608016350299081}
+  - component: {fileID: 6639779816994145739}
   m_Layer: 0
   m_Name: WholePillar
   m_TagString: Untagged
@@ -599,20 +599,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &924287778911332479
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4710745008771575250}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.20280261
-  m_Height: 0.6087623
-  m_Direction: 1
-  m_Center: {x: 0.000000024835268, y: 0.304381, z: 0}
 --- !u!114 &8813608016350299081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,6 +613,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 112193515389317060}
   _splitBody: {fileID: 4806849230061187662}
+--- !u!65 &6639779816994145739
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710745008771575250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.40560523, y: 0.7017202, z: 0.40682772}
+  m_Center: {x: 0.000000024835268, y: 0.3508601, z: -0.0020685047}
 --- !u!1 &4806849230061187662
 GameObject:
   m_ObjectHideFlags: 0
