@@ -10,6 +10,7 @@ public class WholePiston : MonoBehaviour
     [SerializeField] private Vector3 _shakeStrength = new Vector3(.02f, 0f, .02f);
     [SerializeField] private float _cubicPressSpeed = 5f;
     [SerializeField] private PressStand _pressStand;
+    [SerializeField] private BlocksContainer _blocksContainer;
 
     private bool _cubicReached;
     private bool _pressed;
@@ -41,7 +42,7 @@ public class WholePiston : MonoBehaviour
             }
             else
             {
-                Destroy(colorBlock.gameObject);
+                _blocksContainer.DestroyBlock(colorBlock);
             }
         }
     }
@@ -65,7 +66,7 @@ public class WholePiston : MonoBehaviour
     {
         yield return new WaitForSeconds(_waitBeforePress);
         _pressed = true;
-        Destroy(colorBlock.gameObject);
+        _blocksContainer.DestroyBlock(colorBlock);
     }
 
     private void PressCubic(Cubic cubic)
