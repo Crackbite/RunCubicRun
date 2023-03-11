@@ -2,22 +2,23 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(PressSpeedHandler))]
 public class WholePiston : MonoBehaviour
 {
     [SerializeField] private float _waitBeforePress = 1f;
-    [SerializeField] private float _pressSpeed = 1f;
     [SerializeField] private float _waitBeforeCubicPress = 1f;
     [SerializeField] private Vector3 _shakeStrength = new Vector3(.02f, 0f, .02f);
-    [SerializeField] private float _cubicPressSpeed = 5f;
     [SerializeField] private PressStand _pressStand;
     [SerializeField] private BlocksContainer _blocksContainer;
 
     private bool _cubicReached;
     private bool _pressed;
+    private PressSpeedHandler _pressSpeedHandler;
     private float _pressStandHighestPoint;
 
     private void Start()
     {
+        _pressSpeedHandler = GetComponent<PressSpeedHandler>();
         _pressStandHighestPoint = _pressStand.GetComponent<MeshRenderer>().bounds.max.y;
     }
 
@@ -54,11 +55,13 @@ public class WholePiston : MonoBehaviour
             return;
         }
 
+        float speed = _cubicReached ? _pressSpeedHandler.CubicPressSpeed : _pressSpeedHandler.GetCurrentSpeed();
+
         Vector3 currentPosition = transform.position;
         Vector3 newPosition = currentPosition;
         newPosition.y = _pressStandHighestPoint;
 
-        float step = _pressSpeed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(currentPosition, newPosition, step);
     }
 
@@ -78,7 +81,7 @@ public class WholePiston : MonoBehaviour
         Vector3 scale = cubic.transform.localScale;
         float initScaleY = scale.y;
 
-        Vector3 newScale = scale - (Vector3.up * (_pressSpeed / ScaleReductionFactor));
+        Vector3 newScale = scale - (Vector3.up * (_pressSpeedHandler.CubicPressSpeed / ScaleReductionFactor));
         newScale.y = Mathf.Max(newScale.y, MinScaleY);
         cubic.transform.localScale = newScale;
 
@@ -105,7 +108,6 @@ public class WholePiston : MonoBehaviour
 
         yield return new WaitForSeconds(_waitBeforeCubicPress);
 
-        _pressSpeed = _cubicPressSpeed;
         _pressed = true;
         PressCubic(cubic);
 

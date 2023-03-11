@@ -642,6 +642,7 @@ GameObject:
   - component: {fileID: 1247309594}
   - component: {fileID: 1247309595}
   - component: {fileID: 1247309596}
+  - component: {fileID: 1247309597}
   m_Layer: 0
   m_Name: WholePiston
   m_TagString: Untagged
@@ -691,11 +692,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waitBeforePress: 1
-  _pressSpeed: 1
   _waitBeforeCubicPress: 1
   _shakeStrength: {x: 0.02, y: 0, z: 0.02}
-  _cubicPressSpeed: 5
   _pressStand: {fileID: 7338364661328200470}
+  _blocksContainer: {fileID: 1761122229}
+--- !u!114 &1247309597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247309593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679e0b83e16896f4c9aa749697d833a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blocksContainer: {fileID: 1761122229}
+  _maxSpeed: 5
+  _minSpeed: 1
+  _minBlocksForMinSpeed: 10
+  _cubicPressSpeed: 5
+  _debugLog: 0
 --- !u!23 &1312965520
 MeshRenderer:
   m_ObjectHideFlags: 0
