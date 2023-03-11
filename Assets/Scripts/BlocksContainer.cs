@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
+    [SerializeField] private Cubic _cubic;
 
     private readonly List<ColorBlock> _blocks = new();
 
     private void OnEnable()
     {
         _blockStacker.ColorBlockAdded += OnColorBlockAdded;
+        _cubic.Hit += OnHit;
     }
 
     private void Update()
@@ -21,6 +24,13 @@ public class BlocksContainer : MonoBehaviour
     private void OnDisable()
     {
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
+        _cubic.Hit -= OnHit;
+
+    }
+
+    private void OnHit()
+    {
+        Collapse();
     }
 
     private void OnColorBlockAdded(ColorBlock colorBlock)
@@ -31,6 +41,14 @@ public class BlocksContainer : MonoBehaviour
         for (int i = 0; i < _blocks.Count; i++)
         {
             _blocks[i].StackPosition = _blocks.Count - i;
+        }
+    }
+
+    private void Collapse()
+    {
+        for (int i = 0; i < _blocks.Count; i++)
+        {
+            _blocks[i].FallOff();
         }
     }
 }

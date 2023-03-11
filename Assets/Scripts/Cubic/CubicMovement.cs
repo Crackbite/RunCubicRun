@@ -18,12 +18,12 @@ public class CubicMovement : MonoBehaviour
     private void Awake()
     {
         _cubic = GetComponent<Cubic>();
-
         Vector3 position = _cubic.transform.position;
         _minPositionZ = position.z - _shiftPerMove;
         _maxPositionZ = position.z + _shiftPerMove;
 
         _canMoveToSide = true;
+        _canMoveForward = true;
     }
 
     private void OnEnable()
@@ -31,7 +31,7 @@ public class CubicMovement : MonoBehaviour
         _cubic.Hit += OnHit;
     }
 
-    ¨private void OnDisable()
+    private void OnDisable()
     {
         _cubic.Hit -= OnHit;
     }

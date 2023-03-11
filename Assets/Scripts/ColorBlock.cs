@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class ColorBlock : MonoBehaviour
 {
     [SerializeField] private float _followSpeed = 350f;
+    [SerializeField] private float _frictionCoefficient = 10f;
 
     private bool _follow;
     private Transform _followed;
     private MeshRenderer _meshRenderer;
+    private Collider _collider;
+    private Rigidbody _rigidbody;
 
     public Material CurrentMaterial => _meshRenderer.sharedMaterial;
 
@@ -16,6 +21,8 @@ public class ColorBlock : MonoBehaviour
     private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
+        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -38,5 +45,13 @@ public class ColorBlock : MonoBehaviour
     {
         _followed = followed;
         _follow = true;
+    }
+
+    public void FallOff()
+    {
+        enabled = false;
+        _rigidbody.isKinematic = false;
+        _rigidbody.AddForce(Vector3.right * _frictionCoefficient * StackPosition);
+        _collider.isTrigger = false;
     }
 }

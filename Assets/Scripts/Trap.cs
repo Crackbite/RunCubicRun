@@ -1,15 +1,19 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
+
 public class Trap : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _splitBody;
 
     private Rigidbody[] _pieces;
+    private Collider[] _colliders;
 
     private void Start()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
+        _colliders = GetComponentsInChildren<Collider>();
     }
 
     public void Break()
@@ -30,5 +34,8 @@ public class Trap : MonoBehaviour
     public void Stop()
     {
         _animator.enabled = false;
+
+        foreach (var collider in _colliders)
+            collider.isTrigger = false;
     }
 }
