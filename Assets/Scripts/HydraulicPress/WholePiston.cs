@@ -67,6 +67,12 @@ public class WholePiston : MonoBehaviour
 
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(currentPosition, newPosition, step);
+
+        if (Mathf.Approximately(newPosition.y, transform.position.y))
+        {
+            _pressed = false;
+        }
+
     }
 
     private void DestroyBlock(ColorBlock colorBlock)
