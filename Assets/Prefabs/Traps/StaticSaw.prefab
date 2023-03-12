@@ -825,10 +825,8 @@ GameObject:
   - component: {fileID: 9212905660049862521}
   - component: {fileID: 7388386413144233945}
   - component: {fileID: 809608494509176411}
-  - component: {fileID: 4783107503262233444}
-  - component: {fileID: 2133788266639104855}
-  - component: {fileID: 1095637273774099473}
   - component: {fileID: 679385715997067021}
+  - component: {fileID: 1159422072}
   m_Layer: 0
   m_Name: WholeSaw
   m_TagString: Untagged
@@ -902,48 +900,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4783107503262233444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6552621481731179849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 3517080686816452736}
-  _splitBody: {fileID: 5227087399341092590}
---- !u!136 &2133788266639104855
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6552621481731179849}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.037866954
-  m_Height: 0.45866483
-  m_Direction: 2
-  m_Center: {x: -0.0044892556, y: 0.0023091522, z: 7.619657e-18}
---- !u!136 &1095637273774099473
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6552621481731179849}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.037866954
-  m_Height: 0.45866483
-  m_Direction: 1
-  m_Center: {x: -0.0044892556, y: 0.0023091522, z: 7.619657e-18}
 --- !u!65 &679385715997067021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -957,6 +913,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.074229375, y: 0.29965684, z: 0.33541217}
   m_Center: {x: 0.000009641051, y: -0.0016231197, z: 0.00045825753}
+--- !u!114 &1159422072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552621481731179849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 3517080686816452736}
+  _splitBody: {fileID: 5227087399341092590}
+  _isVertical: 1
 --- !u!1 &7052216327476984942
 GameObject:
   m_ObjectHideFlags: 0

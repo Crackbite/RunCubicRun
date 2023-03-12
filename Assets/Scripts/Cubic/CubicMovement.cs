@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _animationSpeed = .1f;
     [SerializeField] private float _shiftPerMove = 1.3f;
+    [SerializeField] private AnimationCurve _stopCurve;
 
     private bool _canMoveToSide;
     private bool _canMoveForward;
@@ -65,8 +67,12 @@ public class CubicMovement : MonoBehaviour
 
     private void OnHit()
     {
-        _canMoveForward = false;
         _canMoveToSide = false;
+
+        if (_cubic.IsSawing)
+            StartCoroutine(StopSlowly());
+        else
+            _canMoveForward = false;
     }
 
     private IEnumerator MoveToPositionZ(float positionZ)
@@ -74,5 +80,20 @@ public class CubicMovement : MonoBehaviour
         _canMoveToSide = false;
         yield return _cubic.transform.DOMoveZ(positionZ, _animationSpeed).WaitForCompletion();
         _canMoveToSide = true;
+    }
+
+    private IEnumerator StopSlowly()
+    {
+        float runningTime = 0;
+        float stopDuration;
+
+        stopDuration = _stopCurve.keys[_stopCurve.length - 1].time;
+
+        while (_moveSpeed > 0)
+        {
+            _moveSpeed -= _moveSpeed * _stopCurve.Evaluate(runningTime)/stopDuration;
+            runningTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
