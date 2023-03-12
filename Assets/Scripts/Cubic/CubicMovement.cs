@@ -13,6 +13,7 @@ public class CubicMovement : MonoBehaviour
 
     private bool _canMoveToSide;
     private bool _canMoveForward;
+    private float _currentSpeed;
     private Cubic _cubic;
     private float _maxPositionZ;
     private float _minPositionZ;
@@ -30,6 +31,7 @@ public class CubicMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        _currentSpeed = _moveSpeed;
         _cubic.Hit += OnHit;
     }
 
@@ -42,7 +44,9 @@ public class CubicMovement : MonoBehaviour
     private void Update()
     {
         if (_canMoveForward)
-            _cubic.transform.Translate(Vector3.right * _moveSpeed * Time.deltaTime);
+            _cubic.transform.Translate(Vector3.right * _currentSpeed * Time.deltaTime);
+
+        Debug.Log(_moveSpeed);
     }
 
     public void MoveLeft()
@@ -89,9 +93,9 @@ public class CubicMovement : MonoBehaviour
 
         stopDuration = _stopCurve.keys[_stopCurve.length - 1].time;
 
-        while (_moveSpeed > 0)
+        while (runningTime <= stopDuration)
         {
-            _moveSpeed -= _moveSpeed * _stopCurve.Evaluate(runningTime)/stopDuration;
+            _currentSpeed = _moveSpeed * _stopCurve.Evaluate(runningTime)/stopDuration;
             runningTime += Time.deltaTime;
             yield return null;
         }
