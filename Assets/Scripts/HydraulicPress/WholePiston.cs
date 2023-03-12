@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -10,11 +11,14 @@ public class WholePiston : MonoBehaviour
     [SerializeField] private Vector3 _shakeStrength = new Vector3(.02f, 0f, .02f);
     [SerializeField] private PressStand _pressStand;
     [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private int _minBlocksToLeave = 8;
 
     private bool _cubicReached;
     private bool _pressed;
     private PressSpeedHandler _pressSpeedHandler;
     private float _pressStandHighestPoint;
+
+    public event Action LeavePressAllowed;
 
     private void Start()
     {
@@ -43,7 +47,7 @@ public class WholePiston : MonoBehaviour
             }
             else
             {
-                _blocksContainer.DestroyBlock(colorBlock);
+                DestroyBlock(colorBlock);
             }
         }
     }
@@ -65,11 +69,21 @@ public class WholePiston : MonoBehaviour
         transform.position = Vector3.MoveTowards(currentPosition, newPosition, step);
     }
 
+    private void DestroyBlock(ColorBlock colorBlock)
+    {
+        if (_blocksContainer.BlocksCount <= _minBlocksToLeave + 1)
+        {
+            LeavePressAllowed?.Invoke();
+        }
+
+        _blocksContainer.DestroyBlock(colorBlock);
+    }
+
     private IEnumerator PressAndDestroy(ColorBlock colorBlock)
     {
         yield return new WaitForSeconds(_waitBeforePress);
         _pressed = true;
-        _blocksContainer.DestroyBlock(colorBlock);
+        DestroyBlock(colorBlock);
     }
 
     private void PressCubic(Cubic cubic)

@@ -10,7 +10,11 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _changeLineSpeed = .1f;
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _stopAtPressStandSpeed = 1f;
+    [SerializeField] private WholePiston _wholePiston;
+    [SerializeField] private float _leavePressTime = .8f;
+    [SerializeField] private float _leavePressDistance = 5f;
 
+    private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
 
@@ -33,6 +37,7 @@ public class CubicMovement : MonoBehaviour
     private void OnEnable()
     {
         _cubic.SteppedOnStand += CubicOnSteppedOnStand;
+        _wholePiston.LeavePressAllowed += OnLeavePressAllowed;
     }
 
     private void Update()
@@ -46,6 +51,21 @@ public class CubicMovement : MonoBehaviour
     private void OnDisable()
     {
         _cubic.SteppedOnStand -= CubicOnSteppedOnStand;
+        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
+    }
+
+    public void MoveForward()
+    {
+        if (_canLeavePress == false)
+        {
+            return;
+        }
+
+        float newPositionX = _cubic.transform.position.x + _leavePressDistance;
+        _cubic.transform.DOMoveX(newPositionX, _leavePressTime).SetEase(Ease.OutQuart);
+
+        _canLeavePress = false;
+        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
     }
 
     public void MoveLeft()
@@ -84,5 +104,10 @@ public class CubicMovement : MonoBehaviour
         _canLineChange = false;
         yield return _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).WaitForCompletion();
         _canLineChange = true;
+    }
+
+    private void OnLeavePressAllowed()
+    {
+        _canLeavePress = true;
     }
 }

@@ -20,5 +20,9 @@ public class KeyboardInput : MonoBehaviour
         {
             _cubicMovement.MoveRight();
         }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            _cubicMovement.MoveForward();
+        }
     }
 }
