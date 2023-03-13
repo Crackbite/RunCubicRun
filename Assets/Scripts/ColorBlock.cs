@@ -15,7 +15,6 @@ public class ColorBlock : MonoBehaviour
     private Rigidbody _rigidbody;
 
     public Material CurrentMaterial => _meshRenderer.sharedMaterial;
-
     public float StackPosition { get; set; }
 
     private void Awake()
@@ -47,11 +46,11 @@ public class ColorBlock : MonoBehaviour
         _follow = true;
     }
 
-    public void FallOff()
+    public void FallOff(Vector3 fallDirection)
     {
         enabled = false;
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(Vector3.right * _frictionCoefficient * StackPosition);
+        _rigidbody.AddForce(fallDirection * _frictionCoefficient * StackPosition);
         _collider.isTrigger = false;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,9 +45,15 @@ public class BlocksContainer : MonoBehaviour
 
     private void Collapse()
     {
+        Vector3 fallDirection = Vector3.right;
+        Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
+
+        if (_cubic.IsSideCollision)
+            fallDirection = trapPosition.z > _cubic.transform.position.z ? fallDirection + Vector3.forward : fallDirection + Vector3.back;
+
         for (int i = 0; i < _blocks.Count; i++)
         {
-            _blocks[i].FallOff();
+            _blocks[i].FallOff(fallDirection);
         }
     }
 }
