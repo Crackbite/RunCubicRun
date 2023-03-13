@@ -38,6 +38,7 @@ public class CubicMovement : MonoBehaviour
     {
         _cubic.SteppedOnStand += CubicOnSteppedOnStand;
         _wholePiston.LeavePressAllowed += OnLeavePressAllowed;
+        _wholePiston.CubicReached += WholePistonOnCubicReached;
     }
 
     private void Update()
@@ -52,6 +53,7 @@ public class CubicMovement : MonoBehaviour
     {
         _cubic.SteppedOnStand -= CubicOnSteppedOnStand;
         _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
+        _wholePiston.CubicReached -= WholePistonOnCubicReached;
     }
 
     public void MoveForward()
@@ -109,5 +111,10 @@ public class CubicMovement : MonoBehaviour
     private void OnLeavePressAllowed()
     {
         _canLeavePress = true;
+    }
+
+    private void WholePistonOnCubicReached()
+    {
+        _canLeavePress = false;
     }
 }
