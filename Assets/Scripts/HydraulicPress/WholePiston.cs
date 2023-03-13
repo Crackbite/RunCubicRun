@@ -18,6 +18,7 @@ public class WholePiston : MonoBehaviour
     private PressSpeedHandler _pressSpeedHandler;
     private float _pressStandHighestPoint;
 
+    public event Action CubicReached;
     public event Action LeavePressAllowed;
     public event Action WorkCompleted;
 
@@ -33,6 +34,7 @@ public class WholePiston : MonoBehaviour
         {
             if (_cubicReached == false)
             {
+                CubicReached?.Invoke();
                 StartCoroutine(ShakeAndPress(cubic));
             }
             else
@@ -74,7 +76,6 @@ public class WholePiston : MonoBehaviour
             _pressed = false;
             WorkCompleted?.Invoke();
         }
-
     }
 
     private void DestroyBlock(ColorBlock colorBlock)
