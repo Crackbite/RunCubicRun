@@ -73,7 +73,7 @@ public class PressSpeedReducer : MonoBehaviour
 
     private void OnLeavePressAllowed()
     {
-        _speed = _pressSpeedHandler.GetCurrentSpeed();
+        _speed = _pressSpeedHandler.PureSpeed;
         _canReduceSpeed = true;
         _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
     }
