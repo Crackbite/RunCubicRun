@@ -13,6 +13,10 @@ public class PressSpeedHandler : MonoBehaviour
 
     public float CubicPressSpeed => _cubicPressSpeed;
 
+    public float PureSpeed { get; private set; }
+
+    public float SpeedReduceRate { get; set; }
+
     public float GetCurrentSpeed()
     {
         if (_initBlockCount < 0)
@@ -32,9 +36,14 @@ public class PressSpeedHandler : MonoBehaviour
             currentSpeed = Mathf.Lerp(_maxSpeed, _minSpeed, lerpFactor);
         }
 
+        PureSpeed = currentSpeed;
+
+        float newSpeed = currentSpeed - SpeedReduceRate;
+        currentSpeed = currentSpeed < 0 ? currentSpeed : newSpeed;
+
         if (_debugLog)
         {
-            Debug.Log($"{_blocksContainer.BlocksCount} = {currentSpeed}");
+            Debug.Log($"{_blocksContainer.BlocksCount} = {currentSpeed} | {SpeedReduceRate}");
         }
 
         return currentSpeed;

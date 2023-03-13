@@ -19,6 +19,7 @@ public class WholePiston : MonoBehaviour
     private float _pressStandHighestPoint;
 
     public event Action LeavePressAllowed;
+    public event Action WorkCompleted;
 
     private void Start()
     {
@@ -71,6 +72,7 @@ public class WholePiston : MonoBehaviour
         if (Mathf.Approximately(newPosition.y, transform.position.y))
         {
             _pressed = false;
+            WorkCompleted?.Invoke();
         }
 
     }

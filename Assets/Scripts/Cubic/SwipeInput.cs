@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(CubicMovement))]
 public class SwipeInput : MonoBehaviour
 {
+    [SerializeField] private PressSpeedReducer _pressSpeedReducer;
+
     private CubicMovement _cubicMovement;
     private Vector3 _mousePreviousPosition;
 
@@ -15,6 +17,7 @@ public class SwipeInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            _pressSpeedReducer.ReduceSpeed();
             _mousePreviousPosition = Input.mousePosition;
         }
 
