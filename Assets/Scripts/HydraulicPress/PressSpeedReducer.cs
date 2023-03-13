@@ -7,6 +7,7 @@ public class PressSpeedReducer : MonoBehaviour
     [SerializeField] private float _increaseSpeed = 1f;
     [SerializeField] private float _timeThreshold = .1f;
     [SerializeField] private float _minSpeed = .1f;
+    [SerializeField] private CubicMovement _cubicMovement;
 
     private bool _canReduceSpeed;
     private PressSpeedHandler _pressSpeedHandler;
@@ -23,7 +24,8 @@ public class PressSpeedReducer : MonoBehaviour
     private void OnEnable()
     {
         _wholePiston.LeavePressAllowed += OnLeavePressAllowed;
-        _wholePiston.WorkCompleted += OnWorkCompleted;
+        _wholePiston.WorkCompleted += DisableReduceSpeed;
+        _cubicMovement.CubicLeftPress += DisableReduceSpeed;
     }
 
     private void Update()
@@ -48,7 +50,8 @@ public class PressSpeedReducer : MonoBehaviour
     private void OnDisable()
     {
         _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
-        _wholePiston.WorkCompleted -= OnWorkCompleted;
+        _wholePiston.WorkCompleted -= DisableReduceSpeed;
+        _cubicMovement.CubicLeftPress -= DisableReduceSpeed;
     }
 
     public void ReduceSpeed()
@@ -62,15 +65,16 @@ public class PressSpeedReducer : MonoBehaviour
         _speed -= _decreaseRate;
     }
 
+    private void DisableReduceSpeed()
+    {
+        _canReduceSpeed = false;
+        _pressSpeedHandler.SpeedReduceRate = 0;
+    }
+
     private void OnLeavePressAllowed()
     {
         _speed = _pressSpeedHandler.GetCurrentSpeed();
         _canReduceSpeed = true;
         _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
-    }
-
-    private void OnWorkCompleted()
-    {
-        _canReduceSpeed = false;
     }
 }
