@@ -23,6 +23,7 @@ public class CubicMovement : MonoBehaviour
     private float _maxPositionZ;
     private float _minPositionZ;
 
+    public event Action CubicLeftPress;
     public event Action CubicOnStand;
 
     private void Awake()
@@ -68,6 +69,8 @@ public class CubicMovement : MonoBehaviour
 
         _canLeavePress = false;
         _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
+
+        CubicLeftPress?.Invoke();
     }
 
     public void MoveLeft()
