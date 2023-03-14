@@ -108,7 +108,7 @@ public class CubicMovement : MonoBehaviour
     {
         _canLineChange = false;
         yield return _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).WaitForCompletion();
-        _canLineChange = true;
+        _canLineChange = _canMove;
     }
 
     private void OnLeavePressAllowed()
