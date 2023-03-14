@@ -9,7 +9,6 @@ public class Cubic : MonoBehaviour
     [SerializeField] private VerticalSplitter _verticalSplitter;
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
     [SerializeField] private ColorHolder _colorHolder;
-    [SerializeField] private AnimationCurve _jumpCurve;
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
@@ -34,11 +33,6 @@ public class Cubic : MonoBehaviour
     {
         _meshRenderer.material.color = color;
         ColorChanged?.Invoke(color);
-    }
-
-    public void Jump()
-    {
-
     }
 
     public void SplitIntoPieces(bool isVerticalSplit)

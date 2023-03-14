@@ -17,6 +17,11 @@ public class BlocksContainer : MonoBehaviour
         _cubic.ColorChanged += OnColorChanged;
     }
 
+    private void Start()
+    {
+        _collectedBlocksMaterial.color = _cubic.CurrentColor;
+    }
+
     private void Update()
     {
         Vector3 currentPosition = transform.position;
