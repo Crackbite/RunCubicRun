@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private Cubic _cubic;
+    [SerializeField] private Material _collectedBlocksMaterial;
 
     private readonly List<ColorBlock> _blocks = new();
 
@@ -12,6 +14,7 @@ public class BlocksContainer : MonoBehaviour
     {
         _blockStacker.ColorBlockAdded += OnColorBlockAdded;
         _cubic.Hit += OnHit;
+        _cubic.ColorChanged += OnColorChanged;
     }
 
     private void Update()
@@ -24,7 +27,15 @@ public class BlocksContainer : MonoBehaviour
     {
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
         _cubic.Hit -= OnHit;
+        _cubic.ColorChanged -= OnColorChanged;
+    }
 
+    private void OnColorChanged(Color color)
+    {
+        foreach (var block in _blocks)
+        {
+            block.ChangeColor(color);
+        }
     }
 
     private void OnHit()
@@ -35,6 +46,7 @@ public class BlocksContainer : MonoBehaviour
     private void OnColorBlockAdded(ColorBlock colorBlock)
     {
         _blocks.Add(colorBlock);
+        colorBlock.ChangeMaterial(_collectedBlocksMaterial);
         colorBlock.EnableFollow(_blockStacker.transform);
 
         for (int i = 0; i < _blocks.Count; i++)

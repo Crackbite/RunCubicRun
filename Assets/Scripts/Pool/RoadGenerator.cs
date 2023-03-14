@@ -36,12 +36,12 @@ public class RoadGenerator : ObjectPool
         }
     }
 
-    private void SetRoadToPosition(Vector3 InstallationPosition)
+    private void SetRoadToPosition(Vector3 installationPosition)
     {
         if (TryGetObject(out GameObject item))
         {
             item.SetActive(true);
-            item.transform.position = InstallationPosition;
+            item.transform.position = installationPosition;
             _currentRoad = item;
         }
     }

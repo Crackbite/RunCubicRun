@@ -8,21 +8,48 @@ public class Cubic : MonoBehaviour
     [SerializeField] private bool _canDestroy;
     [SerializeField] private VerticalSplitter _verticalSplitter;
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
+    [SerializeField] private ColorHolder _colorHolder;
 
     private MeshRenderer _meshRenderer;
     private Collider _collider;
 
+    public Color CurrentColor => _meshRenderer.material.color;
     public Collider Collider => _collider;
     public bool IsSawing { get; private set; }
     public bool IsSideCollision { get; private set; }
     public Trap CollisionTrap { get; private set; }
 
     public event UnityAction Hit;
+    public event UnityAction<Color> ColorChanged;
 
-    private void Start()
+    private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
+        ChooseStartColor();
+    }
+
+    public void ChangeColor(Color color)
+    {
+        _meshRenderer.material.color = color;
+        ColorChanged?.Invoke(color);
+    }
+
+    private void ChooseStartColor()
+    {
+        float minValue = -1f;
+        float maxValue = _colorHolder.Colors.Count - 1;
+
+        float random = Random.Range(minValue, maxValue);
+
+        for (int i = 0; i < _colorHolder.Colors.Count; i++)
+        {
+            if (random <= i)
+            {
+                _meshRenderer.material.color = _colorHolder.Colors[i];
+                break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
