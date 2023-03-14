@@ -10,6 +10,10 @@ public class Trap : MonoBehaviour
     private Rigidbody[] _pieces;
     private Collider[] _colliders;
 
+    protected bool IsSideCollision;
+
+    private Cubic _cubic;
+
     private void Start()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
@@ -37,5 +41,22 @@ public class Trap : MonoBehaviour
 
         foreach (var collider in _colliders)
             collider.isTrigger = false;
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Cubic>(out Cubic cubic))
+        {
+            if (cubic.CanDestroy)
+            {
+                Break();
+            }
+            else
+            {
+                IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) >= transform.localScale.z / 2;
+                Stop();
+                cubic.HitTrap(this, IsSideCollision);
+            }
+        }
     }
 }
