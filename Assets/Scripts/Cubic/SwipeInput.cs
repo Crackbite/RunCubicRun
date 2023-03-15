@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(CubicMovement))]
 public class SwipeInput : MonoBehaviour
 {
+    [SerializeField] private float _minForwardDistance = 30f;
     [SerializeField] private PressSpeedReducer _pressSpeedReducer;
 
     private CubicMovement _cubicMovement;
@@ -42,7 +43,9 @@ public class SwipeInput : MonoBehaviour
         }
         else
         {
-            if (mousePosition.y > _mousePreviousPosition.y)
+            float swipeDistanceY = mousePosition.y - _mousePreviousPosition.y;
+
+            if (swipeDistanceY > _minForwardDistance)
             {
                 _cubicMovement.MoveForward();
             }
