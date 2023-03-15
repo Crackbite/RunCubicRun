@@ -6,6 +6,7 @@ public class HydraulicPress : MonoBehaviour
     [SerializeField] private PressTop _pressTop;
     [SerializeField] private float _pressTopInitOffset = 10f;
     [SerializeField] private CubicMovement _cubicMovement;
+    [SerializeField] private BarometerArrow _barometerArrow;
 
     private void OnEnable()
     {
@@ -33,5 +34,6 @@ public class HydraulicPress : MonoBehaviour
 
         _pressTop.gameObject.SetActive(true);
         _pressTop.Init();
+        _barometerArrow.Init();
     }
 }
