@@ -12,7 +12,9 @@ public class WholePiston : MonoBehaviour
     [SerializeField] private PressStand _pressStand;
     [SerializeField] private BlocksContainer _blocksContainer;
     [SerializeField] private int _minBlocksToLeave = 8;
+    [SerializeField] private CubicMovement _cubicMovement;
 
+    private bool _cubicCollisionDisabled;
     private bool _cubicReached;
     private bool _pressed;
     private PressSpeedHandler _pressSpeedHandler;
@@ -22,6 +24,11 @@ public class WholePiston : MonoBehaviour
     public event Action LeavePressAllowed;
     public event Action WorkCompleted;
 
+    private void OnEnable()
+    {
+        _cubicMovement.CubicLeftPress += OnCubicLeftPress;
+    }
+
     private void Start()
     {
         _pressSpeedHandler = GetComponent<PressSpeedHandler>();
@@ -30,7 +37,7 @@ public class WholePiston : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Cubic cubic))
+        if (collision.TryGetComponent(out Cubic cubic) && _cubicCollisionDisabled == false)
         {
             if (_cubicReached == false)
             {
@@ -78,6 +85,11 @@ public class WholePiston : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _cubicMovement.CubicLeftPress -= OnCubicLeftPress;
+    }
+
     private void DestroyBlock(ColorBlock colorBlock)
     {
         if (_blocksContainer.BlocksCount <= _minBlocksToLeave + 1)
@@ -86,6 +98,11 @@ public class WholePiston : MonoBehaviour
         }
 
         _blocksContainer.DestroyBlock(colorBlock);
+    }
+
+    private void OnCubicLeftPress()
+    {
+        _cubicCollisionDisabled = true;
     }
 
     private IEnumerator PressAndDestroy(ColorBlock colorBlock)
