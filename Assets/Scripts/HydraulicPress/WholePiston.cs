@@ -108,7 +108,8 @@ public class WholePiston : MonoBehaviour
     private IEnumerator PressAndDestroy(ColorBlock colorBlock)
     {
         yield return new WaitForSeconds(_delayBeforePress);
-        _isPressed = true;
+
+        StartPress();
         DestroyBlock(colorBlock);
     }
 
@@ -152,5 +153,11 @@ public class WholePiston : MonoBehaviour
         PressCubic(cubic);
 
         tweener.Kill();
+    }
+
+    private void StartPress()
+    {
+        _pressSpeedHandler.Init();
+        _isPressed = true;
     }
 }

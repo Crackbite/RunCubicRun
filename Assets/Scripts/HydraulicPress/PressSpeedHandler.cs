@@ -9,7 +9,7 @@ public class PressSpeedHandler : MonoBehaviour
     [SerializeField] private float _cubicPressSpeed = 5f;
     [SerializeField] private bool _debugLog;
 
-    private int _initBlockCount = -1;
+    private int _initBlockCount;
 
     public float CubicPressSpeed => _cubicPressSpeed;
 
@@ -19,12 +19,8 @@ public class PressSpeedHandler : MonoBehaviour
 
     public float GetCurrentSpeed()
     {
-        if (_initBlockCount < 0)
-        {
-            _initBlockCount = _blocksContainer.BlocksCount;
-        }
-
         float currentSpeed;
+        float blocksCount = _blocksContainer.BlocksCount;
 
         if (_initBlockCount <= _minBlocksForMinSpeed)
         {
@@ -32,7 +28,7 @@ public class PressSpeedHandler : MonoBehaviour
         }
         else
         {
-            float lerpFactor = Mathf.InverseLerp(_initBlockCount, _minBlocksForMinSpeed, _blocksContainer.BlocksCount);
+            float lerpFactor = Mathf.InverseLerp(_initBlockCount, _minBlocksForMinSpeed, blocksCount);
             currentSpeed = Mathf.Lerp(_maxSpeed, _minSpeed, lerpFactor);
         }
 
@@ -43,9 +39,14 @@ public class PressSpeedHandler : MonoBehaviour
 
         if (_debugLog)
         {
-            Debug.Log($"{_blocksContainer.BlocksCount} = {currentSpeed} | {SpeedReduceRate}");
+            Debug.Log($"{blocksCount} = {currentSpeed} | {SpeedReduceRate}");
         }
 
         return currentSpeed;
+    }
+
+    public void Init()
+    {
+        _initBlockCount = _blocksContainer.BlocksCount;
     }
 }
