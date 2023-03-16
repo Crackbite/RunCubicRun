@@ -6,6 +6,7 @@ public class BarometerArrow : MonoBehaviour
     [SerializeField] private BlocksContainer _blocksContainer;
     [SerializeField] private float _minRotationY = 34f;
     [SerializeField] private float _maxRotationY = -236f;
+    [SerializeField] private float _rotateDuration = .5f;
 
     private int _initBlockCount;
 
@@ -36,6 +37,6 @@ public class BarometerArrow : MonoBehaviour
         Vector3 newRotation = transform.localEulerAngles;
         newRotation.y = rotationY;
 
-        transform.DOLocalRotate(newRotation, .5f);
+        transform.DOLocalRotate(newRotation, _rotateDuration);
     }
 }
