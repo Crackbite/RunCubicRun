@@ -5,7 +5,7 @@ public class PressSpeedReducer : MonoBehaviour
 {
     [SerializeField] private float _decreaseRate = .2f;
     [SerializeField] private float _increaseSpeed = 1f;
-    [SerializeField] private float _timeThreshold = .1f;
+    [SerializeField] private float _clickTimeThreshold = .1f;
     [SerializeField] private float _minSpeed = .1f;
     [SerializeField] private CubicMovement _cubicMovement;
 
@@ -35,7 +35,7 @@ public class PressSpeedReducer : MonoBehaviour
             return;
         }
 
-        if (_timeSinceLastClick > _timeThreshold)
+        if (_timeSinceLastClick > _clickTimeThreshold)
         {
             _speed += _increaseSpeed * Time.deltaTime;
         }
