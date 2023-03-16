@@ -13,6 +13,7 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private WholePiston _wholePiston;
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
+    [SerializeField] private BlocksContainer _blocksContainer;
 
     private bool _canLeavePress;
     private bool _canLineChange = true;
@@ -95,6 +96,11 @@ public class CubicMovement : MonoBehaviour
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
+        if (_blocksContainer.BlocksCount < 1)
+        {
+            return;
+        }
+
         _canMove = false;
         _canLineChange = false;
 
