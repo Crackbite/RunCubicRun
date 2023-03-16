@@ -6,7 +6,7 @@ public class PressTop : MonoBehaviour
     {
         if (TryGetComponent(out PressTopAnimator pressTopAnimator))
         {
-            pressTopAnimator.EnableFallAnimation();
+            pressTopAnimator.StartFallAnimation();
         }
     }
 }

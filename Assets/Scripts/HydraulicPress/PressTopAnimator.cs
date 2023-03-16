@@ -7,18 +7,18 @@ public class PressTopAnimator : MonoBehaviour
     [SerializeField] private float _divergenceSpeed = .1f;
     [SerializeField] private float _initDivergenceOffset = .2f;
     [SerializeField] private float _stepDivergenceOffset = .01f;
-    [SerializeField] private Ease _ease = Ease.InOutFlash;
+    [SerializeField] private Ease _fallEase = Ease.InOutFlash;
     [SerializeField] private BlocksContainer _blocksContainer;
 
-    public void EnableFallAnimation()
+    public void StartFallAnimation()
     {
         ColorBlock highestBlock = _blocksContainer.GetBlockByIndex(0);
         float highestBlockY = highestBlock.GetComponent<Collider>().bounds.max.y;
 
-        transform.DOMoveY(highestBlockY, _fallSpeed).SetEase(_ease).OnComplete(EnableDivergenceAnimation);
+        transform.DOMoveY(highestBlockY, _fallSpeed).SetEase(_fallEase).OnComplete(StartDivergenceAnimation);
     }
 
-    private void EnableDivergenceAnimation()
+    private void StartDivergenceAnimation()
     {
         float zOffset = _initDivergenceOffset;
 
