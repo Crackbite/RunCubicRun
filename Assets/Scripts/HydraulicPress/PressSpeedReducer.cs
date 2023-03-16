@@ -68,7 +68,7 @@ public class PressSpeedReducer : MonoBehaviour
     private void DisableReduceSpeed()
     {
         _canReduceSpeed = false;
-        _pressSpeedHandler.SpeedReduceRate = 0;
+        _pressSpeedHandler.SpeedReduceRate = 0f;
     }
 
     private void OnLeavePressAllowed()
