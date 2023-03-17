@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PressSpeedHandler), typeof(WholePiston))]
+[RequireComponent(typeof(PressSpeedHandler), typeof(PistonMover), typeof(BlockDestroyer))]
 public class PressSpeedReducer : MonoBehaviour
 {
     [SerializeField] private float _decreaseRate = .2f;
@@ -9,22 +9,24 @@ public class PressSpeedReducer : MonoBehaviour
     [SerializeField] private float _minSpeed = .1f;
     [SerializeField] private CubicMovement _cubicMovement;
 
+    private BlockDestroyer _blockDestroyer;
     private bool _canReduceSpeed;
+    private PistonMover _pistonMover;
     private PressSpeedHandler _pressSpeedHandler;
     private float _speed;
     private float _timeSinceLastClick;
-    private WholePiston _wholePiston;
 
     private void Awake()
     {
         _pressSpeedHandler = GetComponent<PressSpeedHandler>();
-        _wholePiston = GetComponent<WholePiston>();
+        _blockDestroyer = GetComponent<BlockDestroyer>();
+        _pistonMover = GetComponent<PistonMover>();
     }
 
     private void OnEnable()
     {
-        _wholePiston.LeavePressAllowed += OnLeavePressAllowed;
-        _wholePiston.WorkCompleted += DisableReduceSpeed;
+        _blockDestroyer.LeavePressAllowed += OnLeavePressAllowed;
+        _pistonMover.WorkCompleted += DisableReduceSpeed;
         _cubicMovement.CubicLeftPress += DisableReduceSpeed;
     }
 
@@ -49,8 +51,8 @@ public class PressSpeedReducer : MonoBehaviour
 
     private void OnDisable()
     {
-        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
-        _wholePiston.WorkCompleted -= DisableReduceSpeed;
+        _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
+        _pistonMover.WorkCompleted -= DisableReduceSpeed;
         _cubicMovement.CubicLeftPress -= DisableReduceSpeed;
     }
 
@@ -75,6 +77,6 @@ public class PressSpeedReducer : MonoBehaviour
     {
         _speed = _pressSpeedHandler.PureSpeed;
         _canReduceSpeed = true;
-        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
+        _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
     }
 }

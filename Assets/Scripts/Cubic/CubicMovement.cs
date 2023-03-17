@@ -10,7 +10,8 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _changeLineSpeed = .1f;
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _stopAtPressStandSpeed = 1f;
-    [SerializeField] private WholePiston _wholePiston;
+    [SerializeField] private PistonPresser _pistonPresser;
+    [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
     [SerializeField] private BlocksContainer _blocksContainer;
@@ -39,8 +40,8 @@ public class CubicMovement : MonoBehaviour
     private void OnEnable()
     {
         _cubic.SteppedOnStand += CubicOnSteppedOnStand;
-        _wholePiston.LeavePressAllowed += OnLeavePressAllowed;
-        _wholePiston.CubicReached += WholePistonOnCubicReached;
+        _blockDestroyer.LeavePressAllowed += OnLeavePressAllowed;
+        _pistonPresser.CubicReached += WholePistonOnCubicReached;
     }
 
     private void Update()
@@ -54,8 +55,8 @@ public class CubicMovement : MonoBehaviour
     private void OnDisable()
     {
         _cubic.SteppedOnStand -= CubicOnSteppedOnStand;
-        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
-        _wholePiston.CubicReached -= WholePistonOnCubicReached;
+        _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
+        _pistonPresser.CubicReached -= WholePistonOnCubicReached;
     }
 
     public void MoveForward()
@@ -69,7 +70,7 @@ public class CubicMovement : MonoBehaviour
         _cubic.transform.DOMoveX(newPositionX, _leavePressTime).SetEase(Ease.OutQuart);
 
         _canLeavePress = false;
-        _wholePiston.LeavePressAllowed -= OnLeavePressAllowed;
+        _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
 
         CubicLeftPress?.Invoke();
     }
