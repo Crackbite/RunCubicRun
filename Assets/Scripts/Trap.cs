@@ -12,8 +12,6 @@ public class Trap : MonoBehaviour
 
     protected bool IsSideCollision;
 
-    private Cubic _cubic;
-
     private void Start()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
