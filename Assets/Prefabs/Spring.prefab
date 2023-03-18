@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1220715341777295939}
   - component: {fileID: 1691773872489479113}
-  - component: {fileID: 919350645765019676}
   - component: {fileID: 1673740017200086238}
+  - component: {fileID: 1501013211369588616}
   m_Layer: 0
   m_Name: Spring
   m_TagString: Untagged
@@ -139,19 +139,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &919350645765019676
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1998202465277772025}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: 0.2, y: 0.32999745, z: 0}
 --- !u!114 &1673740017200086238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,10 +151,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e54642e7b95cf84e97aa067731fb8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwForce: 0
+  _throwForce: 7
   _throwCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.21627
+      outSlope: 1.21627
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.23168483
+    - serializedVersion: 3
+      time: 0.21581042
+      value: 0.2146216
+      inSlope: 0.79783124
+      outSlope: 0.79783124
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2074163
+      outWeight: 0.34898826
+    - serializedVersion: 3
+      time: 2
+      value: 0
+      inSlope: -0.99550456
+      outSlope: -0.99550456
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10928786
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &1501013211369588616
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998202465277772025}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1309898
+  m_Center: {x: 0.27, y: 0.36901003, z: 0}

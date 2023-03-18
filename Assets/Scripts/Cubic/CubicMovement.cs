@@ -2,8 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic))]
-[RequireComponent(typeof(FreeSidewayChecker))]
+[RequireComponent(typeof(Cubic), typeof(FreeSidewayChecker))]
 public class CubicMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
@@ -13,11 +12,13 @@ public class CubicMovement : MonoBehaviour
 
     private bool _canMoveToSide;
     private bool _canMoveForward;
+    private bool _isFall;
     private float _currentSpeed;
     private Cubic _cubic;
     private FreeSidewayChecker _sidewayChacker;
     private float _maxPositionZ;
     private float _minPositionZ;
+    private float _fallPositionY = -10;
 
     private void Awake()
     {
@@ -44,34 +45,42 @@ public class CubicMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_canMoveForward)
+        _isFall = _cubic.transform.position.y <= _fallPositionY;
+
+        if (_canMoveForward && _isFall == false)
+        {
             _cubic.transform.Translate(Vector3.right * _currentSpeed * Time.deltaTime);
+        }
     }
 
     public void MoveLeft()
     {
-        float currentShift = _shiftPerMove;
         Vector3 direction = Vector3.forward;
         float positionZ = _cubic.transform.position.z;
 
         if (_canMoveToSide && positionZ < _maxPositionZ)
         {
-            currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
-            StartCoroutine(MoveToPositionZ(positionZ + currentShift));
+            StartMoveToSide(positionZ, direction);
         }
     }
 
     public void MoveRight()
     {
-        float currentShift = _shiftPerMove;
         Vector3 direction = Vector3.back;
         float positionZ = _cubic.transform.position.z;
 
         if (_canMoveToSide && positionZ > _minPositionZ)
         {
-            currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
-            StartCoroutine(MoveToPositionZ(positionZ - currentShift));
+            StartMoveToSide(positionZ, direction);
         }
+    }
+
+    private void StartMoveToSide(float positionZ, Vector3 direction)
+    {
+        float currentShift = _shiftPerMove;
+
+        currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
+        StartCoroutine(MoveToPositionZ(positionZ + currentShift * direction.z));
     }
 
     private void OnHit()
@@ -79,13 +88,29 @@ public class CubicMovement : MonoBehaviour
         _canMoveToSide = false;
 
         if (_cubic.IsSawing)
+        {
             StartCoroutine(StopSlowly());
+        }
         else
+        {
             _canMoveForward = false;
+        }
     }
 
     private IEnumerator MoveToPositionZ(float positionZ)
     {
+        Collider[] colliders = Physics.OverlapSphere(_cubic.transform.position, _cubic.transform.localScale.y);
+
+        foreach (var collider in colliders)
+        {
+            if (collider.TryGetComponent<Road>(out Road ground))
+            {
+                break;
+            }
+
+            yield break;
+        }
+
         _canMoveToSide = false;
         yield return _cubic.transform.DOMoveZ(positionZ, _animationSpeed).WaitForCompletion();
         _canMoveToSide = true;

@@ -5,41 +5,50 @@ using UnityEngine;
 public class Spring : MonoBehaviour
 {
     [SerializeField] private float _throwForce;
-    [SerializeField] private AnimationCurve _throwCurve;
 
     private Animator _animator;
-    private const string _animationName = "Toss";
+    private const string _triggerName = "Toss";
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
     }
 
+    public void Toss(Cubic cubic)
+    {
+        _animator.SetTrigger(_triggerName);
+        StartCoroutine(ThrowOverHole(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
+    }
+
+    private IEnumerator ThrowOverHole(Transform flyingObject, float throwForce, float acceleration)
+    {
+        float runningTime = 0;
+        float startPositionY = flyingObject.position.y;
+        Vector3 currentPosition;
+        bool isGround = false;
+
+        while (isGround == false)
+        {
+            runningTime += Time.deltaTime;
+            currentPosition = flyingObject.position;
+            currentPosition.y = startPositionY + throwForce * runningTime - acceleration * Mathf.Pow(runningTime, 2) / 2;
+
+            if (currentPosition.y < startPositionY)
+            {
+                currentPosition.y = startPositionY;
+                isGround = true;
+            }
+
+            flyingObject.transform.position = currentPosition;
+            yield return null;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Cubic>(out Cubic cubic))
         {
-            _animator.Play(_animationName);
-            StartCoroutine(Toss(cubic.transform));
-        }
-    }
-
-    private IEnumerator Toss(Transform cubic)
-    {
-        float runningTime = 0;
-        float duration;
-        Vector3 startPosition = cubic.position;
-        Vector3 currentPosition;
-
-        duration = _throwCurve.keys[_throwCurve.length - 1].time;
-
-        while (runningTime <= duration)
-        {
-            currentPosition = cubic.position;
-            currentPosition.y = startPosition.y + _throwForce * _throwCurve.Evaluate(runningTime);
-            cubic.transform.position = currentPosition;
-            runningTime += Time.deltaTime;
-            yield return null;
+            Toss(cubic);
         }
     }
 }
