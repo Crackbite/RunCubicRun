@@ -8,11 +8,13 @@ public class BlockStacker : MonoBehaviour
 
     private float _stackYPosition;
 
+    public float Gap => _gap;
+
     public event Action<ColorBlock> ColorBlockAdded;
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out ColorBlock colorBlock) == false)
+        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.IsFollow)
         {
             return;
         }

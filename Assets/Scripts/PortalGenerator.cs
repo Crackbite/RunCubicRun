@@ -1,23 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PortalGenerator : ObjectPool
 {
     [SerializeField] private GameObject _template;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private ColorHolder _colorHolder;
+    [SerializeField] private BlocksContainer _blockContainer;
     [SerializeField] private float _skipDistance;
 
     private Color _usedColor;
     private List<Color> _unusedColors;
 
-    public event UnityAction<Color> ColorChanged;
-
     private void Start()
     {
         Initialize(_template.gameObject);
-        _usedColor = _cubic.CurrentColor;
         SortUnusedColors();
         SetToPosition(GetInstallationPosition());
     }
@@ -74,6 +71,7 @@ public class PortalGenerator : ObjectPool
 
     private void OnCubicEntered(Portal portal)
     {
+        _blockContainer.ChangeColor(portal.Color);
         SetToPosition(GetInstallationPosition());
         portal.CubicEntered -= OnCubicEntered;
         DisableObjectAbroadScreen();

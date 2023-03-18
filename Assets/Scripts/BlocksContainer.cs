@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private Cubic _cubic;
-    [SerializeField] private Material _collectedBlocksMaterial;
+    [SerializeField] private Material _stackMaterial;
 
     private readonly List<ColorBlock> _blocks = new();
 
@@ -14,12 +13,6 @@ public class BlocksContainer : MonoBehaviour
     {
         _blockStacker.ColorBlockAdded += OnColorBlockAdded;
         _cubic.Hit += OnHit;
-        _cubic.ColorChanged += OnColorChanged;
-    }
-
-    private void Start()
-    {
-        _collectedBlocksMaterial.color = _cubic.CurrentColor;
     }
 
     private void Update()
@@ -32,15 +25,11 @@ public class BlocksContainer : MonoBehaviour
     {
         _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
         _cubic.Hit -= OnHit;
-        _cubic.ColorChanged -= OnColorChanged;
     }
 
-    private void OnColorChanged(Color color)
+    public void ChangeColor(Color color)
     {
-        foreach (var block in _blocks)
-        {
-            block.ChangeColor(color);
-        }
+        _stackMaterial.color = color;
     }
 
     private void OnHit()
@@ -48,25 +37,26 @@ public class BlocksContainer : MonoBehaviour
         Collapse();
     }
 
-    private void OnColorBlockAdded(ColorBlock colorBlock)
+    public void OnColorBlockAdded(ColorBlock colorBlock)
     {
         _blocks.Add(colorBlock);
-        colorBlock.ChangeMaterial(_collectedBlocksMaterial);
-        colorBlock.EnableFollow(_blockStacker.transform);
-
-        for (int i = 0; i < _blocks.Count; i++)
-        {
-            _blocks[i].StackPosition = _blocks.Count - i;
-        }
+        colorBlock.PlaceInStack(_stackMaterial, _cubic, _blockStacker.Gap);
     }
 
     private void Collapse()
     {
         Vector3 fallDirection = Vector3.right;
-        Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
+        Vector3 trapPosition = Vector3.zero;
+
+        if(_cubic.CollisionTrap != null)
+        {
+            trapPosition = _cubic.CollisionTrap.transform.position;
+        }
 
         if (_cubic.IsSideCollision)
+        {
             fallDirection = trapPosition.z > _cubic.transform.position.z ? fallDirection + Vector3.forward : fallDirection + Vector3.back;
+        }
 
         for (int i = 0; i < _blocks.Count; i++)
         {
