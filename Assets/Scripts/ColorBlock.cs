@@ -49,15 +49,13 @@ public class ColorBlock : MonoBehaviour
                 _isGrounded = false;
                 _lastGroundPositionY = currentPosition.y;
             }
-            else if(_followed.transform.position.y < _followedGroundPositionY)
+            else if (_followed.transform.position.y < _followedGroundPositionY)
             {
                 currentPosition.y = _followed.transform.position.y + _followedDistanceY;
                 _isFallDawn = true;
-                //Debug.Log(currentPosition.y + "   " + (_followed.transform.position.y + _followedDistanceY) + "   dis: " + _followedDistanceY);
             }
             else if (currentPosition.y != _lastGroundPositionY && _isFallDawn == false)
             {
-                Debug.Log(deltaY);
                 _followedDistanceY = currentPosition.y - _followedGroundPositionY;
                 _stackPosition = (_followedDistanceY - _halfSizeDifference) / _sizeWithGap;
                 _lastGroundPositionY = currentPosition.y;

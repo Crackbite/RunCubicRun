@@ -187,16 +187,3 @@ public class CubicMovement : MonoBehaviour
         }
     }
 }
-	    }e.keys[_stopCurve.length - 1].time;
-
-        while (runningTime <= stopDuration)
-        {
-            _currentSpeed = _moveSpeed * _stopCu
-        while (runningTime <= stopDuration)
-        {
-            _currentSpeed = _moveSpeed * _stopCurve.Evaluate(runningTime);
-            runningTime += Time.deltaTime;
-            yield return null;
-        }
-    }
-}

@@ -64,13 +64,15 @@ public class Cubic : MonoBehaviour
         Hit?.Invoke();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.TryGetComponent<Wall>(out Wall wall))
+        if (collision.TryGetComponent(out Wall _))
         {
             Hit?.Invoke();
+            return;
         }
-        else if (_steppedOnStand || collision.TryGetComponent(out PressStand pressStand) == false)
+
+        if (_steppedOnStand || collision.TryGetComponent(out PressStand pressStand) == false)
         {
             return;
         }
@@ -78,9 +80,5 @@ public class Cubic : MonoBehaviour
         _steppedOnStand = true;
         SteppedOnStand?.Invoke(pressStand);
     }
-}
-.Invoke(pressStand);
-            Hit?.Invoke();
-        }
-    }
+
 }
