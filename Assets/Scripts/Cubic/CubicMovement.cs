@@ -3,7 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic))]
+[RequireComponent(typeof(Cubic), typeof(FreeSidewayChecker))]
 public class CubicMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
@@ -15,15 +15,17 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
     [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private AnimationCurve _stopCurve;
 
     private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
-
-    private Cubic _cubic;
-
+    private bool _isFall;
     private float _maxPositionZ;
     private float _minPositionZ;
+    private float _fallPositionY = -10;
+    private Cubic _cubic;
+    private FreeSidewayChecker _sidewayChacker;
 
     public event Action CubicLeftPress;
     public event Action CubicOnStand;
@@ -31,6 +33,7 @@ public class CubicMovement : MonoBehaviour
     private void Awake()
     {
         _cubic = GetComponent<Cubic>();
+        _sidewayChacker = GetComponent<FreeSidewayChecker>();
 
         Vector3 position = _cubic.transform.position;
         _minPositionZ = position.z - _shiftPerMove;
@@ -42,11 +45,14 @@ public class CubicMovement : MonoBehaviour
         _cubic.SteppedOnStand += CubicOnSteppedOnStand;
         _blockDestroyer.LeavePressAllowed += OnLeavePressAllowed;
         _pistonPresser.CubicReached += WholePistonOnCubicReached;
+        _cubic.Hit += OnHit;
     }
 
     private void Update()
     {
-        if (_canMove)
+        _isFall = _cubic.transform.position.y <= _fallPositionY;
+
+        if (_canMove && _isFall == false)
         {
             _cubic.transform.Translate(_moveSpeed * Time.deltaTime * Vector3.right);
         }
@@ -57,6 +63,7 @@ public class CubicMovement : MonoBehaviour
         _cubic.SteppedOnStand -= CubicOnSteppedOnStand;
         _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
         _pistonPresser.CubicReached -= WholePistonOnCubicReached;
+        _cubic.Hit -= OnHit;
     }
 
     public void MoveForward()
@@ -77,21 +84,45 @@ public class CubicMovement : MonoBehaviour
 
     public void MoveLeft()
     {
+        Vector3 direction = Vector3.forward;
         float positionZ = _cubic.transform.position.z;
 
         if (_canLineChange && positionZ < _maxPositionZ)
         {
-            StartCoroutine(MoveToPositionZ(positionZ + _shiftPerMove));
+            StartMoveToSide(positionZ, direction);
         }
     }
 
     public void MoveRight()
     {
+        Vector3 direction = Vector3.back;
         float positionZ = _cubic.transform.position.z;
 
         if (_canLineChange && positionZ > _minPositionZ)
         {
-            StartCoroutine(MoveToPositionZ(positionZ - _shiftPerMove));
+            StartMoveToSide(positionZ, direction);
+        }
+    }
+
+    private void StartMoveToSide(float positionZ, Vector3 direction)
+    {
+        float currentShift = _shiftPerMove;
+
+        currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
+        StartCoroutine(MoveToPositionZ(positionZ + currentShift * direction.z));
+    }
+
+    private void OnHit()
+    {
+        _canLineChange = false;
+
+        if (_cubic.IsSawing)
+        {
+            StartCoroutine(StopSlowly());
+        }
+        else
+        {
+            _canMove = false;
         }
     }
 
@@ -111,13 +142,6 @@ public class CubicMovement : MonoBehaviour
         _cubic.transform.DOMove(nextPosition, _stopAtPressStandSpeed).OnComplete(() => CubicOnStand?.Invoke());
     }
 
-    private IEnumerator MoveToPositionZ(float positionZ)
-    {
-        _canLineChange = false;
-        yield return _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).WaitForCompletion();
-        _canLineChange = _canMove;
-    }
-
     private void OnLeavePressAllowed()
     {
         _canLeavePress = true;
@@ -126,5 +150,53 @@ public class CubicMovement : MonoBehaviour
     private void WholePistonOnCubicReached()
     {
         _canLeavePress = false;
+    }
+
+    private IEnumerator MoveToPositionZ(float positionZ)
+    {
+        Collider[] colliders = Physics.OverlapSphere(_cubic.transform.position, _cubic.transform.localScale.y);
+
+        foreach (var collider in colliders)
+        {
+            if (collider.TryGetComponent<Road>(out Road ground))
+            {
+                break;
+            }
+
+            yield break;
+        }
+
+        _canLineChange = false;
+        yield return _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).WaitForCompletion();
+        _canLineChange = true;
+    }
+
+    private IEnumerator StopSlowly()
+    {
+        float runningTime = 0;
+        float stopDuration;
+        float currentSpeed;
+
+        stopDuration = _stopCurve.keys[_stopCurve.length - 1].time;
+
+        while (runningTime <= stopDuration)
+        {
+            currentSpeed = _moveSpeed * _stopCurve.Evaluate(runningTime);
+            runningTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+}
+	    }e.keys[_stopCurve.length - 1].time;
+
+        while (runningTime <= stopDuration)
+        {
+            _currentSpeed = _moveSpeed * _stopCu
+        while (runningTime <= stopDuration)
+        {
+            _currentSpeed = _moveSpeed * _stopCurve.Evaluate(runningTime);
+            runningTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
