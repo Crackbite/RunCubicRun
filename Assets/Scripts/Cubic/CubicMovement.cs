@@ -85,31 +85,41 @@ public class CubicMovement : MonoBehaviour
     public void MoveLeft()
     {
         Vector3 direction = Vector3.forward;
-        float positionZ = _cubic.transform.position.z;
-
-        if (_canLineChange && positionZ < _maxPositionZ)
-        {
-            StartMoveToSide(positionZ, direction);
-        }
+        MoveToSide(direction);
     }
 
     public void MoveRight()
     {
         Vector3 direction = Vector3.back;
-        float positionZ = _cubic.transform.position.z;
-
-        if (_canLineChange && positionZ > _minPositionZ)
-        {
-            StartMoveToSide(positionZ, direction);
-        }
+        MoveToSide(direction);
     }
 
-    private void StartMoveToSide(float positionZ, Vector3 direction)
+    public void MoveToSide(Vector3 direction)
     {
+        Collider[] colliders = Physics.OverlapSphere(_cubic.transform.position, _cubic.transform.localScale.y);
         float currentShift = _shiftPerMove;
+        float currentPositionZ = _cubic.transform.position.z;
+        float targetPositionZ;
+        bool canMoveLeft;
+        bool canMoveRight;
 
         currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
-        StartCoroutine(MoveToPositionZ(positionZ + currentShift * direction.z));
+        targetPositionZ = currentPositionZ + currentShift * direction.z;
+        canMoveLeft = direction.z > 0 && currentPositionZ < _maxPositionZ;
+        canMoveRight = direction.z < 0 && currentPositionZ > _minPositionZ;
+
+        if ((canMoveLeft || canMoveRight) && _canLineChange)
+        {
+            foreach (var collider in colliders)
+            {
+                if (collider.TryGetComponent(out Road _))
+                {
+                    _canLineChange = false;
+                    _cubic.transform.DOMoveZ(targetPositionZ, _changeLineSpeed).OnComplete(() => _canLineChange = _canMove);
+                    break;
+                }
+            }
+        }
     }
 
     private void OnHit()
@@ -150,25 +160,6 @@ public class CubicMovement : MonoBehaviour
     private void WholePistonOnCubicReached()
     {
         _canLeavePress = false;
-    }
-
-    private IEnumerator MoveToPositionZ(float positionZ)
-    {
-        Collider[] colliders = Physics.OverlapSphere(_cubic.transform.position, _cubic.transform.localScale.y);
-
-        foreach (var collider in colliders)
-        {
-            if (collider.TryGetComponent<Road>(out Road ground))
-            {
-                break;
-            }
-
-            yield break;
-        }
-
-        _canLineChange = false;
-        yield return _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).WaitForCompletion();
-        _canLineChange = true;
     }
 
     private IEnumerator StopSlowly()
