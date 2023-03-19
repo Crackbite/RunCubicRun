@@ -98,15 +98,13 @@ public class CubicMovement : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(_cubic.transform.position, _cubic.transform.localScale.y);
         float currentShift = _shiftPerMove;
-        float currentPositionZ = _cubic.transform.position.z;
-        float targetPositionZ;
+        float positionZ = _cubic.transform.position.z;
         bool canMoveLeft;
         bool canMoveRight;
 
         currentShift = _sidewayChacker.Check(_cubic.transform, currentShift, direction);
-        targetPositionZ = currentPositionZ + currentShift * direction.z;
-        canMoveLeft = direction.z > 0 && currentPositionZ < _maxPositionZ;
-        canMoveRight = direction.z < 0 && currentPositionZ > _minPositionZ;
+        canMoveLeft = direction.z > 0 && positionZ < _maxPositionZ;
+        canMoveRight = direction.z < 0 && positionZ > _minPositionZ;
 
         if ((canMoveLeft || canMoveRight) && _canLineChange)
         {
@@ -115,7 +113,8 @@ public class CubicMovement : MonoBehaviour
                 if (collider.TryGetComponent(out Road _))
                 {
                     _canLineChange = false;
-                    _cubic.transform.DOMoveZ(targetPositionZ, _changeLineSpeed).OnComplete(() => _canLineChange = _canMove);
+                    positionZ += currentShift * direction.z;
+                    _cubic.transform.DOMoveZ(positionZ, _changeLineSpeed).OnComplete(() => _canLineChange = _canMove);
                     break;
                 }
             }
