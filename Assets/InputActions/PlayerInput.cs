@@ -28,9 +28,18 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""b0bc01ae-27f7-40b3-8f4b-f7d8421db9dd"",
             ""actions"": [
                 {
-                    ""name"": ""KeyboardMove"",
+                    ""name"": ""KeyboardArrow"",
                     ""type"": ""Value"",
                     ""id"": ""0816c746-d3f8-4b91-9a56-2e4dea4b5070"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""KeyboardWASD"",
+                    ""type"": ""Value"",
+                    ""id"": ""1a1eb9c6-0826-4a45-8d39-7c4291c824f3"",
                     ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -72,7 +81,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""KeyboardMove"",
+                    ""action"": ""KeyboardArrow"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -83,7 +92,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
+                    ""action"": ""KeyboardArrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -94,7 +103,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
+                    ""action"": ""KeyboardArrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -105,51 +114,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""3D Vector"",
-                    ""id"": ""e7d23cb7-554c-4917-b242-31ed1c43e87b"",
-                    ""path"": ""3DVector(mode=1)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""KeyboardMove"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Up"",
-                    ""id"": ""4f1bb280-d335-413b-b6cf-4466ef16bc21"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Forward"",
-                    ""id"": ""d8fb782a-d466-4f6c-ada8-e06458ff23fb"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Backward"",
-                    ""id"": ""cfb10935-f440-46fc-b601-0c6f3b0503b3"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""KeyboardMove"",
+                    ""action"": ""KeyboardArrow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -196,6 +161,50 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""PressSpeedReduce"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""334472b9-c835-4489-ad6b-b5056043e404"",
+                    ""path"": ""3DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""KeyboardWASD"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""bbf5428a-7990-43c1-a2ea-6e9366573d4f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""KeyboardWASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Forward"",
+                    ""id"": ""1c6db332-3aac-4086-9ce9-742046a1f56c"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""KeyboardWASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Backward"",
+                    ""id"": ""b02f4b7c-0e1a-459c-9b58-771b6056d694"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""KeyboardWASD"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -238,7 +247,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
 }");
         // Cubic
         m_Cubic = asset.FindActionMap("Cubic", throwIfNotFound: true);
-        m_Cubic_KeyboardMove = m_Cubic.FindAction("KeyboardMove", throwIfNotFound: true);
+        m_Cubic_KeyboardArrow = m_Cubic.FindAction("KeyboardArrow", throwIfNotFound: true);
+        m_Cubic_KeyboardWASD = m_Cubic.FindAction("KeyboardWASD", throwIfNotFound: true);
         m_Cubic_PointerPosition = m_Cubic.FindAction("PointerPosition", throwIfNotFound: true);
         m_Cubic_PointerPress = m_Cubic.FindAction("PointerPress", throwIfNotFound: true);
         m_Cubic_PressSpeedReduce = m_Cubic.FindAction("PressSpeedReduce", throwIfNotFound: true);
@@ -301,7 +311,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Cubic
     private readonly InputActionMap m_Cubic;
     private ICubicActions m_CubicActionsCallbackInterface;
-    private readonly InputAction m_Cubic_KeyboardMove;
+    private readonly InputAction m_Cubic_KeyboardArrow;
+    private readonly InputAction m_Cubic_KeyboardWASD;
     private readonly InputAction m_Cubic_PointerPosition;
     private readonly InputAction m_Cubic_PointerPress;
     private readonly InputAction m_Cubic_PressSpeedReduce;
@@ -309,7 +320,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         private @PlayerInput m_Wrapper;
         public CubicActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @KeyboardMove => m_Wrapper.m_Cubic_KeyboardMove;
+        public InputAction @KeyboardArrow => m_Wrapper.m_Cubic_KeyboardArrow;
+        public InputAction @KeyboardWASD => m_Wrapper.m_Cubic_KeyboardWASD;
         public InputAction @PointerPosition => m_Wrapper.m_Cubic_PointerPosition;
         public InputAction @PointerPress => m_Wrapper.m_Cubic_PointerPress;
         public InputAction @PressSpeedReduce => m_Wrapper.m_Cubic_PressSpeedReduce;
@@ -322,9 +334,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_CubicActionsCallbackInterface != null)
             {
-                @KeyboardMove.started -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardMove;
-                @KeyboardMove.performed -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardMove;
-                @KeyboardMove.canceled -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardMove;
+                @KeyboardArrow.started -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardArrow;
+                @KeyboardArrow.performed -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardArrow;
+                @KeyboardArrow.canceled -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardArrow;
+                @KeyboardWASD.started -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardWASD;
+                @KeyboardWASD.performed -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardWASD;
+                @KeyboardWASD.canceled -= m_Wrapper.m_CubicActionsCallbackInterface.OnKeyboardWASD;
                 @PointerPosition.started -= m_Wrapper.m_CubicActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.performed -= m_Wrapper.m_CubicActionsCallbackInterface.OnPointerPosition;
                 @PointerPosition.canceled -= m_Wrapper.m_CubicActionsCallbackInterface.OnPointerPosition;
@@ -338,9 +353,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             m_Wrapper.m_CubicActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @KeyboardMove.started += instance.OnKeyboardMove;
-                @KeyboardMove.performed += instance.OnKeyboardMove;
-                @KeyboardMove.canceled += instance.OnKeyboardMove;
+                @KeyboardArrow.started += instance.OnKeyboardArrow;
+                @KeyboardArrow.performed += instance.OnKeyboardArrow;
+                @KeyboardArrow.canceled += instance.OnKeyboardArrow;
+                @KeyboardWASD.started += instance.OnKeyboardWASD;
+                @KeyboardWASD.performed += instance.OnKeyboardWASD;
+                @KeyboardWASD.canceled += instance.OnKeyboardWASD;
                 @PointerPosition.started += instance.OnPointerPosition;
                 @PointerPosition.performed += instance.OnPointerPosition;
                 @PointerPosition.canceled += instance.OnPointerPosition;
@@ -383,7 +401,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     }
     public interface ICubicActions
     {
-        void OnKeyboardMove(InputAction.CallbackContext context);
+        void OnKeyboardArrow(InputAction.CallbackContext context);
+        void OnKeyboardWASD(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
         void OnPointerPress(InputAction.CallbackContext context);
         void OnPressSpeedReduce(InputAction.CallbackContext context);

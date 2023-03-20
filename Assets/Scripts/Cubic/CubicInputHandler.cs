@@ -19,10 +19,11 @@ public class CubicInputHandler : MonoBehaviour
     {
         _input = new PlayerInput();
 
-        _input.Cubic.KeyboardMove.performed += OnKeyboardMoved;
+        _input.Cubic.KeyboardWASD.performed += OnKeyboardMoved;
+        _input.Cubic.KeyboardArrow.performed += OnKeyboardMoved;
         _input.Cubic.PressSpeedReduce.performed += OnSpeedReduced;
 
-        _input.Cubic.PointerPress.performed += _ => { _previousPointerPosition = CurrentPointerPosition; };
+        _input.Cubic.PointerPress.performed += _ => _previousPointerPosition = CurrentPointerPosition;
         _input.Cubic.PointerPress.canceled += OnPointerPressCanceled;
     }
 
