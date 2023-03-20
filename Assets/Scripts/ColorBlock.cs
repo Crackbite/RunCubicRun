@@ -24,9 +24,9 @@ public class ColorBlock : MonoBehaviour
     private float _runningTime;
     float _followedDistanceY;
 
-    public event Action<int> CrossbarHit;
-
     public bool IsFollow => _isFollow;
+
+    public event Action<int> CrossbarHit;
 
     private void Awake()
     {
@@ -91,6 +91,11 @@ public class ColorBlock : MonoBehaviour
                 currentPosition.x,
                 currentPosition.y,
                 Mathf.Lerp(currentPosition.z, _followed.transform.position.z, interpolationZ));
+    }
+
+    public void SetLineColor(Color color)
+    {
+        _meshRenderer.material.color = color;
     }
 
     public void PlaceInStack(Material stackMaterial, Cubic followed, float gap)
