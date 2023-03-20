@@ -55,7 +55,20 @@ public class BlocksContainer : MonoBehaviour
     private void OnColorBlockAdded(ColorBlock colorBlock)
     {
         _blocks.Add(colorBlock);
+        colorBlock.CrossbarHit += OnCrossbarHit;
         colorBlock.PlaceInStack(_stackMaterial, _cubic, _blockStacker.Gap);
+    }
+
+    private void OnCrossbarHit(int stackPosition)
+    {
+        float forceFactor = 0.1f;
+        int brokenBlocksCount = _blocks.Count - stackPosition;
+
+        for (int i = 1; i <= brokenBlocksCount; i++)
+        {
+            _blocks[0].FallOff(Vector3.left, forceFactor);
+            _blocks.Remove(_blocks[0]);
+        }
     }
 
     private void Collapse()

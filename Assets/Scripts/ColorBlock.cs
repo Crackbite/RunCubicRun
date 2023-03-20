@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer), typeof(Collider), typeof(Rigidbody))]
 public class ColorBlock : MonoBehaviour
@@ -22,6 +23,8 @@ public class ColorBlock : MonoBehaviour
     private float _lastGroundPositionY;
     private float _runningTime;
     float _followedDistanceY;
+
+    public event Action<int> CrossbarHit;
 
     public bool IsFollow => _isFollow;
 
@@ -69,12 +72,11 @@ public class ColorBlock : MonoBehaviour
     private void Follow(Vector3 currentPosition)
     {
         float interpolationZ = _followSpeed / _stackPosition * Time.deltaTime;
-        float jumpForce = 0f;
 
         if (_isGrounded == false)
         {
             _runningTime += Time.deltaTime;
-            jumpForce = _followed.JumpForce + _gapSizeFactor * Mathf.Pow(_stackPosition, 2);
+            float jumpForce = _followed.JumpForce + _gapSizeFactor * Mathf.Pow(_stackPosition, 2);
             currentPosition.y = _lastGroundPositionY + jumpForce * _runningTime - _followed.JumpAcceleration * Mathf.Pow(_runningTime, 2) / 2;
 
             if (currentPosition.y < _lastGroundPositionY)
@@ -103,12 +105,17 @@ public class ColorBlock : MonoBehaviour
     }
 
 
-    public void FallOff(Vector3 fallDirection)
+    public void FallOff(Vector3 fallDirection, float forceFactor = 1)
     {
+        float lifeTime = 5f;
+
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(fallDirection * _frictionCoefficient * _stackPosition);
+        _rigidbody.AddForce(fallDirection * forceFactor *_frictionCoefficient * _stackPosition);
         _collider.isTrigger = false;
+        _isFollow = false;
+        transform.parent = null;
         enabled = false;
+        Destroy(gameObject, lifeTime);
     }
 
     private void EnableFollow(Cubic followed)
@@ -122,5 +129,16 @@ public class ColorBlock : MonoBehaviour
     private void SetStackMaterial(Material stackMaterial)
     {
         _meshRenderer.material = stackMaterial;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.TryGetComponent(out Crossbar _) == false || _isFollow == false)
+        {
+            return;
+        }
+
+        collision.isTrigger = false;
+        CrossbarHit?.Invoke((int)Mathf.Round(_stackPosition));
     }
 }
