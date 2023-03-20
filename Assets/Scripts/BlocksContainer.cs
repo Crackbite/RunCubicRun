@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlocksContainer : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class BlocksContainer : MonoBehaviour
         {
             _blocks[0].FallOff(Vector3.left, forceFactor);
             _blocks.Remove(_blocks[0]);
+            _blocks[0].CrossbarHit -= OnCrossbarHit;
         }
     }
 
