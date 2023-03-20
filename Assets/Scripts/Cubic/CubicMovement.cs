@@ -3,7 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic), typeof(FreeSidewayChecker))]
+[RequireComponent(typeof(Cubic), typeof(CubicInputHandler), typeof(FreeSidewayChecker))]
 public class CubicMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
@@ -16,7 +16,7 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _leavePressDistance = 5f;
     [SerializeField] private BlocksContainer _blocksContainer;
     [SerializeField] private AnimationCurve _stopCurve;
-
+    
     private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
@@ -26,6 +26,7 @@ public class CubicMovement : MonoBehaviour
     private float _fallPositionY = -10;
     private Cubic _cubic;
     private FreeSidewayChecker _sidewayChacker;
+    private CubicInputHandler _cubicInputHandler;
 
     public event Action CubicLeftPress;
     public event Action CubicOnStand;
@@ -33,6 +34,7 @@ public class CubicMovement : MonoBehaviour
     private void Awake()
     {
         _cubic = GetComponent<Cubic>();
+        _cubicInputHandler = GetComponent<CubicInputHandler>();
         _sidewayChacker = GetComponent<FreeSidewayChecker>();
 
         Vector3 position = _cubic.transform.position;
@@ -46,6 +48,9 @@ public class CubicMovement : MonoBehaviour
         _blockDestroyer.LeavePressAllowed += OnLeavePressAllowed;
         _pistonPresser.CubicReached += WholePistonOnCubicReached;
         _cubic.Hit += OnHit;
+
+        _cubicInputHandler.LineChanged += OnLineChanged;
+        _cubicInputHandler.PressEscaped += OnPressEscaped;
     }
 
     private void Update()
@@ -64,6 +69,9 @@ public class CubicMovement : MonoBehaviour
         _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
         _pistonPresser.CubicReached -= WholePistonOnCubicReached;
         _cubic.Hit -= OnHit;
+
+        _cubicInputHandler.LineChanged -= OnLineChanged;
+        _cubicInputHandler.PressEscaped -= OnPressEscaped;
     }
 
     public void MoveForward()
@@ -159,6 +167,16 @@ public class CubicMovement : MonoBehaviour
     private void WholePistonOnCubicReached()
     {
         _canLeavePress = false;
+    }
+
+    private void OnLineChanged(Vector3 direction)
+    {
+        MoveToSide(direction);
+    }
+
+    private void OnPressEscaped()
+    {
+        MoveForward();
     }
 
     private IEnumerator StopSlowly()

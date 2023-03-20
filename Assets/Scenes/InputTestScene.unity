@@ -1526,13 +1526,12 @@ GameObject:
   - component: {fileID: 296935711}
   - component: {fileID: 296935703}
   - component: {fileID: 296935710}
-  - component: {fileID: 296935709}
-  - component: {fileID: 296935708}
   - component: {fileID: 296935713}
   - component: {fileID: 296935712}
   - component: {fileID: 296935715}
   - component: {fileID: 296935714}
   - component: {fileID: 296935717}
+  - component: {fileID: 296935718}
   m_Layer: 2
   m_Name: Cubic
   m_TagString: Untagged
@@ -1639,33 +1638,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &296935708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17707557cefe1243b0d05cb7bee2cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minForwardDistance: 30
-  _pressSpeedReducer: {fileID: 951312453}
---- !u!114 &296935709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61cefb044eafd8c4e91c2516deae5737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pressSpeedReducer: {fileID: 951312453}
 --- !u!114 &296935710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,6 +1776,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ignoreLayerMask: 7
+--- !u!114 &296935718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296935702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c087fada0460b94b949f3fa9a046185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minForwardDistance: 30
 --- !u!1001 &298545682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3826,6 +3811,7 @@ MonoBehaviour:
   _clickTimeThreshold: 0.1
   _minSpeed: 0.1
   _cubicMovement: {fileID: 296935710}
+  _cubicInputHandler: {fileID: 296935718}
 --- !u!114 &951312454
 MonoBehaviour:
   m_ObjectHideFlags: 0
