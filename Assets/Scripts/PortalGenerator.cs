@@ -9,22 +9,36 @@ public class PortalGenerator : ObjectPool
     [SerializeField] private BlocksContainer _blockContainer;
     [SerializeField] private float _skipDistance;
 
-    private Color _usedColor;
     private List<Color> _unusedColors;
+    private Color _usedColor;
 
     private void Start()
     {
-        Initialize(_template.gameObject);
+        Initialize(_template);
         SortUnusedColors();
         SetToPosition(GetInstallationPosition());
     }
 
+    private Vector3 GetInstallationPosition()
+    {
+        Vector3 position = _template.transform.position;
+        return new Vector3(_cubic.transform.position.x + _skipDistance, position.y, position.z);
+    }
+
+    private void OnCubicEntered(Portal portal)
+    {
+        _blockContainer.ChangeColor(portal.Color);
+        SetToPosition(GetInstallationPosition());
+        portal.CubicEntered -= OnCubicEntered;
+        DisableObjectAbroadScreen();
+    }
+
     private Color SetNextColor()
     {
-        float minValue = -1f;
-        float maxValue = _unusedColors.Count - 1;
+        const float MinValue = -1f;
 
-        float random = Random.Range(minValue, maxValue);
+        float maxValue = _unusedColors.Count - 1;
+        float random = Random.Range(MinValue, maxValue);
 
         for (int i = 0; i < _unusedColors.Count; i++)
         {
@@ -39,41 +53,29 @@ public class PortalGenerator : ObjectPool
         return _usedColor;
     }
 
+    private void SetToPosition(Vector3 installationPosition)
+    {
+        if (TryGetObject(out GameObject item) == false || item.TryGetComponent(out Portal portal) == false)
+        {
+            return;
+        }
+
+        item.SetActive(true);
+        portal.transform.position = installationPosition;
+        portal.SetColor(SetNextColor());
+        portal.CubicEntered += OnCubicEntered;
+    }
+
     private void SortUnusedColors()
     {
         _unusedColors = new List<Color>();
 
-        foreach (var color in _colorHolder.Colors)
+        foreach (Color color in _colorHolder.Colors)
         {
             if (color != _usedColor)
-                _unusedColors.Add(color);
-        }
-    }
-
-    private void SetToPosition(Vector3 installationPosition)
-    {
-        if (TryGetObject(out GameObject item))
-        {
-            if (item.TryGetComponent<Portal>(out Portal portal))
             {
-                item.SetActive(true);
-                portal.transform.position = installationPosition;
-                portal.SetColor(SetNextColor());
-                portal.CubicEntered += OnCubicEntered;
+                _unusedColors.Add(color);
             }
         }
-    }
-
-    private Vector3 GetInstallationPosition()
-    {
-        return new Vector3(_cubic.transform.position.x + _skipDistance, _template.transform.position.y, _template.transform.position.z);
-    }
-
-    private void OnCubicEntered(Portal portal)
-    {
-        _blockContainer.ChangeColor(portal.Color);
-        SetToPosition(GetInstallationPosition());
-        portal.CubicEntered -= OnCubicEntered;
-        DisableObjectAbroadScreen();
     }
 }

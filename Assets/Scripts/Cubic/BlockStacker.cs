@@ -8,10 +8,10 @@ public class BlockStacker : MonoBehaviour
 
     private float _stackYPosition;
 
-    public float Gap => _gap;
-
     public event Action<ColorBlock> ColorBlockAdded;
     public event Action WrongBlockTaken;
+
+    public float Gap => _gap;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -27,7 +27,6 @@ public class BlockStacker : MonoBehaviour
             return;
         }
 
-
         Transform containerTransform = _blocksContainer.transform;
         Vector3 containerPosition = containerTransform.position;
         Transform blockTransform = colorBlock.transform;
@@ -36,7 +35,7 @@ public class BlockStacker : MonoBehaviour
 
         if (_stackYPosition == 0)
         {
-            _stackYPosition = colorBlock.transform.localScale.y / 2 + transform.localScale.y / 2 + _gap;
+            _stackYPosition = (colorBlock.transform.localScale.y / 2f) + (transform.localScale.y / 2f) + _gap;
         }
 
         containerTransform.position = new Vector3(

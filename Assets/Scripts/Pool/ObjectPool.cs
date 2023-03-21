@@ -1,15 +1,33 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject _container;
     [SerializeField] private int _capacity;
 
+    protected List<GameObject> _pool = new();
+
     private Camera _camera;
 
-    protected List<GameObject> _pool = new List<GameObject>();
+    protected void DisableObjectAbroadScreen()
+    {
+        Vector3 disableLeftPoint = _camera.ViewportToWorldPoint(new Vector3(0, 0.5f, _camera.nearClipPlane));
+
+        foreach (GameObject item in _pool)
+        {
+            if (item.activeSelf == false)
+            {
+                continue;
+            }
+
+            if (item.transform.position.x < disableLeftPoint.x)
+            {
+                item.SetActive(false);
+            }
+        }
+    }
 
     protected void Initialize(GameObject prefab)
     {
@@ -27,22 +45,5 @@ public class ObjectPool : MonoBehaviour
     {
         result = _pool.FirstOrDefault(p => p.activeSelf == false);
         return result != null;
-    }
-
-    protected void DisableObjectAbroadScreen()
-    {
-        Vector3 disableLeftPoint = _camera.ViewportToWorldPoint(new Vector3(0, 0.5f, _camera.nearClipPlane));
-        Vector3 disableRightPoint = _camera.ViewportToWorldPoint(new Vector3(1, 0.5f, _camera.nearClipPlane));
-
-        foreach (var item in _pool)
-        {
-            if (item.activeSelf == true)
-            {
-                if (item.transform.position.x < disableLeftPoint.x)
-                {
-                    item.SetActive(false);
-                }
-            }
-        }
     }
 }

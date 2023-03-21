@@ -3,34 +3,39 @@ using UnityEngine;
 public class Saw : Trap
 {
     [SerializeField] private bool _isVertical;
-    [SerializeField] private VerticalSplitter _verticalSplitter;
-    [SerializeField] private HorizontalSplitter _horizontalSplitter;
 
     public bool IsVertical => _isVertical;
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider collision)
     {
-        if (other.TryGetComponent<Cubic>(out Cubic cubic))
+        if (collision.TryGetComponent(out Cubic cubic) == false)
         {
-            if (cubic.CanDestroy)
-            {
-                Break();
-            }
-            else
-            {
-                IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) >= transform.localScale.z / 2;
+            return;
+        }
 
-                if (IsVertical && IsSideCollision == true)
-                    Stop();
+        if (cubic.CanDestroy)
+        {
+            Break();
+        }
+        else
+        {
+            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
+                              >= transform.localScale.z / 2f;
 
-                cubic.HitTrap(this, IsSideCollision);
+            if (IsVertical && IsSideCollision)
+            {
+                Stop();
             }
+
+            cubic.HitTrap(this, IsSideCollision);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collision)
     {
-        if (other.TryGetComponent<Cubic>(out Cubic cubic) && cubic.IsSawing)
+        if (collision.TryGetComponent(out Cubic cubic) && cubic.IsSawing)
+        {
             cubic.SplitIntoPieces(IsVertical);
+        }
     }
 }

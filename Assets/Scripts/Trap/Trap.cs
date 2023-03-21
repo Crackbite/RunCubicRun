@@ -1,16 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-
 public class Trap : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _splitBody;
 
-    private Rigidbody[] _pieces;
-    private Collider[] _colliders;
-
     protected bool IsSideCollision;
+
+    private Collider[] _colliders;
+    private Rigidbody[] _pieces;
 
     private void Start()
     {
@@ -18,18 +17,38 @@ public class Trap : MonoBehaviour
         _colliders = GetComponentsInChildren<Collider>();
     }
 
+    protected virtual void OnTriggerEnter(Collider collision)
+    {
+        if (collision.TryGetComponent(out Cubic cubic) == false)
+        {
+            return;
+        }
+
+        if (cubic.CanDestroy)
+        {
+            Break();
+        }
+        else
+        {
+            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
+                              >= transform.localScale.z / 2f;
+            Stop();
+            cubic.HitTrap(this, IsSideCollision);
+        }
+    }
+
     public void Break()
     {
-        float pieceLifeTime = 10;
+        const float PieceLifeTime = 10f;
 
         Stop();
         gameObject.SetActive(false);
         _splitBody.SetActive(true);
 
-        foreach (var piece in _pieces)
+        foreach (Rigidbody piece in _pieces)
         {
             piece.isKinematic = false;
-            Destroy(piece.gameObject, pieceLifeTime);
+            Destroy(piece.gameObject, PieceLifeTime);
         }
     }
 
@@ -37,24 +56,9 @@ public class Trap : MonoBehaviour
     {
         _animator.enabled = false;
 
-        foreach (var collider in _colliders)
-            collider.isTrigger = false;
-    }
-
-    protected virtual void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Cubic>(out Cubic cubic))
+        foreach (Collider currentCollider in _colliders)
         {
-            if (cubic.CanDestroy)
-            {
-                Break();
-            }
-            else
-            {
-                IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) >= transform.localScale.z / 2;
-                Stop();
-                cubic.HitTrap(this, IsSideCollision);
-            }
+            currentCollider.isTrigger = false;
         }
     }
 }

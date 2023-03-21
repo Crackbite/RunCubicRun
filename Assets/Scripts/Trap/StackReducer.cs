@@ -19,11 +19,12 @@ public class StackReducer : MonoBehaviour
 
     public void SetSize(float height, bool isLong, bool isLeft)
     {
-        Vector3 headPosition = _head.position;
         Vector3 size = _pillar.localScale;
         _pillar.localScale = new Vector3(size.x, height, size.z);
+
+        Vector3 headPosition = _head.position;
         headPosition.y = _pillar.GetComponent<MeshRenderer>().bounds.size.y + transform.position.y;
-        _head.position = headPosition;       
+        _head.position = headPosition;
 
         if (isLong)
         {

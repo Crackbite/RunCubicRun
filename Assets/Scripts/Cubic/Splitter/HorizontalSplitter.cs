@@ -21,14 +21,15 @@ public class HorizontalSplitter : Splitter
     private IEnumerator Slide(Transform upperPart, Transform bottomPart)
     {
         float currentDistanceX = 0;
-        Vector3 nextPosition;
 
         while (currentDistanceX <= _slideDistance)
         {
-            nextPosition = bottomPart.transform.position;
-            nextPosition.x = bottomPart.transform.position.x - _slideDistance;
+            Vector3 nextPosition = bottomPart.position;
+            nextPosition.x -= _slideDistance;
+
             upperPart.position = Vector3.Lerp(upperPart.position, nextPosition, _slideSpeed * Time.deltaTime);
-            currentDistanceX = bottomPart.transform.position.x - upperPart.position.x;
+            currentDistanceX = bottomPart.position.x - upperPart.position.x;
+
             yield return null;
         }
     }

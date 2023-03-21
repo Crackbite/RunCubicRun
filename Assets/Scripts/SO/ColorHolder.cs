@@ -7,15 +7,15 @@ public class ColorHolder : ScriptableObject
 {
     [SerializeField] private Color[] _colors;
 
-    private int _colorCount = 3;
+    public IReadOnlyList<Color> Colors => _colors;
 
     private void OnValidate()
     {
-        if (_colors.Length != _colorCount)
+        const int ColorCount = 3;
+
+        if (_colors.Length != ColorCount)
         {
-            Array.Resize(ref _colors, _colorCount);
+            Array.Resize(ref _colors, ColorCount);
         }
     }
-
-    public IReadOnlyList<Color> Colors => _colors;
 }

@@ -6,21 +6,23 @@ public class Portal : MonoBehaviour
     [SerializeField] private ParticleSystem _effect;
     [SerializeField] private float _alphaValue;
 
+    public event UnityAction<Portal> CubicEntered;
+
     public Color Color { get; private set; }
 
-    public event UnityAction<Portal> CubicEntered;
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.TryGetComponent(out Cubic _))
+        {
+            CubicEntered?.Invoke(this);
+        }
+    }
 
     public void SetColor(Color color)
     {
         Color = color;
-        var main = _effect.main;
+        ParticleSystem.MainModule main = _effect.main;
         color.a = _alphaValue;
         main.startColor = color;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<Cubic>(out Cubic cubic))
-            CubicEntered?.Invoke(this);
     }
 }

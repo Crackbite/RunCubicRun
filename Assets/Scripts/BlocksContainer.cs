@@ -8,11 +8,11 @@ public class BlocksContainer : MonoBehaviour
     [SerializeField] private Cubic _cubic;
 
     private readonly List<ColorBlock> _blocks = new();
-    private Color _currentColor;
-    public Color CurrentColor => _currentColor;
-    public int BlocksCount => _blocks.Count;
 
     public event Action BlockRemoved;
+
+    public int BlocksCount => _blocks.Count;
+    public Color CurrentColor { get; private set; }
 
     private void OnEnable()
     {
@@ -32,6 +32,16 @@ public class BlocksContainer : MonoBehaviour
         _cubic.Hit -= OnHit;
     }
 
+    public void ChangeColor(Color color)
+    {
+        CurrentColor = color;
+
+        foreach (ColorBlock block in _blocks)
+        {
+            block.SetColor(color);
+        }
+    }
+
     public void DestroyBlock(ColorBlock colorBlock)
     {
         Destroy(colorBlock.gameObject);
@@ -40,45 +50,7 @@ public class BlocksContainer : MonoBehaviour
         BlockRemoved?.Invoke();
     }
 
-    public void ChangeColor(Color color)
-    {
-        _currentColor = color;
-
-        foreach (ColorBlock block in _blocks)
-        {
-            block.SetColor(color);
-        }
-    }
-
     public ColorBlock GetBlockByIndex(int index) => _blocks[index];
-
-    private void OnHit()
-    {
-        Collapse();
-    }
-
-    private void OnColorBlockAdded(ColorBlock colorBlock)
-    {
-        if (_currentColor != colorBlock.CurrentColor)
-            _currentColor = colorBlock.CurrentColor;
-
-        _blocks.Add(colorBlock);
-        colorBlock.CrossbarHit += OnCrossbarHit;
-        colorBlock.PlaceInStack(_cubic, _blockStacker.Gap);
-    }
-
-    private void OnCrossbarHit(int stackPosition)
-    {
-        float forceFactor = 0.1f;
-        int brokenBlocksCount = _blocks.Count - stackPosition;
-
-        for (int i = 1; i <= brokenBlocksCount; i++)
-        {
-            _blocks[0].FallOff(Vector3.left, forceFactor);
-            _blocks.Remove(_blocks[0]);
-            _blocks[0].CrossbarHit -= OnCrossbarHit;
-        }
-    }
 
     private void Collapse()
     {
@@ -92,12 +64,46 @@ public class BlocksContainer : MonoBehaviour
 
         if (_cubic.IsSideCollision)
         {
-            fallDirection = trapPosition.z > _cubic.transform.position.z ? fallDirection + Vector3.forward : fallDirection + Vector3.back;
+            fallDirection = trapPosition.z > _cubic.transform.position.z
+                                ? fallDirection + Vector3.forward
+                                : fallDirection + Vector3.back;
         }
 
-        for (int i = 0; i < _blocks.Count; i++)
+        foreach (ColorBlock block in _blocks)
         {
-            _blocks[i].FallOff(fallDirection);
+            block.FallOff(fallDirection);
         }
+    }
+
+    private void OnColorBlockAdded(ColorBlock colorBlock)
+    {
+        if (CurrentColor != colorBlock.CurrentColor)
+        {
+            CurrentColor = colorBlock.CurrentColor;
+        }
+
+        _blocks.Add(colorBlock);
+
+        colorBlock.CrossbarHit += OnCrossbarHit;
+        colorBlock.PlaceInStack(_cubic, _blockStacker.Gap);
+    }
+
+    private void OnCrossbarHit(int stackPosition)
+    {
+        const float ForceFactor = 0.1f;
+
+        int brokenBlocksCount = _blocks.Count - stackPosition;
+
+        for (int i = 1; i <= brokenBlocksCount; i++)
+        {
+            _blocks[0].FallOff(Vector3.left, ForceFactor);
+            _blocks.Remove(_blocks[0]);
+            _blocks[0].CrossbarHit -= OnCrossbarHit;
+        }
+    }
+
+    private void OnHit()
+    {
+        Collapse();
     }
 }

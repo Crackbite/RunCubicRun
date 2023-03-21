@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LineShuffler : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _lines;
     [SerializeField] private ColorHolder _colorHolder;
 
-    private List<Color> _colors = new List<Color>(); 
+    private readonly List<Color> _colors = new();
 
     private void Start()
     {
@@ -20,15 +22,12 @@ public class LineShuffler : MonoBehaviour
 
     public void Shuffle()
     {
-        float minValue = 0f;
         float maxValue = _colorHolder.Colors.Count - 1;
 
         for (int i = _colors.Count - 1; i > 0; i--)
         {
-            int randomIndex = (int)Random.Range(minValue, maxValue);
-            Color temporaryColor = _colors[i];
-            _colors[i] = _colors[randomIndex];
-            _colors[randomIndex] = temporaryColor;
+            int randomIndex = Convert.ToInt32(Mathf.Round(Random.Range(0, maxValue)));
+            (_colors[i], _colors[randomIndex]) = (_colors[randomIndex], _colors[i]);
         }
 
         AssignColorsToLines();
@@ -40,11 +39,10 @@ public class LineShuffler : MonoBehaviour
         {
             ColorBlock[] blocks = _lines[i].GetComponentsInChildren<ColorBlock>();
 
-            foreach (ColorBlock block in blocks) 
+            foreach (ColorBlock block in blocks)
             {
                 block.SetColor(_colors[i]);
             }
         }
     }
-
 }
