@@ -11,6 +11,7 @@ public class BlockStacker : MonoBehaviour
     public float Gap => _gap;
 
     public event Action<ColorBlock> ColorBlockAdded;
+    public event Action WrongBlockTaken;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -18,6 +19,14 @@ public class BlockStacker : MonoBehaviour
         {
             return;
         }
+
+        if (_blocksContainer.BlocksCount > 0 && _blocksContainer.CurrentColor != colorBlock.CurrentColor)
+        {
+            Destroy(colorBlock.gameObject);
+            WrongBlockTaken?.Invoke();
+            return;
+        }
+
 
         Transform containerTransform = _blocksContainer.transform;
         Vector3 containerPosition = containerTransform.position;
