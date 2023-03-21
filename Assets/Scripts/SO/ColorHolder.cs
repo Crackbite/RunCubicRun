@@ -11,7 +11,7 @@ public class ColorHolder : ScriptableObject
 
     private void OnValidate()
     {
-        if (_colors.Length !< _colorCount)
+        if (_colors.Length != _colorCount)
         {
             Array.Resize(ref _colors, _colorCount);
         }
