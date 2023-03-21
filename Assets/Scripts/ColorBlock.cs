@@ -25,6 +25,7 @@ public class ColorBlock : MonoBehaviour
     float _followedDistanceY;
 
     public bool IsFollow => _isFollow;
+    public Color CurrentColor => _meshRenderer.material.color;
 
     public event Action<int> CrossbarHit;
 
@@ -93,19 +94,18 @@ public class ColorBlock : MonoBehaviour
                 Mathf.Lerp(currentPosition.z, _followed.transform.position.z, interpolationZ));
     }
 
-    public void SetLineColor(Color color)
+    public void SetColor(Color color)
     {
         _meshRenderer.material.color = color;
     }
 
-    public void PlaceInStack(Material stackMaterial, Cubic followed, float gap)
+    public void PlaceInStack(Cubic followed, float gap)
     {
         _halfSizeDifference = (followed.transform.localScale.y - transform.localScale.y) / 2;
         _sizeWithGap = transform.localScale.y + gap;
         _lastGroundPositionY = transform.position.y;
         _followedDistanceY = _lastGroundPositionY - _followedGroundPositionY;
         _stackPosition = (_followedDistanceY - _halfSizeDifference) / _sizeWithGap;
-        SetStackMaterial(stackMaterial);
         EnableFollow(followed);
     }
 
@@ -129,11 +129,6 @@ public class ColorBlock : MonoBehaviour
         _isFollow = true;
         _followedLastPositionY = _followed.transform.position.y;
         _followedGroundPositionY = followed.transform.position.y;
-    }
-
-    private void SetStackMaterial(Material stackMaterial)
-    {
-        _meshRenderer.material = stackMaterial;
     }
 
     private void OnTriggerEnter(Collider collision)

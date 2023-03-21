@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private Cubic _cubic;
-    [SerializeField] private Material _stackMaterial;
 
     private readonly List<ColorBlock> _blocks = new();
 
-    public event Action BlockRemoved;
-
+    public Color CurrentColor => _blocks[_blocks.Count - 1].CurrentColor;
     public int BlocksCount => _blocks.Count;
+
+    public event Action BlockRemoved;
 
     private void OnEnable()
     {
@@ -43,7 +42,10 @@ public class BlocksContainer : MonoBehaviour
 
     public void ChangeColor(Color color)
     {
-        _stackMaterial.color = color;
+        foreach (ColorBlock block in _blocks)
+        {
+            block.SetColor(color);
+        }
     }
 
     public ColorBlock GetBlockByIndex(int index) => _blocks[index];
@@ -57,7 +59,7 @@ public class BlocksContainer : MonoBehaviour
     {
         _blocks.Add(colorBlock);
         colorBlock.CrossbarHit += OnCrossbarHit;
-        colorBlock.PlaceInStack(_stackMaterial, _cubic, _blockStacker.Gap);
+        colorBlock.PlaceInStack(_cubic, _blockStacker.Gap);
     }
 
     private void OnCrossbarHit(int stackPosition)
