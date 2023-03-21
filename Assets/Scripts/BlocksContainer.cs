@@ -8,8 +8,8 @@ public class BlocksContainer : MonoBehaviour
     [SerializeField] private Cubic _cubic;
 
     private readonly List<ColorBlock> _blocks = new();
-
-    public Color CurrentColor => _blocks[_blocks.Count - 1].CurrentColor;
+    private Color _currentColor;
+    public Color CurrentColor => _currentColor;
     public int BlocksCount => _blocks.Count;
 
     public event Action BlockRemoved;
@@ -42,6 +42,8 @@ public class BlocksContainer : MonoBehaviour
 
     public void ChangeColor(Color color)
     {
+        _currentColor = color;
+
         foreach (ColorBlock block in _blocks)
         {
             block.SetColor(color);
@@ -57,6 +59,9 @@ public class BlocksContainer : MonoBehaviour
 
     private void OnColorBlockAdded(ColorBlock colorBlock)
     {
+        if (_currentColor != colorBlock.CurrentColor)
+            _currentColor = colorBlock.CurrentColor;
+
         _blocks.Add(colorBlock);
         colorBlock.CrossbarHit += OnCrossbarHit;
         colorBlock.PlaceInStack(_cubic, _blockStacker.Gap);

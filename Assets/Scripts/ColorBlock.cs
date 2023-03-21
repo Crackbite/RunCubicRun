@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer), typeof(Collider), typeof(Rigidbody))]
@@ -7,6 +8,8 @@ public class ColorBlock : MonoBehaviour
     [SerializeField] private float _followSpeed = 350f;
     [SerializeField] private float _frictionCoefficient = 10f;
     [SerializeField] private float _gapSizeFactor = 0.001f;
+    [SerializeField] private float _gradient = 0f;
+    [SerializeField] private float _coloringSpeedFactor = 0.02f;
 
     private bool _isFollow;
     private bool _isGrounded = true;
@@ -96,7 +99,7 @@ public class ColorBlock : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        _meshRenderer.material.color = color;
+        _meshRenderer.material.DOColor(color, _gradient).SetDelay(_coloringSpeedFactor * _stackPosition);
     }
 
     public void PlaceInStack(Cubic followed, float gap)

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ColorHolder", menuName = "LevelData/ColorHolder", order = 51)]
 public class ColorHolder : ScriptableObject
 {
-    [SerializeField] Color[] _colors;
+    [SerializeField] private Color[] _colors;
 
     private int _colorCount = 3;
 
