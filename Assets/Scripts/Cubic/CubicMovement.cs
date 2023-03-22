@@ -3,10 +3,10 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic), typeof(CubicInputHandler), typeof(FreeSidewayChecker))]
+[RequireComponent(typeof(Cubic), typeof(CubicInputHandler))]
+[RequireComponent(typeof(CubicSpeedController), typeof(FreeSidewayChecker))]
 public class CubicMovement : MonoBehaviour
 {
-    [SerializeField] private SpeedController _speedController;
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private BlockDestroyer _blockDestroyer;
@@ -18,12 +18,12 @@ public class CubicMovement : MonoBehaviour
     private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
-    private bool _isFall;
     private float _maxPositionZ;
     private float _minPositionZ;
 
     private Cubic _cubic;
     private CubicInputHandler _cubicInputHandler;
+    private CubicSpeedController _cubicSpeedController;
     private FreeSidewayChecker _sidewaysChecker;
 
     public event Action CubicLeftPress;
@@ -34,6 +34,7 @@ public class CubicMovement : MonoBehaviour
         _cubic = GetComponent<Cubic>();
         _cubicInputHandler = GetComponent<CubicInputHandler>();
         _sidewaysChecker = GetComponent<FreeSidewayChecker>();
+        _cubicSpeedController = GetComponent<CubicSpeedController>();
 
         Vector3 position = _cubic.transform.position;
         _minPositionZ = position.z - _shiftPerMove;
@@ -54,11 +55,11 @@ public class CubicMovement : MonoBehaviour
 
     private void Update()
     {
-        _isFall = _cubic.transform.position.y <= _fallPositionY;
+        bool isFalling = _cubic.transform.position.y <= _fallPositionY;
 
-        if (_canMove && _isFall == false)
+        if (_canMove && isFalling == false)
         {
-            _cubic.transform.Translate(_speedController.CurrentSpeed * Time.deltaTime * Vector3.right);
+            _cubic.transform.Translate(_cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right);
         }
     }
 
@@ -74,7 +75,7 @@ public class CubicMovement : MonoBehaviour
         _cubicInputHandler.PressEscaped -= OnPressEscaped;
     }
 
-    public void MoveForward()
+    public void EscapeFromPress()
     {
         if (_canLeavePress == false)
         {
@@ -112,7 +113,7 @@ public class CubicMovement : MonoBehaviour
             _canLineChange = false;
             cubicPosition.z += currentShift * direction.z;
 
-            _cubic.transform.DOMoveZ(cubicPosition.z, _speedController.ChangeLineSpeed)
+            _cubic.transform.DOMoveZ(cubicPosition.z, _cubicSpeedController.ChangeLineSpeed)
                 .OnComplete(() => _canLineChange = _canMove);
         }
     }
@@ -130,7 +131,7 @@ public class CubicMovement : MonoBehaviour
         Vector3 standCenter = pressStand.Bounds.center;
         var nextPosition = new Vector3(standCenter.x, _cubic.transform.position.y, standCenter.z);
 
-        _cubic.transform.DOMove(nextPosition, _speedController.StopAtPressStandSpeed)
+        _cubic.transform.DOMove(nextPosition, _cubicSpeedController.StopAtPressStandSpeed)
             .OnComplete(() => CubicOnStand?.Invoke());
     }
 
@@ -140,7 +141,7 @@ public class CubicMovement : MonoBehaviour
 
         if (_cubic.IsSawing)
         {
-            _speedController.SlowDown();
+            _cubicSpeedController.SlowDown();
         }
         else
         {
@@ -160,7 +161,7 @@ public class CubicMovement : MonoBehaviour
 
     private void OnPressEscaped()
     {
-        MoveForward();
+        EscapeFromPress();
     }
 
     private void WholePistonOnCubicReached()

@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpeedController : MonoBehaviour
+[RequireComponent(typeof(Cubic))]
+public class CubicSpeedController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _changeLineSpeed = .1f;
@@ -9,8 +10,9 @@ public class SpeedController : MonoBehaviour
     [SerializeField] private float _slowdownFactor = .25f;
     [SerializeField] private float _acceleration = 3f;
     [SerializeField] private BlockStacker _blockStacker;
-    [SerializeField] private Cubic _cubic;
     [SerializeField] private AnimationCurve _stopCurve;
+
+    private Cubic _cubic;
 
     private float _initialSpeed;
     private bool _isMaxSpeed;
@@ -28,6 +30,8 @@ public class SpeedController : MonoBehaviour
 
     private void Start()
     {
+        _cubic = GetComponent<Cubic>();
+
         CurrentSpeed = _moveSpeed;
         _isMaxSpeed = true;
     }
