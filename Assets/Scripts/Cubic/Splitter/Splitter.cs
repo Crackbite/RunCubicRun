@@ -7,3 +7,9 @@ public abstract class Splitter : MonoBehaviour
 
     public abstract void Split();
 }
+
+public enum SplitType
+{
+    Vertical,
+    Horizontal
+}

@@ -9,15 +9,15 @@ public class StackReducer : MonoBehaviour
     [SerializeField] private float _height;
     [SerializeField] private float _rightPositionZ;
     [SerializeField] private float _leftPositionZ;
-    [SerializeField] private bool _isLong;
-    [SerializeField] private bool _isLeft;
+    [SerializeField] private WidthType _width;
+    [SerializeField] private SideType _side;
 
     private void Start()
     {
-        SetSize(_height, _isLong, _isLeft);
+        SetSize(_height, _width, _side);
     }
 
-    public void SetSize(float height, bool isLong, bool isLeft)
+    public void SetSize(float height, WidthType width, SideType side)
     {
         Vector3 size = _pillar.localScale;
         _pillar.localScale = new Vector3(size.x, height, size.z);
@@ -26,7 +26,7 @@ public class StackReducer : MonoBehaviour
         headPosition.y = _pillar.GetComponent<MeshRenderer>().bounds.size.y + transform.position.y;
         _head.position = headPosition;
 
-        if (isLong)
+        if (width == WidthType.Long)
         {
             _longCrossbar.SetActive(true);
         }
@@ -37,7 +37,7 @@ public class StackReducer : MonoBehaviour
 
         Vector3 position = transform.position;
 
-        if (isLeft)
+        if (side == SideType.Left)
         {
             position.z = _leftPositionZ;
             _head.rotation = Quaternion.Euler(0, 180, 0);
@@ -49,4 +49,16 @@ public class StackReducer : MonoBehaviour
 
         transform.position = position;
     }
+}
+
+public enum WidthType
+{
+    Short,
+    Long
+}
+
+public enum SideType
+{
+    Left,
+    Right
 }

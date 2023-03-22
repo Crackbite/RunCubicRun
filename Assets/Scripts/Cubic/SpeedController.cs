@@ -9,6 +9,7 @@ public class SpeedController : MonoBehaviour
     [SerializeField] private float _slowdownFactor = .25f;
     [SerializeField] private float _acceleration = 3f;
     [SerializeField] private BlockStacker _blockStacker;
+    [SerializeField] private Cubic _cubic;
     [SerializeField] private AnimationCurve _stopCurve;
 
     private float _initialSpeed;
@@ -45,11 +46,11 @@ public class SpeedController : MonoBehaviour
         _blockStacker.WrongBlockTaken -= OnWrongBlockTaken;
     }
 
-    public void SlowDown(bool isSlowStop)
+    public void SlowDown()
     {
         const float StartTime = 0f;
 
-        if (isSlowStop)
+        if (_cubic.IsSawing)
         {
             _isStop = true;
             StartCoroutine(StopSlowly());
@@ -83,7 +84,7 @@ public class SpeedController : MonoBehaviour
 
     private void OnWrongBlockTaken()
     {
-        SlowDown(false);
+        SlowDown();
     }
 
     private IEnumerator StopSlowly()

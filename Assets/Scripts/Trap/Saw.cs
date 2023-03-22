@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Saw : Trap
 {
-    [SerializeField] private bool _isVertical;
+    [SerializeField] private SplitType _splitType;
 
-    public bool IsVertical => _isVertical;
+    public SplitType SplitType => _splitType;
 
     protected override void OnTriggerEnter(Collider collision)
     {
@@ -22,7 +22,7 @@ public class Saw : Trap
             IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
                               >= transform.localScale.z / 2f;
 
-            if (IsVertical && IsSideCollision)
+            if (_splitType == SplitType.Vertical && IsSideCollision)
             {
                 Stop();
             }
@@ -35,7 +35,7 @@ public class Saw : Trap
     {
         if (collision.TryGetComponent(out Cubic cubic) && cubic.IsSawing)
         {
-            cubic.SplitIntoPieces(IsVertical);
+            cubic.SplitIntoPieces(_splitType);
         }
     }
 }

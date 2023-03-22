@@ -140,7 +140,7 @@ public class CubicMovement : MonoBehaviour
 
         if (_cubic.IsSawing)
         {
-            _speedController.SlowDown(true);
+            _speedController.SlowDown();
         }
         else
         {

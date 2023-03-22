@@ -56,7 +56,7 @@ public class Cubic : MonoBehaviour
 
         if (trap.TryGetComponent(out Saw saw))
         {
-            if (saw.IsVertical == false || (saw.IsVertical && IsSideCollision == false))
+            if (saw.SplitType == SplitType.Horizontal || (saw.SplitType == SplitType.Vertical && IsSideCollision == false))
             {
                 IsSawing = true;
             }
@@ -65,13 +65,13 @@ public class Cubic : MonoBehaviour
         Hit?.Invoke();
     }
 
-    public void SplitIntoPieces(bool isVerticalSplit)
+    public void SplitIntoPieces(SplitType splitType)
     {
-        if (isVerticalSplit)
+        if (splitType == SplitType.Vertical)
         {
             _verticalSplitter.Split();
         }
-        else
+        else if (splitType == SplitType.Horizontal)
         {
             _horizontalSplitter.Split();
         }
