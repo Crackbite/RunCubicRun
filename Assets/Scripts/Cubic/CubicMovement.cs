@@ -93,16 +93,16 @@ public class CubicMovement : MonoBehaviour
 
     public void MoveToSide(Vector3 direction)
     {
+        const int maxAmount = 5;
         Transform cubicTransform = _cubic.transform;
         Vector3 cubicPosition = cubicTransform.position;
-        int maxAmount = 1;
 
         bool canMoveLeft = direction.z > 0 && cubicPosition.z < _maxPositionZ;
         bool canMoveRight = direction.z < 0 && cubicPosition.z > _minPositionZ;
 
         Vector3 area = new Vector3(0, cubicTransform.localScale.y, 0);
         Collider[] colliders = new Collider[maxAmount];
-        int amount = Physics.OverlapBoxNonAlloc(
+        Physics.OverlapBoxNonAlloc(
             cubicPosition,
             area,
             colliders,
@@ -112,12 +112,9 @@ public class CubicMovement : MonoBehaviour
         {
             float currentShift = _sidewaysChecker.Check(cubicTransform, _shiftPerMove, direction);
 
-            for (int i = 0; i < amount; i++)
+            if (colliders.Any(collider => collider != null && collider.TryGetComponent(out Road _)) == false)
             {
-                if (colliders.Any(currentCollider => currentCollider.TryGetComponent(out Road _)) == false)
-                {
-                    return;
-                }
+                return;
             }
 
             _canLineChange = false;

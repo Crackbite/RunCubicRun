@@ -9,8 +9,8 @@ public class FreeSidewayChecker : MonoBehaviour
 
     public float Check(Transform movingObject, float maxSideDistance, Vector3 direction)
     {
+        const int maxAmount = 5;
         float distance = maxSideDistance;
-        int maxAmount = 1;
 
         distance += transform.localScale.z / 2f;
         Vector3 area = new Vector3(distance, 0, distance);
