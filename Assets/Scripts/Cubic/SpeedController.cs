@@ -6,8 +6,8 @@ public class SpeedController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _changeLineSpeed = .1f;
     [SerializeField] private float _stopAtPressStandSpeed = 1f;
-    [SerializeField] private float _slowdownFactor = .2f;
-    [SerializeField] private float _acceleration = .1f;
+    [SerializeField] private float _slowdownFactor = .25f;
+    [SerializeField] private float _acceleration = 3f;
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private AnimationCurve _stopCurve;
 
