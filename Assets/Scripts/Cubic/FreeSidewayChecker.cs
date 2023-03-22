@@ -10,30 +10,32 @@ public class FreeSidewayChecker : MonoBehaviour
     public float Check(Transform movingObject, float maxSideDistance, Vector3 direction)
     {
         float distance = maxSideDistance;
+        int maxAmount = 1;
 
         distance += transform.localScale.z / 2f;
-        var area = new Vector3(distance, 0, distance);
-
-        Collider[] allColliders = Physics.OverlapBox(
+        Vector3 area = new Vector3(distance, 0, distance);
+        Collider[] colliders = new Collider[maxAmount];
+        int amount = Physics.OverlapBoxNonAlloc(
             movingObject.position,
             area,
+            colliders,
             Quaternion.identity,
             _ignoreLayerMask);
 
-        foreach (Collider currentCollider in allColliders)
+        for (int i = 0; i < amount; i++)
         {
             if (direction.z > 0)
             {
-                if (currentCollider.transform.position.z > movingObject.position.z)
+                if (colliders[i].transform.position.z > movingObject.position.z)
                 {
-                    _trapColliders.Add(currentCollider);
+                    _trapColliders.Add(colliders[i]);
                 }
             }
             else if (direction.z < 0)
             {
-                if (currentCollider.transform.position.z < movingObject.position.z)
+                if (colliders[i].transform.position.z < movingObject.position.z)
                 {
-                    _trapColliders.Add(currentCollider);
+                    _trapColliders.Add(colliders[i]);
                 }
             }
         }
