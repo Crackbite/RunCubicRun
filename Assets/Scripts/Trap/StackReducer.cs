@@ -12,6 +12,18 @@ public class StackReducer : MonoBehaviour
     [SerializeField] private WidthType _width;
     [SerializeField] private SideType _side;
 
+    public enum SideType
+    {
+        Left,
+        Right
+    }
+
+    public enum WidthType
+    {
+        Short,
+        Long
+    }
+
     private void Start()
     {
         SetSize(_height, _width, _side);
@@ -30,7 +42,7 @@ public class StackReducer : MonoBehaviour
         {
             _longCrossbar.SetActive(true);
         }
-        else
+        else if (width == WidthType.Short)
         {
             _shortCrossbar.SetActive(true);
         }
@@ -49,16 +61,4 @@ public class StackReducer : MonoBehaviour
 
         transform.position = position;
     }
-}
-
-public enum WidthType
-{
-    Short,
-    Long
-}
-
-public enum SideType
-{
-    Left,
-    Right
 }
