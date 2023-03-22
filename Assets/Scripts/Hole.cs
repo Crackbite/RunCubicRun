@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (other.TryGetComponent(out Cubic cubic) == false)
+        if (collision.TryGetComponent(out Cubic cubic) == false)
         {
             return;
         }
 
-        if (cubic.TryGetComponent(out Rigidbody rigidbody))
+        if (cubic.TryGetComponent(out Rigidbody collisionRigidbody))
         {
-            rigidbody.isKinematic = false;
+            collisionRigidbody.isKinematic = false;
         }
     }
 }
