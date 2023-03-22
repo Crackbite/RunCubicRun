@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 6268986}
   - component: {fileID: 6268985}
   - component: {fileID: 6268984}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &6268986
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -267,7 +269,7 @@ GameObject:
   - component: {fileID: 16163602}
   - component: {fileID: 16163601}
   - component: {fileID: 16163600}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,6 +322,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &16163602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -562,7 +566,7 @@ GameObject:
   - component: {fileID: 83957265}
   - component: {fileID: 83957264}
   - component: {fileID: 83957263}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,6 +619,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &83957265
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -774,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1713765129755502564, guid: 33dce4681fe2d8e49a72be9b9aa4c1df, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2054579187355188574, guid: 33dce4681fe2d8e49a72be9b9aa4c1df, type: 3}
       propertyPath: m_RootOrder
@@ -782,11 +788,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054579187355188574, guid: 33dce4681fe2d8e49a72be9b9aa4c1df, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2054579187355188574, guid: 33dce4681fe2d8e49a72be9b9aa4c1df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.55
+      value: -0.63
       objectReference: {fileID: 0}
     - target: {fileID: 2054579187355188574, guid: 33dce4681fe2d8e49a72be9b9aa4c1df, type: 3}
       propertyPath: m_LocalPosition.z
@@ -919,7 +925,7 @@ GameObject:
   - component: {fileID: 258977919}
   - component: {fileID: 258977922}
   - component: {fileID: 258977918}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1035,6 +1041,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &296935702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,10 +1063,9 @@ GameObject:
   - component: {fileID: 296935714}
   - component: {fileID: 296935717}
   - component: {fileID: 296935720}
-  - component: {fileID: 296935719}
-  - component: {fileID: 296935718}
   - component: {fileID: 296935721}
-  m_Layer: 2
+  - component: {fileID: 296935722}
+  m_Layer: 0
   m_Name: Cubic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1153,7 +1160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296935702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -80.1, y: 0, z: 0}
+  m_LocalPosition: {x: -73.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1176,7 +1183,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -1256,34 +1263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811c1c2022535664ebbefdc89094052e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ignoreLayerMask: 7
---- !u!114 &296935718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61cefb044eafd8c4e91c2516deae5737, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pressSpeedReducer: {fileID: 2119106957}
---- !u!114 &296935719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17707557cefe1243b0d05cb7bee2cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minForwardDistance: 30
-  _pressSpeedReducer: {fileID: 2119106957}
+  _ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &296935720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,15 +1278,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246972d6642077945a6a9478e9479ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _changeLineSpeed: 0.1
   _shiftPerMove: 1.3
-  _stopAtPressStandSpeed: 1
   _pistonPresser: {fileID: 2119106960}
   _blockDestroyer: {fileID: 2119106959}
   _leavePressTime: 0.8
   _leavePressDistance: 5
   _blocksContainer: {fileID: 1761122229}
+  _fallPositionY: -0.5
+--- !u!114 &296935721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296935702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c087fada0460b94b949f3fa9a046185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minForwardDistance: 30
+--- !u!114 &296935722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296935702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e2c778e28a05c46b7acb25fcfd2c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 7
+  _changeLineSpeed: 0.1
+  _stopAtPressStandSpeed: 1
+  _slowdownFactor: 0.25
+  _acceleration: 3
+  _blockStacker: {fileID: 296935713}
   _stopCurve:
     serializedVersion: 2
     m_Curve:
@@ -1329,19 +1340,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &296935721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c087fada0460b94b949f3fa9a046185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _minForwardDistance: 30
 --- !u!1 &324024305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1354,7 @@ GameObject:
   - component: {fileID: 324024309}
   - component: {fileID: 324024308}
   - component: {fileID: 324024307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1409,6 +1407,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &324024309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1479,17 +1479,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1366141820434856462, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
+      propertyPath: _splitType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5125245338740694020, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5125245338740694020, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 22.57
       objectReference: {fileID: 0}
     - target: {fileID: 5125245338740694020, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.18
       objectReference: {fileID: 0}
     - target: {fileID: 5125245338740694020, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1529,7 +1533,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5125245338740694023, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6969932148283819947, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
+      propertyPath: _splitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7180373130116451220, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
+      propertyPath: _splitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7455175758453328760, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277815469755741979, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
+      propertyPath: _splitType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aba5527fd2c496a498d5b5aa0b9825a1, type: 3}
@@ -1547,7 +1567,7 @@ GameObject:
   - component: {fileID: 358436675}
   - component: {fileID: 358436678}
   - component: {fileID: 358436674}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1663,6 +1683,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &405519835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1782,7 @@ GameObject:
   - component: {fileID: 420376321}
   - component: {fileID: 420376320}
   - component: {fileID: 420376319}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1813,6 +1835,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &420376321
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1939,7 +1963,7 @@ GameObject:
   - component: {fileID: 500320312}
   - component: {fileID: 500320311}
   - component: {fileID: 500320310}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (47)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1992,6 +2016,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &500320312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2069,7 +2095,7 @@ GameObject:
   - component: {fileID: 555547258}
   - component: {fileID: 555547257}
   - component: {fileID: 555547256}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2122,6 +2148,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &555547258
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2199,7 +2227,7 @@ GameObject:
   - component: {fileID: 562043979}
   - component: {fileID: 562043978}
   - component: {fileID: 562043977}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2252,6 +2280,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &562043979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2526,7 +2556,7 @@ GameObject:
   - component: {fileID: 621784675}
   - component: {fileID: 621784678}
   - component: {fileID: 621784674}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2642,6 +2672,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &623093305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,7 +2688,7 @@ GameObject:
   - component: {fileID: 623093309}
   - component: {fileID: 623093308}
   - component: {fileID: 623093307}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2709,6 +2741,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &623093309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2786,7 +2820,7 @@ GameObject:
   - component: {fileID: 675996126}
   - component: {fileID: 675996129}
   - component: {fileID: 675996125}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2902,6 +2936,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &688084871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,7 +2952,7 @@ GameObject:
   - component: {fileID: 688084875}
   - component: {fileID: 688084874}
   - component: {fileID: 688084873}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2969,6 +3005,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &688084875
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3129,7 +3167,7 @@ GameObject:
   - component: {fileID: 731719626}
   - component: {fileID: 731719625}
   - component: {fileID: 731719624}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3182,6 +3220,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &731719626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3310,7 +3350,7 @@ GameObject:
   - component: {fileID: 750569127}
   - component: {fileID: 750569126}
   - component: {fileID: 750569125}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3325,7 +3365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750569123}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.0080841705, y: -0.010051132, z: 0}
+  m_LocalPosition: {x: -0.00913, y: -0.010051132, z: 0}
   m_LocalScale: {x: 0.00025549298, y: 0.000085227235, z: 0.0042955326}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3363,6 +3403,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &750569127
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3621,7 +3663,7 @@ GameObject:
   - component: {fileID: 857715663}
   - component: {fileID: 857715662}
   - component: {fileID: 857715661}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (42)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3674,6 +3716,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &857715663
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3751,7 +3795,7 @@ GameObject:
   - component: {fileID: 881061666}
   - component: {fileID: 881061665}
   - component: {fileID: 881061664}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (48)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3804,6 +3848,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &881061666
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3881,7 +3927,7 @@ GameObject:
   - component: {fileID: 930333031}
   - component: {fileID: 930333030}
   - component: {fileID: 930333029}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (53)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3934,6 +3980,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &930333031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4094,7 +4142,7 @@ GameObject:
   - component: {fileID: 938272260}
   - component: {fileID: 938272259}
   - component: {fileID: 938272258}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4147,6 +4195,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &938272260
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4273,7 +4323,7 @@ GameObject:
   - component: {fileID: 941699624}
   - component: {fileID: 941699627}
   - component: {fileID: 941699623}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4389,6 +4439,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &962618107
 GameObject:
   m_ObjectHideFlags: 0
@@ -4403,7 +4455,7 @@ GameObject:
   - component: {fileID: 962618111}
   - component: {fileID: 962618110}
   - component: {fileID: 962618109}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (40)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4456,6 +4508,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &962618111
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4533,7 +4587,7 @@ GameObject:
   - component: {fileID: 977241583}
   - component: {fileID: 977241582}
   - component: {fileID: 977241581}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (52)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4586,6 +4640,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &977241583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4746,7 +4802,7 @@ GameObject:
   - component: {fileID: 999648717}
   - component: {fileID: 999648720}
   - component: {fileID: 999648716}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4862,6 +4918,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1045863805
 GameObject:
   m_ObjectHideFlags: 0
@@ -5104,7 +5162,7 @@ GameObject:
   - component: {fileID: 1080502704}
   - component: {fileID: 1080502703}
   - component: {fileID: 1080502702}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5157,6 +5215,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1080502704
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5234,7 +5294,7 @@ GameObject:
   - component: {fileID: 1108805573}
   - component: {fileID: 1108805572}
   - component: {fileID: 1108805571}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5287,6 +5347,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1108805573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5364,7 +5426,7 @@ GameObject:
   - component: {fileID: 1133763656}
   - component: {fileID: 1133763655}
   - component: {fileID: 1133763654}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5417,6 +5479,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1133763656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5494,7 +5558,7 @@ GameObject:
   - component: {fileID: 1189642195}
   - component: {fileID: 1189642194}
   - component: {fileID: 1189642193}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5547,6 +5611,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1189642195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5675,7 +5741,7 @@ GameObject:
   - component: {fileID: 1283648256}
   - component: {fileID: 1283648259}
   - component: {fileID: 1283648255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (49)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5791,6 +5857,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1304414585
 GameObject:
   m_ObjectHideFlags: 0
@@ -5805,7 +5873,7 @@ GameObject:
   - component: {fileID: 1304414589}
   - component: {fileID: 1304414588}
   - component: {fileID: 1304414587}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5858,6 +5926,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1304414589
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5935,7 +6005,7 @@ GameObject:
   - component: {fileID: 1312411885}
   - component: {fileID: 1312411884}
   - component: {fileID: 1312411883}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5988,6 +6058,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1312411885
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6065,7 +6137,7 @@ GameObject:
   - component: {fileID: 1336958442}
   - component: {fileID: 1336958441}
   - component: {fileID: 1336958440}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6118,6 +6190,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1336958442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6181,6 +6255,64 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336958438}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1347704011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347704014}
+  - component: {fileID: 1347704013}
+  - component: {fileID: 1347704012}
+  m_Layer: 0
+  m_Name: Abyss
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1347704012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347704011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a39aa2d1fef2d4181169444ad662e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1347704013
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347704011}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6268578, y: 1, z: 4.6350107}
+  m_Center: {x: 0.05083847, y: 0, z: 0.03812945}
+--- !u!4 &1347704014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347704011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.36, y: -0.58, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348447811
 GameObject:
   m_ObjectHideFlags: 0
@@ -6289,7 +6421,7 @@ GameObject:
   - component: {fileID: 1364381360}
   - component: {fileID: 1364381359}
   - component: {fileID: 1364381358}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (55)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6342,6 +6474,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1364381360
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6419,7 +6553,7 @@ GameObject:
   - component: {fileID: 1380657731}
   - component: {fileID: 1380657730}
   - component: {fileID: 1380657729}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (63)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6472,6 +6606,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1380657731
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6549,7 +6685,7 @@ GameObject:
   - component: {fileID: 1423412683}
   - component: {fileID: 1423412682}
   - component: {fileID: 1423412681}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (57)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6602,6 +6738,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1423412683
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6679,7 +6817,7 @@ GameObject:
   - component: {fileID: 1440327802}
   - component: {fileID: 1440327801}
   - component: {fileID: 1440327800}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6732,6 +6870,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1440327802
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6809,7 +6949,7 @@ GameObject:
   - component: {fileID: 1449870665}
   - component: {fileID: 1449870664}
   - component: {fileID: 1449870663}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (60)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6862,6 +7002,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1449870665
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7023,7 +7165,7 @@ GameObject:
   - component: {fileID: 1481866134}
   - component: {fileID: 1481866133}
   - component: {fileID: 1481866132}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7076,6 +7218,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1481866134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7153,7 +7297,7 @@ GameObject:
   - component: {fileID: 1486535545}
   - component: {fileID: 1486535544}
   - component: {fileID: 1486535543}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7206,6 +7350,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1486535545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7283,7 +7429,7 @@ GameObject:
   - component: {fileID: 1495427169}
   - component: {fileID: 1495427172}
   - component: {fileID: 1495427168}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (45)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7399,6 +7545,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1521796899
 GameObject:
   m_ObjectHideFlags: 0
@@ -7413,7 +7561,7 @@ GameObject:
   - component: {fileID: 1521796902}
   - component: {fileID: 1521796905}
   - component: {fileID: 1521796901}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7529,6 +7677,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1524092213
 GameObject:
   m_ObjectHideFlags: 0
@@ -7543,7 +7693,7 @@ GameObject:
   - component: {fileID: 1524092216}
   - component: {fileID: 1524092219}
   - component: {fileID: 1524092215}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7659,6 +7809,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1533115492
 GameObject:
   m_ObjectHideFlags: 0
@@ -7768,7 +7920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1535411897}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Line2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7824,7 +7976,7 @@ GameObject:
   - component: {fileID: 1576699753}
   - component: {fileID: 1576699752}
   - component: {fileID: 1576699751}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (59)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7877,6 +8029,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1576699753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7954,7 +8108,7 @@ GameObject:
   - component: {fileID: 1577280529}
   - component: {fileID: 1577280528}
   - component: {fileID: 1577280527}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8007,6 +8161,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1577280529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8133,7 +8289,7 @@ GameObject:
   - component: {fileID: 1591346339}
   - component: {fileID: 1591346338}
   - component: {fileID: 1591346337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (58)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8186,6 +8342,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1591346339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8263,7 +8421,7 @@ GameObject:
   - component: {fileID: 1604507369}
   - component: {fileID: 1604507368}
   - component: {fileID: 1604507367}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (54)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8316,6 +8474,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1604507369
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8393,7 +8553,7 @@ GameObject:
   - component: {fileID: 1610067067}
   - component: {fileID: 1610067070}
   - component: {fileID: 1610067066}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8509,6 +8669,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1612428854
 GameObject:
   m_ObjectHideFlags: 0
@@ -8523,7 +8685,7 @@ GameObject:
   - component: {fileID: 1612428857}
   - component: {fileID: 1612428860}
   - component: {fileID: 1612428856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8639,6 +8801,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1635535870
 GameObject:
   m_ObjectHideFlags: 0
@@ -8653,7 +8817,7 @@ GameObject:
   - component: {fileID: 1635535874}
   - component: {fileID: 1635535873}
   - component: {fileID: 1635535872}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (62)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8706,6 +8870,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1635535874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8778,7 +8944,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666762554}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Line3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8973,7 +9139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692656026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.89, y: 0, z: 0}
+  m_LocalPosition: {x: -17, y: 0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9005,11 +9171,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 138635036779946803, guid: e9f56e527209a32489507c40493eb74c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.68
+      value: 6.7
       objectReference: {fileID: 0}
     - target: {fileID: 138635036779946803, guid: e9f56e527209a32489507c40493eb74c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.762
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 138635036779946803, guid: e9f56e527209a32489507c40493eb74c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9049,7 +9215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 767678435505043849, guid: e9f56e527209a32489507c40493eb74c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2182534444551901767, guid: e9f56e527209a32489507c40493eb74c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9127,7 +9293,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _blockStacker: {fileID: 296935713}
   _cubic: {fileID: 296935703}
-  _stackMaterial: {fileID: 2100000, guid: c46e3eca3a050db48b00fe938be0cdf1, type: 2}
 --- !u!1 &1786945316
 GameObject:
   m_ObjectHideFlags: 0
@@ -9329,7 +9494,7 @@ GameObject:
   - component: {fileID: 1798661709}
   - component: {fileID: 1798661712}
   - component: {fileID: 1798661708}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9445,6 +9610,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &1809821808
 GameObject:
   m_ObjectHideFlags: 0
@@ -9459,7 +9626,7 @@ GameObject:
   - component: {fileID: 1809821812}
   - component: {fileID: 1809821811}
   - component: {fileID: 1809821810}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9512,6 +9679,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1809821812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9584,7 +9753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1848845238}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Line1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9724,7 +9893,7 @@ GameObject:
   - component: {fileID: 1932469530}
   - component: {fileID: 1932469529}
   - component: {fileID: 1932469528}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (61)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9777,6 +9946,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1932469530
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9937,7 +10108,7 @@ GameObject:
   - component: {fileID: 1974440558}
   - component: {fileID: 1974440557}
   - component: {fileID: 1974440556}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9990,6 +10161,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1974440558
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10067,7 +10240,7 @@ GameObject:
   - component: {fileID: 1976798160}
   - component: {fileID: 1976798159}
   - component: {fileID: 1976798158}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10120,6 +10293,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &1976798160
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10197,7 +10372,7 @@ GameObject:
   - component: {fileID: 1988247683}
   - component: {fileID: 1988247686}
   - component: {fileID: 1988247682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (46)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10313,6 +10488,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!1 &2009891838
 GameObject:
   m_ObjectHideFlags: 0
@@ -10438,7 +10615,7 @@ GameObject:
   - component: {fileID: 2019883948}
   - component: {fileID: 2019883947}
   - component: {fileID: 2019883946}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10491,6 +10668,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &2019883948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10568,7 +10747,7 @@ GameObject:
   - component: {fileID: 2027606726}
   - component: {fileID: 2027606725}
   - component: {fileID: 2027606724}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10583,7 +10762,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027606722}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.0080841705, y: -0.010051132, z: 0.0051546395}
+  m_LocalPosition: {x: -0.00951, y: -0.010051132, z: 0.0051546395}
   m_LocalScale: {x: 0.00025549298, y: 0.000085227235, z: 0.0042955326}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10621,6 +10800,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &2027606726
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10782,7 +10963,7 @@ GameObject:
   - component: {fileID: 2045250828}
   - component: {fileID: 2045250826}
   - component: {fileID: 2045250827}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (50)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10804,6 +10985,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!54 &2045250827
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10898,50 +11081,6 @@ Transform:
   m_Father: {fileID: 1666762554}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2055194749
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2055194751}
-  - component: {fileID: 2055194750}
-  m_Layer: 0
-  m_Name: LevelGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2055194750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055194749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5e7c34043943146a6fd6d08540c8d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2055194751
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055194749}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.182293, y: -6.4630237, z: 18.316566}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2060451498
 GameObject:
   m_ObjectHideFlags: 0
@@ -10956,7 +11095,7 @@ GameObject:
   - component: {fileID: 2060451502}
   - component: {fileID: 2060451501}
   - component: {fileID: 2060451500}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11009,6 +11148,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &2060451502
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11086,7 +11227,7 @@ GameObject:
   - component: {fileID: 2103385010}
   - component: {fileID: 2103385009}
   - component: {fileID: 2103385008}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Block (51)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11139,6 +11280,8 @@ MonoBehaviour:
   _followSpeed: 350
   _frictionCoefficient: 10
   _gapSizeFactor: 0.001
+  _gradient: 0
+  _coloringSpeedFactor: 0.02
 --- !u!65 &2103385010
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11546,7 +11689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220715341777295939, guid: f1b06bdbbdfc7f64ba66e2f73b7a045b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.7
+      value: -21.44
       objectReference: {fileID: 0}
     - target: {fileID: 1220715341777295939, guid: f1b06bdbbdfc7f64ba66e2f73b7a045b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11644,10 +11787,6 @@ PrefabInstance:
     - target: {fileID: 6679499169471867206, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
       propertyPath: m_Name
       value: StaticSaw
-      objectReference: {fileID: 0}
-    - target: {fileID: 6679499169471867206, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96fca3babb4a6c44e8327782cd498309, type: 3}
