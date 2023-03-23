@@ -26,6 +26,12 @@ public class FollowController : MonoBehaviour
     public bool CheckGround()
     {
         _deltaY = _followed.position.y - _followedGroundPositionY;
+
+        if(_deltaY < 0 )
+        {
+            IsFallDawn = true;
+        }
+
         return _deltaY == 0;
     }
 
