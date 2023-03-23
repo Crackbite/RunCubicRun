@@ -109,7 +109,7 @@ public class CubicMovement : MonoBehaviour
         {
             float currentShift = _sidewaysChecker.Check(cubicTransform, _shiftPerMove, direction);
 
-            if (colliders.Any(currentCollider => currentCollider.TryGetComponent(out Road _)) == false)
+            if (colliders.Any(currentCollider => currentCollider != null && currentCollider.TryGetComponent(out Road _)) == false)
             {
                 return;
             }
