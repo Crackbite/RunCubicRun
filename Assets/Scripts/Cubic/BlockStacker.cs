@@ -5,22 +5,21 @@ public class BlockStacker : MonoBehaviour
 {
     [SerializeField] private float _gap = .02f;
     [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private StackRenderer _stackRenderer;
 
     private float _stackYPosition;
 
     public event Action<ColorBlock> ColorBlockAdded;
     public event Action WrongBlockTaken;
 
-    public float Gap => _gap;
-
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.IsFollow)
+        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.CanFollow)
         {
             return;
         }
 
-        if (_blocksContainer.BlocksCount > 0 && _blocksContainer.CurrentColor != colorBlock.CurrentColor)
+        if (_blocksContainer.BlocksCount > 0 && _stackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
             WrongBlockTaken?.Invoke();

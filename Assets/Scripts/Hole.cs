@@ -9,9 +9,9 @@ public class Hole : MonoBehaviour
             return;
         }
 
-        if (cubic.TryGetComponent(out Rigidbody collisionRigidbody))
+        if (cubic.TryGetComponent(out Rigidbody cubicRigidbody))
         {
-            collisionRigidbody.isKinematic = false;
+            cubicRigidbody.isKinematic = false;
         }
     }
 }

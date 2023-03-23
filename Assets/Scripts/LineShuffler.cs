@@ -37,9 +37,9 @@ public class LineShuffler : MonoBehaviour
     {
         for (int i = 0; i < _lines.Count; i++)
         {
-            ColorBlock[] blocks = _lines[i].GetComponentsInChildren<ColorBlock>();
+            ColorBlockRenderer[] blocks = _lines[i].GetComponentsInChildren<ColorBlockRenderer>();
 
-            foreach (ColorBlock block in blocks)
+            foreach (ColorBlockRenderer block in blocks)
             {
                 block.SetColor(_colors[i]);
             }
