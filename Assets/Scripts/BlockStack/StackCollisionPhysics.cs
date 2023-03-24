@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StackCollisionHandler : MonoBehaviour
+public class StackCollisionPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStacker _blockStacker;

@@ -22,10 +22,10 @@ public class ColorBlock : MonoBehaviour
         _blockMovement = GetComponent<ColorBlockMovement>();
     }
 
-    public void Init(BlocksContainer blockContainer, FollowController followController)
+    public void Init(BlocksContainer blockContainer, BlockMovementCoordinator followController)
     {
         _blockContainer = blockContainer;
-        _stackPosition = _blockContainer.GetStackPosition(this);
+        SetStackPosition();
         _blockMovement.StartFollowing(followController);
         CanFollow = true;
     }

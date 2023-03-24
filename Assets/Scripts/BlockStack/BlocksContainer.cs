@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
-    [SerializeField] private FollowController _followController;
+    [SerializeField] private BlockMovementCoordinator _followController;
 
     private readonly List<ColorBlock> _blocks = new();
 
