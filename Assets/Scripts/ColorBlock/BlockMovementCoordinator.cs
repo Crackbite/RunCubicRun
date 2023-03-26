@@ -18,16 +18,11 @@ public class BlockMovementCoordinator : MonoBehaviour
         _anchorGroundPositionY = _anchor.position.y;
     }
 
-    private void Update()
-    {
-        IsFallDawn = _anchor.position.y < _anchorGroundPositionY;
-    }
-
     public bool IsAnchorGrounded()
     {
         _deltaY = _anchor.position.y - _anchorGroundPositionY;
 
-        if (_deltaY < 0)
+        if (_deltaY < 0 && IsFallDawn == false)
         {
             IsFallDawn = true;
         }

@@ -3,11 +3,10 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic), typeof(CubicInputHandler))]
-[RequireComponent(typeof(CubicSpeedController), typeof(FreeSidewayChecker))]
+[RequireComponent(typeof(Cubic), typeof(CubicInputHandler), typeof(CubicSpeedController))]
 public class CubicMovement : MonoBehaviour
 {
-    [SerializeField] private float _shiftPerMove = 1.3f;
+    [SerializeField] private const float ShiftPerMove = 1.3f;
     [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
@@ -24,21 +23,19 @@ public class CubicMovement : MonoBehaviour
     private Cubic _cubic;
     private CubicInputHandler _cubicInputHandler;
     private CubicSpeedController _cubicSpeedController;
-    private FreeSidewayChecker _sidewaysChecker;
 
     public event Action CubicLeftPress;
     public event Action CubicOnStand;
 
     private void Awake()
-    {
+    { 
         _cubic = GetComponent<Cubic>();
         _cubicInputHandler = GetComponent<CubicInputHandler>();
-        _sidewaysChecker = GetComponent<FreeSidewayChecker>();
         _cubicSpeedController = GetComponent<CubicSpeedController>();
 
         Vector3 position = _cubic.transform.position;
-        _minPositionZ = position.z - _shiftPerMove;
-        _maxPositionZ = position.z + _shiftPerMove;
+        _minPositionZ = position.z - ShiftPerMove;
+        _maxPositionZ = position.z + ShiftPerMove;
     }
 
     private void OnEnable()
@@ -107,20 +104,30 @@ public class CubicMovement : MonoBehaviour
 
         if ((canMoveLeft || canMoveRight) && _canLineChange)
         {
-            float currentShift = _sidewaysChecker.Check(cubicTransform, _shiftPerMove, direction);
-
             if (colliders.Any(currentCollider => currentCollider != null && currentCollider.TryGetComponent(out Road _)) == false)
             {
                 return;
             }
 
-            _canLineChange = false;
-            cubicPosition.z += currentShift * direction.z;
-
-            _cubic.transform.DOMoveZ(cubicPosition.z, _cubicSpeedController.ChangeLineSpeed)
-                .OnComplete(() => _canLineChange = _canMove);
+            ChangeLine(direction, cubicPosition.z);
         }
     }
+
+    private void ChangeLine(Vector3 direction, float cubicPositionZ)
+    {
+        Tweener tween = null;
+        float duration = _cubicSpeedController.GetLineChangeDuration(ShiftPerMove);
+        cubicPositionZ += ShiftPerMove * direction.z;
+        _canLineChange = false;
+        tween = _cubic.transform.DOMoveZ(cubicPositionZ, duration).OnUpdate(() =>
+        {
+            if (_canMove == false)
+            {
+                tween.Kill();
+            }
+        }).OnComplete(()=> _canLineChange = _canMove);
+    }
+
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
