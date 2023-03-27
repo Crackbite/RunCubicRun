@@ -1,5 +1,5 @@
-using DG.Tweening;
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class SidewayMovement : MonoBehaviour
@@ -8,14 +8,16 @@ public class SidewayMovement : MonoBehaviour
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _changeLineSpeed = .1f;
 
-    private float _currentLine = 1;
-    private float _startPosition;
+    private float _currentLineIndex = 1f;
+    private float _initialPositionZ;
+
+    private Tweener _lineTweener;
 
     public event Action LineReached;
 
     private void Start()
     {
-        _startPosition = transform.position.z;
+        _initialPositionZ = transform.position.z;
     }
 
     public void Move(Vector3 direction)
@@ -25,10 +27,11 @@ public class SidewayMovement : MonoBehaviour
 
         if (IsOnRoad())
         {
-            _currentLine += direction.z;
-            _currentLine = Mathf.Clamp(_currentLine, RightLineIndex, LeftLineIndex);
-            float cubicPositionZ = _startPosition + (_currentLine - 1) * _shiftPerMove;
-            ChangeLine(cubicPositionZ);
+            _currentLineIndex += direction.z;
+            _currentLineIndex = Mathf.Clamp(_currentLineIndex, RightLineIndex, LeftLineIndex);
+            float targetPositionZ = _initialPositionZ + ((_currentLineIndex - 1) * _shiftPerMove);
+
+            ChangeLine(targetPositionZ);
         }
         else
         {
@@ -36,49 +39,44 @@ public class SidewayMovement : MonoBehaviour
         }
     }
 
-    private void ChangeLine(float cubicPositionZ)
+    private void ChangeLine(float targetPositionZ)
     {
-        Tweener tween = null;
-
-        tween = transform.DOMoveZ(cubicPositionZ, _changeLineSpeed).OnUpdate(() =>
-        {
-            if(CheckFreeWay())
-            {
-                tween.Kill();
-            }
-        }).OnComplete(() => LineReached?.Invoke());
+        _lineTweener = transform.DOMoveZ(targetPositionZ, _changeLineSpeed).OnUpdate(StopLineTweener)
+            .OnComplete(() => LineReached?.Invoke());
     }
 
     private bool IsOnRoad()
     {
         const float DistanceToRoad = 0.5f;
 
-        RaycastHit hit;
         var ray = new Ray(transform.position, Vector3.down);
-        Debug.Log(Physics.Raycast(ray, out hit, DistanceToRoad));
-        if (Physics.Raycast(ray, out hit, DistanceToRoad))
-        {
-            return true;
-        }
-
-        return false;
+        return Physics.Raycast(ray, out RaycastHit _, DistanceToRoad);
     }
 
-    public bool CheckFreeWay()
+    private bool IsWayClear()
     {
-        const int MaxAmount = 5;
-        const float OffSet = 0.1f;
+        const int MaxColliders = 5;
+        const float ColliderOffset = 0.1f;
 
-        float size = transform.localScale.z / 2f - OffSet;        
-        var colliders = new Collider[MaxAmount];
-        var area = new Vector3(size, size, size);
-        var hitCount = Physics.OverlapBoxNonAlloc(transform.position, area, colliders, transform.rotation, _ignoreLayerMask);
+        float boxSize = (transform.localScale.z / 2f) - ColliderOffset;
+        var colliders = new Collider[MaxColliders];
+        var area = new Vector3(boxSize, boxSize, boxSize);
 
-        if (hitCount > 0)
+        int hitCount = Physics.OverlapBoxNonAlloc(
+            transform.position,
+            area,
+            colliders,
+            transform.rotation,
+            _ignoreLayerMask);
+
+        return hitCount > 0;
+    }
+
+    private void StopLineTweener()
+    {
+        if (IsWayClear())
         {
-            return true;
+            _lineTweener.Kill();
         }
-
-        return false;
     }
 }
