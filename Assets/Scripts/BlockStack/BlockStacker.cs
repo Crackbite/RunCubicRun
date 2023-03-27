@@ -4,12 +4,11 @@ using UnityEngine;
 public class BlockStacker : MonoBehaviour
 {
     [SerializeField] private float _gap = .02f;
-    [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private StackRenderer _stackRenderer;
     [SerializeField] private ColorBlockCollection _blockCollection;
 
     private float _stackYPosition;
-
-    public event Action<ColorBlock> ColorBlockAdded;
+    
     public event Action WrongBlockTaken;
 
     private void OnTriggerEnter(Collider collision)
@@ -19,14 +18,14 @@ public class BlockStacker : MonoBehaviour
             return;
         }
 
-        if (_blockCollection.Blocks.Count > 0 && _blocksContainer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
+        if (_blockCollection.Blocks.Count > 0 && _stackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
             WrongBlockTaken?.Invoke();
             return;
         }
 
-        Transform containerTransform = _blocksContainer.transform;
+        Transform containerTransform = _stackRenderer.transform;
         Vector3 containerPosition = containerTransform.position;
         Transform blockTransform = colorBlock.transform;
 
@@ -45,6 +44,6 @@ public class BlockStacker : MonoBehaviour
         blockTransform.localPosition = new Vector3(0f, _stackYPosition, 0f);
         blockTransform.SetParent(containerTransform);
 
-        ColorBlockAdded?.Invoke(colorBlock);
+        _blockCollection.Add(colorBlock);
     }
 }

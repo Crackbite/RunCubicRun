@@ -1,36 +1,34 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StackCollisionPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
-    [SerializeField] private BlockStacker _blockStacker;
-
-    private readonly List<ColorBlock> _blocks = new();
+    [SerializeField] private ColorBlockCollection _blockCollection;
 
     private void OnEnable()
     {
-        _blockStacker.ColorBlockAdded += OnColorBlockAdded;
+        _blockCollection.BlockAdded += OnBlockAdded;
         _cubic.Hit += OnHit;
     }
 
     private void OnDisable()
     {
-        _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
+        _blockCollection.BlockAdded -= OnBlockAdded;
         _cubic.Hit -= OnHit;
     }
 
     public void OnCrossbarHit(int stackPosition)
     {
+        const float BlockDestroyDelay = 5f;
         const float ForceFactor = 0.1f;
 
-        int brokenBlocksCount = _blocks.Count - stackPosition;
+        int brokenBlocksCount = _blockCollection.Blocks.Count - stackPosition;
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blocks[0].BlockPhysics.FallOff(Vector3.left, ForceFactor);
-            _blocks.Remove(_blocks[0]);
-            _blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
+            _blockCollection.Blocks[0].BlockPhysics.FallOff(Vector3.left, ForceFactor);
+            _blockCollection.Destroy(_blockCollection.Blocks[0], BlockDestroyDelay);
+            _blockCollection.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
     }
 
@@ -51,21 +49,19 @@ public class StackCollisionPhysics : MonoBehaviour
                                 : fallDirection + Vector3.back;
         }
 
-        foreach (ColorBlock block in _blocks)
+        foreach (ColorBlock block in _blockCollection.Blocks)
         {
             block.BlockPhysics.FallOff(fallDirection);
         }
     }
 
+    private void OnBlockAdded(ColorBlock colorBlock)
+    {
+        colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
+    }
+
     private void OnHit()
     {
         Collapse();
-    }
-
-    private void OnColorBlockAdded(ColorBlock colorBlock)
-    {
-        _blocks.Add(colorBlock);
-
-        colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
     }
 }

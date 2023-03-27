@@ -4,35 +4,32 @@
 public class ColorBlock : MonoBehaviour
 {
     private BlocksContainer _blockContainer;
-    private ColorBlockRenderer _blockRenderer;
-    private ColorBlockPhysics _blockPhysics;
     private ColorBlockMovement _blockMovement;
-    private int _stackPosition;
 
-    public ColorBlockRenderer BlockRenderer => _blockRenderer;
-    public ColorBlockPhysics BlockPhysics => _blockPhysics;
+    public ColorBlockPhysics BlockPhysics { get; private set; }
+    public ColorBlockRenderer BlockRenderer { get; private set; }
 
     public bool CanFollow { get; private set; }
-    public int StackPosition => _stackPosition;
+    public int StackPosition { get; private set; }
 
     private void Awake()
     {
-        _blockRenderer = GetComponent<ColorBlockRenderer>();
-        _blockPhysics = GetComponent<ColorBlockPhysics>();
+        BlockRenderer = GetComponent<ColorBlockRenderer>();
+        BlockPhysics = GetComponent<ColorBlockPhysics>();
         _blockMovement = GetComponent<ColorBlockMovement>();
     }
 
-    public void Init(BlocksContainer blockContainer, BlockMovementCoordinator followController)
+    public void Init(BlocksContainer blockContainer, BlockMovementCoordinator movementCoordinator)
     {
         _blockContainer = blockContainer;
         SetStackPosition();
-        _blockMovement.StartFollowing(followController);
+        _blockMovement.StartFollowing(movementCoordinator);
         CanFollow = true;
     }
 
     public void SetStackPosition()
     {
-        _stackPosition = _blockContainer.GetStackPosition(this);
+        StackPosition = _blockContainer.GetStackPosition(this);
     }
 
     public void StopFollow()

@@ -1300,7 +1300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296935702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -57.9, y: 0.0000057220464, z: 0}
+  m_LocalPosition: {x: -97.11, y: 0.0000057220464, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1344,6 +1344,7 @@ MonoBehaviour:
   _ease: 32
   _loops: 4
   _loopType: 1
+  _blockCollection: {fileID: 1761122233}
 --- !u!114 &296935713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,7 +1358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gap: 0.02
-  _blocksContainer: {fileID: 1761122229}
+  _stackRenderer: {fileID: 1761122231}
   _blockCollection: {fileID: 1761122233}
 --- !u!114 &296935714
 MonoBehaviour:
@@ -3845,7 +3846,7 @@ MonoBehaviour:
   _template: {fileID: 5231557107900802310, guid: f01300cfd947bb5408f65c3d3793390c, type: 3}
   _cubic: {fileID: 296935703}
   _colorHolder: {fileID: 11400000, guid: 23221a222a199f145b646400db327e86, type: 2}
-  _blockContainer: {fileID: 0}
+  _stackRenderer: {fileID: 0}
   _skipDistance: 20
 --- !u!4 &732850530
 Transform:
@@ -5022,8 +5023,8 @@ GameObject:
   - component: {fileID: 941699626}
   - component: {fileID: 941699625}
   - component: {fileID: 941699624}
-  - component: {fileID: 941699627}
   - component: {fileID: 941699623}
+  - component: {fileID: 941699627}
   - component: {fileID: 941699628}
   - component: {fileID: 941699629}
   - component: {fileID: 941699630}
@@ -11011,9 +11012,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8424bb768dc61a048aa6a8c742df432a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blockStacker: {fileID: 296935713}
-  _coordinator: {fileID: 1761122232}
   _cubic: {fileID: 296935703}
+  _coordinator: {fileID: 1761122232}
 --- !u!114 &1761122230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11027,7 +11027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubic: {fileID: 296935703}
-  _blockStacker: {fileID: 296935713}
+  _blockCollection: {fileID: 1761122233}
 --- !u!114 &1761122231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11040,10 +11040,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56db5bde4b262d24a8050f2e47e3d5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blockStacker: {fileID: 296935713}
-  _blocksContainer: {fileID: 1761122229}
   _gradient: 0.2
   _coloringSpeedFactor: 0.02
+  _blockCollection: {fileID: 1761122233}
 --- !u!114 &1761122232
 MonoBehaviour:
   m_ObjectHideFlags: 0
