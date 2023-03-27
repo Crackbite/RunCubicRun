@@ -5,6 +5,7 @@ public class BlockStacker : MonoBehaviour
 {
     [SerializeField] private float _gap = .02f;
     [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private ColorBlockCollection _blockCollection;
 
     private float _stackYPosition;
 
@@ -18,7 +19,7 @@ public class BlockStacker : MonoBehaviour
             return;
         }
 
-        if (_blocksContainer.BlocksCount > 0 && _blocksContainer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
+        if (_blockCollection.Blocks.Count > 0 && _blocksContainer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
             WrongBlockTaken?.Invoke();

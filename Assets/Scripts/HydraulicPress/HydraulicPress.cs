@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HydraulicPress : MonoBehaviour
 {
-    [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private ColorBlockCollection _blockCollection;
     [SerializeField] private PressTop _pressTop;
     [SerializeField] private float _pressTopInitOffset = 10f;
     [SerializeField] private CubicMovement _cubicMovement;
@@ -25,7 +25,7 @@ public class HydraulicPress : MonoBehaviour
 
     private void CubicOnStand()
     {
-        ColorBlock highestBlock = _blocksContainer.GetBlockByIndex(0);
+        ColorBlock highestBlock = _blockCollection.Blocks[0];
         float highestBlockY = highestBlock.GetComponent<Collider>().bounds.max.y;
 
         Vector3 currentPosition = _pressTop.transform.position;

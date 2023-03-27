@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PressSpeedHandler : MonoBehaviour
 {
-    [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private ColorBlockCollection _blockCollection;
     [SerializeField] private float _maxSpeed = 5f;
     [SerializeField] private float _minSpeed = 1f;
     [SerializeField] private int _minBlocksForMinSpeed = 10;
@@ -20,7 +20,7 @@ public class PressSpeedHandler : MonoBehaviour
     public float GetCurrentSpeed()
     {
         float currentSpeed;
-        float blocksCount = _blocksContainer.BlocksCount;
+        float blocksCount = _blockCollection.Blocks.Count;
 
         if (_initBlockCount <= _minBlocksForMinSpeed)
         {
@@ -47,6 +47,6 @@ public class PressSpeedHandler : MonoBehaviour
 
     public void Init()
     {
-        _initBlockCount = _blocksContainer.BlocksCount;
+        _initBlockCount = _blockCollection.Blocks.Count;
     }
 }

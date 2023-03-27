@@ -1,19 +1,20 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ColorBlockCollection))]
 public class BlocksContainer : MonoBehaviour
 {
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private BlockMovementCoordinator _coordinator;
     [SerializeField] private Cubic _cubic;
 
-    private readonly List<ColorBlock> _blocks = new();
+    private ColorBlockCollection _blockCollection;
 
-    public event Action BlockRemoved;
-
-    public int BlocksCount => _blocks.Count;
     public Color CurrentColor { get; private set; }
+
+    private void Awake()
+    {
+        _blockCollection = GetComponent<ColorBlockCollection>();
+    }
 
     private void OnEnable()
     {
@@ -33,41 +34,31 @@ public class BlocksContainer : MonoBehaviour
         _cubic.Hit -= OnHit;
     }
 
+    public void ChangeColor(Color color)
+    {
+        CurrentColor = color;
+
+        foreach (ColorBlock block in _blockCollection.Blocks)
+        {
+            block.BlockRenderer.SetColor(color);
+        }
+    }
+
     public int GetStackPosition(ColorBlock targetBlock)
     {
         int position = 0;
 
-        for (int i = 0; i < _blocks.Count; i++)
+        for (int i = 0; i < _blockCollection.Blocks.Count; i++)
         {
-            if (_blocks[i] == targetBlock)
+            if (_blockCollection.Blocks[i] == targetBlock)
             {
-                position = _blocks.Count - i;
+                position = _blockCollection.Blocks.Count - i;
                 return position;
             }
         }
 
         return position;
     }
-
-    public void ChangeColor(Color color)
-    {
-        CurrentColor = color;
-
-        foreach (ColorBlock block in _blocks)
-        {
-            block.BlockRenderer.SetColor(color);
-        }
-    }
-
-    public void DestroyBlock(ColorBlock colorBlock)
-    {
-        Destroy(colorBlock.gameObject);
-        _blocks.Remove(colorBlock);
-
-        BlockRemoved?.Invoke();
-    }
-
-    public ColorBlock GetBlockByIndex(int index) => _blocks[index];
 
     private void Collapse()
     {
@@ -86,7 +77,7 @@ public class BlocksContainer : MonoBehaviour
                                 : fallDirection + Vector3.back;
         }
 
-        foreach (ColorBlock block in _blocks)
+        foreach (ColorBlock block in _blockCollection.Blocks)
         {
             block.BlockPhysics.FallOff(fallDirection);
         }
@@ -99,7 +90,7 @@ public class BlocksContainer : MonoBehaviour
             CurrentColor = colorBlock.BlockRenderer.CurrentColor;
         }
 
-        _blocks.Add(colorBlock);
+        _blockCollection.Add(colorBlock);
 
         colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
         colorBlock.Init(this, _coordinator);
@@ -107,15 +98,16 @@ public class BlocksContainer : MonoBehaviour
 
     private void OnCrossbarHit(int stackPosition)
     {
+        const float BlockDestroyDelay = 5f;
         const float ForceFactor = 0.1f;
 
-        int brokenBlocksCount = _blocks.Count - stackPosition;
+        int brokenBlocksCount = _blockCollection.Blocks.Count - stackPosition;
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blocks[0].BlockPhysics.FallOff(Vector3.left, ForceFactor);
-            _blocks.Remove(_blocks[0]);
-            _blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
+            _blockCollection.Blocks[0].BlockPhysics.FallOff(Vector3.left, ForceFactor);
+            _blockCollection.Destroy(_blockCollection.Blocks[0], BlockDestroyDelay);
+            _blockCollection.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
     }
 

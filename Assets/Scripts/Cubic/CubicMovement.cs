@@ -10,7 +10,7 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
-    [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private ColorBlockCollection _blockCollection;
     [SerializeField] private float _fallPositionY = -10f;
 
     private bool _canLeavePress;
@@ -98,7 +98,7 @@ public class CubicMovement : MonoBehaviour
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
-        if (_blocksContainer.BlocksCount < 1)
+        if (_blockCollection.Blocks.Count < 1)
         {
             return;
         }

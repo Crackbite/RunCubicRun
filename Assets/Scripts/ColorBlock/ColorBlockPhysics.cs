@@ -31,14 +31,11 @@ public class ColorBlockPhysics : MonoBehaviour
 
     public void FallOff(Vector3 fallDirection, float forceFactor = 1)
     {
-        const float LifeTime = 5f;
-
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(_frictionCoefficient * _colorBlock.StackPosition * forceFactor * fallDirection);
         _collider.isTrigger = false;
         transform.parent = null;
         _colorBlock.StopFollow();
         _colorBlock.enabled = false;
-        Destroy(gameObject, LifeTime);
     }
 }
