@@ -4,7 +4,7 @@ using UnityEngine;
 public class ColorBlockMovement : MonoBehaviour
 {
     private ColorBlock _colorBlock;
-    private BlockMovementCoordinator _coordinator;
+    private BlockStackCoordinator _stackCoordinator;
     private float _followedDistanceY;
     private float _lastPlacePositionY;
     private float _runningTime;
@@ -26,11 +26,11 @@ public class ColorBlockMovement : MonoBehaviour
 
         if (_isPlaced)
         {
-            if (_coordinator.IsAnchorGrounded() == false)
+            if (_stackCoordinator.IsAnchorGrounded() == false)
             {
-                if (_coordinator.IsFallDawn)
+                if (_stackCoordinator.IsFallDawn)
                 {
-                    currentPosition.y = _coordinator.GetYPositionInFall(_followedDistanceY);
+                    currentPosition.y = _stackCoordinator.GetYPositionInFall(_followedDistanceY);
                 }
                 else
                 {
@@ -40,14 +40,14 @@ public class ColorBlockMovement : MonoBehaviour
             }
             else if (currentPosition.y != _lastPlacePositionY)
             {
-                _followedDistanceY = _coordinator.GetDistanceFromGround(currentPosition.y);
+                _followedDistanceY = _stackCoordinator.GetDistanceFromGround(currentPosition.y);
                 _lastPlacePositionY = currentPosition.y;
                 _colorBlock.SetStackPosition();
             }
         }
         else
         {
-            currentPosition.y = _coordinator.GetYPositionInJump(ref _runningTime, _lastPlacePositionY, _colorBlock.StackPosition);
+            currentPosition.y = _stackCoordinator.GetYPositionInJump(ref _runningTime, _lastPlacePositionY, _colorBlock.StackPosition);
 
             if (currentPosition.y < _lastPlacePositionY)
             {
@@ -57,13 +57,13 @@ public class ColorBlockMovement : MonoBehaviour
             }
         }
 
-        transform.position = _coordinator.Coordinate(currentPosition, _colorBlock.StackPosition);
+        transform.position = _stackCoordinator.Coordinate(currentPosition, _colorBlock.StackPosition);
     }
 
-    public void StartFollowing(BlockMovementCoordinator coordinator)
+    public void StartFollowing(BlockStackCoordinator stackCoordinator)
     {
-        _coordinator = coordinator;
+        _stackCoordinator = stackCoordinator;
         _lastPlacePositionY = transform.position.y;
-        _followedDistanceY = _coordinator.GetDistanceFromGround(transform.position.y);
+        _followedDistanceY = _stackCoordinator.GetDistanceFromGround(transform.position.y);
     }
 }

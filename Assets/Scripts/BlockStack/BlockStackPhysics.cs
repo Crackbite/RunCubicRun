@@ -1,21 +1,21 @@
 using UnityEngine;
 
-public class StackCollisionPhysics : MonoBehaviour
+public class BlockStackPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
-    [SerializeField] private ColorBlockCollection _blockCollection;
+    [SerializeField] private BlockStack _blockStack;
     [SerializeField] private float _frictionCoefficient = 10f;
     [SerializeField] private float _blockDestroyDelay = 5f;
 
     private void OnEnable()
     {
-        _blockCollection.BlockAdded += OnBlockAdded;
+        _blockStack.BlockAdded += OnBlockAdded;
         _cubic.Hit += OnHit;
     }
 
     private void OnDisable()
     {
-        _blockCollection.BlockAdded -= OnBlockAdded;
+        _blockStack.BlockAdded -= OnBlockAdded;
         _cubic.Hit -= OnHit;
     }
 
@@ -23,13 +23,13 @@ public class StackCollisionPhysics : MonoBehaviour
     {
         const float ForceFactor = 0.1f;
 
-        int brokenBlocksCount = _blockCollection.Blocks.Count - stackPosition;
+        int brokenBlocksCount = _blockStack.Blocks.Count - stackPosition;
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockCollection.Blocks[0].BlockPhysics.FallOff(Vector3.left, _frictionCoefficient, ForceFactor);
-            _blockCollection.Destroy(_blockCollection.Blocks[0], _blockDestroyDelay);
-            _blockCollection.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
+            _blockStack.Blocks[0].BlockPhysics.FallOff(Vector3.left, _frictionCoefficient, ForceFactor);
+            _blockStack.Destroy(_blockStack.Blocks[0], _blockDestroyDelay);
+            _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
     }
 
@@ -50,7 +50,7 @@ public class StackCollisionPhysics : MonoBehaviour
                                 : fallDirection + Vector3.back;
         }
 
-        foreach (ColorBlock block in _blockCollection.Blocks)
+        foreach (ColorBlock block in _blockStack.Blocks)
         {
             block.BlockPhysics.FallOff(fallDirection, _frictionCoefficient);
         }

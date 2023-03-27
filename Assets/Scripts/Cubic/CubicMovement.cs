@@ -10,7 +10,7 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
-    [SerializeField] private ColorBlockCollection _blockCollection;
+    [SerializeField] private BlockStack _blockStack;
     [SerializeField] private float _fallPositionY = -10f;
 
     private bool _canLeavePress;
@@ -26,7 +26,7 @@ public class CubicMovement : MonoBehaviour
     public event Action CubicOnStand;
 
     private void Awake()
-    { 
+    {
         _cubic = GetComponent<Cubic>();
         _cubicInputHandler = GetComponent<CubicInputHandler>();
         _cubicSpeedController = GetComponent<CubicSpeedController>();
@@ -98,7 +98,7 @@ public class CubicMovement : MonoBehaviour
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
-        if (_blockCollection.Blocks.Count < 1)
+        if (_blockStack.Blocks.Count < 1)
         {
             return;
         }
@@ -111,11 +111,6 @@ public class CubicMovement : MonoBehaviour
 
         _cubic.transform.DOMove(nextPosition, _cubicSpeedController.StopAtPressStandSpeed)
             .OnComplete(() => CubicOnStand?.Invoke());
-    }
-
-    private void OnLineReached()
-    {
-        _canLineChange = _canMove;
     }
 
     private void OnHit()
@@ -140,6 +135,11 @@ public class CubicMovement : MonoBehaviour
     private void OnLineChanged(Vector3 direction)
     {
         MoveToSide(direction);
+    }
+
+    private void OnLineReached()
+    {
+        _canLineChange = _canMove;
     }
 
     private void OnPressEscaped()

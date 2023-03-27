@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class BlockMovementCoordinator : MonoBehaviour
+public class BlockStackCoordinator : MonoBehaviour
 {
+    [SerializeField] private Cubic _cubic;
     [SerializeField] private float _followSpeed = 350f;
     [SerializeField] private float _gapSizeFactor = 0.001f;
-    [SerializeField] private Cubic _cubic;
 
     private Transform _anchor;
+
     private float _anchorGroundPositionY;
     private float _deltaY;
 
@@ -18,16 +19,14 @@ public class BlockMovementCoordinator : MonoBehaviour
         _anchorGroundPositionY = _anchor.position.y;
     }
 
-    public bool IsAnchorGrounded()
+    public Vector3 Coordinate(Vector3 currentPosition, int stackPosition)
     {
-        _deltaY = _anchor.position.y - _anchorGroundPositionY;
+        float interpolationZ = _followSpeed / stackPosition * Time.deltaTime;
 
-        if (_deltaY < 0 && IsFallDawn == false)
-        {
-            IsFallDawn = true;
-        }
-
-        return _deltaY == 0;
+        return new Vector3(
+            currentPosition.x,
+            currentPosition.y,
+            Mathf.Lerp(currentPosition.z, _anchor.position.z, interpolationZ));
     }
 
     public float GetDistanceFromGround(float positionY)
@@ -45,18 +44,20 @@ public class BlockMovementCoordinator : MonoBehaviour
         time += Time.deltaTime;
         float jumpForce = _cubic.JumpForce + (_gapSizeFactor * Mathf.Pow(stackPosition, 2f));
         float nextPositionY = (lastPlacePositionY + (jumpForce * time))
-                            - (_cubic.JumpAcceleration * Mathf.Pow(time, 2f) / 2f);
+                              - (_cubic.JumpAcceleration * Mathf.Pow(time, 2f) / 2f);
 
         return nextPositionY;
     }
 
-    public Vector3 Coordinate(Vector3 currentPosition, int stackPosition)
+    public bool IsAnchorGrounded()
     {
-        float interpolationZ = _followSpeed / stackPosition * Time.deltaTime;
+        _deltaY = _anchor.position.y - _anchorGroundPositionY;
 
-        return new Vector3(
-            currentPosition.x,
-            currentPosition.y,
-            Mathf.Lerp(currentPosition.z, _anchor.position.z, interpolationZ));
+        if (_deltaY < 0 && IsFallDawn == false)
+        {
+            IsFallDawn = true;
+        }
+
+        return _deltaY == 0;
     }
 }

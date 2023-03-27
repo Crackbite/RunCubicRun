@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BarometerArrow : MonoBehaviour
 {
-    [SerializeField] private ColorBlockCollection _blockCollection;
+    [SerializeField] private BlockStack _blockStack;
     [SerializeField] private float _minRotationY = 34f;
     [SerializeField] private float _maxRotationY = -236f;
     [SerializeField] private float _rotateDuration = .5f;
@@ -12,26 +12,26 @@ public class BarometerArrow : MonoBehaviour
 
     private void OnEnable()
     {
-        _blockCollection.BlockRemoved += BlockCollectionOnBlockRemoved;
+        _blockStack.BlockRemoved += BlockStackOnBlockRemoved;
     }
 
     private void OnDisable()
     {
-        _blockCollection.BlockRemoved -= BlockCollectionOnBlockRemoved;
+        _blockStack.BlockRemoved -= BlockStackOnBlockRemoved;
     }
 
     public void Init()
     {
-        _initBlockCount = _blockCollection.Blocks.Count;
+        _initBlockCount = _blockStack.Blocks.Count;
 
         Vector3 eulerAngles = transform.localEulerAngles;
         eulerAngles.y = _minRotationY;
         transform.localEulerAngles = eulerAngles;
     }
 
-    private void BlockCollectionOnBlockRemoved(ColorBlock colorBlock)
+    private void BlockStackOnBlockRemoved(ColorBlock colorBlock)
     {
-        float lerpFactor = Mathf.InverseLerp(_initBlockCount, 0f, _blockCollection.Blocks.Count);
+        float lerpFactor = Mathf.InverseLerp(_initBlockCount, 0f, _blockStack.Blocks.Count);
         float rotationY = Mathf.Lerp(_minRotationY, _maxRotationY, lerpFactor);
 
         Vector3 newRotation = transform.localEulerAngles;

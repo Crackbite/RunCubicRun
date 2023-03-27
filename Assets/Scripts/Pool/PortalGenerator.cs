@@ -6,7 +6,7 @@ public class PortalGenerator : ObjectPool
     [SerializeField] private GameObject _template;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private ColorHolder _colorHolder;
-    [SerializeField] private StackRenderer _stackRenderer;
+    [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private float _skipDistance;
 
     private List<Color> _unusedColors;
@@ -27,7 +27,7 @@ public class PortalGenerator : ObjectPool
 
     private void OnCubicEntered(Portal portal)
     {
-        _stackRenderer.ChangeColor(portal.Color);
+        _blockStackRenderer.ChangeColor(portal.Color);
         SetToPosition(GetInstallationPosition());
         portal.CubicEntered -= OnCubicEntered;
         DisableObjectAbroadScreen();

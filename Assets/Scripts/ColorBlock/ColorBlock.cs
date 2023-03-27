@@ -3,7 +3,7 @@
 [RequireComponent(typeof(ColorBlockRenderer), typeof(ColorBlockPhysics), typeof(ColorBlockMovement))]
 public class ColorBlock : MonoBehaviour
 {
-    private BlocksContainer _blockContainer;
+    private BlockStack _blockContainer;
     private ColorBlockMovement _blockMovement;
 
     public ColorBlockPhysics BlockPhysics { get; private set; }
@@ -19,11 +19,11 @@ public class ColorBlock : MonoBehaviour
         _blockMovement = GetComponent<ColorBlockMovement>();
     }
 
-    public void Init(BlocksContainer blockContainer, BlockMovementCoordinator movementCoordinator)
+    public void Init(BlockStack blockContainer, BlockStackCoordinator stackCoordinator)
     {
         _blockContainer = blockContainer;
         SetStackPosition();
-        _blockMovement.StartFollowing(movementCoordinator);
+        _blockMovement.StartFollowing(stackCoordinator);
         CanFollow = true;
     }
 
