@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider), typeof(Rigidbody), typeof(ColorBlock))]
 public class ColorBlockPhysics : MonoBehaviour
 {
-    [SerializeField] private float _frictionCoefficient = 10f;
-
     private ColorBlock _colorBlock;
     private Collider _collider;
     private Rigidbody _rigidbody;
@@ -29,10 +27,10 @@ public class ColorBlockPhysics : MonoBehaviour
         CrossbarHit?.Invoke(_colorBlock.StackPosition);
     }
 
-    public void FallOff(Vector3 fallDirection, float forceFactor = 1)
+    public void FallOff(Vector3 fallDirection, float frictionCoefficient, float forceFactor = 1f)
     {
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(_frictionCoefficient * _colorBlock.StackPosition * forceFactor * fallDirection);
+        _rigidbody.AddForce(frictionCoefficient * _colorBlock.StackPosition * forceFactor * fallDirection);
         _collider.isTrigger = false;
         transform.parent = null;
         _colorBlock.StopFollow();

@@ -4,6 +4,8 @@ public class StackCollisionPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private ColorBlockCollection _blockCollection;
+    [SerializeField] private float _frictionCoefficient = 10f;
+    [SerializeField] private float _blockDestroyDelay = 5f;
 
     private void OnEnable()
     {
@@ -19,15 +21,14 @@ public class StackCollisionPhysics : MonoBehaviour
 
     public void OnCrossbarHit(int stackPosition)
     {
-        const float BlockDestroyDelay = 5f;
         const float ForceFactor = 0.1f;
 
         int brokenBlocksCount = _blockCollection.Blocks.Count - stackPosition;
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockCollection.Blocks[0].BlockPhysics.FallOff(Vector3.left, ForceFactor);
-            _blockCollection.Destroy(_blockCollection.Blocks[0], BlockDestroyDelay);
+            _blockCollection.Blocks[0].BlockPhysics.FallOff(Vector3.left, _frictionCoefficient, ForceFactor);
+            _blockCollection.Destroy(_blockCollection.Blocks[0], _blockDestroyDelay);
             _blockCollection.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
     }
@@ -51,7 +52,7 @@ public class StackCollisionPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockCollection.Blocks)
         {
-            block.BlockPhysics.FallOff(fallDirection);
+            block.BlockPhysics.FallOff(fallDirection, _frictionCoefficient);
         }
     }
 
