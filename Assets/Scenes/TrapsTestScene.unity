@@ -1300,7 +1300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296935702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -93.1, y: 0.0000057220464, z: 0}
+  m_LocalPosition: {x: -10.8, y: 0.0000057220464, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1358,7 +1358,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gap: 0.02
   _blocksContainer: {fileID: 1761122229}
-  _stackRenderer: {fileID: 1761122231}
 --- !u!114 &296935714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,6 +1406,8 @@ MonoBehaviour:
   _ignoreLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  _shiftPerMove: 1.3
+  _changeLineSpeed: 0.1
 --- !u!114 &296935720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1451,7 +1452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 7
-  _changeLineSpeed: 13
   _stopAtPressStandSpeed: 1
   _slowdownFactor: 0.25
   _acceleration: 3
@@ -3844,7 +3844,7 @@ MonoBehaviour:
   _template: {fileID: 5231557107900802310, guid: f01300cfd947bb5408f65c3d3793390c, type: 3}
   _cubic: {fileID: 296935703}
   _colorHolder: {fileID: 11400000, guid: 23221a222a199f145b646400db327e86, type: 2}
-  _stackRenderer: {fileID: 1761122231}
+  _blockContainer: {fileID: 0}
   _skipDistance: 20
 --- !u!4 &732850530
 Transform:

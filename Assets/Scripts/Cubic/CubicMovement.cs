@@ -1,12 +1,11 @@
 using System;
-using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(Cubic), typeof(CubicInputHandler), typeof(CubicSpeedController))]
+[RequireComponent(typeof(Cubic), typeof(CubicInputHandler))]
+[RequireComponent(typeof(CubicSpeedController), typeof(SidewayMovement))]
 public class CubicMovement : MonoBehaviour
 {
-    [SerializeField] private const float ShiftPerMove = 1.3f;
     [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
@@ -17,12 +16,11 @@ public class CubicMovement : MonoBehaviour
     private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
-    private float _maxPositionZ;
-    private float _minPositionZ;
 
     private Cubic _cubic;
     private CubicInputHandler _cubicInputHandler;
     private CubicSpeedController _cubicSpeedController;
+    private SidewayMovement _sidewaysMovement;
 
     public event Action CubicLeftPress;
     public event Action CubicOnStand;
@@ -32,10 +30,7 @@ public class CubicMovement : MonoBehaviour
         _cubic = GetComponent<Cubic>();
         _cubicInputHandler = GetComponent<CubicInputHandler>();
         _cubicSpeedController = GetComponent<CubicSpeedController>();
-
-        Vector3 position = _cubic.transform.position;
-        _minPositionZ = position.z - ShiftPerMove;
-        _maxPositionZ = position.z + ShiftPerMove;
+        _sidewaysMovement = GetComponent<SidewayMovement>();
     }
 
     private void OnEnable()
@@ -48,6 +43,8 @@ public class CubicMovement : MonoBehaviour
 
         _cubicInputHandler.LineChanged += OnLineChanged;
         _cubicInputHandler.PressEscaped += OnPressEscaped;
+
+        _sidewaysMovement.LineReached += OnLineReached;
     }
 
     private void Update()
@@ -70,6 +67,8 @@ public class CubicMovement : MonoBehaviour
 
         _cubicInputHandler.LineChanged -= OnLineChanged;
         _cubicInputHandler.PressEscaped -= OnPressEscaped;
+
+        _sidewaysMovement.LineReached -= OnLineReached;
     }
 
     public void EscapeFromPress()
@@ -90,44 +89,12 @@ public class CubicMovement : MonoBehaviour
 
     public void MoveToSide(Vector3 direction)
     {
-        const int MaxAmount = 5;
-
-        Transform cubicTransform = _cubic.transform;
-        Vector3 cubicPosition = cubicTransform.position;
-
-        bool canMoveLeft = direction.z > 0 && cubicPosition.z < _maxPositionZ;
-        bool canMoveRight = direction.z < 0 && cubicPosition.z > _minPositionZ;
-
-        var area = new Vector3(0, cubicTransform.localScale.y, 0);
-        var colliders = new Collider[MaxAmount];
-        Physics.OverlapBoxNonAlloc(cubicPosition, area, colliders, Quaternion.identity);
-
-        if ((canMoveLeft || canMoveRight) && _canLineChange)
+        if (_canLineChange)
         {
-            if (colliders.Any(currentCollider => currentCollider != null && currentCollider.TryGetComponent(out Road _)) == false)
-            {
-                return;
-            }
-
-            ChangeLine(direction, cubicPosition.z);
+            _canLineChange = false;
+            _sidewaysMovement.Move(direction);
         }
     }
-
-    private void ChangeLine(Vector3 direction, float cubicPositionZ)
-    {
-        Tweener tween = null;
-        float duration = _cubicSpeedController.GetLineChangeDuration(ShiftPerMove);
-        cubicPositionZ += ShiftPerMove * direction.z;
-        _canLineChange = false;
-        tween = _cubic.transform.DOMoveZ(cubicPositionZ, duration).OnUpdate(() =>
-        {
-            if (_canMove == false)
-            {
-                tween.Kill();
-            }
-        }).OnComplete(()=> _canLineChange = _canMove);
-    }
-
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
@@ -144,6 +111,11 @@ public class CubicMovement : MonoBehaviour
 
         _cubic.transform.DOMove(nextPosition, _cubicSpeedController.StopAtPressStandSpeed)
             .OnComplete(() => CubicOnStand?.Invoke());
+    }
+
+    private void OnLineReached()
+    {
+        _canLineChange = _canMove;
     }
 
     private void OnHit()
