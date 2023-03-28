@@ -19,8 +19,7 @@ public class Saw : Trap
         }
         else
         {
-            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
-                              >= transform.localScale.z / 2f;
+            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) > 0;
 
             if (_splitType == SplitType.Vertical && IsSideCollision)
             {

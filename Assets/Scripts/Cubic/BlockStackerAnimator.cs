@@ -1,7 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(BlockStacker))]
 public class BlockStackerAnimator : MonoBehaviour
 {
     [SerializeField] private float _scatter = 30f;
@@ -9,25 +8,19 @@ public class BlockStackerAnimator : MonoBehaviour
     [SerializeField] private Ease _ease = Ease.Flash;
     [SerializeField] private int _loops = 4;
     [SerializeField] private LoopType _loopType = LoopType.Yoyo;
-
-    private BlockStacker _blockStacker;
-
-    private void Awake()
-    {
-        _blockStacker = GetComponent<BlockStacker>();
-    }
+    [SerializeField] private BlockStack _blockStack;
 
     private void OnEnable()
     {
-        _blockStacker.ColorBlockAdded += OnColorBlockAdded;
+        _blockStack.BlockAdded += OnBlockAdded;
     }
 
     private void OnDisable()
     {
-        _blockStacker.ColorBlockAdded -= OnColorBlockAdded;
+        _blockStack.BlockAdded -= OnBlockAdded;
     }
 
-    private void OnColorBlockAdded(ColorBlock colorBlock)
+    private void OnBlockAdded(ColorBlock colorBlock)
     {
         Vector3 blockScale = colorBlock.transform.localScale;
 
