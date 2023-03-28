@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CubicTracker : MonoBehaviour
@@ -7,13 +8,33 @@ public class CubicTracker : MonoBehaviour
     [SerializeField] private float _xOffset;
     [SerializeField] private float _xLeftLimit;
     [SerializeField] private float _xRightLimit;
+    [SerializeField] private StagePortal _stagePortal;
 
     private Vector3 _targetPosition;
+    bool _canTrack;
+
+    private void OnEnable()
+    {
+        _stagePortal.ThrownOut += OnCubicThrownOut;
+    }
 
     private void LateUpdate()
     {
-        SetTargetPosition();
-        transform.position = Vector3.Lerp(transform.position, _targetPosition, _damping * Time.deltaTime);
+        if (_canTrack)
+        {
+            SetTargetPosition();
+            transform.position = Vector3.Lerp(transform.position, _targetPosition, _damping * Time.deltaTime);
+        }
+    }
+
+    private void OnDisable()
+    {
+        _stagePortal.ThrownOut -= OnCubicThrownOut;
+    }
+
+    private void OnCubicThrownOut()
+    {
+        _canTrack = true;
     }
 
     private void SetTargetPosition()
