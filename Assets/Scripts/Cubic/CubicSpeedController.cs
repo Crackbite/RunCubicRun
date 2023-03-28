@@ -14,7 +14,7 @@ public class CubicSpeedController : MonoBehaviour
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private AnimationCurve _stopCurve;
     [SerializeField] private AnimationCurve _fightSlowCurve;
-    [SerializeField] private StagePortal _stagePortal;
+    [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
     private Cubic _cubic;
 
@@ -31,7 +31,7 @@ public class CubicSpeedController : MonoBehaviour
     private void OnEnable()
     {
         _blockStacker.WrongBlockTaken += OnWrongBlockTaken;
-        _stagePortal.ThrownOut += OnCubicThrownOut;
+        _levelEntryPortal.ThrowingOut += OnCubicThrowingOut;
     }
 
     private void Start()
@@ -39,7 +39,7 @@ public class CubicSpeedController : MonoBehaviour
         _cubic = GetComponent<Cubic>();
 
         CurrentSpeed = 0;
-        _isMaxSpeed = false;
+        _isThrowing = true;
     }
 
     private void Update()
@@ -54,13 +54,7 @@ public class CubicSpeedController : MonoBehaviour
     private void OnDisable()
     {
         _blockStacker.WrongBlockTaken -= OnWrongBlockTaken;
-        _stagePortal.ThrownOut -= OnCubicThrownOut;
-    }
-
-    private void OnCubicThrownOut()
-    {
-        StartCoroutine(StopSlowly(_fightSlowCurve));
-        _isThrowing = true;
+        _levelEntryPortal.ThrowingOut -= OnCubicThrowingOut;
     }
 
     public void SlowDown()
@@ -78,6 +72,11 @@ public class CubicSpeedController : MonoBehaviour
             _runningTime = StartTime;
             _initialSpeed = CurrentSpeed;
         }
+    }
+
+    private void OnCubicThrowingOut()
+    {
+        StartCoroutine(StopSlowly(_fightSlowCurve));
     }
 
     private IEnumerator Accelerate()
@@ -116,6 +115,10 @@ public class CubicSpeedController : MonoBehaviour
             yield return null;
         }
 
-        _isThrowing = false;
+        if(_isStop == false)
+        {
+            _isMaxSpeed = true;
+            _isThrowing = false;
+        }
     }
 }

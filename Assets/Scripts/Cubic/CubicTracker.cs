@@ -8,14 +8,14 @@ public class CubicTracker : MonoBehaviour
     [SerializeField] private float _xOffset;
     [SerializeField] private float _xLeftLimit;
     [SerializeField] private float _xRightLimit;
-    [SerializeField] private StagePortal _stagePortal;
+    [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
     private Vector3 _targetPosition;
     bool _canTrack;
 
     private void OnEnable()
     {
-        _stagePortal.ThrownOut += OnCubicThrownOut;
+        _levelEntryPortal.ThrowingOut += OnCubicThrownOut;
     }
 
     private void LateUpdate()
@@ -29,7 +29,7 @@ public class CubicTracker : MonoBehaviour
 
     private void OnDisable()
     {
-        _stagePortal.ThrownOut -= OnCubicThrownOut;
+        _levelEntryPortal.ThrowingOut -= OnCubicThrownOut;
     }
 
     private void OnCubicThrownOut()

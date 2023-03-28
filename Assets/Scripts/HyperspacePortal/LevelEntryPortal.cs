@@ -26,6 +26,5 @@ public class LevelEntryPortal : HyperspacePortal
             .SetEase(RotationEase))
             .OnComplete(() => CubicTransform.rotation = startRotation);
         FlightSequence.Join(CubicTransform.DOMoveY(TargetPositionY, FlightDuration).SetEase(FlightEase));
-        FlightSequence.Play();
     }
 }

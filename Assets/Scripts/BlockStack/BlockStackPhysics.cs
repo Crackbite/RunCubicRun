@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BlockStackPhysics : MonoBehaviour
@@ -6,18 +7,23 @@ public class BlockStackPhysics : MonoBehaviour
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private float _frictionCoefficient = 10f;
     [SerializeField] private float _blockDestroyDelay = 5f;
+    [SerializeField] private LevelExitPortal _levelExitPortal;
 
     private void OnEnable()
     {
         _blockStack.BlockAdded += OnBlockAdded;
         _cubic.Hit += OnHit;
+        _levelExitPortal.SuckingIn += OnCubicSuckingIn;
     }
 
     private void OnDisable()
     {
         _blockStack.BlockAdded -= OnBlockAdded;
         _cubic.Hit -= OnHit;
+        _levelExitPortal.SuckingIn -= OnCubicSuckingIn;
+
     }
+
 
     public void OnCrossbarHit(int stackPosition)
     {
@@ -53,6 +59,16 @@ public class BlockStackPhysics : MonoBehaviour
         foreach (ColorBlock block in _blockStack.Blocks)
         {
             block.BlockPhysics.FallOff(fallDirection, _frictionCoefficient);
+        }
+    }
+
+    private void OnCubicSuckingIn()
+    {
+        const float ForceFactor = 0.1f;
+
+        foreach (ColorBlock block in _blockStack.Blocks)
+        {
+            block.BlockPhysics.FallOff(Vector3.zero, _frictionCoefficient, ForceFactor);
         }
     }
 
