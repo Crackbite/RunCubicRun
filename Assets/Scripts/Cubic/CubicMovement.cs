@@ -1,30 +1,26 @@
 using System;
-using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Cubic), typeof(CubicInputHandler))]
-[RequireComponent(typeof(CubicSpeedController), typeof(FreeSidewayChecker))]
+[RequireComponent(typeof(CubicSpeedController), typeof(SidewayMovement))]
 public class CubicMovement : MonoBehaviour
 {
-    [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private BlockDestroyer _blockDestroyer;
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
-    [SerializeField] private BlocksContainer _blocksContainer;
+    [SerializeField] private BlockStack _blockStack;
     [SerializeField] private float _fallPositionY = -10f;
 
     private bool _canLeavePress;
     private bool _canLineChange = true;
     private bool _canMove = true;
-    private float _maxPositionZ;
-    private float _minPositionZ;
 
     private Cubic _cubic;
     private CubicInputHandler _cubicInputHandler;
     private CubicSpeedController _cubicSpeedController;
-    private FreeSidewayChecker _sidewaysChecker;
+    private SidewayMovement _sidewaysMovement;
 
     public event Action CubicLeftPress;
     public event Action CubicOnStand;
@@ -33,12 +29,8 @@ public class CubicMovement : MonoBehaviour
     {
         _cubic = GetComponent<Cubic>();
         _cubicInputHandler = GetComponent<CubicInputHandler>();
-        _sidewaysChecker = GetComponent<FreeSidewayChecker>();
         _cubicSpeedController = GetComponent<CubicSpeedController>();
-
-        Vector3 position = _cubic.transform.position;
-        _minPositionZ = position.z - _shiftPerMove;
-        _maxPositionZ = position.z + _shiftPerMove;
+        _sidewaysMovement = GetComponent<SidewayMovement>();
     }
 
     private void OnEnable()
@@ -51,6 +43,8 @@ public class CubicMovement : MonoBehaviour
 
         _cubicInputHandler.LineChanged += OnLineChanged;
         _cubicInputHandler.PressEscaped += OnPressEscaped;
+
+        _sidewaysMovement.LineReached += OnLineReached;
     }
 
     private void Update()
@@ -73,6 +67,8 @@ public class CubicMovement : MonoBehaviour
 
         _cubicInputHandler.LineChanged -= OnLineChanged;
         _cubicInputHandler.PressEscaped -= OnPressEscaped;
+
+        _sidewaysMovement.LineReached -= OnLineReached;
     }
 
     public void EscapeFromPress()
@@ -93,38 +89,16 @@ public class CubicMovement : MonoBehaviour
 
     public void MoveToSide(Vector3 direction)
     {
-        const int MaxAmount = 5;
-
-        Transform cubicTransform = _cubic.transform;
-        Vector3 cubicPosition = cubicTransform.position;
-
-        bool canMoveLeft = direction.z > 0 && cubicPosition.z < _maxPositionZ;
-        bool canMoveRight = direction.z < 0 && cubicPosition.z > _minPositionZ;
-
-        var area = new Vector3(0, cubicTransform.localScale.y, 0);
-        var colliders = new Collider[MaxAmount];
-        Physics.OverlapBoxNonAlloc(cubicPosition, area, colliders, Quaternion.identity);
-
-        if ((canMoveLeft || canMoveRight) && _canLineChange)
+        if (_canLineChange)
         {
-            float currentShift = _sidewaysChecker.Check(cubicTransform, _shiftPerMove, direction);
-
-            if (colliders.Any(currentCollider => currentCollider != null && currentCollider.TryGetComponent(out Road _)) == false)
-            {
-                return;
-            }
-
             _canLineChange = false;
-            cubicPosition.z += currentShift * direction.z;
-
-            _cubic.transform.DOMoveZ(cubicPosition.z, _cubicSpeedController.ChangeLineSpeed)
-                .OnComplete(() => _canLineChange = _canMove);
+            _sidewaysMovement.Move(direction);
         }
     }
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
-        if (_blocksContainer.BlocksCount < 1)
+        if (_blockStack.Blocks.Count < 1)
         {
             return;
         }
@@ -161,6 +135,11 @@ public class CubicMovement : MonoBehaviour
     private void OnLineChanged(Vector3 direction)
     {
         MoveToSide(direction);
+    }
+
+    private void OnLineReached()
+    {
+        _canLineChange = _canMove;
     }
 
     private void OnPressEscaped()

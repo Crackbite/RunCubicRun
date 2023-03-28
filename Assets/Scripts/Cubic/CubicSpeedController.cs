@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -5,7 +6,6 @@ using UnityEngine;
 public class CubicSpeedController : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _changeLineSpeed = .1f;
     [SerializeField] private float _stopAtPressStandSpeed = 1f;
     [SerializeField] private float _slowdownFactor = .25f;
     [SerializeField] private float _acceleration = 3f;
@@ -19,7 +19,6 @@ public class CubicSpeedController : MonoBehaviour
     private bool _isStop;
     private float _runningTime;
 
-    public float ChangeLineSpeed => _changeLineSpeed;
     public float CurrentSpeed { get; private set; }
     public float StopAtPressStandSpeed => _stopAtPressStandSpeed;
 
