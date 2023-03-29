@@ -7,13 +7,19 @@ public class BlockStacker : MonoBehaviour
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private BlockStack _blockStack;
 
+    private bool _blocksEnded;
     private float _stackYPosition;
 
     public event Action WrongBlockTaken;
 
+    private void OnEnable()
+    {
+        _blockStack.BlocksEnded += OnBlocksEnded;
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.CanFollow)
+        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.CanFollow || _blocksEnded)
         {
             return;
         }
@@ -21,6 +27,8 @@ public class BlockStacker : MonoBehaviour
         if (_blockStack.Blocks.Count > 0 && _blockStackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
+            _blockStack.AnimateDestroy(_blockStack.Blocks[0]);
+
             WrongBlockTaken?.Invoke();
             return;
         }
@@ -45,5 +53,10 @@ public class BlockStacker : MonoBehaviour
         blockTransform.SetParent(containerTransform);
 
         _blockStack.Add(colorBlock);
+    }
+
+    private void OnBlocksEnded()
+    {
+        _blocksEnded = true;
     }
 }

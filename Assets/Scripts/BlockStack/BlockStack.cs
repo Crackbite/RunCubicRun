@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BlockStackAddAnimator), typeof(BlockStackDestroyAnimator))]
 public class BlockStack : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
@@ -9,10 +10,25 @@ public class BlockStack : MonoBehaviour
 
     private readonly List<ColorBlock> _blocks = new();
 
+    private BlockStackAddAnimator _addAnimator;
+    private BlockStackDestroyAnimator _destroyAnimator;
+
     public event Action<ColorBlock> BlockAdded;
     public event Action<ColorBlock> BlockRemoved;
+    public event Action BlocksEnded;
 
     public IReadOnlyList<ColorBlock> Blocks => _blocks;
+
+    private void Awake()
+    {
+        _addAnimator = GetComponent<BlockStackAddAnimator>();
+        _destroyAnimator = GetComponent<BlockStackDestroyAnimator>();
+    }
+
+    private void OnEnable()
+    {
+        _destroyAnimator.AnimationCompleted += OnDestroyAnimationCompleted;
+    }
 
     private void Update()
     {
@@ -24,14 +40,27 @@ public class BlockStack : MonoBehaviour
     {
         _blocks.Add(colorBlock);
         PlaceInStack(colorBlock);
+        _addAnimator.StartAddAnimation(colorBlock);
 
         BlockAdded?.Invoke(colorBlock);
     }
 
+    public void AnimateDestroy(ColorBlock colorBlock)
+    {
+        if (TryRemoveBlock(colorBlock) == false)
+        {
+            return;
+        }
+
+        _destroyAnimator.StartDestroyAnimation(colorBlock);
+    }
+
     public void Destroy(ColorBlock colorBlock, float delay = 0f)
     {
-        _blocks.Remove(colorBlock);
-        BlockRemoved?.Invoke(colorBlock);
+        if (TryRemoveBlock(colorBlock) == false)
+        {
+            return;
+        }
 
         Destroy(colorBlock.gameObject, delay);
     }
@@ -55,5 +84,28 @@ public class BlockStack : MonoBehaviour
     public void PlaceInStack(ColorBlock colorBlock)
     {
         colorBlock.Init(this, _stackCoordinator);
+    }
+
+    private void OnDestroyAnimationCompleted(ColorBlock colorBlock)
+    {
+        Destroy(colorBlock.gameObject);
+    }
+
+    private bool TryRemoveBlock(ColorBlock colorBlock)
+    {
+        if (_blocks.Contains(colorBlock) == false)
+        {
+            return false;
+        }
+
+        _blocks.Remove(colorBlock);
+        BlockRemoved?.Invoke(colorBlock);
+
+        if (_blocks.Count < 1)
+        {
+            BlocksEnded?.Invoke();
+        }
+
+        return true;
     }
 }

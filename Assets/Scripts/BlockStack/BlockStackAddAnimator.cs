@@ -1,26 +1,18 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class BlockStackerAnimator : MonoBehaviour
+public class BlockStackAddAnimator : MonoBehaviour
 {
     [SerializeField] private float _scatter = 30f;
-    [SerializeField] private float _speed = .1f;
+    [SerializeField] private float _duration = .1f;
     [SerializeField] private Ease _ease = Ease.Flash;
     [SerializeField] private int _loops = 4;
     [SerializeField] private LoopType _loopType = LoopType.Yoyo;
-    [SerializeField] private BlockStack _blockStack;
 
-    private void OnEnable()
-    {
-        _blockStack.BlockAdded += OnBlockAdded;
-    }
+    public event Action<ColorBlock> AnimationCompleted;
 
-    private void OnDisable()
-    {
-        _blockStack.BlockAdded -= OnBlockAdded;
-    }
-
-    private void OnBlockAdded(ColorBlock colorBlock)
+    public void StartAddAnimation(ColorBlock colorBlock)
     {
         Vector3 blockScale = colorBlock.transform.localScale;
 
@@ -29,6 +21,7 @@ public class BlockStackerAnimator : MonoBehaviour
         float scaleZ = blockScale.z * scatter;
         var newScale = new Vector3(scaleX, blockScale.y, scaleZ);
 
-        colorBlock.transform.DOScale(newScale, _speed).SetEase(_ease).SetLoops(_loops, _loopType);
+        colorBlock.transform.DOScale(newScale, _duration).SetEase(_ease).SetLoops(_loops, _loopType)
+            .OnComplete(() => AnimationCompleted?.Invoke(colorBlock));
     }
 }

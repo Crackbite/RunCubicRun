@@ -1126,7 +1126,6 @@ GameObject:
   - component: {fileID: 296935711}
   - component: {fileID: 296935703}
   - component: {fileID: 296935713}
-  - component: {fileID: 296935712}
   - component: {fileID: 296935715}
   - component: {fileID: 296935714}
   - component: {fileID: 296935717}
@@ -1255,24 +1254,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &296935712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296935702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907f89edcc673d24c8f22d72903ac173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scatter: 30
-  _speed: 0.1
-  _ease: 32
-  _loops: 4
-  _loopType: 1
-  _blockStack: {fileID: 1761122229}
 --- !u!114 &296935713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10808,6 +10789,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1761122228}
   - component: {fileID: 1761122229}
+  - component: {fileID: 1761122234}
+  - component: {fileID: 1761122233}
   - component: {fileID: 1761122230}
   - component: {fileID: 1761122231}
   - component: {fileID: 1761122232}
@@ -10893,6 +10876,37 @@ MonoBehaviour:
   _cubic: {fileID: 296935703}
   _followSpeed: 350
   _gapSizeFactor: 0.001
+--- !u!114 &1761122233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761122227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0348f66d26257c94c8738a38bef829fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0.2
+  _ease: 32
+--- !u!114 &1761122234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761122227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d48847901a1d3948bdd643c15c4d489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scatter: 30
+  _duration: 0.1
+  _ease: 32
+  _loops: 4
+  _loopType: 1
 --- !u!1 &1786945316
 GameObject:
   m_ObjectHideFlags: 0
