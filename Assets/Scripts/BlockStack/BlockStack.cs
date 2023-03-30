@@ -30,7 +30,7 @@ public class BlockStack : MonoBehaviour
         _destroyAnimator.AnimationCompleted += OnDestroyAnimationCompleted;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         Vector3 currentPosition = transform.position;
         transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
