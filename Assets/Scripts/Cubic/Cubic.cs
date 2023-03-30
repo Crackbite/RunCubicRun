@@ -79,4 +79,9 @@ public class Cubic : MonoBehaviour
         _meshRenderer.enabled = false;
         _collider.enabled = false;
     }
+
+    public void TurnOffCollider()
+    {
+        _collider.enabled = false;
+    }
 }

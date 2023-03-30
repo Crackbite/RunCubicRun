@@ -147,7 +147,7 @@ public class CubicMovement : MonoBehaviour
         EscapeFromPress();
     }
 
-    private void WholePistonOnCubicReached()
+    private void WholePistonOnCubicReached(Cubic cubic)
     {
         _canLeavePress = false;
     }

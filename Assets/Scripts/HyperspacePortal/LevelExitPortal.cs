@@ -10,7 +10,7 @@ public class LevelExitPortal : HyperspacePortal
     [SerializeField] private PressStand _pressStand;
 
 
-    private float _dragDistance = 3f;
+    private float _dragDistance = 5f;
     private float _dragDuration = 3f;
     private bool _isCubicLeft;
 
@@ -30,16 +30,15 @@ public class LevelExitPortal : HyperspacePortal
 
     private void OnCubicLeftPress()
     {
-        Debug.Log("Left");
         _isCubicLeft = true;
-        TargetPositionY = Center.position.y;
-        TargetScale = Vector3.zero;
-        Invoke(nameof(SuckIn), 3);
+        Invoke(nameof(SuckIn), 1);
     }
 
     private void SuckIn()
     {
         SuckingIn?.Invoke();
+        TargetPositionY = Center.position.y;
+        TargetScale = Vector3.zero;
         Sequence dragSequence = DOTween.Sequence();
 
         dragSequence.Append(CubicTransform.DOBlendableMoveBy(new Vector3(_dragDistance, 0, 0), _dragDuration).SetEase(_dragEase))
@@ -47,21 +46,17 @@ public class LevelExitPortal : HyperspacePortal
             {
                 FlightSequence = DOTween.Sequence();
                 FlightSequence.Append(CubicTransform.DOMove(Center.position, FlightDuration).SetEase(FlightEase)).SetSpeedBased(true);
-                FlightSequence.Join(CubicTransform.DOScale(TargetScale, FlightDuration).SetDelay(FlightDuration * 0.2f));
+                FlightSequence.Join(CubicTransform.DOScale(TargetScale, FlightDuration).SetEase(FlightEase));
+                FlightSequence.Join(CubicTransform.DOBlendableRotateBy(Vector3.right * RotationAngle * RotationSpeed, FlightDuration, RotateMode.FastBeyond360)).SetEase(RotationEase);
             });
-        dragSequence.Join(CubicTransform.DOShakeRotation(_dragDuration, strength: new Vector3(0, 0, 10), vibrato: 70, randomness: 100));
+        dragSequence.Join(CubicTransform.DOShakeRotation(_dragDuration, strength: new Vector3(2, 0, 2), vibrato: 30, randomness: 100)).SetEase(_dragEase);
     }
 
     private void OnPistonWorkCompleted()
     {
-        Debug.Log("WorkCompleted");
         if(_isCubicLeft == false)
         {
-            TargetPositionY = Center.position.y;
-            TargetScale = Vector3.zero;
-            CubicTransform.localScale = new Vector3(CubicTransform.localScale.x, 0.1f, CubicTransform.localScale.z);
-            CubicTransform.position = new Vector3(CubicTransform.position.x, _pressStand.Bounds.max.y + CubicTransform.localScale.y, CubicTransform.position.z);
-            Invoke(nameof(SuckIn), 3);
+            Invoke(nameof(SuckIn), 1);
         }
     }
 }

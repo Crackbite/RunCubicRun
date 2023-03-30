@@ -5,10 +5,12 @@ using UnityEngine;
 public class PistonMover : MonoBehaviour
 {
     [SerializeField] private PressStand _pressStand;
+    [SerializeField] private float _crushedCubicSizeY = .1f;
 
     private bool _isCubicReached;
     private PistonPresser _pistonPresser;
     private PressSpeedHandler _pressSpeedHandler;
+    private Cubic _cubic;
 
     public event Action WorkCompleted;
 
@@ -37,7 +39,7 @@ public class PistonMover : MonoBehaviour
         Vector3 currentPosition = transform.position;
         Vector3 newPosition = currentPosition;
 
-        float pressStandTopYPosition = _pressStand.Bounds.max.y;
+        float pressStandTopYPosition = _pressStand.Bounds.max.y + _crushedCubicSizeY;
         newPosition.y = pressStandTopYPosition;
 
         float step = speed * Time.deltaTime;
@@ -45,6 +47,11 @@ public class PistonMover : MonoBehaviour
 
         if (Mathf.Approximately(newPosition.y, transform.position.y))
         {
+            if(_cubic != null)
+            {
+                 CrushCubic();
+            }
+
             IsWorking = false;
             WorkCompleted?.Invoke();
         }
@@ -70,8 +77,16 @@ public class PistonMover : MonoBehaviour
         IsWorking = true;
     }
 
-    private void PistonPresserOnCubicReached()
+    private void PistonPresserOnCubicReached(Cubic cubic)
     {
+        _cubic = cubic;
         _isCubicReached = true;
+    }
+
+    private void CrushCubic()
+    {
+        float positionY = _cubic.transform.position.y + _cubic.Bounds.extents.y + _crushedCubicSizeY;
+        _cubic.transform.localScale = new Vector3(_cubic.transform.localScale.x, _crushedCubicSizeY, _cubic.transform.localScale.z);
+        _cubic.transform.position = new Vector3(_cubic.transform.position.x, positionY, _cubic.transform.position.z);
     }
 }

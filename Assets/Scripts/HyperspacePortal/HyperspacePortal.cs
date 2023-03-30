@@ -3,7 +3,7 @@ using DG.Tweening;
 
 public abstract class HyperspacePortal : MonoBehaviour
 {
-    [SerializeField] protected Transform CubicTransform;
+    [SerializeField] protected Cubic Cubic;
     [SerializeField] protected Transform Center;
     [SerializeField] protected float FlightDuration = 1.2f; 
     [SerializeField] protected float RotationAngle = 360f; 
@@ -14,5 +14,11 @@ public abstract class HyperspacePortal : MonoBehaviour
     protected Vector3 TargetScale;
     protected Sequence FlightSequence;
     protected float TargetPositionY;
+    protected Transform CubicTransform;
+
+    private void Awake()
+    {
+        CubicTransform = Cubic.transform;
+    }
 }
 

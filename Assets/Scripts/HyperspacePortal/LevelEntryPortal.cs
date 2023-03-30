@@ -9,7 +9,6 @@ public class LevelEntryPortal : HyperspacePortal
     private void Start()
     {
         TargetPositionY = CubicTransform.position.y;
-        CubicTransform.position = Center.position;
         TargetScale = CubicTransform.transform.localScale;
         CubicTransform.localScale = Vector3.zero;
         Invoke(nameof(ThrowOut), 2);
@@ -19,6 +18,7 @@ public class LevelEntryPortal : HyperspacePortal
     {
         ThrowingOut?.Invoke();
         Quaternion startRotation = CubicTransform.rotation;
+        CubicTransform.position = Center.position;
 
         FlightSequence = DOTween.Sequence();
         FlightSequence.Append(CubicTransform.DOScale(TargetScale, FlightDuration * 0.5f));
