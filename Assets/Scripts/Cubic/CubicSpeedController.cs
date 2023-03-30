@@ -1,3 +1,4 @@
+using System;
 
 using System.Collections;
 using UnityEngine;
@@ -11,11 +12,14 @@ public class CubicSpeedController : MonoBehaviour
     [SerializeField] private float _acceleration = 3f;
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private AnimationCurve _stopCurve;
+    [SerializeField] private AnimationCurve _fightSlowCurve;
+    [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
     private Cubic _cubic;
 
     private float _initialSpeed;
     private bool _isMaxSpeed;
+    private bool _isThrowing;
     private bool _isStop;
     private float _runningTime;
 
@@ -25,19 +29,20 @@ public class CubicSpeedController : MonoBehaviour
     private void OnEnable()
     {
         _blockStacker.WrongBlockTaken += OnWrongBlockTaken;
+        _levelEntryPortal.ThrowingOut += OnCubicThrowingOut;
     }
 
     private void Start()
     {
         _cubic = GetComponent<Cubic>();
 
-        CurrentSpeed = _moveSpeed;
-        _isMaxSpeed = true;
+        CurrentSpeed = 0;
+        _isThrowing = true;
     }
 
     private void Update()
     {
-        if (CurrentSpeed < _moveSpeed && _isMaxSpeed)
+        if (CurrentSpeed < _moveSpeed && _isMaxSpeed && _isThrowing == false)
         {
             _isMaxSpeed = false;
             StartCoroutine(Accelerate());
@@ -47,6 +52,7 @@ public class CubicSpeedController : MonoBehaviour
     private void OnDisable()
     {
         _blockStacker.WrongBlockTaken -= OnWrongBlockTaken;
+        _levelEntryPortal.ThrowingOut -= OnCubicThrowingOut;
     }
 
     public void SlowDown()
@@ -56,7 +62,7 @@ public class CubicSpeedController : MonoBehaviour
         if (_cubic.IsSawing)
         {
             _isStop = true;
-            StartCoroutine(StopSlowly());
+            StartCoroutine(StopSlowly(_stopCurve));
         }
         else
         {
@@ -64,6 +70,11 @@ public class CubicSpeedController : MonoBehaviour
             _runningTime = StartTime;
             _initialSpeed = CurrentSpeed;
         }
+    }
+
+    private void OnCubicThrowingOut()
+    {
+        StartCoroutine(StopSlowly(_fightSlowCurve));
     }
 
     private IEnumerator Accelerate()
@@ -90,17 +101,22 @@ public class CubicSpeedController : MonoBehaviour
         SlowDown();
     }
 
-    private IEnumerator StopSlowly()
+    private IEnumerator StopSlowly(AnimationCurve slowCurve)
     {
         float runningTime = 0;
         float stopDuration = _stopCurve.keys[_stopCurve.length - 1].time;
 
         while (runningTime <= stopDuration)
         {
-            CurrentSpeed = _moveSpeed * _stopCurve.Evaluate(runningTime);
+            CurrentSpeed = _moveSpeed * slowCurve.Evaluate(runningTime);
             runningTime += Time.deltaTime;
-
             yield return null;
+        }
+
+        if(_isStop == false)
+        {
+            _isMaxSpeed = true;
+            _isThrowing = false;
         }
     }
 }

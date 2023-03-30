@@ -16,7 +16,7 @@ public class PistonPresser : MonoBehaviour
     private bool _isCubicReached;
     private PistonMover _pistonMover;
 
-    public event Action CubicReached;
+    public event Action<Cubic> CubicReached;
 
     private void OnEnable()
     {
@@ -35,7 +35,7 @@ public class PistonPresser : MonoBehaviour
         {
             if (_isCubicReached == false)
             {
-                CubicReached?.Invoke();
+                CubicReached?.Invoke(cubic);
                 StartCoroutine(ShakeAndPress(cubic));
             }
             else

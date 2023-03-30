@@ -53,7 +53,7 @@ public class CubicMovement : MonoBehaviour
 
         if (_canMove && isFalling == false)
         {
-            _cubic.transform.Translate(_cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right);
+            _cubic.transform.Translate(_cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right, Space.World);
         }
     }
 
@@ -147,7 +147,7 @@ public class CubicMovement : MonoBehaviour
         EscapeFromPress();
     }
 
-    private void WholePistonOnCubicReached()
+    private void WholePistonOnCubicReached(Cubic cubic)
     {
         _canLeavePress = false;
     }
