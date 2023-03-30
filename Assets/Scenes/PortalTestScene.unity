@@ -2065,8 +2065,8 @@ MonoBehaviour:
   FlightDuration: 1.2
   RotationAngle: 360
   RotationSpeed: 2
-  FlightEase: 8
-  RotationEase: 6
+  _flightEase: 8
+  _rotationEase: 6
 --- !u!95 &328617538
 Animator:
   serializedVersion: 4
@@ -2095,7 +2095,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328617536}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -23.9, y: 0.63, z: 0}
+  m_LocalPosition: {x: -97, y: 0.63, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -8155,18 +8155,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cubic: {fileID: 296935703}
   Center: {fileID: 1515719037}
-  FlightDuration: 0.07
+  FlightDuration: 0.5
   RotationAngle: 360
   RotationSpeed: 1.5
-  FlightEase: 20
-  RotationEase: 5
   _cubicMovement: {fileID: 296935720}
-  _dragEase: 20
-  _scaleEase: 8
   _pistonMover: {fileID: 2119106961}
   _pressStand: {fileID: 2009891839}
-  _dragDistance: 4
-  _dragDuration: 4
+  _dragDistance: 5
+  _dragDuration: 3
+  _randomness: 100
+  _vibration: 30
+  _strength: {x: 2, y: 0, z: 2}
 --- !u!1 &1229451421
 GameObject:
   m_ObjectHideFlags: 0

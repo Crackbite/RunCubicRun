@@ -47,9 +47,9 @@ public class PistonMover : MonoBehaviour
 
         if (Mathf.Approximately(newPosition.y, transform.position.y))
         {
-            if(_cubic != null)
+            if (_cubic != null)
             {
-                 CrushCubic();
+                CrushCubic();
             }
 
             IsWorking = false;

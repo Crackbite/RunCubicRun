@@ -5,13 +5,15 @@ using UnityEngine;
 public class LevelExitPortal : HyperspacePortal
 {
     [SerializeField] private CubicMovement _cubicMovement;
-    [SerializeField] private Ease _dragEase = Ease.InCubic;
     [SerializeField] private PistonMover _pistonMover;
     [SerializeField] private PressStand _pressStand;
+    [SerializeField] private float _dragDistance = 5f;
+    [SerializeField] private float _dragDuration = 3f;
+    [SerializeField] private float _randomness = 100f;
+    [SerializeField] private int _vibration = 30;
+    [SerializeField] private Vector3 _strength = new Vector3(2, 0, 2);
 
-
-    private float _dragDistance = 5f;
-    private float _dragDuration = 3f;
+    private const float Delay = 1f;
     private bool _isCubicLeft;
 
     public event Action SuckingIn;
@@ -31,32 +33,33 @@ public class LevelExitPortal : HyperspacePortal
     private void OnCubicLeftPress()
     {
         _isCubicLeft = true;
-        Invoke(nameof(SuckIn), 1);
+        Invoke(nameof(SuckIn), Delay);
     }
 
     private void SuckIn()
     {
         SuckingIn?.Invoke();
-        TargetPositionY = Center.position.y;
         TargetScale = Vector3.zero;
         Sequence dragSequence = DOTween.Sequence();
 
-        dragSequence.Append(CubicTransform.DOBlendableMoveBy(new Vector3(_dragDistance, 0, 0), _dragDuration).SetEase(_dragEase))
-            .OnComplete(() =>
-            {
-                FlightSequence = DOTween.Sequence();
-                FlightSequence.Append(CubicTransform.DOMove(Center.position, FlightDuration).SetEase(FlightEase)).SetSpeedBased(true);
-                FlightSequence.Join(CubicTransform.DOScale(TargetScale, FlightDuration).SetEase(FlightEase));
-                FlightSequence.Join(CubicTransform.DOBlendableRotateBy(Vector3.right * RotationAngle * RotationSpeed, FlightDuration, RotateMode.FastBeyond360)).SetEase(RotationEase);
-            });
-        dragSequence.Join(CubicTransform.DOShakeRotation(_dragDuration, strength: new Vector3(2, 0, 2), vibrato: 30, randomness: 100)).SetEase(_dragEase);
+        Tween dragByX = CubicTransform.DOMoveX(CubicTransform.position.x + _dragDistance, _dragDuration).SetEase(Ease.Linear);
+        Tween shaking = CubicTransform.DOShakeRotation(_dragDuration, strength: _strength, vibrato: _vibration, randomness: _randomness).SetEase(Ease.Linear);
+        Tween flight = CubicTransform.DOMove(Center.position, FlightDuration).SetEase(Ease.Linear);
+        Tween scaling = CubicTransform.DOScale(TargetScale, FlightDuration).SetEase(Ease.Linear);
+        Tween rotation = CubicTransform.DORotate(Vector3.right * RotationAngle * RotationSpeed, FlightDuration, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+
+        dragSequence.Append(dragByX);
+        dragSequence.Join(shaking);
+        dragSequence.Append(flight);
+        dragSequence.Join(scaling);
+        dragSequence.Join(rotation);
     }
 
     private void OnPistonWorkCompleted()
     {
-        if(_isCubicLeft == false)
+        if (_isCubicLeft == false)
         {
-            Invoke(nameof(SuckIn), 1);
+            Invoke(nameof(SuckIn), Delay);
         }
     }
 }
