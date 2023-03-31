@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class ScoreAllocator : MonoBehaviour
 {
-    [Range(.5f, 10f)] [SerializeField] private float _scorePerGoodBlock = 1f;
-    [Range(-.5f, -10f)] [SerializeField] private float _scorePerBadBlock = -2f;
-    [Range(2, 100)] [SerializeField] private int _collectedGoodBlocksForBonus = 10;
-    [Range(.5f, 10f)] [SerializeField] private float _scorePerBonusGoodBlock = 1.5f;
+    [Range(.5f, 10f)] [SerializeField] private float _goodBlockScore = 1f;
+    [Range(-.5f, -10f)] [SerializeField] private float _badBlockScore = -2f;
+    [Range(2, 100)] [SerializeField] private int _bonusGoodBlockThreshold = 10;
+    [Range(.5f, 10f)] [SerializeField] private float _bonusGoodBlockScore = 1.5f;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
 
-    private float _blocksAssembledInRow;
-    private float _currentScorePerGoodBlock;
+    private float _currentGoodBlockScore;
+    private float _goodBlocksInRow;
     private bool _isCubicUnderPress;
-    private float _score;
+    private float _totalScore;
 
     public event Action<Score> ScoreChanged;
 
@@ -27,7 +27,7 @@ public class ScoreAllocator : MonoBehaviour
 
     private void Start()
     {
-        _currentScorePerGoodBlock = _scorePerGoodBlock;
+        _currentGoodBlockScore = _goodBlockScore;
     }
 
     private void OnDisable()
@@ -39,25 +39,23 @@ public class ScoreAllocator : MonoBehaviour
 
     private void ChangeScore(float value, ScoreChangeInitiator initiator)
     {
-        _score = Mathf.Max(_score += value, 0f);
-        var score = new Score(_score, value, initiator);
+        _totalScore = Mathf.Max(_totalScore += value, 0f);
+        var score = new Score(_totalScore, value, initiator);
 
         ScoreChanged?.Invoke(score);
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)
     {
-        _currentScorePerGoodBlock = _blocksAssembledInRow >= _collectedGoodBlocksForBonus
-                                        ? _scorePerBonusGoodBlock
-                                        : _scorePerGoodBlock;
-        _blocksAssembledInRow++;
+        _currentGoodBlockScore = _goodBlocksInRow >= _bonusGoodBlockThreshold ? _bonusGoodBlockScore : _goodBlockScore;
+        _goodBlocksInRow++;
 
-        ChangeScore(_currentScorePerGoodBlock, ScoreChangeInitiator.Cubic);
+        ChangeScore(_currentGoodBlockScore, ScoreChangeInitiator.Cubic);
     }
 
     private void OnBlockRemoved(ColorBlock colorBlock)
     {
-        _blocksAssembledInRow = 0;
+        _goodBlocksInRow = 0;
 
         float score;
         ScoreChangeInitiator initiator;
@@ -69,7 +67,7 @@ public class ScoreAllocator : MonoBehaviour
         }
         else
         {
-            score = _scorePerBadBlock;
+            score = _badBlockScore;
             initiator = ScoreChangeInitiator.Cubic;
         }
 
