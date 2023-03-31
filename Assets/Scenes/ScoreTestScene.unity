@@ -7885,6 +7885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1229451423}
   - component: {fileID: 1229451422}
+  - component: {fileID: 1229451424}
   m_Layer: 0
   m_Name: HydraulicPress
   m_TagString: Untagged
@@ -7926,6 +7927,24 @@ Transform:
   m_Father: {fileID: 1418456538}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1229451424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229451421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3147d929daf064f459327e7d1e6a1887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minScore: 0.2
+  _maxScore: 15
+  _increaseStep: 5
+  _increaseAmount: 0.4
+  _cubic: {fileID: 296935703}
+  _blockStack: {fileID: 1761122229}
 --- !u!4 &1272204689 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3871968676722395240, guid: ff41a1c984a2e414ba6ce8ca5f4170d5, type: 3}
@@ -12448,6 +12467,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df9a1cad0cae4642a431874a89d25af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1643414454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643414457}
+  - component: {fileID: 1643414456}
+  - component: {fileID: 1643414455}
+  m_Layer: 0
+  m_Name: ScoreAllocator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1643414455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643414454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb80c794521df524cb1068c76930df41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreAllocator: {fileID: 1643414456}
+--- !u!114 &1643414456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643414454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66bc82e0814757e45bc06add92375600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scorePerGoodBlock: 1
+  _scorePerBadBlock: -2
+  _cubic: {fileID: 296935703}
+  _blockStack: {fileID: 1761122229}
+  _pressScoreCalculator: {fileID: 1229451424}
+--- !u!4 &1643414457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643414454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1666762553
 GameObject:
   m_ObjectHideFlags: 0

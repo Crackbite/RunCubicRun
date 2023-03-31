@@ -16,6 +16,6 @@ public class ScoreDisplay : MonoBehaviour
 
     private void OnScoreChanged(Score score)
     {
-        Debug.Log($"{score.Current} | {score.Change}");
+        Debug.Log($"{score.Current} | {score.Change} | {score.Initiator}");
     }
 }
