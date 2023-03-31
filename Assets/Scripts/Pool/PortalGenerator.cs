@@ -7,7 +7,7 @@ public class PortalGenerator : ObjectPool
     [SerializeField] private Cubic _cubic;
     [SerializeField] private ColorHolder _colorHolder;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
-    [SerializeField] private float _skipDistance;
+    [SerializeField] private List<Transform> _instalationPoints;
 
     private List<Color> _unusedColors;
     private Color _usedColor;
@@ -16,21 +16,31 @@ public class PortalGenerator : ObjectPool
     {
         Initialize(_template);
         SortUnusedColors();
-        SetToPosition(GetInstallationPosition());
+
+        if(_instalationPoints.Count > 0)
+        {
+            SetToPosition(GetInstallationPosition());
+        }
     }
 
     private Vector3 GetInstallationPosition()
     {
-        Vector3 position = _template.transform.position;
-        return new Vector3(_cubic.transform.position.x + _skipDistance, position.y, position.z);
+        int firstPointIndex = 0;
+        Vector3 position = _instalationPoints[firstPointIndex].position;
+        _instalationPoints.RemoveAt(firstPointIndex);
+        return position;
     }
 
     private void OnCubicEntered(Portal portal)
     {
         _blockStackRenderer.ChangeColor(portal.Color);
-        SetToPosition(GetInstallationPosition());
         portal.CubicEntered -= OnCubicEntered;
         DisableObjectAbroadScreen();
+
+        if (_instalationPoints.Count > 0)
+        {
+            SetToPosition(GetInstallationPosition());
+        }
     }
 
     private Color SetNextColor()

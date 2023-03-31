@@ -5,6 +5,7 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _effect;
     [SerializeField] private float _alphaValue;
+    [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
     public event UnityAction<Portal> CubicEntered;
 
