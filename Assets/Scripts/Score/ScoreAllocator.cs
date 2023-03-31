@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ScoreAllocator : MonoBehaviour
 {
+    [SerializeField] private float _minScore;
     [Range(.5f, 10f)] [SerializeField] private float _goodBlockScore = 1f;
     [Range(-.5f, -10f)] [SerializeField] private float _badBlockScore = -2f;
     [Range(2, 100)] [SerializeField] private int _bonusGoodBlockThreshold = 10;
@@ -39,7 +40,10 @@ public class ScoreAllocator : MonoBehaviour
 
     private void ChangeScore(float value, ScoreChangeInitiator initiator)
     {
-        _totalScore = Mathf.Max(_totalScore += value, 0f);
+        const float RoundingFactor = 10.0f;
+
+        _totalScore += Mathf.Round(value * RoundingFactor) / RoundingFactor;
+        _totalScore = Mathf.Max(_totalScore, _minScore);
         var score = new Score(_totalScore, value, initiator);
 
         ScoreChanged?.Invoke(score);
