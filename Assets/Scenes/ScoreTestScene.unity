@@ -4534,7 +4534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 745010657}
   m_Layer: 0
-  m_Name: Environpents
+  m_Name: Environments
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12510,8 +12510,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bc82e0814757e45bc06add92375600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scorePerGoodBlock: 1
-  _scorePerBadBlock: -2
+  _minScore: 0
+  _goodBlockScore: 1
+  _badBlockScore: -2
+  _bonusGoodBlockThreshold: 10
+  _bonusGoodBlockScore: 1.5
   _cubic: {fileID: 296935703}
   _blockStack: {fileID: 1761122229}
   _pressScoreCalculator: {fileID: 1229451424}
