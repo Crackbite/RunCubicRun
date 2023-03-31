@@ -7,6 +7,7 @@ public class BlockStackRenderer : MonoBehaviour
     [SerializeField] private BlockStack _blockStack;
 
     public Color CurrentColor { get; private set; }
+    public bool IsColorAssigned { get; private set; }
 
     private void OnEnable()
     {
@@ -27,6 +28,8 @@ public class BlockStackRenderer : MonoBehaviour
             int stackPosition = _blockStack.Blocks.Count - i;
             _blockStack.Blocks[i].BlockRenderer.SetColor(color, stackPosition, _gradient, _coloringSpeedFactor);
         }
+
+        TryAssignColor();
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)
@@ -35,6 +38,16 @@ public class BlockStackRenderer : MonoBehaviour
             && blockRenderer.CurrentColor != CurrentColor)
         {
             CurrentColor = blockRenderer.CurrentColor;
+        }
+
+        TryAssignColor();
+    }
+
+    private void TryAssignColor()
+    {
+        if (IsColorAssigned == false)
+        {
+            IsColorAssigned = true;
         }
     }
 }

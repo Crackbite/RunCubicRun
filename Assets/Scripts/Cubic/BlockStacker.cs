@@ -24,7 +24,7 @@ public class BlockStacker : MonoBehaviour
             return;
         }
 
-        if (_blockStack.Blocks.Count > 0 && _blockStackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
+        if (_blockStackRenderer.IsColorAssigned && _blockStackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
             _blockStack.AnimateDestroy(_blockStack.Blocks[0]);
