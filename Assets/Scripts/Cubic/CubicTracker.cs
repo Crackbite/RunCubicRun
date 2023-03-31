@@ -43,6 +43,6 @@ public class CubicTracker : MonoBehaviour
         Vector3 cubicPosition = _cubic.transform.position;
 
         _targetPosition = new Vector3(cubicPosition.x + _xOffset, trackerPosition.y, trackerPosition.z);
-        _targetPosition.x = Mathf.Clamp(_targetPosition.x, _xLeftLimit, _xRightLimit + cubicPosition.x);
+        _targetPosition.x = Mathf.Clamp(_targetPosition.x, _xLeftLimit, _xRightLimit);
     }
 }
