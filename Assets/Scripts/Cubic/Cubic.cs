@@ -9,6 +9,7 @@ public class Cubic : MonoBehaviour
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
     [SerializeField] private float _jumpForce = 6.5f;
     [SerializeField] private float _jumpAcceleration = 7.7f;
+    [SerializeField] private float _crushedSizeY = .1f;
 
     private Collider _collider;
     private MeshRenderer _meshRenderer;
@@ -25,6 +26,7 @@ public class Cubic : MonoBehaviour
     public bool IsSideCollision { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
     public float JumpForce => _jumpForce;
+    public float CrushedSizeY => _crushedSizeY;
 
     private void Start()
     {
@@ -80,8 +82,11 @@ public class Cubic : MonoBehaviour
         _collider.enabled = false;
     }
 
-    public void TurnOffCollider()
+    public void FlattenOut(float standMaxY)
     {
         _collider.enabled = false;
+        float positionY = standMaxY + _crushedSizeY / 2;
+        transform.localScale = new Vector3(transform.localScale.x, _crushedSizeY, transform.localScale.z);
+        transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
     }
 }
