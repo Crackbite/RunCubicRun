@@ -6,7 +6,7 @@ public class PressScoreCalculator : MonoBehaviour
     [Range(.1f, 100f)] [SerializeField] private float _minScore = .2f;
     [Range(1f, 10000f)] [SerializeField] private float _maxScore = 15f;
     [Range(1, 100)] [SerializeField] private int _increaseStep = 5;
-    [Range(.1f, 100f)] [SerializeField] private float _increaseAmount = .4f;
+    [Range(.1f, 10f)] [SerializeField] private float _increaseAmount = .4f;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
 
