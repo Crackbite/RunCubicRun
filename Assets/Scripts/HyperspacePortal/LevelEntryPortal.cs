@@ -31,13 +31,13 @@ public class LevelEntryPortal : HyperspacePortal
         Sequence throwSequence = DOTween.Sequence();
 
         Tween scaling = CubicTransform.DOScale(TargetScale, FlightDuration * ScaleDurationMultiplier);
-        Tween rotation = CubicTransform.DORotate(Vector3.forward * RotationAngle * RotationSpeed, FlightDuration * RotateDurationMultiplier, RotateMode.FastBeyond360);
+        Tween rotation = CubicTransform.DORotate(Vector3.forward * RotationAngle * RotationSpeed, FlightDuration * RotateDurationMultiplier, RotateMode.FastBeyond360)
+            .SetEase(_rotationEase)
+            .OnComplete(() => CubicTransform.rotation = startRotation);
         Tween flight = CubicTransform.DOMoveY(_targetPositionY, FlightDuration).SetEase(_flightEase);
 
         throwSequence.Append(scaling);
-        throwSequence.Join(rotation)
-            .SetEase(_rotationEase)
-            .OnComplete(() => CubicTransform.rotation = startRotation);
+        throwSequence.Join(rotation);
         throwSequence.Join(flight);
     }
 }
