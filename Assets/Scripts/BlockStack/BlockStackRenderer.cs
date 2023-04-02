@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BlockStackRenderer : MonoBehaviour
@@ -5,6 +6,8 @@ public class BlockStackRenderer : MonoBehaviour
     [SerializeField] private float _gradient = .2f;
     [SerializeField] private float _coloringSpeedFactor = .02f;
     [SerializeField] private BlockStack _blockStack;
+
+    public event Action<Color> ColorAssigned;
 
     public Color CurrentColor { get; private set; }
     public bool IsColorAssigned { get; private set; }
@@ -48,6 +51,7 @@ public class BlockStackRenderer : MonoBehaviour
         if (IsColorAssigned == false)
         {
             IsColorAssigned = true;
+            ColorAssigned?.Invoke(CurrentColor);
         }
     }
 }

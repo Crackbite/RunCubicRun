@@ -12,12 +12,23 @@ public class PortalGenerator : ObjectPool
     private List<Color> _unusedColors;
     private Color _usedColor;
 
-    private void Start()
+    private void OnEnable()
+    {
+        _blockStackRenderer.ColorAssigned += OnStackColorAssigned;
+    }
+
+    private void OnDisable()
+    {
+        _blockStackRenderer.ColorAssigned -= OnStackColorAssigned;
+    }
+
+    private void OnStackColorAssigned(Color color)
     {
         Initialize(_template);
+        _usedColor = color;
         SortUnusedColors();
 
-        if(_instalationPoints.Count > 0)
+        if (_instalationPoints.Count > 0)
         {
             SetToPosition(GetInstallationPosition());
         }
