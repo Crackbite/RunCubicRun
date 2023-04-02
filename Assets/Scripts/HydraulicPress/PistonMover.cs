@@ -11,6 +11,7 @@ public class PistonMover : MonoBehaviour
     private PistonPresser _pistonPresser;
     private PressSpeedHandler _pressSpeedHandler;
     private Cubic _cubic;
+    private const float Threshold = 0.001f;
 
     public event Action WorkCompleted;
 
@@ -45,7 +46,7 @@ public class PistonMover : MonoBehaviour
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(currentPosition, newPosition, step);
 
-        if (Mathf.Approximately(newPosition.y, transform.position.y))
+        if (transform.position.y - newPosition.y < Threshold)
         {
             if (_cubic != null)
             {
