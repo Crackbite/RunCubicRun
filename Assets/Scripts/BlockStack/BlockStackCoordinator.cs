@@ -51,13 +51,15 @@ public class BlockStackCoordinator : MonoBehaviour
 
     public bool IsAnchorGrounded()
     {
+        const float Threshold = 0.001f;
+
         _deltaY = _anchor.position.y - _anchorGroundPositionY;
 
-        if (_deltaY < 0 && IsFallDawn == false)
+        if (_deltaY < -Threshold && IsFallDawn == false)
         {
             IsFallDawn = true;
         }
 
-        return _deltaY == 0;
+        return Mathf.Abs(_deltaY) < Threshold;
     }
 }
