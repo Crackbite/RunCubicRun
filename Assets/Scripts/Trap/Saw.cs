@@ -4,6 +4,8 @@ public class Saw : Trap
 {
     [SerializeField] private SplitType _splitType;
 
+    private const float Threshold = .5f;
+
     public SplitType SplitType => _splitType;
 
     protected override void OnTriggerEnter(Collider collision)
@@ -19,7 +21,7 @@ public class Saw : Trap
         }
         else
         {
-            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) > 0;
+            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) > Threshold;
 
             if (_splitType == SplitType.Vertical && IsSideCollision)
             {
