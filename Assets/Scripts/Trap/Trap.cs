@@ -11,6 +11,8 @@ public class Trap : MonoBehaviour
     private Collider[] _colliders;
     private Rigidbody[] _pieces;
 
+    protected const float Threshold = .5f;
+
     private void Start()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
@@ -31,7 +33,7 @@ public class Trap : MonoBehaviour
         else
         {
             IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
-                              >= transform.localScale.z / 2f;
+                              >= Threshold;
             Stop();
             cubic.HitTrap(this, IsSideCollision);
         }
@@ -54,7 +56,7 @@ public class Trap : MonoBehaviour
 
     public void Stop()
     {
-        _animator.enabled = false;
+        _animator.speed = 0f;
 
         foreach (Collider currentCollider in _colliders)
         {

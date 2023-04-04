@@ -4,8 +4,6 @@ public class Saw : Trap
 {
     [SerializeField] private SplitType _splitType;
 
-    private const float Threshold = .5f;
-
     public SplitType SplitType => _splitType;
 
     protected override void OnTriggerEnter(Collider collision)

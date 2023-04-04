@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(Cubic))]
 public class SidewayMovement : MonoBehaviour
 {
     [SerializeField] private LayerMask _ignoreLayerMask = 1 << 7;
@@ -10,6 +11,7 @@ public class SidewayMovement : MonoBehaviour
 
     private float _currentLineIndex = 1f;
     private float _initialPositionZ;
+    private Cubic _cubic;
 
     private Tweener _lineTweener;
 
@@ -17,6 +19,7 @@ public class SidewayMovement : MonoBehaviour
 
     private void Start()
     {
+        _cubic = GetComponent<Cubic>();
         _initialPositionZ = transform.position.z;
     }
 
@@ -74,7 +77,7 @@ public class SidewayMovement : MonoBehaviour
 
     private void StopLineTweener()
     {
-        if (IsWayClear())
+        if (IsWayClear() && _cubic.CanDestroy == false)
         {
             _lineTweener.Kill();
         }
