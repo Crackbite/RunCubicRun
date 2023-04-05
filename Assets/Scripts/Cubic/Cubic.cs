@@ -23,7 +23,6 @@ public class Cubic : MonoBehaviour
     public bool CanDestroy => _canDestroy;
     public Trap CollisionTrap { get; private set; }
     public bool IsSawing { get; private set; }
-    public bool IsSideCollision { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
     public float JumpForce => _jumpForce;
     public float CrushedSizeY => _crushedSizeY;
@@ -51,14 +50,13 @@ public class Cubic : MonoBehaviour
         SteppedOnStand?.Invoke(pressStand);
     }
 
-    public void HitTrap(Trap trap, bool isSideCollision)
+    public void HitTrap(Trap trap)
     {
         CollisionTrap = trap;
-        IsSideCollision = isSideCollision;
 
         if (trap.TryGetComponent(out Saw saw))
         {
-            if (saw.SplitType == SplitType.Horizontal || (saw.SplitType == SplitType.Vertical && IsSideCollision == false))
+            if (trap.IsSideCollision == false)
             {
                 IsSawing = true;
             }
@@ -67,13 +65,13 @@ public class Cubic : MonoBehaviour
         Hit?.Invoke();
     }
 
-    public void SplitIntoPieces(SplitType splitType)
+    public void SplitIntoPieces(Saw saw)
     {
-        if (splitType == SplitType.Vertical)
+        if (TryGetComponent(out VerticalSaw _))
         {
             _verticalSplitter.Split();
         }
-        else if (splitType == SplitType.Horizontal)
+        else 
         {
             _horizontalSplitter.Split();
         }

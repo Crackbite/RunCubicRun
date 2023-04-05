@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class BlockStackPhysics : MonoBehaviour
@@ -60,7 +59,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         if (_cubic.CollisionTrap != null)
         {
-            if (_cubic.IsSideCollision)
+            if (_cubic.CollisionTrap.IsSideCollision)
             {
                 Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
                 fallDirection = trapPosition.z > _cubic.transform.position.z
