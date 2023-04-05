@@ -5,6 +5,7 @@ public class Trap : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _splitBody;
+    [SerializeField] private GameObject _wholeBody;
 
     protected bool IsSideCollision;
 
@@ -44,7 +45,7 @@ public class Trap : MonoBehaviour
         const float PieceLifeTime = 10f;
 
         Stop();
-        gameObject.SetActive(false);
+        _wholeBody.SetActive(false);
         _splitBody.SetActive(true);
 
         foreach (Rigidbody piece in _pieces)
