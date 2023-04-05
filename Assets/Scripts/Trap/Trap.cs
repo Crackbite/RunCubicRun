@@ -14,7 +14,7 @@ public class Trap : MonoBehaviour
     protected bool IsSideCollision;
     protected const float Threshold = .5f;
 
-    private void Start()
+    private void Awake()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
         _colliders = GetComponentsInChildren<Collider>();

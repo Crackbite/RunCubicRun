@@ -18,7 +18,7 @@ public class BlockStack : MonoBehaviour
     public event Action BlocksEnded;
 
     public IReadOnlyList<ColorBlock> Blocks => _blocks;
-    public float Height => _blocks[_blocks.Count - 1].transform.position.y;
+    public float Height => _blocks[0].transform.position.y;
 
     private void Awake()
     {
