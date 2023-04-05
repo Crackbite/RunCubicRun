@@ -12,7 +12,7 @@ public class Trap : MonoBehaviour
     private Collider _collider;
 
     protected bool IsSideCollision;
-    protected const float Threshold = .5f;
+    protected const float Threshold = .1f;
 
     private void Awake()
     {

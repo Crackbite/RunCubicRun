@@ -63,18 +63,19 @@ public class BlockStackPhysics : MonoBehaviour
             if (_cubic.IsSideCollision)
             {
                 Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
-                return trapPosition.z > _cubic.transform.position.z
-                                    ? fallDirection + Vector3.forward
-                                    : fallDirection + Vector3.back;
+                fallDirection = trapPosition.z > _cubic.transform.position.z
+                                    ? Vector3.forward
+                                    : Vector3.back;
             }
-            else if(_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
+
+            if(_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
             {
                 if(tallTrap.Bounds.max.y > _blockStack.Height)
                 {
-                    return Vector3.left;
+                    return -fallDirection;
                 }
             }
-        }
+        } 
 
         return fallDirection;
     }

@@ -15,7 +15,7 @@ public class ColorBlockMovement : MonoBehaviour
         _colorBlock = GetComponent<ColorBlock>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (_colorBlock.CanFollow == false)
         {
