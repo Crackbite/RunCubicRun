@@ -7,17 +7,18 @@ public class Trap : MonoBehaviour
     [SerializeField] private GameObject _splitBody;
     [SerializeField] private GameObject _wholeBody;
 
-    protected bool IsSideCollision;
-
     private Collider[] _colliders;
     private Rigidbody[] _pieces;
+    private Collider _collider;
 
+    protected bool IsSideCollision;
     protected const float Threshold = .5f;
 
     private void Start()
     {
         _pieces = _splitBody.GetComponentsInChildren<Rigidbody>();
         _colliders = GetComponentsInChildren<Collider>();
+        _collider = GetComponent<Collider>();
     }
 
     protected virtual void OnTriggerEnter(Collider collision)
@@ -48,20 +49,20 @@ public class Trap : MonoBehaviour
         _wholeBody.SetActive(false);
         _splitBody.SetActive(true);
 
+        foreach (Collider currentCollider in _colliders)
+        {
+            currentCollider.isTrigger = false;
+        }
+
         foreach (Rigidbody piece in _pieces)
         {
             piece.isKinematic = false;
             Destroy(piece.gameObject, PieceLifeTime);
         }
     }
-
     public void Stop()
     {
-        _animator.speed = 0f;
-
-        foreach (Collider currentCollider in _colliders)
-        {
-            currentCollider.isTrigger = false;
-        }
+        _animator.enabled = false;
+        _collider.isTrigger = false;
     }
 }

@@ -41,25 +41,42 @@ public class BlockStackPhysics : MonoBehaviour
 
     private void Collapse()
     {
-        Vector3 fallDirection = Vector3.right;
-        Vector3 trapPosition = Vector3.zero;
-
-        if (_cubic.CollisionTrap != null)
+        if(_blockStack.Blocks.Count == 0)
         {
-            trapPosition = _cubic.CollisionTrap.transform.position;
+            return;
         }
 
-        if (_cubic.IsSideCollision)
-        {
-            fallDirection = trapPosition.z > _cubic.transform.position.z
-                                ? fallDirection + Vector3.forward
-                                : fallDirection + Vector3.back;
-        }
+        Vector3 fallDirection = GetFallDirection();
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
             block.BlockPhysics.FallOff(fallDirection, _frictionCoefficient);
         }
+    }
+
+    private Vector3 GetFallDirection()
+    {
+        Vector3 fallDirection = Vector3.right;
+
+        if (_cubic.CollisionTrap != null)
+        {
+            if (_cubic.IsSideCollision)
+            {
+                Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
+                return trapPosition.z > _cubic.transform.position.z
+                                    ? fallDirection + Vector3.forward
+                                    : fallDirection + Vector3.back;
+            }
+            else if(_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
+            {
+                if(tallTrap.Bounds.max.y > _blockStack.Height)
+                {
+                    return Vector3.left;
+                }
+            }
+        }
+
+        return fallDirection;
     }
 
     private void OnCubicSuckingIn()

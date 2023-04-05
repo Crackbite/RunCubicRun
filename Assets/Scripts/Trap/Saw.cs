@@ -19,11 +19,13 @@ public class Saw : Trap
         }
         else
         {
-            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z) > Threshold;
-
-            if (_splitType == SplitType.Vertical && IsSideCollision)
+            if (_splitType == SplitType.Vertical)
             {
-                Stop();
+                if (Mathf.Abs(transform.position.z - cubic.transform.position.z) > Threshold)
+                {
+                    IsSideCollision = true;
+                    Stop();
+                }
             }
 
             cubic.HitTrap(this, IsSideCollision);
