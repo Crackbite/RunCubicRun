@@ -1,31 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-8492794312561048845
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Horizontal Right Spin
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 67d8329fb293bfc46b55c7b94f5d5251, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-4180542497932951807
 AnimatorState:
   serializedVersion: 6
@@ -33,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Patrul
+  m_Name: Patrol
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -68,14 +42,8 @@ AnimatorStateMachine:
     m_State: {fileID: -4180542497932951807}
     m_Position: {x: 400, y: 200, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -8492794312561048845}
-    m_Position: {x: 400, y: 260, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 3470396956670743318}
-    m_Position: {x: 400, y: 380, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 863116986024483297}
-    m_Position: {x: 400, y: 320, z: 0}
+    m_Position: {x: 400, y: 260, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -92,7 +60,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SawController
+  m_Name: VerticalSawController
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -108,32 +76,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &863116986024483297
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Horizontal Left Spin
-  m_Speed: -1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 67d8329fb293bfc46b55c7b94f5d5251, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &3470396956670743318
 AnimatorState:
   serializedVersion: 6
@@ -141,7 +83,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Vertical Spin
+  m_Name: StaticSpin
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
