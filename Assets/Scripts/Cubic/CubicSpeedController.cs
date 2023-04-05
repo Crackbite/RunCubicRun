@@ -104,7 +104,7 @@ public class CubicSpeedController : MonoBehaviour
     private IEnumerator StopSlowly(AnimationCurve slowCurve)
     {
         float runningTime = 0;
-        float stopDuration = _stopCurve.keys[_stopCurve.length - 1].time;
+        float stopDuration = slowCurve.keys[slowCurve.length - 1].time;
 
         while (runningTime <= stopDuration)
         {
