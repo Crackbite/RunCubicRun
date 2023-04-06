@@ -67,7 +67,7 @@ public class Cubic : MonoBehaviour
 
     public void SplitIntoPieces(Saw saw)
     {
-        if (TryGetComponent(out VerticalSaw _))
+        if (saw is VerticalSaw)
         {
             _verticalSplitter.Split();
         }

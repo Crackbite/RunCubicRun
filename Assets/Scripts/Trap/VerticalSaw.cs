@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class VerticalSaw : Saw
 {
@@ -6,19 +6,19 @@ public class VerticalSaw : Saw
 
     public enum SawType { Patrol, Static }
 
-    private readonly int Patrol = Animator.StringToHash("Base Layer.Patrol");
-    private readonly int StaticSpin = Animator.StringToHash("Base Layer.StaticSpin");
+    private readonly int _speedParameterId = Animator.StringToHash("PatrolSpeed");
+    private const int MaxPatrolSpeed = 1;
+    private const int MinPatrolSpeed = 0;
 
     private void Start()
     {
-        switch (_sawType)
+        if (_sawType == SawType.Patrol)
         {
-            case SawType.Patrol:
-                Animator.Play(Patrol);
-                break;
-            case SawType.Static:
-                Animator.Play(StaticSpin);
-                break;
+            Animator.SetFloat(_speedParameterId, MaxPatrolSpeed);
+        }
+        else
+        {
+            Animator.SetFloat(_speedParameterId, MinPatrolSpeed);
         }
     }
 
@@ -29,9 +29,9 @@ public class VerticalSaw : Saw
             IsSideCollision = true;
             Stop();
         }
-        else if(_sawType == SawType.Patrol)
+        else if (_sawType == SawType.Patrol)
         {
-            Animator.Play(StaticSpin);
+            Animator.SetFloat(_speedParameterId, MinPatrolSpeed);
         }
     }
 }
