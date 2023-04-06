@@ -3,16 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _splitBody;
     [SerializeField] private GameObject _wholeBody;
+    [SerializeField] protected Animator Animator;
 
     private Collider[] _colliders;
     private Rigidbody[] _pieces;
     private Collider _collider;
 
-    protected bool IsSideCollision;
     protected const float Threshold = .1f;
+    protected float CubicPositionZ;
+
+    public bool IsSideCollision { get; protected set; }
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class Trap : MonoBehaviour
         _collider = GetComponent<Collider>();
     }
 
-    protected virtual void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.TryGetComponent(out Cubic cubic) == false)
         {
@@ -31,14 +33,12 @@ public class Trap : MonoBehaviour
         if (cubic.CanDestroy)
         {
             Break();
+            return;
         }
-        else
-        {
-            IsSideCollision = Mathf.Abs(transform.position.z - cubic.transform.position.z)
-                              >= Threshold;
-            Stop();
-            cubic.HitTrap(this, IsSideCollision);
-        }
+
+        CubicPositionZ = cubic.transform.position.z;
+        CompleteCollision();
+        cubic.HitTrap(this);
     }
 
     public void Break()
@@ -62,7 +62,14 @@ public class Trap : MonoBehaviour
     }
     public void Stop()
     {
-        _animator.enabled = false;
+        Animator.enabled = false;
         _collider.isTrigger = false;
+    }
+
+    protected virtual void CompleteCollision()
+    {
+        IsSideCollision = Mathf.Abs(transform.position.z - CubicPositionZ)
+                          >= Threshold;
+        Stop();
     }
 }
