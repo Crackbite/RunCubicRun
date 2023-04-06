@@ -9,18 +9,32 @@ public class LevelEntryPortal : HyperspacePortal
     [SerializeField] private Ease _rotationEase = Ease.OutQuad;
     [SerializeField] private float _rotationDurationFactor = .8f;
     [SerializeField] private float _scalingDurationFactor = .5f;
+    [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private float _targetYPosition;
 
     public event Action ThrowingOut;
     public event Action ThrownOut;
 
+    private void OnEnable()
+    {
+        _gameStatusTracker.GameStarted += OnGameStarted;
+    }
+
     private void Start()
     {
         _targetYPosition = CubicTransform.position.y;
         TargetScale = CubicTransform.transform.localScale;
         CubicTransform.localScale = Vector3.zero;
+    }
 
+    private void OnDisable()
+    {
+        _gameStatusTracker.GameStarted -= OnGameStarted;
+    }
+
+    private void OnGameStarted()
+    {
         StartCoroutine(ThrowOut());
     }
 
