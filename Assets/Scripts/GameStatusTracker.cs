@@ -12,7 +12,7 @@ public class GameStatusTracker : MonoBehaviour
     private bool _isCubicLeftPress;
     private bool _isCubicSteppedOnStand;
 
-    public event Action<GameStatus> GameEnded;
+    public event Action<GameResult> GameEnded;
     public event Action GameStarted;
 
     private void OnEnable()
@@ -39,13 +39,13 @@ public class GameStatusTracker : MonoBehaviour
     {
         if (_isCubicSteppedOnStand == false)
         {
-            GameEnded?.Invoke(GameStatus.Lose);
+            GameEnded?.Invoke(GameResult.Lose);
         }
     }
 
     private void OnCubicHit()
     {
-        GameEnded?.Invoke(GameStatus.Lose);
+        GameEnded?.Invoke(GameResult.Lose);
     }
 
     private void OnCubicLeftPress()
@@ -60,7 +60,7 @@ public class GameStatusTracker : MonoBehaviour
 
     private void OnExitPortalSuckedIn()
     {
-        GameEnded?.Invoke(_isCubicLeftPress ? GameStatus.Win : GameStatus.Lose);
+        GameEnded?.Invoke(_isCubicLeftPress ? GameResult.Win : GameResult.Lose);
     }
 
     private void OnMenuStartClicked()

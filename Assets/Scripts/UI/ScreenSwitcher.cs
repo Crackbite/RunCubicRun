@@ -27,9 +27,9 @@ public class ScreenSwitcher : MonoBehaviour
         _gameStatusTracker.GameEnded -= OnGameEnded;
     }
 
-    private void OnGameEnded(GameStatus gameStatus)
+    private void OnGameEnded(GameResult gameResult)
     {
-        if (gameStatus == GameStatus.Win)
+        if (gameResult == GameResult.Win)
         {
             SetSuccessScreen();
         }
