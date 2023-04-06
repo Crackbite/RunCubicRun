@@ -8,10 +8,10 @@ public class PistonMover : MonoBehaviour
 
     private float _crushedCubicSizeY;
     private bool _isCubicReached;
+
+    private Cubic _cubic;
     private PistonPresser _pistonPresser;
     private PressSpeedHandler _pressSpeedHandler;
-    private Cubic _cubic;
-    private const float Threshold = 0.001f;
 
     public event Action WorkCompleted;
 
@@ -30,6 +30,8 @@ public class PistonMover : MonoBehaviour
 
     private void Update()
     {
+        const float Threshold = 0.001f;
+
         if (IsWorking == false)
         {
             return;
@@ -48,7 +50,7 @@ public class PistonMover : MonoBehaviour
 
         if (transform.position.y - newPosition.y < Threshold)
         {
-            if (_cubic != null)
+            if (_isCubicReached)
             {
                 CrushCubic();
             }
@@ -78,15 +80,15 @@ public class PistonMover : MonoBehaviour
         IsWorking = true;
     }
 
+    private void CrushCubic()
+    {
+        _cubic.FlattenOut(_pressStand.Bounds.max.y);
+    }
+
     private void PistonPresserOnCubicReached(Cubic cubic)
     {
         _cubic = cubic;
         _crushedCubicSizeY = _cubic.CrushedSizeY;
         _isCubicReached = true;
-    }
-
-    private void CrushCubic()
-    {
-        _cubic.FlattenOut(_pressStand.Bounds.max.y);
     }
 }
