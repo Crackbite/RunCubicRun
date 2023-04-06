@@ -45,6 +45,7 @@ public class CubicMovement : MonoBehaviour
         _cubicInputHandler.PressEscaped += OnPressEscaped;
 
         _sidewaysMovement.LineReached += OnLineReached;
+        _blockStack.BlocksEnded += OnBlockStackBlocksEnded;
     }
 
     private void Update()
@@ -53,7 +54,9 @@ public class CubicMovement : MonoBehaviour
 
         if (_canMove && isFalling == false)
         {
-            _cubic.transform.Translate(_cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right, Space.World);
+            _cubic.transform.Translate(
+                _cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right,
+                Space.World);
         }
     }
 
@@ -69,6 +72,7 @@ public class CubicMovement : MonoBehaviour
         _cubicInputHandler.PressEscaped -= OnPressEscaped;
 
         _sidewaysMovement.LineReached -= OnLineReached;
+        _blockStack.BlocksEnded -= OnBlockStackBlocksEnded;
     }
 
     public void EscapeFromPress()
@@ -111,6 +115,12 @@ public class CubicMovement : MonoBehaviour
 
         _cubic.transform.DOMove(nextPosition, _cubicSpeedController.StopAtPressStandSpeed)
             .OnComplete(() => CubicOnStand?.Invoke());
+    }
+
+    private void OnBlockStackBlocksEnded()
+    {
+        _canMove = false;
+        _canLineChange = false;
     }
 
     private void OnHit()
