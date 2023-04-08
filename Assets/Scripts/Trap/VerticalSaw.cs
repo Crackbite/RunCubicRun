@@ -6,21 +6,7 @@ public class VerticalSaw : Saw
 
     public enum SawType { Patrol, Static }
 
-    private readonly int _speedParameterId = Animator.StringToHash("PatrolSpeed");
-    private const int MaxPatrolSpeed = 1;
     private const int MinPatrolSpeed = 0;
-
-    private void Start()
-    {
-        if (_sawType == SawType.Patrol)
-        {
-            Animator.SetFloat(_speedParameterId, MaxPatrolSpeed);
-        }
-        else
-        {
-            Animator.SetFloat(_speedParameterId, MinPatrolSpeed);
-        }
-    }
 
     protected override void CompleteCollision()
     {
@@ -31,7 +17,19 @@ public class VerticalSaw : Saw
         }
         else if (_sawType == SawType.Patrol)
         {
-            Animator.SetFloat(_speedParameterId, MinPatrolSpeed);
+            Animator.SetFloat(SpeedId, MinPatrolSpeed);
+        }
+    }
+
+    protected override void SetSpeed()
+    {
+        if (_sawType == SawType.Patrol)
+        {
+            base.SetSpeed();
+        }
+        else
+        {
+            Animator.SetFloat(SpeedId, MinPatrolSpeed);
         }
     }
 }
