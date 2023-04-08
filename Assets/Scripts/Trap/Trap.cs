@@ -30,20 +30,22 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Cubic cubic) == false)
+        if (collision.TryGetComponent(out Cubic cubic))
         {
-            return;
-        }
+            if (cubic.CanDestroy)
+            {
+                Break();
+                return;
+            }
 
-        if (cubic.CanDestroy)
+            CubicPositionZ = cubic.transform.position.z;
+            CompleteCollision();
+            cubic.HitTrap(this);
+        }
+        else if (collision.TryGetComponent(out ColorBlock block))
         {
-            Break();
-            return;
+            _collider.isTrigger = false;
         }
-
-        CubicPositionZ = cubic.transform.position.z;
-        CompleteCollision();
-        cubic.HitTrap(this);
     }
 
     public void Break()
