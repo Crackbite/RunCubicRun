@@ -35,8 +35,6 @@ public class ColorBlockPhysics : MonoBehaviour
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(frictionCoefficient * _colorBlock.StackPosition * forceFactor * fallDirection);
 
-        _collider.isTrigger = false;
-
         if (Math.Abs(forceFactor - DefaultForceFactor) != 0)
         {
             transform.parent = null;
@@ -44,5 +42,10 @@ public class ColorBlockPhysics : MonoBehaviour
 
         _colorBlock.StopFollow();
         _colorBlock.enabled = false;
+    }
+
+    public void TurnOffTrigger()
+    {
+        _collider.isTrigger = false;
     }
 }

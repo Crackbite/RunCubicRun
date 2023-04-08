@@ -24,6 +24,7 @@ public class ColorBlock : MonoBehaviour
         _blockContainer = blockContainer;
         SetStackPosition();
         _blockMovement.StartFollowing(stackCoordinator);
+        BlockPhysics.TurnOffTrigger();
         CanFollow = true;
     }
 

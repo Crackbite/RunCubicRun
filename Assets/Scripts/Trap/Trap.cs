@@ -42,7 +42,7 @@ public class Trap : MonoBehaviour
             CompleteCollision();
             cubic.HitTrap(this);
         }
-        else if (collision.TryGetComponent(out ColorBlock block))
+        else if (collision.TryGetComponent(out ColorBlock _))
         {
             _collider.isTrigger = false;
         }
