@@ -4,7 +4,10 @@ public class BlockStackPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
-    [SerializeField] private float _frictionCoefficient = 10f;
+    [SerializeField] private float _maxPushForce = 10f;
+    [SerializeField] private float _minPushForce = 4f;
+    [SerializeField] private int _minPushForceBlockCount = 10;
+    [SerializeField] private int _maxPushForceBlockCount = 100;
     [SerializeField] private float _blockDestroyDelay = 5f;
     [SerializeField] private LevelExitPortal _levelExitPortal;
 
@@ -23,7 +26,6 @@ public class BlockStackPhysics : MonoBehaviour
 
     }
 
-
     public void OnCrossbarHit(int stackPosition)
     {
         const float ForceFactor = 0.1f;
@@ -32,7 +34,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockStack.Blocks[0].BlockPhysics.FallOff(Vector3.left, _frictionCoefficient, ForceFactor);
+            _blockStack.Blocks[0].BlockPhysics.FallOff(Vector3.left, GetPushForce(), ForceFactor);
             _blockStack.Destroy(_blockStack.Blocks[0], _blockDestroyDelay);
             _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
@@ -40,7 +42,7 @@ public class BlockStackPhysics : MonoBehaviour
 
     private void Collapse()
     {
-        if(_blockStack.Blocks.Count == 0)
+        if (_blockStack.Blocks.Count == 0)
         {
             return;
         }
@@ -49,7 +51,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
-            block.BlockPhysics.FallOff(fallDirection, _frictionCoefficient);
+            block.BlockPhysics.FallOff(fallDirection, GetPushForce());
         }
     }
 
@@ -67,14 +69,14 @@ public class BlockStackPhysics : MonoBehaviour
                                     : Vector3.back;
             }
 
-            if(_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
+            if (_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
             {
-                if(tallTrap.Bounds.max.y > _blockStack.Height)
+                if (tallTrap.Bounds.max.y > _blockStack.Height)
                 {
                     return -fallDirection;
                 }
             }
-        } 
+        }
 
         return fallDirection;
     }
@@ -85,8 +87,14 @@ public class BlockStackPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
-            block.BlockPhysics.FallOff(Vector3.zero, _frictionCoefficient, ForceFactor);
+            block.BlockPhysics.FallOff(Vector3.zero, GetPushForce(), ForceFactor);
         }
+    }
+
+    private float GetPushForce()
+    {
+        float lerpFactor = Mathf.InverseLerp(_maxPushForceBlockCount, _minPushForceBlockCount, _blockStack.Blocks.Count);
+        return Mathf.Lerp(_maxPushForce, _minPushForce, lerpFactor);
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)

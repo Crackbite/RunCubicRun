@@ -30,10 +30,10 @@ public class ColorBlockPhysics : MonoBehaviour
         CrossbarHit?.Invoke(_colorBlock.StackPosition);
     }
 
-    public void FallOff(Vector3 fallDirection, float frictionCoefficient, float forceFactor = DefaultForceFactor)
+    public void FallOff(Vector3 fallDirection, float pushForce, float forceFactor = DefaultForceFactor)
     {
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(frictionCoefficient * _colorBlock.StackPosition * forceFactor * fallDirection);
+        _rigidbody.AddForce(pushForce * _colorBlock.StackPosition * forceFactor * fallDirection);
 
         if (Math.Abs(forceFactor - DefaultForceFactor) != 0)
         {
