@@ -15,9 +15,16 @@ public class ScoreAllocator : MonoBehaviour
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
     private bool _isCubicUnderPress;
+    private float _scoreMultiplier = 1f;
     private float _totalScore;
 
     public event Action<Score> ScoreChanged;
+
+    public float ScoreMultiplier
+    {
+        get => _scoreMultiplier;
+        set => _scoreMultiplier = value < 1f ? 1f : value;
+    }
 
     private void OnEnable()
     {
@@ -54,7 +61,8 @@ public class ScoreAllocator : MonoBehaviour
         _currentGoodBlockScore = _goodBlocksInRow >= _bonusGoodBlockThreshold ? _bonusGoodBlockScore : _goodBlockScore;
         _goodBlocksInRow++;
 
-        ChangeScore(_currentGoodBlockScore, ScoreChangeInitiator.Cubic);
+        float score = _currentGoodBlockScore * ScoreMultiplier;
+        ChangeScore(score, ScoreChangeInitiator.Cubic);
     }
 
     private void OnBlockRemoved(ColorBlock colorBlock)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BonusHandler : MonoBehaviour
@@ -6,6 +7,7 @@ public class BonusHandler : MonoBehaviour
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BonusIcon _bonusIconPrefab;
     [SerializeField] private Transform _bonusIconsPanel;
+    [SerializeField] private float _hideSpeed = .5f;
 
     private Dictionary<BonusInfo, BonusItem> _activeBonuses;
 
@@ -56,6 +58,8 @@ public class BonusHandler : MonoBehaviour
 
     private void OnCubicBonusReceived(Bonus receivedBonus)
     {
+        RemoveBonusFromScene(receivedBonus);
+
         if (_activeBonuses.TryGetValue(receivedBonus.Info, out BonusItem bonusItem))
         {
             float newBonusTime = bonusItem.BonusTimer.RemainingSeconds + receivedBonus.Info.Duration;
@@ -81,6 +85,11 @@ public class BonusHandler : MonoBehaviour
         {
             DeactivateBonus(bonusItem);
         }
+    }
+
+    private void RemoveBonusFromScene(Bonus bonus)
+    {
+        bonus.transform.DOScale(Vector3.zero, _hideSpeed).OnComplete(() => Destroy(bonus.gameObject));
     }
 
     private void UnsubscribeFromBonusTimerEvents(BonusTimer bonusTimer)
