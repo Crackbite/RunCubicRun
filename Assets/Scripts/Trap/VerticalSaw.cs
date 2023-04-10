@@ -10,9 +10,8 @@ public class VerticalSaw : Saw
 
     protected override void CompleteCollision()
     {
-        if (Mathf.Abs(transform.position.z - CubicPositionZ) > Threshold)
+        if (IsSideCollision)
         {
-            IsSideCollision = true;
             Stop();
         }
         else if (_sawType == SawType.Patrol)

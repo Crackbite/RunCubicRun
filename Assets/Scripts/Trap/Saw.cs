@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Saw : Trap
+public class Saw : Trap
 {
     private void OnTriggerExit(Collider collision)
     {

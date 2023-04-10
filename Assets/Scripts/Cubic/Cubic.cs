@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(MeshRenderer), typeof(Collider))]
 public class Cubic : MonoBehaviour
@@ -16,12 +17,11 @@ public class Cubic : MonoBehaviour
 
     private bool _steppedOnStand;
 
-    public event Action Hit;
+    public event Action<Vector3, float> Hit;
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderer.bounds;
     public bool CanDestroy => _canDestroy;
-    public Trap CollisionTrap { get; private set; }
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
     public float JumpForce => _jumpForce;
@@ -37,7 +37,9 @@ public class Cubic : MonoBehaviour
     {
         if (collision.TryGetComponent(out Wall _))
         {
-            Hit?.Invoke();
+            Vector3 contactPoint = collision.ClosestPoint(transform.position);
+            float wallHeight = collision.bounds.max.y;
+            Hit?.Invoke(contactPoint, wallHeight);
             return;
         }
 
@@ -50,19 +52,14 @@ public class Cubic : MonoBehaviour
         SteppedOnStand?.Invoke(pressStand);
     }
 
-    public void HitTrap(Trap trap)
+    public void HitTrap(Trap trap, Vector3 contactPoint, float trapHeight)
     {
-        CollisionTrap = trap;
-
         if (trap.TryGetComponent(out Saw saw))
         {
-            if (trap.IsSideCollision == false)
-            {
-                IsSawing = true;
-            }
+            IsSawing = IsStartSawing(saw, contactPoint);
         }
 
-        Hit?.Invoke();
+        Hit?.Invoke(contactPoint, trapHeight);
     }
 
     public void SplitIntoPieces(Saw saw)
@@ -71,7 +68,7 @@ public class Cubic : MonoBehaviour
         {
             _verticalSplitter.Split();
         }
-        else 
+        else
         {
             _horizontalSplitter.Split();
         }
@@ -86,5 +83,20 @@ public class Cubic : MonoBehaviour
         float positionY = standMaxY + _crushedSizeY / 2;
         transform.localScale = new Vector3(transform.localScale.x, _crushedSizeY, transform.localScale.z);
         transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
+    }
+
+    private bool IsStartSawing(Saw saw, Vector3 contactPoint)
+    {
+        if (saw is VerticalSaw)
+        {
+            if (Mathf.Approximately(transform.position.z, contactPoint.z))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }
