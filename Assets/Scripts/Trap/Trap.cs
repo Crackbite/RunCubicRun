@@ -12,6 +12,7 @@ public class Trap : MonoBehaviour
     private Collider[] _colliders;
     private Rigidbody[] _pieces;
     private Collider _collider;
+    private bool _isCubicCollided;
 
     protected const float Threshold = .1f;
     protected float CubicPositionZ;
@@ -32,6 +33,8 @@ public class Trap : MonoBehaviour
     {
         if (collision.TryGetComponent(out Cubic cubic))
         {
+            _isCubicCollided = true; ;
+
             if (cubic.CanDestroy)
             {
                 Break();
@@ -42,7 +45,7 @@ public class Trap : MonoBehaviour
             CompleteCollision();
             cubic.HitTrap(this);
         }
-        else if (collision.TryGetComponent(out ColorBlock _))
+        else if (collision.TryGetComponent(out ColorBlock _) && _isCubicCollided == false)
         {
             _collider.isTrigger = false;
         }
