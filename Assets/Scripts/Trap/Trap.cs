@@ -40,7 +40,6 @@ public class Trap : MonoBehaviour
             }
             Vector3 contactPoint = collision.ClosestPoint(transform.position);
             float trapHeight = _collider.bounds.max.y;
-            Debug.Log(trapHeight);
             IsSideCollision = Mathf.Approximately(cubic.transform.position.z, contactPoint.z) == false;
             cubic.HitTrap(this, contactPoint, trapHeight);
             CompleteCollision();
