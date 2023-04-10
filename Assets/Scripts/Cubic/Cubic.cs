@@ -17,12 +17,11 @@ public class Cubic : MonoBehaviour
     private bool _steppedOnStand;
 
     public event Action<Bonus> BonusReceived;
-    public event Action Hit;
+    public event Action<Vector3, float> Hit;
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderer.bounds;
     public bool CanDestroy => _canDestroy;
-    public Trap CollisionTrap { get; private set; }
     public float CrushedSizeY => _crushedSizeY;
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
@@ -44,7 +43,9 @@ public class Cubic : MonoBehaviour
 
         if (collision.TryGetComponent(out Wall _))
         {
-            Hit?.Invoke();
+            Vector3 contactPoint = collision.ClosestPoint(transform.position);
+            float wallHeight = collision.bounds.max.y;
+            Hit?.Invoke(contactPoint, wallHeight);
             return;
         }
 
@@ -65,19 +66,14 @@ public class Cubic : MonoBehaviour
         transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
     }
 
-    public void HitTrap(Trap trap)
+    public void HitTrap(Trap trap, Vector3 contactPoint, float trapHeight)
     {
-        CollisionTrap = trap;
-
         if (trap.TryGetComponent(out Saw saw))
         {
-            if (trap.IsSideCollision == false)
-            {
-                IsSawing = true;
-            }
+            IsSawing = IsStartSawing(saw, contactPoint);
         }
 
-        Hit?.Invoke();
+        Hit?.Invoke(contactPoint, trapHeight);
     }
 
     public void SplitIntoPieces(Saw saw)
@@ -93,5 +89,20 @@ public class Cubic : MonoBehaviour
 
         _meshRenderer.enabled = false;
         _collider.enabled = false;
+    }
+
+    private bool IsStartSawing(Saw saw, Vector3 contactPoint)
+    {
+        if (saw is VerticalSaw)
+        {
+            if (Mathf.Approximately(transform.position.z, contactPoint.z))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        return true;
     }
 }

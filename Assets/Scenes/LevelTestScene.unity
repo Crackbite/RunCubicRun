@@ -2206,7 +2206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 73947293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 414518140}
@@ -2214,6 +2214,8 @@ MonoBehaviour:
   Animator: {fileID: 1502672193}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!64 &73947296
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -7015,6 +7017,8 @@ MonoBehaviour:
   Animator: {fileID: 1672293242}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 1
 --- !u!64 &254176975
 MeshCollider:
@@ -11168,7 +11172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 399704995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 1336508468}
@@ -11176,6 +11180,8 @@ MonoBehaviour:
   Animator: {fileID: 1329118084}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!1 &399991216
 GameObject:
   m_ObjectHideFlags: 0
@@ -14411,7 +14417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506326418}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 298, y: 0, z: 0.16}
+  m_LocalPosition: {x: 298, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -19198,6 +19204,8 @@ MonoBehaviour:
   Animator: {fileID: 321308654}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!54 &692924514
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29212,7 +29220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056472093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 654682845}
@@ -29220,6 +29228,8 @@ MonoBehaviour:
   Animator: {fileID: 892779448}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!64 &1056472096
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -29491,7 +29501,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078198152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 1210514622}
@@ -29499,6 +29509,8 @@ MonoBehaviour:
   Animator: {fileID: 29935420}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!1 &1078208906
 GameObject:
   m_ObjectHideFlags: 0
@@ -29781,6 +29793,8 @@ MonoBehaviour:
   Animator: {fileID: 283567286}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 1
 --- !u!64 &1081496702
 MeshCollider:
@@ -33194,7 +33208,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1185248673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 654682845}
@@ -33202,6 +33216,8 @@ MonoBehaviour:
   Animator: {fileID: 892779448}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!64 &1185248676
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34334,7 +34350,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1239481871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 1210514622}
@@ -34342,6 +34358,8 @@ MonoBehaviour:
   Animator: {fileID: 29935420}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!1 &1248396765
 GameObject:
   m_ObjectHideFlags: 0
@@ -35196,6 +35214,8 @@ MonoBehaviour:
   Animator: {fileID: 1648022092}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!23 &1274573610
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -40037,6 +40057,8 @@ MonoBehaviour:
   Animator: {fileID: 1396398057}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 0
 --- !u!64 &1409807658
 MeshCollider:
@@ -44290,6 +44312,8 @@ MonoBehaviour:
   Animator: {fileID: 1484824507}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 0
 --- !u!1 &1551523893
 GameObject:
@@ -45472,7 +45496,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1577875730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 414518140}
@@ -45480,6 +45504,8 @@ MonoBehaviour:
   Animator: {fileID: 1502672193}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!64 &1577875733
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -52149,10 +52175,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubic: {fileID: 296935703}
   _blockStack: {fileID: 1761122229}
-  _maxPushForce: 10
-  _minPushForce: 4
-  _minPushForceBlockCount: 100
-  _maxPushForceBlockCount: 10
+  _maxPushForce: 15
+  _minPushForce: 1
+  _minPushForceBlockCount: 80
+  _maxPushForceBlockCount: 1
   _blockDestroyDelay: 5
   _levelExitPortal: {fileID: 503677728}
 --- !u!114 &1761122233
@@ -54666,6 +54692,8 @@ MonoBehaviour:
   Animator: {fileID: 506326420}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 0
 --- !u!64 &1809621414
 MeshCollider:
@@ -58980,6 +59008,8 @@ MonoBehaviour:
   Animator: {fileID: 321308654}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!65 &2002588076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70569,6 +70599,8 @@ MonoBehaviour:
   Animator: {fileID: 3165081850063041831}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!65 &3255348307360613055
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75157,6 +75189,8 @@ MonoBehaviour:
   Animator: {fileID: 3165081850063041831}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!23 &5450881499259200584
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -77531,7 +77565,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4646667756119532406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 943714081111925820}
@@ -77539,6 +77573,8 @@ MonoBehaviour:
   Animator: {fileID: 6264698861865378544}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!4 &6592987561139939076
 Transform:
   m_ObjectHideFlags: 0
@@ -77563,7 +77599,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4646667758170366821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 943714079630992431}
@@ -77571,6 +77607,8 @@ MonoBehaviour:
   Animator: {fileID: 6264698861449831139}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!23 &6607842900523421131
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -79911,6 +79949,8 @@ MonoBehaviour:
   Animator: {fileID: 2947852889518586906}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 1
 --- !u!64 &7724831415989569883
 MeshCollider:
@@ -80378,7 +80418,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5550540235920487422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 5986381784037617838}
@@ -80386,6 +80426,8 @@ MonoBehaviour:
   Animator: {fileID: 6489807403738910090}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!1 &7936132321465281606
 GameObject:
   m_ObjectHideFlags: 0
@@ -80537,6 +80579,8 @@ MonoBehaviour:
   Animator: {fileID: 3245169083751977969}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
   _sawType: 0
 --- !u!23 &8015928817762093850
 MeshRenderer:
@@ -81136,7 +81180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8223544192987494399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 7400352242398336853}
@@ -81144,6 +81188,8 @@ MonoBehaviour:
   Animator: {fileID: 8454082794034952395}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!4 &8228934813245608567
 Transform:
   m_ObjectHideFlags: 0
@@ -81436,7 +81482,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2841514265398719214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da6981eb5aaf664b94e3fdfa81732ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 5986381784037617838}
@@ -81444,6 +81490,8 @@ MonoBehaviour:
   Animator: {fileID: 6489807403738910090}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!23 &8319437441195033297
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -82291,7 +82339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2080360762264246533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 927976184228841552}
@@ -82299,6 +82347,8 @@ MonoBehaviour:
   Animator: {fileID: 2699624947991704259}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!33 &8643491651290578764
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82316,7 +82366,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2080360762221285747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e5dbae23ec7504289979513dd6693b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8ced8220d8b5424a92ac20c68c109d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _splitBody: {fileID: 927976184267669542}
@@ -82324,6 +82374,8 @@ MonoBehaviour:
   Animator: {fileID: 2699624947934067381}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!4 &8653694881961780419
 Transform:
   m_ObjectHideFlags: 0
@@ -82610,6 +82662,8 @@ MonoBehaviour:
   Animator: {fileID: 112193514025983832}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!114 &8813608016401370767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82627,6 +82681,8 @@ MonoBehaviour:
   Animator: {fileID: 112193515372028546}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _explosionForce: 50
+  _explosionRadius: 5
 --- !u!23 &8817436762312304327
 MeshRenderer:
   m_ObjectHideFlags: 0

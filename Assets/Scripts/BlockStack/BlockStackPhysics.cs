@@ -4,10 +4,10 @@ public class BlockStackPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
-    [SerializeField] private float _maxPushForce = 10f;
-    [SerializeField] private float _minPushForce = 4f;
-    [SerializeField] private int _minPushForceBlockCount = 10;
-    [SerializeField] private int _maxPushForceBlockCount = 100;
+    [SerializeField] private float _maxPushForce = 15f;
+    [SerializeField] private float _minPushForce = 1f;
+    [SerializeField] private int _minPushForceBlockCount = 80;
+    [SerializeField] private int _maxPushForceBlockCount = 1;
     [SerializeField] private float _blockDestroyDelay = 5f;
     [SerializeField] private LevelExitPortal _levelExitPortal;
 
@@ -40,14 +40,14 @@ public class BlockStackPhysics : MonoBehaviour
         }
     }
 
-    private void Collapse()
+    private void Collapse(Vector3 contactPoint, float obstacleHeight)
     {
         if (_blockStack.Blocks.Count == 0)
         {
             return;
         }
 
-        Vector3 fallDirection = GetFallDirection();
+        Vector3 fallDirection = GetFallDirection(contactPoint, obstacleHeight);
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
@@ -55,30 +55,17 @@ public class BlockStackPhysics : MonoBehaviour
         }
     }
 
-    private Vector3 GetFallDirection()
+    private Vector3 GetFallDirection(Vector3 contactPoint, float obstacleHeight)
     {
-        Vector3 fallDirection = Vector3.right;
+        Vector3 fallDirection = contactPoint - _cubic.transform.position;
+        fallDirection = new Vector3(fallDirection.x, 0, fallDirection.z);
 
-        if (_cubic.CollisionTrap != null)
+        if (obstacleHeight > _blockStack.Height)
         {
-            if (_cubic.CollisionTrap.IsSideCollision)
-            {
-                Vector3 trapPosition = _cubic.CollisionTrap.transform.position;
-                fallDirection = trapPosition.z > _cubic.transform.position.z
-                                    ? Vector3.forward
-                                    : Vector3.back;
-            }
-
-            if (_cubic.CollisionTrap.TryGetComponent(out TallTrap tallTrap))
-            {
-                if (tallTrap.Bounds.max.y > _blockStack.Height)
-                {
-                    return -fallDirection;
-                }
-            }
+            return -fallDirection.normalized;
         }
 
-        return fallDirection;
+        return fallDirection.normalized;
     }
 
     private void OnCubicSuckingIn()
@@ -102,8 +89,8 @@ public class BlockStackPhysics : MonoBehaviour
         colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
     }
 
-    private void OnHit()
+    private void OnHit(Vector3 contactPoint, float obstacleHeight)
     {
-        Collapse();
+        Collapse(contactPoint, obstacleHeight);
     }
 }
