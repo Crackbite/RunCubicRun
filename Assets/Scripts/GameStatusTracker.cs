@@ -43,7 +43,7 @@ public class GameStatusTracker : MonoBehaviour
         }
     }
 
-    private void OnCubicHit()
+    private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
     {
         GameEnded?.Invoke(GameResult.Lose);
     }

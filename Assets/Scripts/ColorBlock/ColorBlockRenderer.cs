@@ -14,6 +14,13 @@ public class ColorBlockRenderer : MonoBehaviour
 
     public void SetColor(Color color, int stackPosition = 0, float gradient = 0, float coloringSpeedFactor = 1)
     {
-        _meshRenderer.material.DOColor(color, gradient).SetDelay(stackPosition * coloringSpeedFactor);
+        if (gradient == 0)
+        {
+            _meshRenderer.material.color = color;
+        }
+        else
+        {
+            _meshRenderer.material.DOColor(color, gradient).SetDelay(stackPosition * coloringSpeedFactor);
+        }
     }
 }

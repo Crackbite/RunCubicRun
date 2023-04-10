@@ -123,7 +123,7 @@ public class CubicMovement : MonoBehaviour
         _canLineChange = false;
     }
 
-    private void OnHit()
+    private void OnHit(Vector3 contactPoint, float obstacleHeight)
     {
         _canLineChange = false;
 
