@@ -26,7 +26,7 @@ public class Colorizer : Bonus
     {
         foreach ((ColorBlock colorBlock, Color originalColor) in _modifiedBlocks)
         {
-            if (colorBlock.IsInStack)
+            if (colorBlock == null || colorBlock.IsInStack)
             {
                 continue;
             }
