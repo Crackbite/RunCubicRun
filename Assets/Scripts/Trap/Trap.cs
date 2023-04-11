@@ -19,7 +19,7 @@ public class Trap : MonoBehaviour
 
     protected readonly int SpeedId = Animator.StringToHash("Speed");
 
-    public bool IsSideCollision;
+    public bool IsSideCollision { get; private set; }
 
     private void Awake()
     {
@@ -33,22 +33,26 @@ public class Trap : MonoBehaviour
     {
         if (collision.TryGetComponent(out Cubic cubic))
         {
-            _isCubicCollided = true; ;
+            _isCubicCollided = true;
 
             if (cubic.CanDestroy)
             {
                 Break();
                 return;
             }
+
             Vector3 contactPoint = _collider.ClosestPoint(cubic.transform.position);
             float trapHeight = _collider.bounds.max.y;
-            IsSideCollision = Mathf.Abs(cubic.transform.position.z) - contactPoint.z > Threshold;
+            IsSideCollision = Mathf.Abs(cubic.transform.position.z - contactPoint.z) > Threshold;
             cubic.HitTrap(this, contactPoint, trapHeight);
             CompleteCollision();
         }
-        else if (collision.TryGetComponent(out ColorBlock _) && _isCubicCollided == false)
+        else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
         {
-           _collider.isTrigger = false;
+            if (_isCubicCollided == false)
+            {
+                _collider.isTrigger = false;
+            }
         }
     }
 
@@ -93,7 +97,6 @@ public class Trap : MonoBehaviour
         foreach (Rigidbody piece in _piecesRigidbody)
         {
             piece.isKinematic = false;
-            piece.AddExplosionForce(200, _wholeBody.transform.position, 5f);
             Destroy(piece.gameObject, PieceLifeTime);
         }
     }
