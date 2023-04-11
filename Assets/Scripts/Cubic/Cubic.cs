@@ -70,7 +70,7 @@ public class Cubic : MonoBehaviour
     {
         if (trap.TryGetComponent(out Saw saw))
         {
-            IsSawing = IsStartSawing(saw, contactPoint);
+            IsSawing = IsStartSawing(saw);
         }
 
         Hit?.Invoke(contactPoint, trapHeight);
@@ -91,11 +91,11 @@ public class Cubic : MonoBehaviour
         _collider.enabled = false;
     }
 
-    private bool IsStartSawing(Saw saw, Vector3 contactPoint)
+    private bool IsStartSawing(Saw saw)
     {
         if (saw is VerticalSaw)
         {
-            if (Mathf.Approximately(transform.position.z, Mathf.Round(contactPoint.z)))
+            if (saw.IsSideCollision == false)
             {
                 return true;
             }
