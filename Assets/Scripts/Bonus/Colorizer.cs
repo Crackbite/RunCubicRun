@@ -26,7 +26,7 @@ public class Colorizer : Bonus
     {
         foreach ((ColorBlock colorBlock, Color originalColor) in _modifiedBlocks)
         {
-            if (colorBlock.CanFollow)
+            if (colorBlock.IsInStack)
             {
                 continue;
             }
@@ -45,8 +45,8 @@ public class Colorizer : Bonus
 
     private void UpdateBlockColors()
     {
-        _modifiedBlocks = new Dictionary<ColorBlock, Color>();
         ColorBlock[] colorBlocks = _roadsContainer.GetComponentsInChildren<ColorBlock>();
+        _modifiedBlocks = new Dictionary<ColorBlock, Color>(colorBlocks.Length);
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
@@ -62,8 +62,8 @@ public class Colorizer : Bonus
 
     private void UpdatePortalColors()
     {
-        _modifiedPortals = new Dictionary<Portal, Color>();
         Portal[] portals = _portalsContainer.GetComponentsInChildren<Portal>();
+        _modifiedPortals = new Dictionary<Portal, Color>(portals.Length);
 
         foreach (Portal portal in portals)
         {

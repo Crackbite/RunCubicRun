@@ -10,6 +10,7 @@ public class ColorBlock : MonoBehaviour
     public ColorBlockRenderer BlockRenderer { get; private set; }
 
     public bool CanFollow { get; private set; }
+    public bool IsInStack { get; private set; }
     public int StackPosition { get; private set; }
 
     private void Awake()
@@ -26,6 +27,7 @@ public class ColorBlock : MonoBehaviour
         _blockMovement.StartFollowing(stackCoordinator);
         BlockPhysics.TurnOffTrigger();
         CanFollow = true;
+        IsInStack = true;
     }
 
     public void SetStackPosition()
