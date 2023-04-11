@@ -95,7 +95,7 @@ public class Cubic : MonoBehaviour
     {
         if (saw is VerticalSaw)
         {
-            if (Mathf.Approximately(transform.position.z, contactPoint.z))
+            if (Mathf.Approximately(transform.position.z, Mathf.Round(contactPoint.z)))
             {
                 return true;
             }
