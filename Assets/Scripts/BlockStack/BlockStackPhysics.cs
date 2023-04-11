@@ -1,13 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BlockStackPhysics : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
-    [SerializeField] private float _maxPushForce = 15f;
-    [SerializeField] private float _minPushForce = 1f;
-    [SerializeField] private int _minPushForceBlockCount = 80;
-    [SerializeField] private int _maxPushForceBlockCount = 1;
+    [SerializeField] private float _maxPushForce = 200f;
     [SerializeField] private float _blockDestroyDelay = 5f;
     [SerializeField] private LevelExitPortal _levelExitPortal;
 
@@ -34,7 +31,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockStack.Blocks[0].BlockPhysics.FallOff(Vector3.left, GetPushForce(), ForceFactor);
+            _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor);
             _blockStack.Destroy(_blockStack.Blocks[0], _blockDestroyDelay);
             _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
@@ -51,7 +48,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
-            block.BlockPhysics.FallOff(fallDirection, GetPushForce());
+            block.BlockPhysics.FallOff(GetCurrentPushForce(fallDirection));
         }
     }
 
@@ -74,14 +71,15 @@ public class BlockStackPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
-            block.BlockPhysics.FallOff(Vector3.zero, GetPushForce(), ForceFactor);
+            block.BlockPhysics.FallOff(GetCurrentPushForce(Vector3.zero), ForceFactor);
         }
     }
 
-    private float GetPushForce()
+    private Vector3 GetCurrentPushForce(Vector3 fallDirection)
     {
-        float lerpFactor = Mathf.InverseLerp(_maxPushForceBlockCount, _minPushForceBlockCount, _blockStack.Blocks.Count);
-        return Mathf.Lerp(_maxPushForce, _minPushForce, lerpFactor);
+        float forceMultiplier = 1f / _blockStack.Blocks.Count;
+
+        return _maxPushForce * forceMultiplier * fallDirection;
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)
