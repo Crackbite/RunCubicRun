@@ -19,6 +19,7 @@ public class Trap : MonoBehaviour
 
     protected readonly int SpeedId = Animator.StringToHash("Speed");
 
+    public bool CanBreak { get; set; }
     public bool IsSideCollision { get; private set; }
 
     private void Awake()
@@ -35,7 +36,7 @@ public class Trap : MonoBehaviour
         {
             _isCubicCollided = true;
 
-            if (cubic.CanDestroy)
+            if (cubic.CanDestroy || CanBreak)
             {
                 Break();
                 return;
