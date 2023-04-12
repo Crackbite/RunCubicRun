@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer), typeof(Collider))]
 public class Cubic : MonoBehaviour
 {
-    [SerializeField] private bool _canDestroy;
     [SerializeField] private VerticalSplitter _verticalSplitter;
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
     [SerializeField] private float _jumpForce = 6.5f;
@@ -21,7 +20,7 @@ public class Cubic : MonoBehaviour
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderer.bounds;
-    public bool CanDestroy => _canDestroy;
+    public bool CanDestroy { get; set; }
     public float CrushedSizeY => _crushedSizeY;
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
