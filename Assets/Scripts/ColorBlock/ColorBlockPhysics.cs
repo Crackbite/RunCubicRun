@@ -48,4 +48,9 @@ public class ColorBlockPhysics : MonoBehaviour
     {
         _collider.isTrigger = false;
     }
+
+    public void TurnOnTrigger()
+    {
+        _collider.isTrigger = true;
+    }
 }
