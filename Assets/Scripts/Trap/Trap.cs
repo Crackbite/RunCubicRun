@@ -94,11 +94,11 @@ public class Trap : MonoBehaviour
 
             if (randomDirection.z > 0)
             {
-                piece.transform.DOMoveZ((piece.transform.position.z + DragDistance), DragDuration).SetEase(Ease.OutQuad);
+                piece.transform.DOMoveZ(piece.transform.position.z + DragDistance, DragDuration).SetEase(Ease.OutQuad);
             }
             else
             {
-                piece.transform.DOMoveZ((piece.transform.position.z - DragDistance), DragDuration).SetEase(Ease.OutQuad);
+                piece.transform.DOMoveZ(piece.transform.position.z - DragDistance, DragDuration).SetEase(Ease.OutQuad);
             }
 
             Destroy(piece.gameObject, PieceLifeTime);
