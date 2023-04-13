@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -8,10 +9,7 @@ public class Trap : MonoBehaviour
     [SerializeField] protected Animator Animator;
     [SerializeField] protected float MinSpeed = .6f;
     [SerializeField] protected float MaxSpeed = 1.2f;
-    [SerializeField] protected float _explosionForce = 50f;
-    [SerializeField] protected float _explosionRadius = 5f;
 
-    private Collider[] _piecesColliders;
     private Rigidbody[] _piecesRigidbody;
     private Collider _collider;
     private bool _isCubicCollided;
@@ -24,7 +22,6 @@ public class Trap : MonoBehaviour
     private void Awake()
     {
         _piecesRigidbody = _splitBody.GetComponentsInChildren<Rigidbody>();
-        _piecesColliders = GetComponentsInChildren<Collider>();
         _collider = GetComponent<Collider>();
         SetSpeed();
     }
@@ -56,7 +53,6 @@ public class Trap : MonoBehaviour
         }
     }
 
-
     protected void Stop()
     {
         if (Animator != null)
@@ -84,19 +80,27 @@ public class Trap : MonoBehaviour
     private void Break()
     {
         const float PieceLifeTime = 10f;
+        const float DragDistance = 2f;
+        const float DragDuration = 1f;
 
         Stop();
         _wholeBody.SetActive(false);
         _splitBody.SetActive(true);
 
-        foreach (Collider currentCollider in _piecesColliders)
-        {
-            currentCollider.isTrigger = false;
-        }
-
         foreach (Rigidbody piece in _piecesRigidbody)
         {
             piece.isKinematic = false;
+            Vector3 randomDirection = Random.onUnitSphere;
+
+            if (randomDirection.z > 0)
+            {
+                piece.transform.DOMoveZ((piece.transform.position.z + DragDistance), DragDuration).SetEase(Ease.OutQuad);
+            }
+            else
+            {
+                piece.transform.DOMoveZ((piece.transform.position.z - DragDistance), DragDuration).SetEase(Ease.OutQuad);
+            }
+
             Destroy(piece.gameObject, PieceLifeTime);
         }
     }
