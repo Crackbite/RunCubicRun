@@ -20,6 +20,7 @@ public class Cubic : MonoBehaviour
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderer.bounds;
+    public Saw CollisionSaw { get; private set; }
     public bool CanDestroy { get; set; }
     public float CrushedSizeY => _crushedSizeY;
     public bool IsSawing { get; private set; }
@@ -69,15 +70,16 @@ public class Cubic : MonoBehaviour
     {
         if (trap.TryGetComponent(out Saw saw))
         {
-            IsSawing = IsStartSawing(saw);
+            CollisionSaw = saw;
+            IsSawing = IsStartSawing();
         }
 
         Hit?.Invoke(contactPoint, trapHeight);
     }
 
-    public void SplitIntoPieces(Saw saw)
+    public void SplitIntoPieces()
     {
-        if (saw is VerticalSaw)
+        if (CollisionSaw is VerticalSaw)
         {
             _verticalSplitter.Split();
         }
@@ -90,11 +92,11 @@ public class Cubic : MonoBehaviour
         _collider.enabled = false;
     }
 
-    private bool IsStartSawing(Saw saw)
+    private bool IsStartSawing()
     {
-        if (saw is VerticalSaw)
+        if (CollisionSaw is VerticalSaw)
         {
-            if (saw.IsSideCollision == false)
+            if (CollisionSaw.IsSideCollision == false)
             {
                 return true;
             }

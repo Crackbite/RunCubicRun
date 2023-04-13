@@ -74,6 +74,7 @@ public class CubicSpeedController : MonoBehaviour
 
     private void OnCubicThrowingOut()
     {
+        _initialSpeed = _moveSpeed;
         StartCoroutine(StopSlowly(_fightSlowCurve));
     }
 
@@ -108,7 +109,7 @@ public class CubicSpeedController : MonoBehaviour
 
         while (runningTime <= stopDuration)
         {
-            CurrentSpeed = _moveSpeed * slowCurve.Evaluate(runningTime);
+            CurrentSpeed = _initialSpeed * slowCurve.Evaluate(runningTime);
             runningTime += Time.deltaTime;
             yield return null;
         }
@@ -117,6 +118,10 @@ public class CubicSpeedController : MonoBehaviour
         {
             _isMaxSpeed = true;
             _isThrowing = false;
+        }
+        else
+        {
+            _cubic.SplitIntoPieces();
         }
     }
 }
