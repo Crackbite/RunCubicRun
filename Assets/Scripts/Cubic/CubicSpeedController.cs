@@ -19,12 +19,17 @@ public class CubicSpeedController : MonoBehaviour
 
     private float _initialSpeed;
     private bool _isMaxSpeed;
-    private bool _isThrowing;
     private bool _isStop;
+    private bool _isThrowing;
     private float _runningTime;
 
     public float CurrentSpeed { get; private set; }
+
+    public float SpeedMultiplier { get; private set; } = 1f;
+
     public float StopAtPressStandSpeed => _stopAtPressStandSpeed;
+
+    private float Speed => _moveSpeed * SpeedMultiplier;
 
     private void OnEnable()
     {
@@ -42,7 +47,7 @@ public class CubicSpeedController : MonoBehaviour
 
     private void Update()
     {
-        if (CurrentSpeed < _moveSpeed && _isMaxSpeed && _isThrowing == false)
+        if (CurrentSpeed < Speed && _isMaxSpeed && _isThrowing == false)
         {
             _isMaxSpeed = false;
             StartCoroutine(Accelerate());
@@ -53,6 +58,19 @@ public class CubicSpeedController : MonoBehaviour
     {
         _blockStacker.WrongBlockTaken -= OnWrongBlockTaken;
         _levelEntryPortal.ThrowingOut -= OnCubicThrowingOut;
+    }
+
+    public void SetSpeedMultiplier(float value)
+    {
+        const float MinSpeedMultiplier = 1f;
+
+        value = value < MinSpeedMultiplier ? MinSpeedMultiplier : value;
+        SpeedMultiplier = value;
+
+        if (CurrentSpeed > Speed)
+        {
+            CurrentSpeed = Speed;
+        }
     }
 
     public void SlowDown()
@@ -80,7 +98,7 @@ public class CubicSpeedController : MonoBehaviour
 
     private IEnumerator Accelerate()
     {
-        while (CurrentSpeed < _moveSpeed)
+        while (CurrentSpeed < Speed)
         {
             if (_isStop)
             {
@@ -93,7 +111,7 @@ public class CubicSpeedController : MonoBehaviour
             yield return null;
         }
 
-        CurrentSpeed = _moveSpeed;
+        CurrentSpeed = Speed;
         _isMaxSpeed = true;
     }
 
