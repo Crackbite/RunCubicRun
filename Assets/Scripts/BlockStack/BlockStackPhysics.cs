@@ -39,6 +39,8 @@ public class BlockStackPhysics : MonoBehaviour
 
     private void Collapse(Vector3 contactPoint, float obstacleHeight)
     {
+        const float ForceFactor = 1f;
+
         if (_blockStack.Blocks.Count == 0)
         {
             return;
@@ -48,7 +50,7 @@ public class BlockStackPhysics : MonoBehaviour
 
         foreach (ColorBlock block in _blockStack.Blocks)
         {
-            block.BlockPhysics.FallOff(GetCurrentPushForce(fallDirection));
+            block.BlockPhysics.FallOff(GetCurrentPushForce(fallDirection), ForceFactor, false);
         }
     }
 
