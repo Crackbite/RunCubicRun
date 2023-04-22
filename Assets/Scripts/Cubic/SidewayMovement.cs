@@ -11,11 +11,13 @@ public class SidewayMovement : MonoBehaviour
 
     private float _currentLineIndex = 1f;
     private float _initialPositionZ;
-    private Cubic _cubic;
 
+    private Cubic _cubic;
     private Tweener _lineTweener;
 
     public event Action LineReached;
+
+    public bool IsInvertControl { get; set; }
 
     private void Start()
     {
@@ -27,6 +29,11 @@ public class SidewayMovement : MonoBehaviour
     {
         const int RightLineIndex = 0;
         const int LeftLineIndex = 2;
+
+        if (IsInvertControl)
+        {
+            direction *= -1;
+        }
 
         if (IsOnRoad())
         {
