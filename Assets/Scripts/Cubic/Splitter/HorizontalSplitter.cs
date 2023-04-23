@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class HorizontalSplitter : Splitter
 {
-    [SerializeField] private float _slideDistance;
-    [SerializeField] private float _slideSpeed;
+    [SerializeField] private float _slideDistance = .6f;
+    [SerializeField] private float _slideSpeed = .9f;
 
     public override void Split()
     {

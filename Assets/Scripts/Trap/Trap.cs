@@ -11,10 +11,10 @@ public class Trap : MonoBehaviour
     [SerializeField] protected float MaxSpeed = 1.2f;
 
     private Rigidbody[] _piecesRigidbody;
-    private Collider _collider;
     private bool _isCubicCollided;
     private const float Threshold = 0.001f;
 
+    protected Collider Collider;
     protected readonly int SpeedId = Animator.StringToHash("Speed");
 
     public bool IsSideCollision { get; private set; }
@@ -22,7 +22,7 @@ public class Trap : MonoBehaviour
     private void Awake()
     {
         _piecesRigidbody = _splitBody.GetComponentsInChildren<Rigidbody>();
-        _collider = GetComponent<Collider>();
+        Collider = GetComponent<Collider>();
         SetSpeed();
     }
 
@@ -38,8 +38,8 @@ public class Trap : MonoBehaviour
                 return;
             }
 
-            Vector3 contactPoint = _collider.ClosestPoint(cubic.transform.position);
-            float trapHeight = _collider.bounds.max.y;
+            Vector3 contactPoint = Collider.ClosestPoint(cubic.transform.position);
+            float trapHeight = Collider.bounds.max.y;
             IsSideCollision = Mathf.Abs(cubic.transform.position.z - contactPoint.z) > Threshold;
             cubic.HitTrap(this, contactPoint, trapHeight);
             CompleteCollision();
@@ -48,7 +48,7 @@ public class Trap : MonoBehaviour
         {
             if (_isCubicCollided == false)
             {
-                _collider.isTrigger = false;
+                Collider.isTrigger = false;
             }
         }
     }
@@ -59,8 +59,6 @@ public class Trap : MonoBehaviour
         {
             Animator.enabled = false;
         }
-
-        _collider.isTrigger = false;
     }
 
     protected virtual void CompleteCollision()
@@ -68,6 +66,7 @@ public class Trap : MonoBehaviour
         if (this is not Saw)
         {
             Stop();
+            Collider.isTrigger = false;
         }
     }
 

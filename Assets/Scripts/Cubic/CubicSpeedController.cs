@@ -12,11 +12,10 @@ public class CubicSpeedController : MonoBehaviour
     [SerializeField] private float _acceleration = 3f;
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private AnimationCurve _stopCurve;
-    [SerializeField] private AnimationCurve _fightSlowCurve;
+    [SerializeField] private AnimationCurve _throwSpeedCurve;
     [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
     private Cubic _cubic;
-
     private float _initialSpeed;
     private bool _isMaxSpeed;
     private bool _isStop;
@@ -80,6 +79,7 @@ public class CubicSpeedController : MonoBehaviour
         if (_cubic.IsSawing)
         {
             _isStop = true;
+            _initialSpeed = CurrentSpeed;
             StartCoroutine(StopSlowly(_stopCurve));
         }
         else
@@ -93,7 +93,7 @@ public class CubicSpeedController : MonoBehaviour
     private void OnCubicThrowingOut()
     {
         _initialSpeed = _moveSpeed;
-        StartCoroutine(StopSlowly(_fightSlowCurve));
+        StartCoroutine(StopSlowly(_throwSpeedCurve));
     }
 
     private IEnumerator Accelerate()
@@ -139,7 +139,11 @@ public class CubicSpeedController : MonoBehaviour
         }
         else
         {
-            _cubic.SplitIntoPieces();
+            if(_cubic.CollisionSaw is VerticalSaw)
+            {
+                _cubic.SplitIntoPieces();
+            }
+
             CurrentSpeed = 0;
         }
     }

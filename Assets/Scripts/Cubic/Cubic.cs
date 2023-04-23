@@ -68,13 +68,16 @@ public class Cubic : MonoBehaviour
 
     public void HitTrap(Trap trap, Vector3 contactPoint, float trapHeight)
     {
-        if (trap.TryGetComponent(out Saw saw))
+        if (trap.TryGetComponent(out Saw saw) && IsSawing == false)
         {
             CollisionSaw = saw;
             IsSawing = IsStartSawing();
+            Hit?.Invoke(contactPoint, trapHeight);
         }
-
-        Hit?.Invoke(contactPoint, trapHeight);
+        else
+        {
+            Hit?.Invoke(contactPoint, trapHeight);
+        }
     }
 
     public void SplitIntoPieces()

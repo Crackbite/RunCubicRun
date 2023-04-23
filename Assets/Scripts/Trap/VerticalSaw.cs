@@ -18,6 +18,8 @@ public class VerticalSaw : Saw
         {
             Animator.SetFloat(SpeedId, MinPatrolSpeed);
         }
+
+        Collider.isTrigger = false;
     }
 
     protected override void SetSpeed()
