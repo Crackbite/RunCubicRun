@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider), typeof(Rigidbody), typeof(ColorBlock))]
 public class ColorBlockPhysics : MonoBehaviour
 {
-    private const float DefaultForceFactor = 1f;
-
     private Collider _collider;
     private ColorBlock _colorBlock;
     private Rigidbody _rigidbody;
@@ -30,12 +28,12 @@ public class ColorBlockPhysics : MonoBehaviour
         CrossbarHit?.Invoke(_colorBlock.StackPosition);
     }
 
-    public void FallOff(Vector3 pushForce, float forceFactor = DefaultForceFactor)
+    public void FallOff(Vector3 pushForce, float forceFactor, bool removeParent = true)
     {
         _rigidbody.isKinematic = false;
-        _rigidbody.AddForce(pushForce * _colorBlock.StackPosition * forceFactor);
+        _rigidbody.AddForce(_colorBlock.StackPosition * forceFactor * pushForce);
 
-        if (Math.Abs(forceFactor - DefaultForceFactor) != 0)
+        if (removeParent)
         {
             transform.parent = null;
         }
