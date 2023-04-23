@@ -140,6 +140,7 @@ public class CubicSpeedController : MonoBehaviour
         else
         {
             _cubic.SplitIntoPieces();
+            CurrentSpeed = 0;
         }
     }
 }
