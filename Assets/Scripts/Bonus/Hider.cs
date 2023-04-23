@@ -7,6 +7,7 @@ public class Hider : Bonus
     [SerializeField] private Transform _portalsContainer;
     [SerializeField] private LayerMask _hiddenLayer = 1 << 9;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
+    [SerializeField] private bool _isHideCorrectBlocks;
 
     private Dictionary<ColorBlock, int> _modifiedBlocks;
     private Dictionary<Portal, Color> _modifiedPortals;
@@ -32,7 +33,7 @@ public class Hider : Bonus
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
-            if (colorBlock.BlockRenderer.CurrentColor == _blockStackRenderer.CurrentColor)
+            if (IsInvalidBlockColor(colorBlock.BlockRenderer))
             {
                 continue;
             }
@@ -42,6 +43,14 @@ public class Hider : Bonus
             colorBlock.gameObject.layer = newLayer;
             colorBlock.BlockPhysics.TurnOffTrigger();
         }
+    }
+
+    private bool IsInvalidBlockColor(ColorBlockRenderer blockRenderer)
+    {
+        Color currentBlockColor = blockRenderer.CurrentColor;
+        Color currentCubicColor = _blockStackRenderer.CurrentColor;
+
+        return _isHideCorrectBlocks ? currentBlockColor != currentCubicColor : currentBlockColor == currentCubicColor;
     }
 
     private void RestorePortalColors()
