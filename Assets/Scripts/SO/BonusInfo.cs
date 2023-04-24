@@ -11,4 +11,5 @@ public class BonusInfo : ScriptableObject
     public string Description => _description;
     public float Duration => _duration;
     public Sprite Icon => _icon;
+    public bool IsPositive => _isPositive;
 }
