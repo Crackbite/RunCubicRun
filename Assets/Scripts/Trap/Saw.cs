@@ -6,7 +6,7 @@ public class Saw : Trap
 
     private void OnTriggerExit(Collider collision)
     {
-        if(collision.TryGetComponent(out Cubic cubic) == false)
+        if(collision.TryGetComponent(out Cubic cubic) == false || cubic.CanDestroy)
         {
             return;
         }
