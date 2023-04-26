@@ -136,6 +136,7 @@ public class CubicSpeedController : MonoBehaviour
         {
             _isMaxSpeed = true;
             _isThrowing = false;
+            CurrentSpeed = _moveSpeed;
         }
         else
         {
