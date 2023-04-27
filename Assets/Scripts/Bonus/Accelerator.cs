@@ -7,6 +7,14 @@ public class Accelerator : Bonus
 
     private float _initialSpeedMultiplier;
 
+    private void Start()
+    {
+        if (_cubicSpeedController == null)
+        {
+            _cubicSpeedController = FindObjectOfType<CubicSpeedController>();
+        }
+    }
+
     public override void Apply()
     {
         _initialSpeedMultiplier = _cubicSpeedController.SpeedMultiplier;
