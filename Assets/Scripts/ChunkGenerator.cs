@@ -8,7 +8,7 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private Chunk[] _availableChunks;
     [SerializeField] private Chunk _finishChunk;
     [SerializeField] private Transform _chunkContainer;
-    [Range(0, 50)] [SerializeField] private int _chunksNumber;
+    [Range(1, 50)] [SerializeField] private int _chunksNumber;
     [Range(0, 100)] [SerializeField] private int _rotateChance;
 
     public event Action Completed;
