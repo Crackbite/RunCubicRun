@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PortalColorizer : MonoBehaviour
 {
-    [SerializeField] private GameObject _portalContainer;
+    [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private ColorHolder _colorHolder;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
@@ -62,7 +62,7 @@ public class PortalColorizer : MonoBehaviour
 
     private void AssignColorsToPortals()
     {
-        Portal[] portals = _portalContainer.GetComponentsInChildren<Portal>();
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
 
         foreach (Portal portal in portals)
         {
