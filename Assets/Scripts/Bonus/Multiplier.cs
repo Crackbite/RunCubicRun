@@ -7,6 +7,14 @@ public class Multiplier : Bonus
 
     private float _initialScoreMultiplier;
 
+    private void Start()
+    {
+        if (_scoreAllocator == null)
+        {
+            _scoreAllocator = FindObjectOfType<ScoreAllocator>();
+        }
+    }
+
     public override void Apply()
     {
         _initialScoreMultiplier = _scoreAllocator.ScoreMultiplier;

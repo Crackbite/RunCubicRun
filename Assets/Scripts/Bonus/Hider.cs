@@ -3,14 +3,19 @@ using UnityEngine;
 
 public class Hider : Bonus
 {
-    [SerializeField] private Transform _roadsContainer;
-    [SerializeField] private Transform _portalsContainer;
+    [SerializeField] private ColorBlocksContainer _colorBlocksContainer;
+    [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private LayerMask _hiddenLayer = 1 << 9;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private bool _isHideCorrectBlocks;
 
     private Dictionary<ColorBlock, int> _modifiedBlocks;
     private Dictionary<Portal, Color> _modifiedPortals;
+
+    private void Start()
+    {
+        AssignComponents();
+    }
 
     public override void Apply()
     {
@@ -24,16 +29,34 @@ public class Hider : Bonus
         RestorePortalColors();
     }
 
+    private void AssignComponents()
+    {
+        if (_colorBlocksContainer == null)
+        {
+            _colorBlocksContainer = FindObjectOfType<ColorBlocksContainer>();
+        }
+
+        if (_portalsContainer == null)
+        {
+            _portalsContainer = FindObjectOfType<PortalsContainer>();
+        }
+
+        if (_blockStackRenderer == null)
+        {
+            _blockStackRenderer = FindObjectOfType<BlockStackRenderer>();
+        }
+    }
+
     private void HideUnnecessaryBlocks()
     {
         int newLayer = (int)Mathf.Log(_hiddenLayer.value, 2);
 
-        ColorBlock[] colorBlocks = _roadsContainer.GetComponentsInChildren<ColorBlock>();
-        _modifiedBlocks = new Dictionary<ColorBlock, int>(colorBlocks.Length);
+        IReadOnlyList<ColorBlock> colorBlocks = _colorBlocksContainer.ColorBlocks;
+        _modifiedBlocks = new Dictionary<ColorBlock, int>(colorBlocks.Count);
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
-            if (IsInvalidBlockColor(colorBlock.BlockRenderer))
+            if (IsInvalidColorBlock(colorBlock))
             {
                 continue;
             }
@@ -45,9 +68,14 @@ public class Hider : Bonus
         }
     }
 
-    private bool IsInvalidBlockColor(ColorBlockRenderer blockRenderer)
+    private bool IsInvalidColorBlock(ColorBlock colorBlock)
     {
-        Color currentBlockColor = blockRenderer.CurrentColor;
+        if (colorBlock == null || colorBlock.IsInStack)
+        {
+            return true;
+        }
+
+        Color currentBlockColor = colorBlock.BlockRenderer.CurrentColor;
         Color currentCubicColor = _blockStackRenderer.CurrentColor;
 
         return _isHideCorrectBlocks ? currentBlockColor != currentCubicColor : currentBlockColor == currentCubicColor;
@@ -65,6 +93,11 @@ public class Hider : Bonus
     {
         foreach ((ColorBlock colorBlock, int originalLayer) in _modifiedBlocks)
         {
+            if (colorBlock == null)
+            {
+                continue;
+            }
+
             colorBlock.gameObject.layer = originalLayer;
             colorBlock.BlockPhysics.TurnOnTrigger();
         }
@@ -72,8 +105,8 @@ public class Hider : Bonus
 
     private void UpdatePortalColors()
     {
-        Portal[] portals = _portalsContainer.GetComponentsInChildren<Portal>();
-        _modifiedPortals = new Dictionary<Portal, Color>(portals.Length);
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
+        _modifiedPortals = new Dictionary<Portal, Color>(portals.Count);
 
         foreach (Portal portal in portals)
         {

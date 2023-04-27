@@ -9,6 +9,14 @@ public class Exploder : Bonus
     [SerializeField] private float _maxPushForce = 200f;
     [SerializeField] private float _blockDestroyDelay = 5f;
 
+    private void Start()
+    {
+        if (_blockStack == null)
+        {
+            _blockStack = FindObjectOfType<BlockStack>();
+        }
+    }
+
     public override void Apply()
     {
         if (_blockStack.Blocks.Count == 0)
