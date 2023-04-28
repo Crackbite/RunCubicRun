@@ -5,6 +5,8 @@ public class Crossbar : MonoBehaviour
 {
     private Collider _collider;
 
+    public TrapType Type { get; } = TrapType.Crossbar;
+
     private void Start()
     {
         _collider = GetComponent<Collider>();
