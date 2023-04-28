@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
+    [SerializeField] private TrapType _type;
     [SerializeField] private GameObject _splitBody;
     [SerializeField] private GameObject _wholeBody;
     [SerializeField] protected Animator Animator;
