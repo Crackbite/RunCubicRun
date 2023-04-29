@@ -21,7 +21,6 @@ public class Trap : MonoBehaviour
     public bool IsSideCollision { get; private set; }
     public TrapType Type => _type;
 
-
     private void Awake()
     {
         _piecesRigidbody = _splitBody.GetComponentsInChildren<Rigidbody>();
