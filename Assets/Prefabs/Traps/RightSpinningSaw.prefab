@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 8049369885127851531}
   - component: {fileID: 9129117903800388549}
   - component: {fileID: 5730327571179175053}
-  - component: {fileID: 5271099168648871494}
+  - component: {fileID: 890183665834898137}
   m_Layer: 0
   m_Name: Saw2
   m_TagString: Untagged
@@ -2150,7 +2150,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: badb6ada60f8e3a43ae14d07ed42f5ae, type: 2}
---- !u!114 &5271099168648871494
+--- !u!114 &890183665834898137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2159,7 +2159,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8262433549251223895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
+  m_Script: {fileID: 11500000, guid: b93cf6bf52646ee46885167e39cf97fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
@@ -2168,6 +2168,9 @@ MonoBehaviour:
   Animator: {fileID: 6718390535843813886}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _defaultSpeed: 1.4
+  _canRandomizeSpeed: 1
+  _sawSide: 1
 --- !u!1 &8367046323355241966
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,7 +2182,7 @@ GameObject:
   - component: {fileID: 7939428336724211789}
   - component: {fileID: 8888948540505320866}
   - component: {fileID: 981624044045280176}
-  - component: {fileID: 2643145761503598810}
+  - component: {fileID: 8709503595404940251}
   m_Layer: 0
   m_Name: Saw1
   m_TagString: Untagged
@@ -2226,7 +2229,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: badb6ada60f8e3a43ae14d07ed42f5ae, type: 2}
---- !u!114 &2643145761503598810
+--- !u!114 &8709503595404940251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2235,7 +2238,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8367046323355241966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9deb38ecf66e4148aa164560b29861e, type: 3}
+  m_Script: {fileID: 11500000, guid: b93cf6bf52646ee46885167e39cf97fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 2
@@ -2244,6 +2247,9 @@ MonoBehaviour:
   Animator: {fileID: 6718390535843813886}
   MinSpeed: 0.8
   MaxSpeed: 1.2
+  _defaultSpeed: 1.4
+  _canRandomizeSpeed: 1
+  _sawSide: 1
 --- !u!1 &8598122766871841808
 GameObject:
   m_ObjectHideFlags: 0
