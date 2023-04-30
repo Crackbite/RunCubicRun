@@ -4,7 +4,7 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _effect;
-    [SerializeField] private float _alphaValue;
+    [SerializeField] private float _alphaValue = .4f;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
     public event Action<Portal> CubicEntered;
