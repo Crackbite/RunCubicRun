@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Saw : Trap
+public abstract class Saw : Trap
 {
     private bool _canSplit = true;
 
