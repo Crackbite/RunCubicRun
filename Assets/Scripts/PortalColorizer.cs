@@ -24,7 +24,10 @@ public class PortalColorizer : MonoBehaviour
     {
         const int FirstPortalIndex = 0;
 
-        _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
+        if (_portalsContainer.Portals.Count > 0)
+        {
+            _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
+        }
         ValidateAvailableColors();
         AssignColorsToPortals();
     }
@@ -71,7 +74,7 @@ public class PortalColorizer : MonoBehaviour
         {
             if (portal.IsColored == false)
             {
-                if(portal.transform.position.x == _nextPortalPositionX)
+                if (portal.transform.position.x == _nextPortalPositionX)
                 {
                     Color nextColor = ChooseNextColor();
                     portal.SetColor(nextColor);
