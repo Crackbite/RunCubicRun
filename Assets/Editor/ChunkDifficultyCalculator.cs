@@ -85,7 +85,7 @@ public class ChunkDifficultyCalculator : EditorWindow
         CalculatePortalsDifficulty(activeGameObject);
         CalculateDistancesDifficulty(activeGameObject);
 
-        _lastUpdateTime = DateTime.Now.ToString("T");
+        _lastUpdateTime = DateTime.Now.ToString("HH:mm:ss");
     }
 
     private void CalculateDistancesDifficulty(GameObject mainObject)
