@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Portal : MonoBehaviour
 {
@@ -7,9 +7,10 @@ public class Portal : MonoBehaviour
     [SerializeField] private float _alphaValue;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
-    public event UnityAction<Portal> CubicEntered;
+    public event Action<Portal> CubicEntered;
 
     public Color Color { get; private set; }
+    public bool IsColored { get; private set; }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -25,5 +26,6 @@ public class Portal : MonoBehaviour
         ParticleSystem.MainModule main = _effect.main;
         color.a = _alphaValue;
         main.startColor = color;
+        IsColored = true;
     }
 }

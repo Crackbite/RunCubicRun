@@ -7,7 +7,7 @@ public class BlockStackRenderer : MonoBehaviour
     [SerializeField] private float _coloringSpeedFactor = .02f;
     [SerializeField] private BlockStack _blockStack;
 
-    public event Action<Color> ColorAssigned;
+    public event Action ColorAssigned;
 
     public Color CurrentColor { get; private set; }
     public bool IsColorAssigned { get; private set; }
@@ -51,7 +51,7 @@ public class BlockStackRenderer : MonoBehaviour
         if (IsColorAssigned == false)
         {
             IsColorAssigned = true;
-            ColorAssigned?.Invoke(CurrentColor);
+            ColorAssigned?.Invoke();
         }
     }
 }
