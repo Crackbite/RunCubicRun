@@ -19,6 +19,7 @@ public class Trap : MonoBehaviour
     protected readonly int SpeedId = Animator.StringToHash("Speed");
 
     public bool IsSideCollision { get; private set; }
+    public TrapType Type => _type;
 
     private void Awake()
     {

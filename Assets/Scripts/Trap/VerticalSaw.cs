@@ -2,10 +2,6 @@
 
 public class VerticalSaw : Saw
 {
-    [SerializeField] private SawType _sawType;
-
-    public enum SawType { Patrol, Static }
-
     private const int MinPatrolSpeed = 0;
 
     protected override void CompleteCollision()
@@ -14,7 +10,7 @@ public class VerticalSaw : Saw
         {
             Stop();
         }
-        else if (_sawType == SawType.Patrol)
+        else if (Type == TrapType.PatrolSaw)
         {
             Animator.SetFloat(SpeedId, MinPatrolSpeed);
         }
@@ -24,7 +20,7 @@ public class VerticalSaw : Saw
 
     protected override void SetSpeed()
     {
-        if (_sawType == SawType.Patrol)
+        if (Type == TrapType.PatrolSaw)
         {
             base.SetSpeed();
         }

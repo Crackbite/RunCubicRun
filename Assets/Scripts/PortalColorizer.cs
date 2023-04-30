@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PortalColorizer : MonoBehaviour
 {
-    [SerializeField] private GameObject _portalContainer;
+    [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private ColorHolder _colorHolder;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
-    private Color _previousColor;
     private List<Color> _availableColors;
+    private float _nextPortalPositionX;
 
     private void OnEnable()
     {
@@ -20,9 +20,11 @@ public class PortalColorizer : MonoBehaviour
         _blockStackRenderer.ColorAssigned -= OnStackColorAssigned;
     }
 
-    private void OnStackColorAssigned(Color color)
+    private void OnStackColorAssigned()
     {
-        _previousColor = color;
+        const int FirstPortalIndex = 0;
+
+        _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
         ValidateAvailableColors();
         AssignColorsToPortals();
     }
@@ -31,20 +33,21 @@ public class PortalColorizer : MonoBehaviour
     {
         const float MinValue = -1f;
 
-        float maxValue = _availableColors.Count - 1;
-        float random = Random.Range(MinValue, maxValue);
-
-        for (int i = 0; i < _availableColors.Count; i++)
+        if (_availableColors.Count > 0)
         {
-            if (random <= i)
+            float maxValue = _availableColors.Count - 1;
+            float random = Random.Range(MinValue, maxValue);
+
+            for (int i = 0; i < _availableColors.Count; i++)
             {
-                _previousColor = _availableColors[i];
-                ValidateAvailableColors();
-                return _previousColor;
+                if (random <= i)
+                {
+                    return _availableColors[i];
+                }
             }
         }
 
-        return _previousColor;
+        return _blockStackRenderer.CurrentColor;
     }
 
     private void ValidateAvailableColors()
@@ -53,7 +56,7 @@ public class PortalColorizer : MonoBehaviour
 
         foreach (Color color in _colorHolder.Colors)
         {
-            if (color != _previousColor)
+            if (color != _blockStackRenderer.CurrentColor)
             {
                 _availableColors.Add(color);
             }
@@ -62,18 +65,32 @@ public class PortalColorizer : MonoBehaviour
 
     private void AssignColorsToPortals()
     {
-        Portal[] portals = _portalContainer.GetComponentsInChildren<Portal>();
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
 
         foreach (Portal portal in portals)
         {
-            portal.SetColor(ChooseNextColor());
-            portal.CubicEntered += OnCubicEntered;
+            if (portal.IsColored == false)
+            {
+                if(portal.transform.position.x == _nextPortalPositionX)
+                {
+                    Color nextColor = ChooseNextColor();
+                    portal.SetColor(nextColor);
+                    portal.CubicEntered += OnCubicEntered;
+                    _availableColors.Remove(nextColor);
+                }
+                else
+                {
+                    _nextPortalPositionX = portal.transform.position.x;
+                    return;
+                }
+            }
         }
     }
 
     private void OnCubicEntered(Portal portal)
     {
         _blockStackRenderer.ChangeColor(portal.Color);
-        portal.CubicEntered -= OnCubicEntered;
+        ValidateAvailableColors();
+        AssignColorsToPortals();
     }
 }

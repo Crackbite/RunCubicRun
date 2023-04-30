@@ -4,6 +4,14 @@ public class Reverser : Bonus
 {
     [SerializeField] private SidewayMovement _sidewayMovement;
 
+    private void Start()
+    {
+        if (_sidewayMovement == null)
+        {
+            _sidewayMovement = FindObjectOfType<SidewayMovement>();
+        }
+    }
+
     public override void Apply()
     {
         _sidewayMovement.IsInvertControl = true;

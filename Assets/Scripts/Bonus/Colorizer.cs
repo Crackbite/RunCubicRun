@@ -3,12 +3,17 @@ using UnityEngine;
 
 public class Colorizer : Bonus
 {
-    [SerializeField] private Transform _roadsContainer;
-    [SerializeField] private Transform _portalsContainer;
+    [SerializeField] private ColorBlocksContainer _colorBlocksContainer;
+    [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
     private Dictionary<ColorBlock, Color> _modifiedBlocks;
     private Dictionary<Portal, Color> _modifiedPortals;
+
+    private void Start()
+    {
+        AssignComponents();
+    }
 
     public override void Apply()
     {
@@ -20,6 +25,24 @@ public class Colorizer : Bonus
     {
         RestoreBlockColors();
         RestorePortalColors();
+    }
+
+    private void AssignComponents()
+    {
+        if (_colorBlocksContainer == null)
+        {
+            _colorBlocksContainer = FindObjectOfType<ColorBlocksContainer>();
+        }
+
+        if (_portalsContainer == null)
+        {
+            _portalsContainer = FindObjectOfType<PortalsContainer>();
+        }
+
+        if (_blockStackRenderer == null)
+        {
+            _blockStackRenderer = FindObjectOfType<BlockStackRenderer>();
+        }
     }
 
     private void RestoreBlockColors()
@@ -45,12 +68,12 @@ public class Colorizer : Bonus
 
     private void UpdateBlockColors()
     {
-        ColorBlock[] colorBlocks = _roadsContainer.GetComponentsInChildren<ColorBlock>();
-        _modifiedBlocks = new Dictionary<ColorBlock, Color>(colorBlocks.Length);
+        IReadOnlyList<ColorBlock> colorBlocks = _colorBlocksContainer.ColorBlocks;
+        _modifiedBlocks = new Dictionary<ColorBlock, Color>(colorBlocks.Count);
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
-            if (colorBlock.BlockRenderer.CurrentColor == _blockStackRenderer.CurrentColor)
+            if (colorBlock == null || colorBlock.BlockRenderer.CurrentColor == _blockStackRenderer.CurrentColor)
             {
                 continue;
             }
@@ -62,8 +85,8 @@ public class Colorizer : Bonus
 
     private void UpdatePortalColors()
     {
-        Portal[] portals = _portalsContainer.GetComponentsInChildren<Portal>();
-        _modifiedPortals = new Dictionary<Portal, Color>(portals.Length);
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
+        _modifiedPortals = new Dictionary<Portal, Color>(portals.Count);
 
         foreach (Portal portal in portals)
         {
