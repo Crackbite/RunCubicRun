@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,9 +16,10 @@ public class ChunkGenerator : MonoBehaviour
 
     private void Start()
     {
-        ShuffleChunks(_availableChunks);
-        GenerateLevel();
+        var chunkComposer = new ChunkComposer(_availableChunks);
+        List<Chunk> chunks = chunkComposer.GetSuitableChunks(1, _chunksNumber);
 
+        GenerateLevel(chunks);
         Completed?.Invoke();
     }
 
@@ -32,18 +34,18 @@ public class ChunkGenerator : MonoBehaviour
         return chunkPosition;
     }
 
-    private void GenerateLevel()
+    private void GenerateLevel(List<Chunk> chunks)
     {
         Vector3 chunkPosition;
         Chunk lastChunk = _startChunk;
-        int chunksNumber = Mathf.Min(_chunksNumber, _availableChunks.Length);
+        int chunksNumber = Mathf.Min(_chunksNumber, chunks.Count);
 
         for (int i = 0; i < chunksNumber; i++)
         {
-            Chunk newChunk = _availableChunks[i];
+            Chunk newChunk = chunks[i];
             chunkPosition = CalculateNewChunkPosition(lastChunk, newChunk);
 
-            Quaternion rotation = GetRandomRotation();
+            Quaternion rotation = GetRandomRotation(newChunk);
             lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
         }
 
@@ -57,21 +59,14 @@ public class ChunkGenerator : MonoBehaviour
         return meshRenderer.bounds.extents.x;
     }
 
-    private Quaternion GetRandomRotation()
+    private Quaternion GetRandomRotation(Chunk chunk)
     {
-        const int MaxChance = 99;
-
-        int range = Random.Range(0, MaxChance);
-
-        return range >= _rotateChance ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
-    }
-
-    private void ShuffleChunks(Chunk[] chunks)
-    {
-        for (int i = chunks.Length - 1; i > 0; i--)
+        if (chunk.CanRotate == false)
         {
-            int range = Random.Range(0, i + 1);
-            (chunks[i], chunks[range]) = (chunks[range], chunks[i]);
+            return Quaternion.identity;
         }
+
+        int chance = Random.Range(0, 100);
+        return chance > _rotateChance ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
     }
 }
