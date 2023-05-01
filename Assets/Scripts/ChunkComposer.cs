@@ -58,7 +58,9 @@ public class ChunkComposer
 
     private bool CanSelectEasyChunk(int level, int generalChance)
     {
-        int chance = 100 - ((level - 1) * 4);
+        const float Coefficient = 4f;
+
+        float chance = 100 - ((level - 1) * Coefficient);
         chance = Mathf.Clamp(chance, 0, 100);
 
         return chance > generalChance;
@@ -66,7 +68,9 @@ public class ChunkComposer
 
     private bool CanSelectHardChunk(int level, int generalChance)
     {
-        int chance = (level - 1) * 2;
+        const float Coefficient = 1.5f;
+
+        float chance = (level - 1) * Coefficient;
         chance = Mathf.Clamp(chance, 0, 100);
 
         return chance > generalChance;
@@ -74,7 +78,9 @@ public class ChunkComposer
 
     private bool CanSelectMediumChunk(int level, int generalChance)
     {
-        int chance = (level - 1) * 2;
+        const float Coefficient = 2f;
+
+        float chance = (level - 1) * Coefficient;
         chance = chance > 100 ? 200 - chance : chance;
         chance = Mathf.Clamp(chance, 0, 100);
 
