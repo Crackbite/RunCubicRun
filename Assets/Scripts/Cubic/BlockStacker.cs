@@ -4,20 +4,29 @@ using UnityEngine;
 public class BlockStacker : MonoBehaviour
 {
     [SerializeField] private float _gap = .02f;
+    [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private BlockStack _blockStack;
+
+    private bool _isCubicHit;
     private float _stackYPosition;
 
     public event Action WrongBlockTaken;
 
+    private void OnEnable()
+    {
+        _cubic.Hit += OnCubicHit;
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.CanFollow)
+        if (_isCubicHit || collision.TryGetComponent(out ColorBlock colorBlock) == false || colorBlock.CanFollow)
         {
             return;
         }
 
-        if (_blockStackRenderer.IsColorAssigned && _blockStackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
+        if (_blockStackRenderer.IsColorAssigned
+            && _blockStackRenderer.CurrentColor != colorBlock.BlockRenderer.CurrentColor)
         {
             Destroy(colorBlock.gameObject);
             _blockStack.AnimateDestroy(_blockStack.Blocks[0]);
@@ -46,5 +55,15 @@ public class BlockStacker : MonoBehaviour
         blockTransform.SetParent(containerTransform);
 
         _blockStack.Add(colorBlock);
+    }
+
+    private void OnDisable()
+    {
+        _cubic.Hit -= OnCubicHit;
+    }
+
+    private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
+    {
+        _isCubicHit = true;
     }
 }
