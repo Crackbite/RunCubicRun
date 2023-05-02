@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Hole : MonoBehaviour
+public class Abyss : MonoBehaviour
 {
     private void OnTriggerEnter(Collider collision)
     {

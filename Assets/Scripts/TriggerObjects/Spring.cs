@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Spring : MonoBehaviour
 {
+    [SerializeField] Abyss _abyss;
+
     private readonly int _tossHash = Animator.StringToHash("Toss");
 
     private Animator _animator;
@@ -11,6 +13,13 @@ public class Spring : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+
+        if (transform.position.x > _abyss.transform.position.x)
+        {
+            transform.localPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
+            Vector3 halfTurnAngle = new Vector3(0f, 180f, 0f);
+            transform.Rotate(halfTurnAngle);
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
