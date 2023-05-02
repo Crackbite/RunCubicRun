@@ -102,7 +102,7 @@ public class CubicMovement : MonoBehaviour
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
-        if (_blockStack.Blocks.Count < 1)
+        if (_canLineChange == false)
         {
             return;
         }
