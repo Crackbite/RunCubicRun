@@ -30,20 +30,19 @@ public class ChunkComposer
 
         while (chunks.Count != count)
         {
-            int generalChance = Random.Range(0, 100);
             Chunk selectedChunk = null;
 
             try
             {
-                if (CanSelectEasyChunk(level, generalChance))
+                if (CanSelectEasyChunk(level))
                 {
                     selectedChunk = GetRandomChunk(_easyChunks);
                 }
-                else if (CanSelectMediumChunk(level, generalChance))
+                else if (CanSelectMediumChunk(level))
                 {
                     selectedChunk = GetRandomChunk(_mediumChunks);
                 }
-                else if (CanSelectHardChunk(level, generalChance))
+                else if (CanSelectHardChunk(level))
                 {
                     selectedChunk = GetRandomChunk(_hardChunks);
                 }
@@ -63,27 +62,27 @@ public class ChunkComposer
         return chunks;
     }
 
-    private bool CanSelectEasyChunk(int level, int generalChance)
+    private bool CanSelectEasyChunk(int level)
     {
         const float Coefficient = 4f;
 
         float chance = 100 - ((level - 1) * Coefficient);
         chance = Mathf.Clamp(chance, 0, 100);
 
-        return chance > generalChance;
+        return chance > GetRandomChance();
     }
 
-    private bool CanSelectHardChunk(int level, int generalChance)
+    private bool CanSelectHardChunk(int level)
     {
         const float Coefficient = 1.5f;
 
         float chance = (level - 1) * Coefficient;
         chance = Mathf.Clamp(chance, 0, 100);
 
-        return chance > generalChance;
+        return chance > GetRandomChance();
     }
 
-    private bool CanSelectMediumChunk(int level, int generalChance)
+    private bool CanSelectMediumChunk(int level)
     {
         const float Coefficient = 2f;
 
@@ -91,7 +90,12 @@ public class ChunkComposer
         chance = chance > 100 ? 200 - chance : chance;
         chance = Mathf.Clamp(chance, 0, 100);
 
-        return chance > generalChance;
+        return chance > GetRandomChance();
+    }
+
+    private int GetRandomChance()
+    {
+        return Random.Range(0, 100);
     }
 
     private Chunk GetRandomChunk(List<Chunk> chunks)
