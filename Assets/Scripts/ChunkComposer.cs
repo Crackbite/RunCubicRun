@@ -14,6 +14,13 @@ public class ChunkComposer
         SortChunks(chunks);
     }
 
+    public void DebugStatistic()
+    {
+        Debug.Log($"EasyChunks: {_easyChunks.Count}");
+        Debug.Log($"MediumChunks: {_mediumChunks.Count}");
+        Debug.Log($"HardChunks: {_hardChunks.Count}");
+    }
+
     public List<Chunk> GetSuitableChunks(int level, int count)
     {
         var chunks = new List<Chunk>(count);
