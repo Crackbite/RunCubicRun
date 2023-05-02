@@ -845,6 +845,37 @@ MonoBehaviour:
     m_Bits: 128
   _shiftPerMove: 2
   _changeLineSpeed: 0.1
+--- !u!1 &326259724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 326259725}
+  m_Layer: 0
+  m_Name: Chunks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &326259725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326259724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 472048007}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &436104307
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +955,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2095107868}
+  - {fileID: 326259725}
   - {fileID: 671540990}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -940,17 +972,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6d4c2a434fe874e917e196178eeea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startChunk: {fileID: 2095107869}
+  _starterChunk: {fileID: 2095107869}
   _availableChunks:
-  - {fileID: -4472595799972834685, guid: 30dd5c5e2c6adb7459a4376b83c5bd76, type: 3}
-  - {fileID: -7629236487716490383, guid: ad800586feeaefe4e961c17a406e1a57, type: 3}
-  - {fileID: 8976465993683565635, guid: 7a1bf9cf6de7a0c4ba30c009f5715e33, type: 3}
-  - {fileID: 6040826904703214456, guid: 03417561d654ea04aba77efd778badf9, type: 3}
-  - {fileID: -1555227031977742756, guid: d17c329e303dd2b45b9f3e2f172f60d0, type: 3}
-  _finishChunk: {fileID: 671540991}
-  _chunkContainer: {fileID: 472048007}
-  _chunksNumber: 5
-  _rotateChance: 0
+  - {fileID: 6967138761191338800, guid: 62e816e84bc1e4e49ad963d695cae581, type: 3}
+  - {fileID: 3603856022589679541, guid: 2b21efc7858a25c4abf3c72058eda9c8, type: 3}
+  - {fileID: 8992573432406854089, guid: 735e22d251fcb9d4f97f68cf6fcde4cf, type: 3}
+  - {fileID: 898980506134373083, guid: 62c866c3fa4384f4e97264d09d45edde, type: 3}
+  - {fileID: 4937644840913586607, guid: 85bf96ee093889a45849e781e8b2a1b9, type: 3}
+  - {fileID: 3049862259650590157, guid: 6c0f0d0690a405c4c98e6373d75c955d, type: 3}
+  - {fileID: 2318759423836041965, guid: 165ac709de86ab3419c4af52d7a87e29, type: 3}
+  - {fileID: 789266082941984777, guid: 6e00283da5e595c42a4ea3cc0f9e956f, type: 3}
+  - {fileID: 113733421912798802, guid: b7e3502e6d4633f4799a2ee0137fc4a2, type: 3}
+  - {fileID: 5182062591591255026, guid: 21cf070a7513a7742b3e30b544f03acd, type: 3}
+  _finalChunk: {fileID: 671540991}
+  _chunkContainer: {fileID: 326259725}
+  _chunksToGenerate: 5
+  _rotateChance: 50
 --- !u!114 &535505728 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 359788459681188440, guid: 4ec72b8360052394c9fc261ed6ad9bdc, type: 3}

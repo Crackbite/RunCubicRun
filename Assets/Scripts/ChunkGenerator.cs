@@ -5,19 +5,19 @@ using Random = UnityEngine.Random;
 
 public class ChunkGenerator : MonoBehaviour
 {
-    [SerializeField] private Chunk _startChunk;
+    [SerializeField] private Chunk _starterChunk;
     [SerializeField] private Chunk[] _availableChunks;
-    [SerializeField] private Chunk _finishChunk;
+    [SerializeField] private Chunk _finalChunk;
     [SerializeField] private Transform _chunkContainer;
-    [Range(1, 50)] [SerializeField] private int _chunksNumber;
-    [Range(0, 100)] [SerializeField] private int _rotateChance;
+    [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
+    [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
 
     public event Action Completed;
 
     private void Start()
     {
         var chunkComposer = new ChunkComposer(_availableChunks);
-        List<Chunk> chunks = chunkComposer.GetSuitableChunks(1, _chunksNumber);
+        List<Chunk> chunks = chunkComposer.GetSuitableChunks(18, _chunksToGenerate);
 
         GenerateLevel(chunks);
         Completed?.Invoke();
@@ -34,11 +34,11 @@ public class ChunkGenerator : MonoBehaviour
         return chunkPosition;
     }
 
-    private void GenerateLevel(List<Chunk> chunks)
+    private void GenerateLevel(IReadOnlyList<Chunk> chunks)
     {
         Vector3 chunkPosition;
-        Chunk lastChunk = _startChunk;
-        int chunksNumber = Mathf.Min(_chunksNumber, chunks.Count);
+        Chunk lastChunk = _starterChunk;
+        int chunksNumber = Mathf.Min(_chunksToGenerate, chunks.Count);
 
         for (int i = 0; i < chunksNumber; i++)
         {
@@ -49,8 +49,8 @@ public class ChunkGenerator : MonoBehaviour
             lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
         }
 
-        chunkPosition = CalculateNewChunkPosition(lastChunk, _finishChunk);
-        _finishChunk.transform.position = chunkPosition;
+        chunkPosition = CalculateNewChunkPosition(lastChunk, _finalChunk);
+        _finalChunk.transform.position = chunkPosition;
     }
 
     private float GetChunkWidth(Chunk chunk)
@@ -61,12 +61,17 @@ public class ChunkGenerator : MonoBehaviour
 
     private Quaternion GetRandomRotation(Chunk chunk)
     {
+        const float RotationDegree = 180f;
+
+        Quaternion defaultRotation = Quaternion.identity;
+        Quaternion newRotation = Quaternion.Euler(0f, RotationDegree, 0f);
+
         if (chunk.CanRotate == false)
         {
-            return Quaternion.identity;
+            return defaultRotation;
         }
 
         int chance = Random.Range(0, 100);
-        return chance > _rotateChance ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
+        return chance > _rotateChance ? defaultRotation : newRotation;
     }
 }
