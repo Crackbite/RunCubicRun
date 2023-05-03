@@ -36,6 +36,7 @@ public class ColorBlockMovement : MonoBehaviour
                 {
                     _isPlaced = false;
                     _lastPlacePositionY = currentPosition.y;
+                    currentPosition.y = _stackCoordinator.GetYPositionInJump(ref _runningTime, _lastPlacePositionY, _colorBlock.StackPosition);
                 }
             }
             else if (currentPosition.y != _lastPlacePositionY)

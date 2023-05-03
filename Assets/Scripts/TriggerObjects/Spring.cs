@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Spring : MonoBehaviour
 {
+    [SerializeField] private float _pushForce = 5;
     private readonly int _tossHash = Animator.StringToHash("Toss");
 
     private Animator _animator;
@@ -24,6 +25,18 @@ public class Spring : MonoBehaviour
     public void Toss(Cubic cubic)
     {
         _animator.SetTrigger(_tossHash);
+
+        if (cubic.IsSawing)
+        {
+            if(cubic.TryGetComponent(out Rigidbody cubicRigidbody))
+            {
+                cubicRigidbody.isKinematic = false;
+                cubicRigidbody.AddForce(_pushForce * Vector3.up, ForceMode.Impulse);
+            }
+
+            return;
+        }
+
         StartCoroutine(ThrowOverHole(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
     }
 

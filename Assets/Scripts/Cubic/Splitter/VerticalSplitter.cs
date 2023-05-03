@@ -9,13 +9,14 @@ public class VerticalSplitter : Splitter
 
     public override void Split()
     {
-        SplitOnePart(FirstPart, _splitAngle);
-        SplitOnePart(SecondPart, -_splitAngle);
+        SplitOnePart(FirstPart);
+        SplitOnePart(SecondPart);
     }
 
-    public void SplitOnePart(Transform part, float angle)
+    public override void SplitOnePart(Transform part)
     {
         part.gameObject.SetActive(true);
-        part.DORotate(Vector3.right * angle, _splitDuration).SetEase(_ease);
+        part.SetParent(null);
+        part.DORotate(Vector3.right * _splitAngle * Mathf.Sign(part.transform.localPosition.z), _splitDuration).SetEase(_ease);
     }
 }

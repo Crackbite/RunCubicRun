@@ -13,7 +13,7 @@ public class HorizontalSplitter : Splitter
         StartCoroutine(Slide(FirstPart, SecondPart));
     }
 
-    public void SplitOnePart(Transform part)
+    public override void SplitOnePart(Transform part)
     {
         part.gameObject.SetActive(true);
     }
