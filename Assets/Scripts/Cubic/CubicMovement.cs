@@ -58,6 +58,12 @@ public class CubicMovement : MonoBehaviour
                 _cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right,
                 Space.World);
         }
+
+        if (isFalling)
+        {
+            float lifeTime = 5f;
+            Destroy(_cubic.gameObject, lifeTime);
+        }
     }
 
     private void OnDisable()

@@ -22,6 +22,8 @@ public class CubicSpeedController : MonoBehaviour
     private bool _isThrowing;
     private float _runningTime;
 
+    public event Action CubicStopped;
+
     public float CurrentSpeed { get; private set; }
 
     public float SpeedMultiplier { get; private set; } = 1f;
@@ -132,7 +134,7 @@ public class CubicSpeedController : MonoBehaviour
             yield return null;
         }
 
-        if(_isStop == false)
+        if (_isStop == false)
         {
             _isMaxSpeed = true;
             _isThrowing = false;
@@ -140,12 +142,13 @@ public class CubicSpeedController : MonoBehaviour
         }
         else
         {
-            if(_cubic.CollisionSaw is VerticalSaw)
+            if (_cubic.CollisionSaw is VerticalSaw)
             {
                 _cubic.SplitIntoPieces();
             }
 
             CurrentSpeed = 0;
+            CubicStopped?.Invoke();
         }
     }
 }

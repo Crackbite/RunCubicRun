@@ -11,16 +11,23 @@ public class CubicTracker : MonoBehaviour
     [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
     private Vector3 _targetPosition;
-    bool _canTrack;
+    private bool _canTrack;
+    private CubicSpeedController _cubicSpeedController;
 
     private void OnEnable()
     {
+        if (_cubic.TryGetComponent(out CubicSpeedController speedController))
+        {
+            _cubicSpeedController = speedController;
+            _cubicSpeedController.CubicStopped += OnCubicStooped;
+        }
+
         _levelEntryPortal.ThrowingOut += OnCubicThrownOut;
     }
 
     private void LateUpdate()
     {
-        if (_canTrack)
+        if (_canTrack && _cubic != null)
         {
             SetTargetPosition();
             transform.position = Vector3.Lerp(transform.position, _targetPosition, _damping * Time.deltaTime);
@@ -35,6 +42,12 @@ public class CubicTracker : MonoBehaviour
     private void OnCubicThrownOut()
     {
         _canTrack = true;
+    }
+
+    private void OnCubicStooped()
+    {
+        _canTrack = false;
+        _cubicSpeedController.CubicStopped -= OnCubicThrownOut;
     }
 
     private void SetTargetPosition()

@@ -34,7 +34,11 @@ public class BlockStack : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 currentPosition = transform.position;
-        transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
+
+        if(_cubic != null)
+        {
+            transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
+        }      
     }
 
     public void Add(ColorBlock colorBlock)
