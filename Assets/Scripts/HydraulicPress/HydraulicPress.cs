@@ -5,12 +5,12 @@ public class HydraulicPress : MonoBehaviour
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressTop _pressTop;
     [SerializeField] private float _pressTopInitOffset = 10f;
-    [SerializeField] private CubicMovement _cubicMovement;
+    [SerializeField] private CameraChanger _cameraChanger;
     [SerializeField] private BarometerArrow _barometerArrow;
 
     private void OnEnable()
     {
-        _cubicMovement.CubicOnStand += CubicOnStand;
+        _cameraChanger.CubicPressBlendFinished += OnCubicPressBlendFinished;
     }
 
     private void Start()
@@ -20,10 +20,10 @@ public class HydraulicPress : MonoBehaviour
 
     private void OnDisable()
     {
-        _cubicMovement.CubicOnStand -= CubicOnStand;
+        _cameraChanger.CubicPressBlendFinished -= OnCubicPressBlendFinished;
     }
 
-    private void CubicOnStand()
+    private void InitPress()
     {
         ColorBlock highestBlock = _blockStack.Blocks[0];
         float highestBlockY = highestBlock.GetComponent<Collider>().bounds.max.y;
@@ -35,5 +35,10 @@ public class HydraulicPress : MonoBehaviour
         _pressTop.gameObject.SetActive(true);
         _pressTop.Init();
         _barometerArrow.Init();
+    }
+
+    private void OnCubicPressBlendFinished()
+    {
+        InitPress();
     }
 }
