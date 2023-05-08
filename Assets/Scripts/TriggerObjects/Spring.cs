@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Spring : MonoBehaviour
 {
-    [SerializeField] Abyss _abyss;
+    [SerializeField] private Abyss _abyss;
 
     private readonly int _tossHash = Animator.StringToHash("Toss");
 
@@ -33,10 +33,10 @@ public class Spring : MonoBehaviour
     public void Toss(Cubic cubic)
     {
         _animator.SetTrigger(_tossHash);
-        StartCoroutine(ThrowOverHole(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
+        StartCoroutine(ThrowOverAbyss(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
     }
 
-    private IEnumerator ThrowOverHole(Transform flyingObject, float throwForce, float acceleration)
+    private IEnumerator ThrowOverAbyss(Transform flyingObject, float throwForce, float acceleration)
     {
         float runningTime = 0;
         float startPositionY = flyingObject.position.y;
