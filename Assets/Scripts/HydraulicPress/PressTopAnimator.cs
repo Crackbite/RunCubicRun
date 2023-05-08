@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class PressTopAnimator : MonoBehaviour
     [SerializeField] private float _stepDivergenceOffset = .01f;
     [SerializeField] private Ease _fallEase = Ease.InOutFlash;
 
+    public event Action Completed;
+
     public void StartFallAnimation()
     {
         ColorBlock highestBlock = _blockStack.Blocks[0];
@@ -20,6 +23,8 @@ public class PressTopAnimator : MonoBehaviour
 
     private void StartDivergenceAnimation()
     {
+        Completed?.Invoke();
+
         float zOffset = _initDivergenceOffset;
 
         for (int i = 0; i < _blockStack.Blocks.Count - 1; i++)
