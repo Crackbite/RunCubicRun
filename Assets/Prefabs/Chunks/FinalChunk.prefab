@@ -546,6 +546,8 @@ GameObject:
   - component: {fileID: 299456858832618355}
   - component: {fileID: 299456858832618356}
   - component: {fileID: 299456858832618357}
+  - component: {fileID: 741979678}
+  - component: {fileID: 741979679}
   m_Layer: 0
   m_Name: WholePiston
   m_TagString: Untagged
@@ -661,6 +663,71 @@ MonoBehaviour:
   _minSpeed: 0.1
   _cubicMovement: {fileID: 0}
   _cubicInputHandler: {fileID: 0}
+--- !u!114 &741979678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299456858832618359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d3825a4a06fe94580024f5458813fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &741979679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299456858832618359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 3
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: -0.1, y: -0.1, z: -0.1}
 --- !u!1 &299456858865214999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1470,7 @@ MonoBehaviour:
   _blockStack: {fileID: 0}
   _pressTop: {fileID: 299456859431356910}
   _pressTopInitOffset: 10
-  _cubicMovement: {fileID: 0}
+  _cameraChanger: {fileID: 0}
   _barometerArrow: {fileID: 299456859107695967}
 --- !u!114 &299456859494038195
 MonoBehaviour:
@@ -3848,15 +3915,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6074423999015524860}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4169420014036417601}
-  - {fileID: 5192787228361178947}
-  - {fileID: 299456859494038196}
   - {fileID: 158309784343115256}
+  - {fileID: 299456859494038196}
+  - {fileID: 5192787228361178947}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4607,7 +4674,7 @@ Transform:
   - {fileID: 6247231523376732262}
   - {fileID: 7167226296673781222}
   m_Father: {fileID: 6847548261262017350}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8692035235404892786
 GameObject:
@@ -5134,11 +5201,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5492032086874685332, guid: 05b8592ffa6040b49859ac2ea4b77d5f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5492032086874685332, guid: 05b8592ffa6040b49859ac2ea4b77d5f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.40000007
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5492032086874685332, guid: 05b8592ffa6040b49859ac2ea4b77d5f, type: 3}
       propertyPath: m_LocalPosition.x
