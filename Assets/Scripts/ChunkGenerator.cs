@@ -1,23 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ChunkGenerator : MonoBehaviour
 {
-    [SerializeField] private Chunk _startChunk;
+    [SerializeField] private Chunk _starterChunk;
     [SerializeField] private Chunk[] _availableChunks;
-    [SerializeField] private Chunk _finishChunk;
+    [SerializeField] private Chunk _finalChunk;
     [SerializeField] private Transform _chunkContainer;
-    [Range(1, 50)] [SerializeField] private int _chunksNumber;
-    [Range(0, 100)] [SerializeField] private int _rotateChance;
+    [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
+    [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
 
     public event Action Completed;
 
     private void Start()
     {
-        ShuffleChunks(_availableChunks);
-        GenerateLevel();
+        var chunkComposer = new ChunkComposer(_availableChunks);
+        List<Chunk> chunks = chunkComposer.GetSuitableChunks(18, _chunksToGenerate);
 
+        GenerateLevel(chunks);
         Completed?.Invoke();
     }
 
@@ -32,23 +34,23 @@ public class ChunkGenerator : MonoBehaviour
         return chunkPosition;
     }
 
-    private void GenerateLevel()
+    private void GenerateLevel(IReadOnlyList<Chunk> chunks)
     {
         Vector3 chunkPosition;
-        Chunk lastChunk = _startChunk;
-        int chunksNumber = Mathf.Min(_chunksNumber, _availableChunks.Length);
+        Chunk lastChunk = _starterChunk;
+        int chunksNumber = Mathf.Min(_chunksToGenerate, chunks.Count);
 
         for (int i = 0; i < chunksNumber; i++)
         {
-            Chunk newChunk = _availableChunks[i];
+            Chunk newChunk = chunks[i];
             chunkPosition = CalculateNewChunkPosition(lastChunk, newChunk);
 
-            Quaternion rotation = GetRandomRotation();
+            Quaternion rotation = GetRandomRotation(newChunk);
             lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
         }
 
-        chunkPosition = CalculateNewChunkPosition(lastChunk, _finishChunk);
-        _finishChunk.transform.position = chunkPosition;
+        chunkPosition = CalculateNewChunkPosition(lastChunk, _finalChunk);
+        _finalChunk.transform.position = chunkPosition;
     }
 
     private float GetChunkWidth(Chunk chunk)
@@ -57,21 +59,19 @@ public class ChunkGenerator : MonoBehaviour
         return meshRenderer.bounds.extents.x;
     }
 
-    private Quaternion GetRandomRotation()
+    private Quaternion GetRandomRotation(Chunk chunk)
     {
-        const int MaxChance = 99;
+        const float RotationDegree = 180f;
 
-        int range = Random.Range(0, MaxChance);
+        Quaternion defaultRotation = Quaternion.identity;
+        Quaternion newRotation = Quaternion.Euler(0f, RotationDegree, 0f);
 
-        return range >= _rotateChance ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
-    }
-
-    private void ShuffleChunks(Chunk[] chunks)
-    {
-        for (int i = chunks.Length - 1; i > 0; i--)
+        if (chunk.CanRotate == false)
         {
-            int range = Random.Range(0, i + 1);
-            (chunks[i], chunks[range]) = (chunks[range], chunks[i]);
+            return defaultRotation;
         }
+
+        int chance = Random.Range(0, 100);
+        return chance > _rotateChance ? defaultRotation : newRotation;
     }
 }

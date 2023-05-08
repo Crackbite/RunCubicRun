@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -33,6 +34,11 @@ public class ChunkDifficultyCalculator : EditorWindow
         if (GUILayout.Button("Calculate Difficulty"))
         {
             CalculateDifficulty();
+        }
+
+        if (GUILayout.Button("Show prefab statistics"))
+        {
+            ShowPrefabStatistics();
         }
     }
 
@@ -164,5 +170,25 @@ public class ChunkDifficultyCalculator : EditorWindow
         GUILayout.Label($"Portals: {_portalsCount} ({(_portalsCount > 0 ? _portalsDifficulty : 0):+#;-#;0})");
         GUILayout.Label(_distanceCalculator.ToString());
         GUILayout.Label($"Difficulty: {_totalDifficulty}");
+    }
+
+    private void ShowPrefabStatistics()
+    {
+        const string ChunksFolder = "Assets/Prefabs/Chunks";
+
+        var directoryInfo = new DirectoryInfo(ChunksFolder);
+        FileInfo[] filesInfo = directoryInfo.GetFiles("Chunk*.prefab");
+
+        var prefabs = new Chunk[filesInfo.Length];
+
+        for (int i = 0; i < filesInfo.Length; i++)
+        {
+            string path = Path.Combine(ChunksFolder, filesInfo[i].Name);
+            var gameObject = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            prefabs[i] = gameObject.GetComponent<Chunk>();
+        }
+
+        var chunkComposer = new ChunkComposer(prefabs);
+        chunkComposer.DebugStatistic();
     }
 }
