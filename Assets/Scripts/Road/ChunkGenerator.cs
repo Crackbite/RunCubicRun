@@ -11,6 +11,7 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private Transform _chunkContainer;
     [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
     [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
+    [SerializeField] private bool _debugLog;
 
     public event Action Completed;
 
@@ -47,6 +48,11 @@ public class ChunkGenerator : MonoBehaviour
 
             Quaternion rotation = GetRandomRotation(newChunk);
             lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
+
+            if (_debugLog)
+            {
+                Debug.Log(lastChunk.name);
+            }
         }
 
         chunkPosition = CalculateNewChunkPosition(lastChunk, _finalChunk);
