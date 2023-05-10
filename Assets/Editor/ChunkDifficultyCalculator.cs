@@ -174,7 +174,7 @@ public class ChunkDifficultyCalculator : EditorWindow
 
     private void ShowPrefabStatistics()
     {
-        const string ChunksFolder = "Assets/Prefabs/Chunks";
+        const string ChunksFolder = "Assets/Prefabs/Chunks/Generated";
 
         var directoryInfo = new DirectoryInfo(ChunksFolder);
         FileInfo[] filesInfo = directoryInfo.GetFiles("Chunk*.prefab");
