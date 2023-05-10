@@ -8,6 +8,7 @@ public class OrthographicSizeChanger : MonoBehaviour
     [SerializeField] private float _fixedHorizontalSize = 8f;
     [SerializeField] private float _fixedVerticalSize = 18f;
 
+    private float _lastCameraAspect;
     private CinemachineVirtualCamera _virtualCamera;
 
     private void Awake()
@@ -15,12 +16,26 @@ public class OrthographicSizeChanger : MonoBehaviour
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    private void Start()
+    private void LateUpdate()
     {
-        float newOrthographicSize;
         float cameraAspect = _mainCamera.aspect;
 
-        if (cameraAspect < 1f)
+        if (Mathf.Approximately(cameraAspect, _lastCameraAspect))
+        {
+            return;
+        }
+
+        ChangeOrthographicSize(cameraAspect);
+        _lastCameraAspect = cameraAspect;
+    }
+
+    private void ChangeOrthographicSize(float cameraAspect)
+    {
+        const float UnityScale = 1f;
+
+        float newOrthographicSize;
+
+        if (cameraAspect < UnityScale)
         {
             newOrthographicSize = _fixedHorizontalSize / cameraAspect;
         }
