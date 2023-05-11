@@ -20,7 +20,6 @@ public class BlockStackPhysics : MonoBehaviour
         _blockStack.BlockAdded -= OnBlockAdded;
         _cubic.Hit -= OnHit;
         _levelExitPortal.SuckingIn -= OnCubicSuckingIn;
-
     }
 
     public void OnCrossbarHit(int stackPosition)
@@ -54,10 +53,17 @@ public class BlockStackPhysics : MonoBehaviour
         }
     }
 
+    private Vector3 GetCurrentPushForce(Vector3 fallDirection)
+    {
+        float forceMultiplier = 1f / _blockStack.Blocks.Count;
+
+        return _maxPushForce * forceMultiplier * fallDirection;
+    }
+
     private Vector3 GetFallDirection(Vector3 contactPoint, float obstacleHeight)
     {
         Vector3 fallDirection = contactPoint - _cubic.transform.position;
-        fallDirection = new Vector3(fallDirection.x, 0, fallDirection.z);
+        fallDirection = new Vector3(fallDirection.x, 0f, fallDirection.z);
 
         if (obstacleHeight > _blockStack.Height)
         {
@@ -65,6 +71,11 @@ public class BlockStackPhysics : MonoBehaviour
         }
 
         return fallDirection.normalized;
+    }
+
+    private void OnBlockAdded(ColorBlock colorBlock)
+    {
+        colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
     }
 
     private void OnCubicSuckingIn()
@@ -75,18 +86,6 @@ public class BlockStackPhysics : MonoBehaviour
         {
             block.BlockPhysics.FallOff(GetCurrentPushForce(Vector3.zero), ForceFactor);
         }
-    }
-
-    private Vector3 GetCurrentPushForce(Vector3 fallDirection)
-    {
-        float forceMultiplier = 1f / _blockStack.Blocks.Count;
-
-        return _maxPushForce * forceMultiplier * fallDirection;
-    }
-
-    private void OnBlockAdded(ColorBlock colorBlock)
-    {
-        colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
     }
 
     private void OnHit(Vector3 contactPoint, float obstacleHeight)

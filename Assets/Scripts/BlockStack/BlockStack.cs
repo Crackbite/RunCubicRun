@@ -34,11 +34,7 @@ public class BlockStack : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 currentPosition = transform.position;
-
-        if(_cubic != null)
-        {
-            transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
-        }      
+        transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
     }
 
     public void Add(ColorBlock colorBlock)
@@ -72,18 +68,17 @@ public class BlockStack : MonoBehaviour
 
     public int GetStackPosition(ColorBlock targetBlock)
     {
-        int position = 0;
+        const int DefaultPosition = 0;
 
         for (int i = 0; i < _blocks.Count; i++)
         {
             if (_blocks[i] == targetBlock)
             {
-                position = _blocks.Count - i;
-                return position;
+                return _blocks.Count - i;
             }
         }
 
-        return position;
+        return DefaultPosition;
     }
 
     public void PlaceInStack(ColorBlock colorBlock)

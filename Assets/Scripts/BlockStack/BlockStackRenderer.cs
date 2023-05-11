@@ -48,10 +48,12 @@ public class BlockStackRenderer : MonoBehaviour
 
     private void TryAssignColor()
     {
-        if (IsColorAssigned == false)
+        if (IsColorAssigned)
         {
-            IsColorAssigned = true;
-            ColorAssigned?.Invoke();
+            return;
         }
+
+        IsColorAssigned = true;
+        ColorAssigned?.Invoke();
     }
 }
