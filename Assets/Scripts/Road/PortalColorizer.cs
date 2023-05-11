@@ -20,16 +20,30 @@ public class PortalColorizer : MonoBehaviour
         _blockStackRenderer.ColorAssigned -= OnStackColorAssigned;
     }
 
-    private void OnStackColorAssigned()
+    private void AssignColorsToPortals()
     {
-        const int FirstPortalIndex = 0;
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
 
-        if (_portalsContainer.Portals.Count > 0)
+        foreach (Portal portal in portals)
         {
-            _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
+            if (portal.IsColored)
+            {
+                continue;
+            }
+
+            if (Mathf.Approximately(portal.transform.position.x, _nextPortalPositionX))
+            {
+                Color nextColor = ChooseNextColor();
+                portal.SetColor(nextColor);
+                portal.CubicEntered += OnCubicEntered;
+                _availableColors.Remove(nextColor);
+            }
+            else
+            {
+                _nextPortalPositionX = portal.transform.position.x;
+                return;
+            }
         }
-        ValidateAvailableColors();
-        AssignColorsToPortals();
     }
 
     private Color ChooseNextColor()
@@ -53,6 +67,26 @@ public class PortalColorizer : MonoBehaviour
         return _blockStackRenderer.CurrentColor;
     }
 
+    private void OnCubicEntered(Portal portal)
+    {
+        _blockStackRenderer.ChangeColor(portal.Color);
+        ValidateAvailableColors();
+        AssignColorsToPortals();
+    }
+
+    private void OnStackColorAssigned()
+    {
+        const int FirstPortalIndex = 0;
+
+        if (_portalsContainer.Portals.Count > 0)
+        {
+            _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
+        }
+
+        ValidateAvailableColors();
+        AssignColorsToPortals();
+    }
+
     private void ValidateAvailableColors()
     {
         _availableColors = new List<Color>();
@@ -64,36 +98,5 @@ public class PortalColorizer : MonoBehaviour
                 _availableColors.Add(color);
             }
         }
-    }
-
-    private void AssignColorsToPortals()
-    {
-        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-
-        foreach (Portal portal in portals)
-        {
-            if (portal.IsColored == false)
-            {
-                if (portal.transform.position.x == _nextPortalPositionX)
-                {
-                    Color nextColor = ChooseNextColor();
-                    portal.SetColor(nextColor);
-                    portal.CubicEntered += OnCubicEntered;
-                    _availableColors.Remove(nextColor);
-                }
-                else
-                {
-                    _nextPortalPositionX = portal.transform.position.x;
-                    return;
-                }
-            }
-        }
-    }
-
-    private void OnCubicEntered(Portal portal)
-    {
-        _blockStackRenderer.ChangeColor(portal.Color);
-        ValidateAvailableColors();
-        AssignColorsToPortals();
     }
 }

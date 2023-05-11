@@ -66,8 +66,8 @@ public class ChunkComposer
     {
         const float Coefficient = 4f;
 
-        float chance = 100 - ((level - 1) * Coefficient);
-        chance = Mathf.Clamp(chance, 0, 100);
+        float chance = 100f - ((level - 1f) * Coefficient);
+        chance = Mathf.Clamp(chance, 0f, 100f);
 
         return chance > GetRandomChance();
     }
@@ -76,8 +76,8 @@ public class ChunkComposer
     {
         const float Coefficient = 1.5f;
 
-        float chance = (level - 1) * Coefficient;
-        chance = Mathf.Clamp(chance, 0, 100);
+        float chance = (level - 1f) * Coefficient;
+        chance = Mathf.Clamp(chance, 0f, 100f);
 
         return chance > GetRandomChance();
     }
@@ -86,9 +86,9 @@ public class ChunkComposer
     {
         const float Coefficient = 2f;
 
-        float chance = (level - 1) * Coefficient;
-        chance = chance > 100 ? 200 - chance : chance;
-        chance = Mathf.Clamp(chance, 0, 100);
+        float chance = (level - 1f) * Coefficient;
+        chance = chance > 100f ? 200f - chance : chance;
+        chance = Mathf.Clamp(chance, 0f, 100f);
 
         return chance > GetRandomChance();
     }
