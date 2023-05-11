@@ -21,7 +21,7 @@ public class ScoreDisplay : MonoBehaviour
         _score = GetComponent<TMP_Text>();
         _scoreText = _score.text;
 
-        SetScore(0);
+        SetScore(0f);
     }
 
     private void OnDisable()

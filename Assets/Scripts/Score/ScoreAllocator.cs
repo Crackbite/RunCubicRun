@@ -67,7 +67,7 @@ public class ScoreAllocator : MonoBehaviour
 
     private void OnBlockRemoved(ColorBlock colorBlock)
     {
-        _goodBlocksInRow = 0;
+        _goodBlocksInRow = 0f;
 
         float score;
         ScoreChangeInitiator initiator;

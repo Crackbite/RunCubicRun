@@ -37,7 +37,7 @@ public class BonusHandler : MonoBehaviour
         bonusTimer.TimerChanged += OnTimerChanged;
         bonusTimer.TimerFinished += OnTimerFinished;
 
-        BonusIcon bonusIcon = bonus.Info.Duration == 0
+        BonusIcon bonusIcon = bonus.Info.Duration == 0f
                                   ? Instantiate(_bonusIconPrefab)
                                   : Instantiate(_bonusIconPrefab, _bonusIconsPanel);
 
