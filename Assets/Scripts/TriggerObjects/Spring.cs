@@ -16,8 +16,10 @@ public class Spring : MonoBehaviour
 
         if (transform.position.x > _abyss.transform.position.x)
         {
-            transform.localPosition = new Vector3(-transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
-            Vector3 halfTurnAngle = new Vector3(0f, 180f, 0f);
+            Vector3 localPosition = transform.localPosition;
+            transform.localPosition = new Vector3(-localPosition.x, localPosition.y, localPosition.z);
+
+            var halfTurnAngle = new Vector3(0f, 180f, 0f);
             transform.Rotate(halfTurnAngle);
         }
     }
@@ -38,16 +40,17 @@ public class Spring : MonoBehaviour
 
     private IEnumerator ThrowOverAbyss(Transform flyingObject, float throwForce, float acceleration)
     {
-        float runningTime = 0;
+        float runningTime = 0f;
         float startPositionY = flyingObject.position.y;
         bool isGround = false;
 
         while (isGround == false)
         {
             runningTime += Time.deltaTime;
+
             Vector3 currentPosition = flyingObject.position;
-            currentPosition.y = startPositionY + throwForce * runningTime
-                                - acceleration * Mathf.Pow(runningTime, 2f) / 2f;
+            currentPosition.y = startPositionY
+                                + ((throwForce * runningTime) - ((acceleration * Mathf.Pow(runningTime, 2f)) / 2f));
 
             if (currentPosition.y < startPositionY)
             {
