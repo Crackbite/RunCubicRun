@@ -17,6 +17,7 @@ public class VerticalSplitter : Splitter
     {
         part.gameObject.SetActive(true);
         part.SetParent(null);
-        part.DORotate(Vector3.right * _splitAngle * Mathf.Sign(part.transform.localPosition.z), _splitDuration).SetEase(_ease);
+        part.DORotate(_splitAngle * Mathf.Sign(part.transform.localPosition.z) * Vector3.right, _splitDuration)
+            .SetEase(_ease);
     }
 }

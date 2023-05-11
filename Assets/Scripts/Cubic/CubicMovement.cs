@@ -50,6 +50,8 @@ public class CubicMovement : MonoBehaviour
 
     private void Update()
     {
+        const float DestroyDelay = 5f;
+
         bool isFalling = _cubic.transform.position.y <= _fallPositionY;
 
         if (_canMove && isFalling == false)
@@ -61,8 +63,7 @@ public class CubicMovement : MonoBehaviour
 
         if (isFalling)
         {
-            float lifeTime = 5f;
-            Destroy(_cubic.gameObject, lifeTime);
+            Destroy(_cubic.gameObject, DestroyDelay);
         }
     }
 
@@ -99,11 +100,13 @@ public class CubicMovement : MonoBehaviour
 
     public void MoveToSide(Vector3 direction)
     {
-        if (_canLineChange)
+        if (_canLineChange == false)
         {
-            _canLineChange = false;
-            _sidewaysMovement.Move(direction);
+            return;
         }
+
+        _canLineChange = false;
+        _sidewaysMovement.Move(direction);
     }
 
     private void CubicOnSteppedOnStand(PressStand pressStand)

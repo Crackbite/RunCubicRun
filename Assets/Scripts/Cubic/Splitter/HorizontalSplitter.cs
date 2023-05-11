@@ -20,7 +20,7 @@ public class HorizontalSplitter : Splitter
 
     private IEnumerator Slide(Transform upperPart, Transform bottomPart)
     {
-        float currentDistanceX = 0;
+        float currentDistanceX = 0f;
 
         while (currentDistanceX <= _slideDistance)
         {

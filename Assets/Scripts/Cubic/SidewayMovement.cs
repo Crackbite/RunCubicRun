@@ -39,7 +39,7 @@ public class SidewayMovement : MonoBehaviour
         {
             _currentLineIndex += direction.z;
             _currentLineIndex = Mathf.Clamp(_currentLineIndex, RightLineIndex, LeftLineIndex);
-            float targetPositionZ = _initialPositionZ + ((_currentLineIndex - 1) * _shiftPerMove);
+            float targetPositionZ = _initialPositionZ + ((_currentLineIndex - 1f) * _shiftPerMove);
 
             ChangeLine(targetPositionZ);
         }
@@ -57,7 +57,7 @@ public class SidewayMovement : MonoBehaviour
 
     private bool IsOnRoad()
     {
-        const float DistanceToRoad = 0.5f;
+        const float DistanceToRoad = .5f;
 
         var ray = new Ray(transform.position, Vector3.down);
         return Physics.Raycast(ray, out RaycastHit _, DistanceToRoad);
@@ -66,7 +66,7 @@ public class SidewayMovement : MonoBehaviour
     private bool IsWayClear()
     {
         const int MaxColliders = 5;
-        const float ColliderOffset = 0.1f;
+        const float ColliderOffset = .1f;
 
         float boxSize = (transform.localScale.z / 2f) - ColliderOffset;
         var colliders = new Collider[MaxColliders];

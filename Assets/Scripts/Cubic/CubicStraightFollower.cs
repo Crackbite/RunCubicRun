@@ -11,7 +11,7 @@ public class CubicStraightFollower : MonoBehaviour
         Vector3 targetPosition = _cubic.transform.position;
         targetPosition.x = Mathf.Max(targetPosition.x, _xMinLimit);
         targetPosition.y = _yLimit;
-        targetPosition.z = 0;
+        targetPosition.z = 0f;
 
         transform.position = targetPosition;
     }

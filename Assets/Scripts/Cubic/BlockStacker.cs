@@ -41,7 +41,7 @@ public class BlockStacker : MonoBehaviour
 
         blockTransform.SetParent(gameObject.transform);
 
-        if (_stackYPosition == 0)
+        if (_stackYPosition == 0f)
         {
             _stackYPosition = (colorBlock.transform.localScale.y / 2f) + (transform.localScale.y / 2f) + _gap;
         }

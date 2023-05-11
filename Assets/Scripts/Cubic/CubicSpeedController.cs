@@ -1,5 +1,4 @@
 using System;
-
 using System.Collections;
 using UnityEngine;
 
@@ -25,11 +24,8 @@ public class CubicSpeedController : MonoBehaviour
     public event Action CubicStopped;
 
     public float CurrentSpeed { get; private set; }
-
     public float SpeedMultiplier { get; private set; } = 1f;
-
     public float StopAtPressStandSpeed => _stopAtPressStandSpeed;
-
     private float Speed => _moveSpeed * SpeedMultiplier;
 
     private void OnEnable()
@@ -42,7 +38,7 @@ public class CubicSpeedController : MonoBehaviour
     {
         _cubic = GetComponent<Cubic>();
 
-        CurrentSpeed = 0;
+        CurrentSpeed = 0f;
         _isThrowing = true;
     }
 
@@ -92,12 +88,6 @@ public class CubicSpeedController : MonoBehaviour
         }
     }
 
-    private void OnCubicThrowingOut()
-    {
-        _initialSpeed = _moveSpeed;
-        StartCoroutine(StopSlowly(_throwSpeedCurve));
-    }
-
     private IEnumerator Accelerate()
     {
         while (CurrentSpeed < Speed)
@@ -115,6 +105,12 @@ public class CubicSpeedController : MonoBehaviour
 
         CurrentSpeed = Speed;
         _isMaxSpeed = true;
+    }
+
+    private void OnCubicThrowingOut()
+    {
+        _initialSpeed = _moveSpeed;
+        StartCoroutine(StopSlowly(_throwSpeedCurve));
     }
 
     private void OnWrongBlockTaken()

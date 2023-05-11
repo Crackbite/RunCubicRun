@@ -20,8 +20,8 @@ public class Cubic : MonoBehaviour
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderer.bounds;
-    public Saw CollisionSaw { get; private set; }
     public bool CanDestroy { get; set; }
+    public Saw CollisionSaw { get; private set; }
     public float CrushedSizeY => _crushedSizeY;
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
@@ -61,9 +61,13 @@ public class Cubic : MonoBehaviour
     public void FlattenOut(float standMaxY)
     {
         _collider.enabled = false;
-        float positionY = standMaxY + _crushedSizeY / 2;
-        transform.localScale = new Vector3(transform.localScale.x, _crushedSizeY, transform.localScale.z);
-        transform.position = new Vector3(transform.position.x, positionY, transform.position.z);
+
+        Vector3 localScale = transform.localScale;
+        transform.localScale = new Vector3(localScale.x, _crushedSizeY, localScale.z);
+
+        Vector3 position = transform.position;
+        float positionY = standMaxY + (_crushedSizeY / 2f);
+        transform.position = new Vector3(position.x, positionY, position.z);
     }
 
     public void HitTrap(Trap trap, Vector3 contactPoint, float trapHeight)
@@ -99,12 +103,7 @@ public class Cubic : MonoBehaviour
     {
         if (CollisionSaw is VerticalSaw)
         {
-            if (CollisionSaw.IsSideCollision == false)
-            {
-                return true;
-            }
-
-            return false;
+            return CollisionSaw.IsSideCollision == false;
         }
 
         return true;
