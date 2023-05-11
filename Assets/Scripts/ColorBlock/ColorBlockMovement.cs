@@ -4,11 +4,11 @@ using UnityEngine;
 public class ColorBlockMovement : MonoBehaviour
 {
     private ColorBlock _colorBlock;
-    private BlockStackCoordinator _stackCoordinator;
     private float _followedDistanceY;
+    private bool _isPlaced = true;
     private float _lastPlacePositionY;
     private float _runningTime;
-    private bool _isPlaced = true;
+    private BlockStackCoordinator _stackCoordinator;
 
     private void Awake()
     {
@@ -26,36 +26,11 @@ public class ColorBlockMovement : MonoBehaviour
 
         if (_isPlaced)
         {
-            if (_stackCoordinator.IsAnchorGrounded() == false)
-            {
-                if (_stackCoordinator.IsFallDawn)
-                {
-                    currentPosition.y = _stackCoordinator.GetYPositionInFall(_followedDistanceY);
-                }
-                else
-                {
-                    _isPlaced = false;
-                    _lastPlacePositionY = currentPosition.y;
-                    currentPosition.y = _stackCoordinator.GetYPositionInJump(ref _runningTime, _lastPlacePositionY, _colorBlock.StackPosition);
-                }
-            }
-            else if (currentPosition.y != _lastPlacePositionY)
-            {
-                _followedDistanceY = _stackCoordinator.GetDistanceFromGround(currentPosition.y);
-                _lastPlacePositionY = currentPosition.y;
-                _colorBlock.SetStackPosition();
-            }
+            UpdateBlockPositionOnGround(currentPosition);
         }
         else
         {
-            currentPosition.y = _stackCoordinator.GetYPositionInJump(ref _runningTime, _lastPlacePositionY, _colorBlock.StackPosition);
-
-            if (currentPosition.y < _lastPlacePositionY)
-            {
-                currentPosition.y = _lastPlacePositionY;
-                _runningTime = 0;
-                _isPlaced = true;
-            }
+            UpdateBlockPositionInAir(ref currentPosition);
         }
 
         transform.position = _stackCoordinator.Coordinate(currentPosition, _colorBlock.StackPosition);
@@ -63,8 +38,50 @@ public class ColorBlockMovement : MonoBehaviour
 
     public void StartFollowing(BlockStackCoordinator stackCoordinator)
     {
+        Vector3 position = transform.position;
+
         _stackCoordinator = stackCoordinator;
-        _lastPlacePositionY = transform.position.y;
-        _followedDistanceY = _stackCoordinator.GetDistanceFromGround(transform.position.y);
+        _lastPlacePositionY = position.y;
+        _followedDistanceY = _stackCoordinator.GetDistanceFromGround(position.y);
+    }
+
+    private void UpdateBlockPositionInAir(ref Vector3 currentPosition)
+    {
+        if (_stackCoordinator.IsFallDawn)
+        {
+            currentPosition.y = _stackCoordinator.GetYPositionInFall(_followedDistanceY);
+        }
+        else
+        {
+            currentPosition.y = _stackCoordinator.GetYPositionInJump(
+                ref _runningTime,
+                _lastPlacePositionY,
+                _colorBlock.StackPosition);
+
+            if (currentPosition.y < _lastPlacePositionY)
+            {
+                currentPosition.y = _lastPlacePositionY;
+                _runningTime = 0f;
+                _isPlaced = true;
+            }
+        }
+    }
+
+    private void UpdateBlockPositionOnGround(Vector3 currentPosition)
+    {
+        const float Tolerance = 0.05f;
+
+        if (_stackCoordinator.IsAnchorGrounded() == false)
+        {
+            _lastPlacePositionY = currentPosition.y;
+            _isPlaced = false;
+            UpdateBlockPositionInAir(ref currentPosition);
+        }
+        else if (Mathf.Abs(currentPosition.y - _lastPlacePositionY) > Tolerance)
+        {
+            _followedDistanceY = _stackCoordinator.GetDistanceFromGround(currentPosition.y);
+            _lastPlacePositionY = currentPosition.y;
+            _colorBlock.SetStackPosition();
+        }
     }
 }

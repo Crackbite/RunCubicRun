@@ -12,9 +12,9 @@ public class ColorBlockRenderer : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    public void SetColor(Color color, int stackPosition = 0, float gradient = 0, float coloringSpeedFactor = 1)
+    public void SetColor(Color color, int stackPosition = 0, float gradient = 0f, float coloringSpeedFactor = 1f)
     {
-        if (gradient == 0)
+        if (gradient == 0f)
         {
             _meshRenderer.material.color = color;
         }
