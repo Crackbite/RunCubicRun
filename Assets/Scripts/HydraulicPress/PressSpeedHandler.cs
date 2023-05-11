@@ -35,7 +35,7 @@ public class PressSpeedHandler : MonoBehaviour
         PureSpeed = currentSpeed;
 
         float newSpeed = currentSpeed - SpeedReduceRate;
-        currentSpeed = currentSpeed < 0 ? currentSpeed : newSpeed;
+        currentSpeed = currentSpeed < 0f ? currentSpeed : newSpeed;
 
         if (_debugLog)
         {
