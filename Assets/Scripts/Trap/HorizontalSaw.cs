@@ -6,43 +6,36 @@ public class HorizontalSaw : Saw
     [SerializeField] private bool _canRandomizeSpeed;
     [SerializeField] private SawSide _sawSide;
 
-    private enum SawSide { Left, Right }
+    private enum SawSide
+    {
+        Left,
+        Right
+    }
 
     protected override void SetSpeed()
     {
         if (_canRandomizeSpeed)
         {
             float speed = Random.Range(MinSpeed, MaxSpeed) * GetRotationDirection();
-            Animator.SetFloat(SpeedId, speed);
+            Animator.SetFloat(SpeedHash, speed);
         }
         else
         {
-            Animator.SetFloat(SpeedId, _defaultSpeed * GetRotationDirection());
-            return;
+            Animator.SetFloat(SpeedHash, _defaultSpeed * GetRotationDirection());
         }
     }
 
     private int GetRotationDirection()
     {
-        const float CenterPositionZ = 0;
+        const float CenterPositionZ = 0f;
         const int RightRotationValue = 1;
         const int LeftRotationValue = -1;
 
         if (_sawSide == SawSide.Right)
         {
-            if(transform.position.z < CenterPositionZ)
-            {
-                return RightRotationValue;
-            }
-
-            return LeftRotationValue;
+            return transform.position.z < CenterPositionZ ? RightRotationValue : LeftRotationValue;
         }
 
-        if (transform.position.z > CenterPositionZ)
-        {
-            return RightRotationValue;
-        }
-
-        return LeftRotationValue;
+        return transform.position.z > CenterPositionZ ? RightRotationValue : LeftRotationValue;
     }
 }

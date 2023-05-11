@@ -11,12 +11,13 @@ public class Trap : MonoBehaviour
     [SerializeField] protected float MinSpeed = .6f;
     [SerializeField] protected float MaxSpeed = 1.2f;
 
-    private Rigidbody[] _piecesRigidbody;
-    private bool _isCubicCollided;
-    private const float Threshold = 0.001f;
+    protected readonly int SpeedHash = Animator.StringToHash("Speed");
 
     protected Collider Collider;
-    protected readonly int SpeedId = Animator.StringToHash("Speed");
+
+    private bool _isCubicCollided;
+
+    private Rigidbody[] _piecesRigidbody;
 
     public bool IsSideCollision { get; private set; }
     public TrapType Type => _type;
@@ -25,11 +26,14 @@ public class Trap : MonoBehaviour
     {
         _piecesRigidbody = _splitBody.GetComponentsInChildren<Rigidbody>();
         Collider = GetComponent<Collider>();
+
         SetSpeed();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
+        const float Threshold = 0.001f;
+
         if (collision.TryGetComponent(out Cubic cubic))
         {
             _isCubicCollided = true;
@@ -40,10 +44,13 @@ public class Trap : MonoBehaviour
                 return;
             }
 
-            Vector3 contactPoint = Collider.ClosestPoint(cubic.transform.position);
+            Vector3 cubicPosition = cubic.transform.position;
+            Vector3 contactPoint = Collider.ClosestPoint(cubicPosition);
+            IsSideCollision = Mathf.Abs(cubicPosition.z - contactPoint.z) > Threshold;
+
             float trapHeight = Collider.bounds.max.y;
-            IsSideCollision = Mathf.Abs(cubic.transform.position.z - contactPoint.z) > Threshold;
             cubic.HitTrap(this, contactPoint, trapHeight);
+
             CompleteCollision();
         }
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
@@ -55,27 +62,29 @@ public class Trap : MonoBehaviour
         }
     }
 
+    protected virtual void CompleteCollision()
+    {
+        if (this is Saw)
+        {
+            return;
+        }
+
+        Stop();
+        Collider.isTrigger = false;
+    }
+
+    protected virtual void SetSpeed()
+    {
+        float speed = Random.Range(MinSpeed, MaxSpeed);
+        Animator.SetFloat(SpeedHash, speed);
+    }
+
     protected void Stop()
     {
         if (Animator != null)
         {
             Animator.enabled = false;
         }
-    }
-
-    protected virtual void CompleteCollision()
-    {
-        if (this is not Saw)
-        {
-            Stop();
-            Collider.isTrigger = false;
-        }
-    }
-
-    protected virtual void SetSpeed()
-    {
-        float speed = Random.Range(MinSpeed, MaxSpeed);
-        Animator.SetFloat(SpeedId, speed);
     }
 
     private void Break()
@@ -93,7 +102,7 @@ public class Trap : MonoBehaviour
             piece.isKinematic = false;
             Vector3 randomDirection = Random.onUnitSphere;
 
-            if (randomDirection.z > 0)
+            if (randomDirection.z > 0f)
             {
                 piece.transform.DOMoveZ(piece.transform.position.z + DragDistance, DragDuration).SetEase(Ease.OutQuad);
             }

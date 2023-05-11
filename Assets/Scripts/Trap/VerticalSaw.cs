@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class VerticalSaw : Saw
+﻿public class VerticalSaw : Saw
 {
     private const int MinPatrolSpeed = 0;
 
@@ -12,7 +10,7 @@ public class VerticalSaw : Saw
         }
         else if (Type == TrapType.PatrolSaw)
         {
-            Animator.SetFloat(SpeedId, MinPatrolSpeed);
+            Animator.SetFloat(SpeedHash, MinPatrolSpeed);
         }
 
         Collider.isTrigger = false;
@@ -26,7 +24,7 @@ public class VerticalSaw : Saw
         }
         else
         {
-            Animator.SetFloat(SpeedId, MinPatrolSpeed);
+            Animator.SetFloat(SpeedHash, MinPatrolSpeed);
         }
     }
 }
