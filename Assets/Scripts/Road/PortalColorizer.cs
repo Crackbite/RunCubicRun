@@ -7,6 +7,10 @@ public class PortalColorizer : MonoBehaviour
     [SerializeField] private ColorHolder _colorHolder;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
 
+    private List<Color> _availableColors;
+    private List<Color> _previousColors;
+    private float _nextPortalPositionX;
+
     private void OnEnable()
     {
         _blockStackRenderer.ColorAssigned += OnStackColorAssigned;
@@ -20,41 +24,70 @@ public class PortalColorizer : MonoBehaviour
     private void AssignColorsToPortals()
     {
         IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-        int currentColorIndex = GetNextColorIndex(_blockStackRenderer.CurrentColor);
-        int previousColorIndex = currentColorIndex;
+        _previousColors = new List<Color>();
 
         foreach (Portal portal in portals)
         {
-            portal.SetColor(_colorHolder.Colors[currentColorIndex]);
+            Color nextColor;
+
+            if (Mathf.Approximately(portal.transform.position.x, _nextPortalPositionX) == false)
+            {
+                UpdateAvailableColors();
+                _previousColors = new List<Color>();
+                _nextPortalPositionX = portal.transform.position.x;
+            }
+
+            nextColor = ChooseNextColor();
+            portal.SetColor(nextColor);
             portal.CubicEntered += OnCubicEntered;
-            currentColorIndex = GetNextColorIndex(_colorHolder.Colors[previousColorIndex]);
-            previousColorIndex = currentColorIndex;
+            _previousColors.Add(nextColor);
+            _availableColors.Remove(nextColor);
         }
     }
 
-    private int GetNextColorIndex(Color exceptColor)
+    private Color ChooseNextColor()
     {
-        const int MinValue = 0; 
+        const int MinValue = 0;
 
-        int maxValue = _colorHolder.Colors.Count;
-        int result = Random.Range(MinValue, maxValue);
-
-        while (_colorHolder.Colors[result] == exceptColor)
+        if (_availableColors.Count == 0)
         {
-            result = Random.Range(MinValue, maxValue);
+            UpdateAvailableColors();
         }
 
-        return result;
+        int maxValue = _availableColors.Count;
+        int result = Random.Range(MinValue, maxValue);
+        return _availableColors[result];
     }
 
     private void OnCubicEntered(Portal portal)
     {
         _blockStackRenderer.ChangeColor(portal.Color);
-        portal.CubicEntered -= OnCubicEntered;
     }
 
     private void OnStackColorAssigned()
     {
+        const int FirstPortalIndex = 0;
+
+        if (_portalsContainer.Portals.Count > 0)
+        {
+            _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
+        }
+
+        _previousColors = new List<Color> { _blockStackRenderer.CurrentColor };
+        UpdateAvailableColors();
         AssignColorsToPortals();
+    }
+
+    private void UpdateAvailableColors()
+    {
+        _availableColors = new List<Color>();
+
+        foreach (Color color in _colorHolder.Colors)
+        {
+            if (_previousColors.Contains(color) == false)
+            {
+                _availableColors.Add(color);
+            }
+        }
     }
 }
