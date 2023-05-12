@@ -25,16 +25,16 @@ public class PortalColorizer : MonoBehaviour
 
         foreach (Portal portal in portals)
         {
-            currentColorIndex = GetNextColorIndex(_colorHolder.Colors[previousColorIndex]);
             portal.SetColor(_colorHolder.Colors[currentColorIndex]);
             portal.CubicEntered += OnCubicEntered;
+            currentColorIndex = GetNextColorIndex(_colorHolder.Colors[previousColorIndex]);
             previousColorIndex = currentColorIndex;
         }
     }
 
     private int GetNextColorIndex(Color exceptColor)
     {
-        const int MinValue = 0;
+        const int MinValue = 0; 
 
         int maxValue = _colorHolder.Colors.Count;
         int result = Random.Range(MinValue, maxValue);
