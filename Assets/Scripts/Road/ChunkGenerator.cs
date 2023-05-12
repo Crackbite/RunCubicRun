@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,10 +18,18 @@ public class ChunkGenerator : MonoBehaviour
 
     private void Start()
     {
-        var chunkComposer = new ChunkComposer(_availableChunks);
-        List<Chunk> chunks = chunkComposer.GetSuitableChunks(18, _chunksToGenerate);
+        if (ChunkStorage.Instance.Chunks?.Count > 0)
+        {
+            GenerateLevel(ChunkStorage.Instance.Chunks);
+        }
+        else
+        {
+            var chunkComposer = new ChunkComposer(_availableChunks);
+            List<Chunk> chunks = chunkComposer.GetSuitableChunks(18, _chunksToGenerate);
 
-        GenerateLevel(chunks);
+            GenerateLevel(chunks);
+        }
+
         Completed?.Invoke();
     }
 
@@ -35,28 +44,44 @@ public class ChunkGenerator : MonoBehaviour
         return chunkPosition;
     }
 
-    private void GenerateLevel(IReadOnlyList<Chunk> chunks)
+    private void GenerateLevel(IReadOnlyList<object> chunks)
     {
-        Vector3 chunkPosition;
         Chunk lastChunk = _starterChunk;
         int chunksNumber = Mathf.Min(_chunksToGenerate, chunks.Count);
 
         for (int i = 0; i < chunksNumber; i++)
         {
-            Chunk newChunk = chunks[i];
-            chunkPosition = CalculateNewChunkPosition(lastChunk, newChunk);
+            Quaternion rotation;
 
-            Quaternion rotation = GetRandomRotation(newChunk);
-            lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
-
-            if (_debugLog)
+            if (chunks[i] is Chunk newChunk)
             {
-                Debug.Log(lastChunk.name);
+                rotation = GetRandomRotation(newChunk);
+
+                var chunkData = new ChunkData(newChunk.name, rotation);
+                ChunkStorage.Instance.Add(chunkData);
             }
+            else if (chunks[i] is ChunkData chunkData)
+            {
+                newChunk = _availableChunks.FirstOrDefault(chunk => chunkData.Name.StartsWith(chunk.name));
+
+                if (newChunk == null)
+                {
+                    continue;
+                }
+
+                rotation = chunkData.Rotation;
+            }
+            else
+            {
+                continue;
+            }
+
+            Vector3 chunkPosition = CalculateNewChunkPosition(lastChunk, newChunk);
+            lastChunk = Instantiate(newChunk, chunkPosition, rotation, _chunkContainer);
         }
 
-        chunkPosition = CalculateNewChunkPosition(lastChunk, _finalChunk);
-        _finalChunk.transform.position = chunkPosition;
+        _finalChunk.transform.position = CalculateNewChunkPosition(lastChunk, _finalChunk);
+        OutputDebugInformation();
     }
 
     private float GetChunkWidth(Chunk chunk)
@@ -79,5 +104,13 @@ public class ChunkGenerator : MonoBehaviour
 
         int chance = Random.Range(0, 100);
         return chance > _rotateChance ? defaultRotation : newRotation;
+    }
+
+    private void OutputDebugInformation()
+    {
+        if (_debugLog)
+        {
+            Debug.Log(ChunkStorage.Instance.GetChunksData());
+        }
     }
 }
