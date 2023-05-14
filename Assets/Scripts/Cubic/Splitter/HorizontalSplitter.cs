@@ -18,19 +18,32 @@ public class HorizontalSplitter : Splitter
         part.gameObject.SetActive(true);
     }
 
-    private IEnumerator Slide(Transform upperPart, Transform bottomPart)
+    private IEnumerator Slide(Transform topPart, Transform bottomPart)
     {
+        const float Tolerance = 0.3f;
         float currentDistanceX = 0f;
+        float initialPositionZ = bottomPart.position.z;
 
         while (currentDistanceX <= _slideDistance)
         {
             Vector3 nextPosition = bottomPart.position;
             nextPosition.x -= _slideDistance;
 
-            upperPart.position = Vector3.Lerp(upperPart.position, nextPosition, _slideSpeed * Time.deltaTime);
-            currentDistanceX = bottomPart.position.x - upperPart.position.x;
+            topPart.position = Vector3.Lerp(topPart.position, nextPosition, _slideSpeed * Time.deltaTime);
+            currentDistanceX = bottomPart.position.x - topPart.position.x;
+
+            if (Mathf.Abs(bottomPart.position.z - initialPositionZ) > Tolerance ||
+                Mathf.Abs(topPart.position.z - initialPositionZ) > Tolerance)
+            {
+                topPart.parent = null;
+                bottomPart.parent = null;
+                yield break;
+            }
 
             yield return null;
         }
+
+        topPart.parent = null;
+        bottomPart.parent = null;
     }
 }
