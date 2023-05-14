@@ -10,7 +10,6 @@ public class Hider : Bonus
     [SerializeField] private bool _isHideCorrectBlocks;
 
     private Dictionary<ColorBlock, int> _modifiedBlocks;
-    private Dictionary<Portal, Color> _modifiedPortals;
 
     private void Start()
     {
@@ -83,9 +82,17 @@ public class Hider : Bonus
 
     private void RestorePortalColors()
     {
-        foreach ((Portal portal, Color originalColor) in _modifiedPortals)
+        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
+
+        foreach (Portal portal in portals)
         {
-            portal.SetColor(originalColor);
+            if (portal.UsedByBonus != this)
+            {
+                continue;
+            }
+
+            portal.SetOriginalColor();
+            portal.UsedByBonus = null;
         }
     }
 
@@ -106,17 +113,11 @@ public class Hider : Bonus
     private void UpdatePortalColors()
     {
         IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-        _modifiedPortals = new Dictionary<Portal, Color>(portals.Count);
 
         foreach (Portal portal in portals)
         {
-            if (portal.Color == _blockStackRenderer.CurrentColor)
-            {
-                continue;
-            }
-
-            _modifiedPortals.Add(portal, portal.Color);
             portal.SetColor(_blockStackRenderer.CurrentColor);
+            portal.UsedByBonus = this;
         }
     }
 }
