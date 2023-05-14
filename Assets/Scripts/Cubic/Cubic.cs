@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer), typeof(Collider))]
+[RequireComponent(typeof(MeshRenderer), typeof(Collider), typeof(Rigidbody))]
 public class Cubic : MonoBehaviour
 {
     [SerializeField] private VerticalSplitter _verticalSplitter;
@@ -11,6 +11,7 @@ public class Cubic : MonoBehaviour
     [SerializeField] private float _crushedSizeY = .1f;
 
     private Collider _collider;
+    private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
 
     private bool _steppedOnStand;
@@ -31,6 +32,7 @@ public class Cubic : MonoBehaviour
     {
         _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -81,6 +83,11 @@ public class Cubic : MonoBehaviour
         else
         {
             Hit?.Invoke(contactPoint, trapHeight);
+        }
+
+        if (IsSawing == false)
+        {
+            _rigidbody.isKinematic = false;
         }
     }
 

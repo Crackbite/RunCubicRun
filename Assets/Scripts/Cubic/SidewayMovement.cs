@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Cubic))]
 public class SidewayMovement : MonoBehaviour
 {
-    [SerializeField] private LayerMask _ignoreLayerMask = 1 << 7;
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _changeLineSpeed = .1f;
 
     private float _currentLineIndex = 1f;
     private float _initialPositionZ;
+    private bool _canMove = true;
 
     private Cubic _cubic;
     private Tweener _lineTweener;
@@ -22,7 +22,13 @@ public class SidewayMovement : MonoBehaviour
     private void Start()
     {
         _cubic = GetComponent<Cubic>();
+        _cubic.Hit += OnCubicHit;
         _initialPositionZ = transform.position.z;
+    }
+
+    private void OnDisable()
+    {
+        _cubic.Hit -= OnCubicHit;
     }
 
     public void Move(Vector3 direction)
@@ -63,30 +69,15 @@ public class SidewayMovement : MonoBehaviour
         return Physics.Raycast(ray, out RaycastHit _, DistanceToRoad);
     }
 
-    private bool IsWayClear()
-    {
-        const int MaxColliders = 5;
-        const float ColliderOffset = .1f;
-
-        float boxSize = (transform.localScale.z / 2f) - ColliderOffset;
-        var colliders = new Collider[MaxColliders];
-        var area = new Vector3(boxSize, boxSize, boxSize);
-
-        int hitCount = Physics.OverlapBoxNonAlloc(
-            transform.position,
-            area,
-            colliders,
-            transform.rotation,
-            _ignoreLayerMask);
-
-        return hitCount > 0;
-    }
-
     private void StopLineTweener()
     {
-        if (IsWayClear() && _cubic.CanDestroy == false)
+        if (_canMove == false)
         {
             _lineTweener.Kill();
         }
+    }
+    private void OnCubicHit(Vector3 contactPoint, float height)
+    {
+        _canMove = false;
     }
 }
