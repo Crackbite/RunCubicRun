@@ -111,11 +111,6 @@ public class CubicMovement : MonoBehaviour
 
     private void CubicOnSteppedOnStand(PressStand pressStand)
     {
-        if (_canLineChange == false)
-        {
-            return;
-        }
-
         _canMove = false;
         _canLineChange = false;
 
