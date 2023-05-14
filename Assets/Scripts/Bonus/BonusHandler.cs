@@ -19,16 +19,12 @@ public class BonusHandler : MonoBehaviour
     private void OnEnable()
     {
         _cubic.BonusReceived += OnCubicBonusReceived;
+        _cubic.Hit += OnCubicHit;
     }
 
     private void OnDisable()
     {
-        _cubic.BonusReceived -= OnCubicBonusReceived;
-
-        foreach ((BonusInfo _, BonusItem bonusItem) in _activeBonuses)
-        {
-            UnsubscribeFromBonusTimerEvents(bonusItem.BonusTimer);
-        }
+        UnsubscribeFromAllEvents();
     }
 
     private void ActivateBonus(Bonus bonus)
@@ -74,6 +70,11 @@ public class BonusHandler : MonoBehaviour
         }
     }
 
+    private void OnCubicHit(Vector3 contactPoint, float height)
+    {
+        UnsubscribeFromAllEvents();
+    }
+
     private void OnTimerChanged(Bonus bonus, float remainingSeconds, TimeChangingSource changingSource)
     {
         if (_activeBonuses.TryGetValue(bonus.Info, out BonusItem bonusItem))
@@ -93,6 +94,17 @@ public class BonusHandler : MonoBehaviour
     private void RemoveBonusFromScene(Bonus bonus)
     {
         bonus.transform.DOScale(Vector3.zero, _hideSpeed).OnComplete(() => Destroy(bonus.gameObject));
+    }
+
+    private void UnsubscribeFromAllEvents()
+    {
+        _cubic.BonusReceived -= OnCubicBonusReceived;
+        _cubic.Hit -= OnCubicHit;
+
+        foreach ((BonusInfo _, BonusItem bonusItem) in _activeBonuses)
+        {
+            UnsubscribeFromBonusTimerEvents(bonusItem.BonusTimer);
+        }
     }
 
     private void UnsubscribeFromBonusTimerEvents(BonusTimer bonusTimer)
