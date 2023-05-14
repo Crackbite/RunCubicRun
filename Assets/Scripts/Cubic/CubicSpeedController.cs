@@ -9,6 +9,7 @@ public class CubicSpeedController : MonoBehaviour
     [SerializeField] private float _stopAtPressStandSpeed = 1f;
     [SerializeField] private float _slowdownFactor = .25f;
     [SerializeField] private float _acceleration = 3f;
+    [SerializeField] private LayerMask _ignoreLayerMask = 1 << 7;
     [SerializeField] private BlockStacker _blockStacker;
     [SerializeField] private AnimationCurve _stopCurve;
     [SerializeField] private AnimationCurve _throwSpeedCurve;
@@ -88,6 +89,38 @@ public class CubicSpeedController : MonoBehaviour
         }
     }
 
+    private bool IsWayClear()
+    {
+        const int MaxColliders = 5;
+
+        float boxSize = transform.localScale.x / 2f;
+        var colliders = new Collider[MaxColliders];
+        var area = new Vector3(boxSize, 0, 0);
+
+        int hitCount = Physics.OverlapBoxNonAlloc(
+            transform.position,
+            area,
+            colliders,
+            transform.rotation,
+            _ignoreLayerMask);
+
+        if (hitCount > 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                if (collider != null && collider.TryGetComponent(out Trap trap))
+                {
+                    if (trap is not Saw)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     private IEnumerator Accelerate()
     {
         while (CurrentSpeed < Speed)
@@ -127,6 +160,12 @@ public class CubicSpeedController : MonoBehaviour
         {
             CurrentSpeed = _initialSpeed * slowCurve.Evaluate(runningTime);
             runningTime += Time.deltaTime;
+
+            if (_cubic.IsSawing && IsWayClear() == false)
+            {
+                runningTime += stopDuration;
+            }
+
             yield return null;
         }
 

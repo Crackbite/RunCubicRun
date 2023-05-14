@@ -46,7 +46,9 @@ public class Trap : MonoBehaviour
 
             Vector3 cubicPosition = cubic.transform.position;
             Vector3 contactPoint = Collider.ClosestPoint(cubicPosition);
-            IsSideCollision = Mathf.Abs(cubicPosition.z - contactPoint.z) > Threshold;
+
+            IsSideCollision = Mathf.Abs(cubicPosition.z - contactPoint.z) > Threshold ||
+                transform.position.x < cubicPosition.x;
 
             float trapHeight = Collider.bounds.max.y;
             cubic.HitTrap(this, contactPoint, trapHeight);
@@ -56,6 +58,13 @@ public class Trap : MonoBehaviour
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
         {
             if (_isCubicCollided == false)
+            {
+                Collider.isTrigger = false;
+            }
+        }
+        else if (collision.TryGetComponent(out SplittedPart splittedPart))
+        {
+            if (splittedPart.transform.parent == null)
             {
                 Collider.isTrigger = false;
             }
