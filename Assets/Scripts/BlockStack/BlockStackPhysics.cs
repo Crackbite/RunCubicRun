@@ -31,7 +31,7 @@ public class BlockStackPhysics : MonoBehaviour
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
             _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor);
-            _blockStack.Destroy(_blockStack.Blocks[0], _blockDestroyDelay);
+            _blockStack.AnimateDestroy(_blockStack.Blocks[0], _blockDestroyDelay);
             _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }
     }

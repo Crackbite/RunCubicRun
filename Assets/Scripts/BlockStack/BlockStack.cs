@@ -46,24 +46,24 @@ public class BlockStack : MonoBehaviour
         BlockAdded?.Invoke(colorBlock);
     }
 
-    public void AnimateDestroy(ColorBlock colorBlock)
+    public void AnimateDestroy(ColorBlock colorBlock, float delay = 0f)
     {
         if (TryRemoveBlock(colorBlock) == false)
         {
             return;
         }
 
-        _destroyAnimator.StartDestroyAnimation(colorBlock);
+        _destroyAnimator.StartDestroyAnimation(colorBlock, delay);
     }
 
-    public void Destroy(ColorBlock colorBlock, float delay = 0f)
+    public void Destroy(ColorBlock colorBlock)
     {
         if (TryRemoveBlock(colorBlock) == false)
         {
             return;
         }
 
-        Destroy(colorBlock.gameObject, delay);
+        Destroy(colorBlock.gameObject);
     }
 
     public int GetStackPosition(ColorBlock targetBlock)

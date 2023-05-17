@@ -33,7 +33,7 @@ public class Exploder : Bonus
             float forceFactor = _initialForce + (_additionalForce * i);
 
             _blockStack.Blocks[0].BlockPhysics.FallOff(pushForce, forceFactor);
-            _blockStack.Destroy(_blockStack.Blocks[0], _blockDestroyDelay);
+            _blockStack.AnimateDestroy(_blockStack.Blocks[0], _blockDestroyDelay);
         }
     }
 

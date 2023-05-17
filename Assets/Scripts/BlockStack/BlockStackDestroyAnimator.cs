@@ -9,9 +9,9 @@ public class BlockStackDestroyAnimator : MonoBehaviour
 
     public event Action<ColorBlock> AnimationCompleted;
 
-    public void StartDestroyAnimation(ColorBlock colorBlock)
+    public void StartDestroyAnimation(ColorBlock colorBlock, float delay = 0f)
     {
         colorBlock.transform.DOScale(Vector3.zero, _duration).SetEase(_ease)
-            .OnComplete(() => AnimationCompleted?.Invoke(colorBlock));
+            .OnComplete(() => AnimationCompleted?.Invoke(colorBlock)).SetDelay(delay);
     }
 }
