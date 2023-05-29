@@ -4,8 +4,9 @@ using UnityEngine;
 public class ColorBlockRenderer : MonoBehaviour
 {
     private MeshRenderer _meshRenderer;
+    private readonly string ColorName = "_EmissionColor";
 
-    public Color CurrentColor => _meshRenderer.material.color;
+    public Color CurrentColor => _meshRenderer.material.GetColor(ColorName);
 
     private void Awake()
     {
@@ -16,11 +17,11 @@ public class ColorBlockRenderer : MonoBehaviour
     {
         if (gradient == 0f)
         {
-            _meshRenderer.material.color = color;
+            _meshRenderer.material.SetColor(ColorName, color);
         }
         else
         {
-            _meshRenderer.material.DOColor(color, gradient).SetDelay(stackPosition * coloringSpeedFactor);
+            _meshRenderer.material.DOColor(color, ColorName, gradient).SetDelay(stackPosition * coloringSpeedFactor);
         }
     }
 }

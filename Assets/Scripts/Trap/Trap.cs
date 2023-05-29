@@ -1,12 +1,13 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
     [SerializeField] private TrapType _type;
-    [SerializeField] private GameObject _splitBody;
-    [SerializeField] private GameObject _wholeBody;
+    [SerializeField] private List<GameObject> _splitBodys;
+    [SerializeField] private List<GameObject> _wholeBodys;
     [SerializeField] protected Animator Animator;
     [SerializeField] protected float MinSpeed = .6f;
     [SerializeField] protected float MaxSpeed = 1.2f;
@@ -17,14 +18,23 @@ public class Trap : MonoBehaviour
 
     private bool _isCubicCollided;
 
-    private Rigidbody[] _piecesRigidbody;
+    private List<Rigidbody> _piecesRigidbody = new List<Rigidbody>();
 
     public bool IsSideCollision { get; private set; }
     public TrapType Type => _type;
 
     private void Awake()
     {
-        _piecesRigidbody = _splitBody.GetComponentsInChildren<Rigidbody>();
+        foreach (GameObject splitBody in _splitBodys)
+        {
+            Rigidbody[] rigidbodys = splitBody.GetComponentsInChildren<Rigidbody>();
+
+            foreach (Rigidbody pieceRigidbody in rigidbodys)
+            {
+                _piecesRigidbody.Add(pieceRigidbody);
+            }
+        }
+
         Collider = GetComponent<Collider>();
 
         SetSpeed();
@@ -96,6 +106,14 @@ public class Trap : MonoBehaviour
         }
     }
 
+    private void SwitchActivity(List<GameObject> bodys, bool isActive)
+    {
+        foreach (GameObject body in bodys)
+        {
+            body.SetActive(isActive);
+        }
+    }
+
     private void Break()
     {
         const float PieceLifeTime = 10f;
@@ -103,8 +121,8 @@ public class Trap : MonoBehaviour
         const float DragDuration = 1f;
 
         Stop();
-        _wholeBody.SetActive(false);
-        _splitBody.SetActive(true);
+        SwitchActivity(_wholeBodys, false);
+        SwitchActivity(_splitBodys, true);
 
         foreach (Rigidbody piece in _piecesRigidbody)
         {
