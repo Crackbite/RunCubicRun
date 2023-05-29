@@ -26,7 +26,7 @@ public class ColorBlocksContainer : MonoBehaviour
     {
         foreach (ColorBlock block in _colorBlocks)
         {
-            if(block != null && block.CanFollow == false)
+            if(block != null && block.IsInStack == false)
             {
                 block.BlockPhysics.TurnOffTrigger();
             }
