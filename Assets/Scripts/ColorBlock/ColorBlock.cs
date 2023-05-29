@@ -22,12 +22,12 @@ public class ColorBlock : MonoBehaviour
 
     public void Init(BlockStack blockContainer, BlockStackCoordinator stackCoordinator)
     {
+        CanFollow = true;
+        IsInStack = true;
         _blockContainer = blockContainer;
         SetStackPosition();
         _blockMovement.StartFollowing(stackCoordinator);
         BlockPhysics.TurnOffTrigger();
-        CanFollow = true;
-        IsInStack = true;
     }
 
     public void SetStackPosition()

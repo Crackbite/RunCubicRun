@@ -19,13 +19,11 @@ public class ColorBlockPhysics : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Crossbar _) == false || _colorBlock.CanFollow == false)
+        if (collision.TryGetComponent(out Crossbar _))
         {
-            return;
+            TurnOffTrigger();
+            CrossbarHit?.Invoke(_colorBlock.StackPosition);
         }
-
-        collision.isTrigger = false;
-        CrossbarHit?.Invoke(_colorBlock.StackPosition);
     }
 
     public void FallOff(Vector3 pushForce, float forceFactor, bool removeParent = true)
@@ -45,10 +43,16 @@ public class ColorBlockPhysics : MonoBehaviour
     public void TurnOffTrigger()
     {
         _collider.isTrigger = false;
+
+        if (_colorBlock.CanFollow == false)
+        {
+            _rigidbody.isKinematic = false;
+        }
     }
 
     public void TurnOnTrigger()
     {
         _collider.isTrigger = true;
+        _rigidbody.isKinematic = true;
     }
 }
