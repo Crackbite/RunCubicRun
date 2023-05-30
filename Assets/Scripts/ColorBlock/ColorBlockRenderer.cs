@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ColorBlockRenderer : MonoBehaviour
 {
-    [SerializeField] private float _intensity;
-
     private MeshRenderer _meshRenderer;
     private readonly string ColorName = "_EmissionColor";
 
@@ -19,11 +17,11 @@ public class ColorBlockRenderer : MonoBehaviour
     {
         if (gradient == 0f)
         {
-            _meshRenderer.material.SetColor(ColorName, color * _intensity);
+            _meshRenderer.material.SetColor(ColorName, color);
         }
         else
         {
-            _meshRenderer.material.DOColor(color * _intensity, ColorName, gradient).SetDelay(stackPosition * coloringSpeedFactor);
+            _meshRenderer.material.DOColor(color, ColorName, gradient).SetDelay(stackPosition * coloringSpeedFactor);
         }
     }
 }
