@@ -37,7 +37,7 @@ public class BonusHandler : MonoBehaviour
                                   ? Instantiate(_bonusIconPrefab)
                                   : Instantiate(_bonusIconPrefab, _bonusIconsPanel);
 
-        bonusIcon.Init(bonus.Info.Icon, bonusTimer.RemainingSeconds);
+        bonusIcon.Init(bonus.Info, bonusTimer.RemainingSeconds);
 
         var bonusItem = new BonusItem(bonus, bonusIcon, bonusTimer);
         _activeBonuses.Add(bonus.Info, bonusItem);
@@ -49,7 +49,7 @@ public class BonusHandler : MonoBehaviour
     private void DeactivateBonus(BonusItem bonusItem)
     {
         bonusItem.Bonus.Cancel();
-        Destroy(bonusItem.BonusIcon.gameObject);
+        bonusItem.BonusIcon.Destroy();
 
         UnsubscribeFromBonusTimerEvents(bonusItem.BonusTimer);
         _activeBonuses.Remove(bonusItem.Bonus.Info);
