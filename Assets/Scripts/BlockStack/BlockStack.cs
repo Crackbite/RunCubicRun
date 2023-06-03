@@ -36,7 +36,7 @@ public class BlockStack : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(_cubic.transform.position.y < _groundPositionY)
+        if(_cubic.transform.position.y < _groundPositionY && _cubic.IsSawing)
         {
             return;
         }
