@@ -18,13 +18,13 @@ public class VerticalSplitter : Splitter
         part.gameObject.SetActive(true);
         float localPositionZ = part.transform.localPosition.z;
         Rigidbody partRigidbody = part.GetComponent<Rigidbody>();
-        part.SetParent(null);
         part.DORotate(_splitAngle * Mathf.Sign(localPositionZ) * Vector3.right, _splitDuration)
             .SetEase(_ease)
             .OnComplete(() =>
             {
                 if (partRigidbody != null)
                 {
+                    part.SetParent(null);
                     partRigidbody.isKinematic = false;
                 }
             });

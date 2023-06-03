@@ -13,6 +13,7 @@ public class BlockStack : MonoBehaviour
 
     private BlockStackAddAnimator _addAnimator;
     private BlockStackDestroyAnimator _destroyAnimator;
+    private float _groundPositionY = 0;
 
     public event Action<ColorBlock> BlockAdded;
     public event Action<ColorBlock> BlockRemoved;
@@ -35,6 +36,11 @@ public class BlockStack : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(_cubic.transform.position.y < _groundPositionY)
+        {
+            return;
+        }
+
         Vector3 currentPosition = transform.position;
         transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
     }

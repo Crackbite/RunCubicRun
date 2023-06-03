@@ -15,7 +15,7 @@ public class ColorBlockMovement : MonoBehaviour
         _colorBlock = GetComponent<ColorBlock>();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (_colorBlock.CanFollow == false)
         {
@@ -26,7 +26,7 @@ public class ColorBlockMovement : MonoBehaviour
 
         if (_isPlaced)
         {
-            UpdateBlockPositionOnGround(currentPosition);
+            UpdateBlockPositionOnGround(ref currentPosition);
         }
         else
         {
@@ -67,7 +67,7 @@ public class ColorBlockMovement : MonoBehaviour
         }
     }
 
-    private void UpdateBlockPositionOnGround(Vector3 currentPosition)
+    private void UpdateBlockPositionOnGround(ref Vector3 currentPosition)
     {
         const float Tolerance = 0.05f;
 

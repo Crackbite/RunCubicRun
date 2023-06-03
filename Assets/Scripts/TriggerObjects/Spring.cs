@@ -35,7 +35,11 @@ public class Spring : MonoBehaviour
     public void Toss(Cubic cubic)
     {
         _animator.SetTrigger(_tossHash);
-        StartCoroutine(ThrowOverAbyss(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
+
+        if(cubic.IsSawing == false)
+        {
+             StartCoroutine(ThrowOverAbyss(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
+        }
     }
 
     private IEnumerator ThrowOverAbyss(Transform flyingObject, float throwForce, float acceleration)
