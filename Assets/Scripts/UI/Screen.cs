@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(CanvasGroup))]
@@ -6,6 +7,9 @@ public abstract class Screen : MonoBehaviour
 {
     private CanvasGroup _canvasGroup;
     private DOTweenAnimation[] _tweenAnimations;
+
+    public event Action Hidden;
+    public event Action Showed;
 
     private void Start()
     {
@@ -20,7 +24,7 @@ public abstract class Screen : MonoBehaviour
             _canvasGroup.interactable = true;
         }
 
-        gameObject.SetActive(true);
+        Show();
     }
 
     public virtual void Exit()
@@ -37,11 +41,23 @@ public abstract class Screen : MonoBehaviour
                 doTweenAnimation.DOPlayBackwards();
             }
 
-            _tweenAnimations[0].tween.OnRewind(() => gameObject.SetActive(false));
+            _tweenAnimations[0].tween.OnRewind(Hide);
         }
         else
         {
-            gameObject.SetActive(false);
+            Hide();
         }
+    }
+
+    private void Hide()
+    {
+        gameObject.SetActive(false);
+        Hidden?.Invoke();
+    }
+
+    private void Show()
+    {
+        gameObject.SetActive(true);
+        Showed?.Invoke();
     }
 }

@@ -32,7 +32,7 @@ public class SwitchToggle : MonoBehaviour
     private void ChangeHandlePosition(bool isOn)
     {
         Vector2 newHandlePosition = isOn ? _handlePosition * -1 : _handlePosition;
-        _switcherRectTransform.DOAnchorPosX(newHandlePosition.x, _animationDuration);
+        _switcherRectTransform.DOAnchorPosX(newHandlePosition.x, _animationDuration).SetUpdate(true);
     }
 
     private void OnSwitch(bool isOn)
