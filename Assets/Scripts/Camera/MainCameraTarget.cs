@@ -13,6 +13,7 @@ public class MainCameraTarget : MonoBehaviour
     [SerializeField] private ChunkGenerator _chunkGenerator;
 
     private bool _hasStarted;
+    private bool _isPositionChangeStopped;
     private float _leftLimit;
     private float _previousCameraAspect;
     private float _rightLimit;
@@ -20,6 +21,7 @@ public class MainCameraTarget : MonoBehaviour
     private void OnEnable()
     {
         _chunkGenerator.Completed += OnChunkGeneratorCompleted;
+        _cubic.Hit += OnCubicHit;
     }
 
     private void LateUpdate()
@@ -43,6 +45,7 @@ public class MainCameraTarget : MonoBehaviour
     private void OnDisable()
     {
         _chunkGenerator.Completed -= OnChunkGeneratorCompleted;
+        _cubic.Hit -= OnCubicHit;
     }
 
     private void ChangeLimits(float cameraAspect)
@@ -66,10 +69,20 @@ public class MainCameraTarget : MonoBehaviour
         _hasStarted = true;
     }
 
+    private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
+    {
+        _isPositionChangeStopped = true;
+    }
+
     private void UpdatePosition(float cameraAspect)
     {
         const float LimitOnY = .5f;
         const float LimitOnZ = 0f;
+
+        if (_isPositionChangeStopped)
+        {
+            return;
+        }
 
         float halfCamWidth = _mainCamera.orthographicSize * cameraAspect;
 
