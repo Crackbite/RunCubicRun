@@ -51,6 +51,17 @@ public class Cubic : MonoBehaviour
             return;
         }
 
+
+        if (collision.TryGetComponent(out Spring _) && IsSawing)
+        {
+            const float PushForce = 10;
+
+            _rigidbody.isKinematic = false;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            _rigidbody.AddForce(Vector3.up * PushForce, ForceMode.Impulse);
+            return;
+        }
+
         if (_steppedOnStand || collision.TryGetComponent(out PressStand pressStand) == false)
         {
             return;

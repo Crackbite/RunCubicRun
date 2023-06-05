@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BlockStackAddAnimator), typeof(BlockStackDestroyAnimator))]
 public class BlockStack : MonoBehaviour
@@ -12,6 +13,7 @@ public class BlockStack : MonoBehaviour
 
     private BlockStackAddAnimator _addAnimator;
     private BlockStackDestroyAnimator _destroyAnimator;
+    private float _groundPositionY = 0;
 
     public event Action<ColorBlock> BlockAdded;
     public event Action<ColorBlock> BlockRemoved;
@@ -29,10 +31,16 @@ public class BlockStack : MonoBehaviour
     private void OnEnable()
     {
         _destroyAnimator.AnimationCompleted += OnDestroyAnimationCompleted;
+        _cubic.Hit += OnCubicHit;
     }
 
     private void LateUpdate()
     {
+        if(_cubic.transform.position.y < _groundPositionY && _cubic.IsSawing)
+        {
+            return;
+        }
+
         Vector3 currentPosition = transform.position;
         transform.position = new Vector3(_cubic.transform.position.x, currentPosition.y, currentPosition.z);
     }
@@ -89,6 +97,18 @@ public class BlockStack : MonoBehaviour
     private void OnDestroyAnimationCompleted(ColorBlock colorBlock)
     {
         Destroy(colorBlock.gameObject);
+    }
+
+
+    private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
+    {
+        if (_cubic.IsSawing == false)
+        {
+            foreach (ColorBlock block in _blocks)
+            {
+                block.transform.parent = null;
+            }
+        }
     }
 
     private bool TryRemoveBlock(ColorBlock colorBlock)

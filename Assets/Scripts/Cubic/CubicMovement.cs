@@ -50,20 +50,11 @@ public class CubicMovement : MonoBehaviour
 
     private void Update()
     {
-        const float DestroyDelay = 5f;
-
-        bool isFalling = _cubic.transform.position.y <= _fallPositionY;
-
-        if (_canMove && isFalling == false)
+        if (_canMove)
         {
             _cubic.transform.Translate(
                 _cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right,
                 Space.World);
-        }
-
-        if (isFalling)
-        {
-            Destroy(_cubic.gameObject, DestroyDelay);
         }
     }
 
