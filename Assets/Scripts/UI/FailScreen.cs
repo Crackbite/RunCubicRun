@@ -4,18 +4,18 @@ using UnityEngine.UI;
 
 public class FailScreen : Screen
 {
-    [SerializeField] private Button _next;
+    [SerializeField] private Button _home;
     [SerializeField] private Button _restart;
 
     private void OnEnable()
     {
-        _next.onClick.AddListener(OnNextClicked);
+        _home.onClick.AddListener(OnHomeClicked);
         _restart.onClick.AddListener(OnRestartClicked);
     }
 
     private void OnDisable()
     {
-        _next.onClick.RemoveListener(OnNextClicked);
+        _home.onClick.RemoveListener(OnHomeClicked);
         _restart.onClick.RemoveListener(OnRestartClicked);
     }
 
@@ -25,7 +25,7 @@ public class FailScreen : Screen
         SceneManager.LoadScene(currentSceneName);
     }
 
-    private void OnNextClicked()
+    private void OnHomeClicked()
     {
         ChunkStorage.Instance.Restart();
         LoadScene();
