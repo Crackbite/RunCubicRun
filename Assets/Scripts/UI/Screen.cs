@@ -34,7 +34,7 @@ public abstract class Screen : MonoBehaviour
             _canvasGroup.interactable = false;
         }
 
-        if (_tweenAnimations.Length > 0)
+        if (_tweenAnimations != null && _tweenAnimations.Length > 0)
         {
             foreach (DOTweenAnimation doTweenAnimation in _tweenAnimations)
             {
