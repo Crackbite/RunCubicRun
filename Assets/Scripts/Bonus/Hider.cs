@@ -6,10 +6,11 @@ public class Hider : Bonus
     [SerializeField] private ColorBlocksContainer _colorBlocksContainer;
     [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private LayerMask _hiddenLayer = 1 << 9;
+    [SerializeField] private LayerMask _defaultLayer = 1 << 3;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private bool _isHideCorrectBlocks;
 
-    private Dictionary<ColorBlock, int> _modifiedBlocks;
+    private List<ColorBlock> _modifiedBlocks;
 
     private void Start()
     {
@@ -51,7 +52,7 @@ public class Hider : Bonus
         int newLayer = (int)Mathf.Log(_hiddenLayer.value, 2);
 
         IReadOnlyList<ColorBlock> colorBlocks = _colorBlocksContainer.ColorBlocks;
-        _modifiedBlocks = new Dictionary<ColorBlock, int>(colorBlocks.Count);
+        _modifiedBlocks = new List<ColorBlock>(colorBlocks.Count);
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
@@ -60,7 +61,7 @@ public class Hider : Bonus
                 continue;
             }
 
-            _modifiedBlocks.Add(colorBlock, colorBlock.gameObject.layer);
+            _modifiedBlocks.Add(colorBlock);
 
             colorBlock.gameObject.layer = newLayer;
             colorBlock.BlockPhysics.TurnOffTrigger();
@@ -98,14 +99,16 @@ public class Hider : Bonus
 
     private void ShowAllBlocks()
     {
-        foreach ((ColorBlock colorBlock, int originalLayer) in _modifiedBlocks)
+        int newLayer = (int)Mathf.Log(_defaultLayer.value, 2);
+
+        foreach (ColorBlock colorBlock in _modifiedBlocks)
         {
             if (colorBlock == null)
             {
                 continue;
             }
 
-            colorBlock.gameObject.layer = originalLayer;
+            colorBlock.gameObject.layer = newLayer;
             colorBlock.BlockPhysics.TurnOnTrigger();
         }
     }
