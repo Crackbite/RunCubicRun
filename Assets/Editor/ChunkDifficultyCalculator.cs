@@ -40,6 +40,11 @@ public class ChunkDifficultyCalculator : EditorWindow
         {
             ShowPrefabStatistics();
         }
+
+        if (GUILayout.Button("Show bonus statistics"))
+        {
+            ShowBonusStatistics();
+        }
     }
 
     [MenuItem("Window/Chunk Difficulty Calculator")]
@@ -150,12 +155,49 @@ public class ChunkDifficultyCalculator : EditorWindow
         _totalDifficulty += _trapCalculator.TotalTrapsDifficulty;
     }
 
+    private Chunk[] GetChunks()
+    {
+        const string ChunksFolder = "Assets/Prefabs/Chunks/Generated";
+
+        var directoryInfo = new DirectoryInfo(ChunksFolder);
+        FileInfo[] filesInfo = directoryInfo.GetFiles("Chunk*.prefab");
+
+        var prefabs = new Chunk[filesInfo.Length];
+
+        for (int i = 0; i < filesInfo.Length; i++)
+        {
+            string path = Path.Combine(ChunksFolder, filesInfo[i].Name);
+            var gameObject = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+
+            prefabs[i] = gameObject.GetComponent<Chunk>();
+        }
+
+        return prefabs;
+    }
+
     private Vector3 GetChunkStartPosition(GameObject mainObject)
     {
         var meshRenderer = mainObject.GetComponentInChildren<Road>().GetComponent<MeshRenderer>();
         float maxX = meshRenderer.bounds.max.x;
 
         return new Vector3(maxX, 0f, 0f);
+    }
+
+    private void ShowBonusStatistics()
+    {
+        Chunk[] chunks = GetChunks();
+
+        foreach (Chunk chunk in chunks)
+        {
+            Bonus[] bonuses = chunk.GetComponentsInChildren<Bonus>();
+
+            foreach (Bonus bonus in bonuses)
+            {
+                string type = bonus.Info.IsPositive ? "[+]" : "[-]";
+
+                Debug.Log($"{type} {bonus.name}");
+            }
+        }
     }
 
     private void ShowCalculationDetails()
@@ -174,21 +216,9 @@ public class ChunkDifficultyCalculator : EditorWindow
 
     private void ShowPrefabStatistics()
     {
-        const string ChunksFolder = "Assets/Prefabs/Chunks/Generated";
+        Chunk[] chunks = GetChunks();
 
-        var directoryInfo = new DirectoryInfo(ChunksFolder);
-        FileInfo[] filesInfo = directoryInfo.GetFiles("Chunk*.prefab");
-
-        var prefabs = new Chunk[filesInfo.Length];
-
-        for (int i = 0; i < filesInfo.Length; i++)
-        {
-            string path = Path.Combine(ChunksFolder, filesInfo[i].Name);
-            var gameObject = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            prefabs[i] = gameObject.GetComponent<Chunk>();
-        }
-
-        var chunkComposer = new ChunkComposer(prefabs);
+        var chunkComposer = new ChunkComposer(chunks);
         chunkComposer.DebugStatistic();
     }
 }
