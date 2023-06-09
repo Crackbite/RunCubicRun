@@ -42,13 +42,10 @@ public class ColorBlockPhysics : MonoBehaviour
 
     public void TurnOffTrigger()
     {
-        const float MinMass = 0f;
-
         _collider.isTrigger = false;
 
         if (_colorBlock.IsInStack == false)
         {
-            _rigidbody.mass = MinMass;
             _rigidbody.isKinematic = false;
         }
     }
