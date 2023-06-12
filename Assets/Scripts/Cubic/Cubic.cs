@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer), typeof(Collider), typeof(Rigidbody))]
+[RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class Cubic : MonoBehaviour
 {
     [SerializeField] private VerticalSplitter _verticalSplitter;
@@ -9,10 +10,10 @@ public class Cubic : MonoBehaviour
     [SerializeField] private float _jumpForce = 6.5f;
     [SerializeField] private float _jumpAcceleration = 7.7f;
     [SerializeField] private float _crushedSizeY = .1f;
+    [SerializeField] private List<MeshRenderer> _meshRenderers;
 
     private Collider _collider;
     private Rigidbody _rigidbody;
-    private MeshRenderer _meshRenderer;
 
     private bool _steppedOnStand;
 
@@ -20,7 +21,7 @@ public class Cubic : MonoBehaviour
     public event Action<Vector3, float> Hit;
     public event Action<PressStand> SteppedOnStand;
 
-    public Bounds Bounds => _meshRenderer.bounds;
+    public Bounds Bounds => _meshRenderers[0].bounds;
     public bool CanDestroy { get; set; }
     public Saw CollisionSaw { get; private set; }
     public float CrushedSizeY => _crushedSizeY;
@@ -30,7 +31,6 @@ public class Cubic : MonoBehaviour
 
     private void Start()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<Collider>();
         _rigidbody = GetComponent<Rigidbody>();
     }
@@ -113,7 +113,11 @@ public class Cubic : MonoBehaviour
             _horizontalSplitter.Split();
         }
 
-        _meshRenderer.enabled = false;
+        foreach (MeshRenderer renderer in _meshRenderers)
+        {
+            renderer.enabled = false;
+        }
+
         _collider.enabled = false;
     }
 
