@@ -11,7 +11,6 @@ public class CubicMovement : MonoBehaviour
     [SerializeField] private float _leavePressTime = .8f;
     [SerializeField] private float _leavePressDistance = 5f;
     [SerializeField] private BlockStack _blockStack;
-    [SerializeField] private float _fallPositionY = -10f;
 
     private bool _canLeavePress;
     private bool _canLineChange = true;
