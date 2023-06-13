@@ -54,7 +54,7 @@ public class Cubic : MonoBehaviour
 
         if (collision.TryGetComponent(out Spring _) && IsSawing)
         {
-            const float PushForce = 10;
+            const float PushForce = 3f;
 
             _rigidbody.isKinematic = false;
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -110,12 +110,12 @@ public class Cubic : MonoBehaviour
         }
         else
         {
-            _horizontalSplitter.Split();
-        }
+            foreach (MeshRenderer renderer in _meshRenderers)
+            {
+                renderer.gameObject.SetActive(false);
+            }
 
-        foreach (MeshRenderer renderer in _meshRenderers)
-        {
-            renderer.enabled = false;
+            _horizontalSplitter.Split();
         }
 
         _collider.enabled = false;

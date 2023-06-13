@@ -15,9 +15,8 @@ public class VerticalSplitter : Splitter
 
     public override void SplitOnePart(Transform part)
     {
-        part.gameObject.SetActive(true);
         float localPositionZ = part.transform.localPosition.z;
-        Rigidbody partRigidbody = part.GetComponent<Rigidbody>();
+        Rigidbody partRigidbody = part.gameObject.AddComponent<Rigidbody>();
         part.DORotate(_splitAngle * Mathf.Sign(localPositionZ) * Vector3.right, _splitDuration)
             .SetEase(_ease)
             .OnComplete(() =>
