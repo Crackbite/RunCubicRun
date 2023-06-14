@@ -39,13 +39,13 @@ public class GameStatusTracker : MonoBehaviour
     {
         if (_isCubicSteppedOnStand == false)
         {
-            GameEnded?.Invoke(GameResult.Lose);
+            GameEnded?.Invoke(GameResult.LoseWithBlocksEnded);
         }
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
     {
-        GameEnded?.Invoke(GameResult.Lose);
+        GameEnded?.Invoke(GameResult.LoseWithHit);
     }
 
     private void OnCubicLeftPress()
@@ -60,7 +60,7 @@ public class GameStatusTracker : MonoBehaviour
 
     private void OnExitPortalSuckedIn()
     {
-        GameEnded?.Invoke(_isCubicLeftPress ? GameResult.Win : GameResult.Lose);
+        GameEnded?.Invoke(_isCubicLeftPress ? GameResult.Win : GameResult.LoseWithPortalSuckedIn);
     }
 
     private void OnMenuStartClicked()

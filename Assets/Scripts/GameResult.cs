@@ -1,5 +1,7 @@
 ﻿public enum GameResult
 {
     Win,
-    Lose
+    LoseWithHit,
+    LoseWithBlocksEnded,
+    LoseWithPortalSuckedIn
 }
