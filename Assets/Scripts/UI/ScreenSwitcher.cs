@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ScreenSwitcher : MonoBehaviour
 {
+    [SerializeField] private MainScreen _mainScreen;
     [SerializeField] private MenuScreen _menuScreen;
     [SerializeField] private GameScreen _gameScreen;
     [SerializeField] private SuccessScreen _successScreen;
@@ -37,6 +38,8 @@ public class ScreenSwitcher : MonoBehaviour
         {
             SetFailScreen();
         }
+
+        _mainScreen.Exit();
     }
 
     private void OnMenuStartClicked()
@@ -46,6 +49,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void SetDefaultScreen()
     {
+        _mainScreen.Enter();
         SetMenuScreen();
     }
 
