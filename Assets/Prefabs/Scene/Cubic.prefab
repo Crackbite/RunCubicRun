@@ -561,6 +561,7 @@ GameObject:
   - component: {fileID: 9114075409595079726}
   - component: {fileID: 9114075409595079725}
   - component: {fileID: 9114075409595079723}
+  - component: {fileID: 7514442383921262274}
   m_Layer: 0
   m_Name: Cubic
   m_TagString: Untagged
@@ -664,8 +665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91966b0efa5fb5e4b92d70329dd97edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstPart: {fileID: 4168780004999894199}
-  SecondPart: {fileID: 1249793836883069961}
+  FirstPart: {fileID: 7335273366657505064}
+  SecondPart: {fileID: 3198065846764578624}
   _splitDuration: 2
   _splitAngle: 90
   _ease: 20
@@ -681,8 +682,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f53e52c81f858428c439778304218e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstPart: {fileID: 7978915165188441112}
-  SecondPart: {fileID: 3632149519030514319}
+  FirstPart: {fileID: 5757024003506808534}
+  SecondPart: {fileID: 7073190983489836904}
   _slideDistance: 0.6
   _slideSpeed: 0.9
 --- !u!114 &9114075409595079727
@@ -702,7 +703,6 @@ MonoBehaviour:
   _leavePressTime: 0.8
   _leavePressDistance: 5
   _blockStack: {fileID: 0}
-  _fallPositionY: -5
 --- !u!114 &9114075409595079726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,3 +835,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shiftPerMove: 2
   _changeLineSpeed: 0.1
+--- !u!114 &7514442383921262274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9114075409595079697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed9bdb0d8924a7a4583a17b45c881fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skins:
+  - {fileID: 11400000, guid: 11f44f5a4be94ed40b936e419b16e1e7, type: 2}
+  - {fileID: 11400000, guid: acf4e70700166334baf422423f4c96e0, type: 2}
+  - {fileID: 11400000, guid: b03df46547e32834db789c0dee6358ac, type: 2}
+  - {fileID: 11400000, guid: 2f84a85aa441c4c489be321f140c9ae1, type: 2}
+  - {fileID: 11400000, guid: 7b63846cffbd06949b82b4224624d9a2, type: 2}
+  - {fileID: 11400000, guid: ec03c4d5d1362ca40ac4df6f13a70a54, type: 2}
+  _cubicPartRenderers:
+  - {fileID: 5695139237377962199}
+  - {fileID: 9201256637719881120}
+  - {fileID: 2028422374540819509}
+  - {fileID: 5547060511368252732}
+  _cubicPartMeshFilters:
+  - {fileID: 8935485872954739347}
+  - {fileID: 5937945770951949822}
+  - {fileID: 3336016125704139987}
+  - {fileID: 8880728539502037453}
