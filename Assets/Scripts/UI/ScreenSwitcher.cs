@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ScreenSwitcher : MonoBehaviour
@@ -6,6 +7,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private GameScreen _gameScreen;
     [SerializeField] private SuccessScreen _successScreen;
     [SerializeField] private FailScreen _failScreen;
+    [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private Screen _currentScreen;
@@ -13,7 +15,9 @@ public class ScreenSwitcher : MonoBehaviour
     private void OnEnable()
     {
         _menuScreen.StartClicked += OnMenuStartClicked;
+        _menuScreen.StoreClicked += OnMenuStoreClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
+        _storeScreen.CloseClicked += OnStoreCloseClicked;
     }
 
     private void Start()
@@ -24,7 +28,9 @@ public class ScreenSwitcher : MonoBehaviour
     private void OnDisable()
     {
         _menuScreen.StartClicked -= OnMenuStartClicked;
+        _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
+        _storeScreen.CloseClicked -= OnStoreCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -44,6 +50,17 @@ public class ScreenSwitcher : MonoBehaviour
         SetGameScreen();
     }
 
+    private void OnMenuStoreClicked()
+    {
+        SetStoreScreen();
+    }
+
+    private void OnStoreCloseClicked()
+    {
+        SetScreen(_menuScreen);
+    }
+
+
     private void SetDefaultScreen()
     {
         SetMenuScreen();
@@ -52,6 +69,11 @@ public class ScreenSwitcher : MonoBehaviour
     private void SetFailScreen()
     {
         SetScreen(_failScreen);
+    }
+
+    private void SetStoreScreen()
+    {
+        SetScreen(_storeScreen);
     }
 
     private void SetGameScreen()
