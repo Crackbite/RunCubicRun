@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreAllocator : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ScoreAllocator : MonoBehaviour
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
+    [SerializeField] private Store _store;
 
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
@@ -31,11 +33,14 @@ public class ScoreAllocator : MonoBehaviour
         _cubic.SteppedOnStand += OnCubicSteppedOnStand;
         _blockStack.BlockAdded += OnBlockAdded;
         _blockStack.BlockRemoved += OnBlockRemoved;
+        _store.SkinBought += OnSkinBought;
     }
+
 
     private void Start()
     {
         _currentGoodBlockScore = _goodBlockScore;
+        IncreaseScore(100, ScoreChangeInitiator.Cubic);
     }
 
     private void OnDisable()
@@ -43,9 +48,10 @@ public class ScoreAllocator : MonoBehaviour
         _cubic.SteppedOnStand -= OnCubicSteppedOnStand;
         _blockStack.BlockAdded -= OnBlockAdded;
         _blockStack.BlockRemoved -= OnBlockRemoved;
+        _store.SkinBought -= OnSkinBought;
     }
 
-    private void ChangeScore(float value, ScoreChangeInitiator initiator)
+    private void IncreaseScore(float value, ScoreChangeInitiator initiator)
     {
         const float RoundingFactor = 10.0f;
 
@@ -56,13 +62,25 @@ public class ScoreAllocator : MonoBehaviour
         ScoreChanged?.Invoke(score);
     }
 
+    private void DicreaseScore(float value, ScoreChangeInitiator initiator)
+    {
+        const float RoundingFactor = 10.0f;
+
+        _totalScore -= Mathf.Round(value * RoundingFactor) / RoundingFactor;
+        _totalScore = Mathf.Max(_totalScore, _minScore);
+        var score = new Score(_totalScore, value, initiator);
+
+        ScoreChanged?.Invoke(score);
+    }
+
+
     private void OnBlockAdded(ColorBlock colorBlock)
     {
         _currentGoodBlockScore = _goodBlocksInRow >= _bonusGoodBlockThreshold ? _bonusGoodBlockScore : _goodBlockScore;
         _goodBlocksInRow++;
 
         float score = _currentGoodBlockScore * ScoreMultiplier;
-        ChangeScore(score, ScoreChangeInitiator.Cubic);
+        IncreaseScore(score, ScoreChangeInitiator.Cubic);
     }
 
     private void OnBlockRemoved(ColorBlock colorBlock)
@@ -83,11 +101,16 @@ public class ScoreAllocator : MonoBehaviour
             initiator = ScoreChangeInitiator.Cubic;
         }
 
-        ChangeScore(score, initiator);
+        IncreaseScore(score, initiator);
     }
 
     private void OnCubicSteppedOnStand(PressStand pressStand)
     {
         _isCubicUnderPress = true;
+    }
+
+    private void OnSkinBought(float skinPrice)
+    {
+        DicreaseScore(skinPrice, ScoreChangeInitiator.Store);
     }
 }

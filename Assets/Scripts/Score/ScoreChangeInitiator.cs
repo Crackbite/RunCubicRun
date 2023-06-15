@@ -1,5 +1,6 @@
 public enum ScoreChangeInitiator
 {
     Cubic,
-    Press
+    Press,
+    Store
 }
