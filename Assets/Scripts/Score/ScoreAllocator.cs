@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreAllocator : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ScoreAllocator : MonoBehaviour
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
+    [SerializeField] private Store _store;
 
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
@@ -33,11 +35,14 @@ public class ScoreAllocator : MonoBehaviour
         _cubic.SteppedOnStand += OnCubicSteppedOnStand;
         _blockStack.BlockAdded += OnBlockAdded;
         _blockStack.BlockRemoved += OnBlockRemoved;
+        _store.SkinBought += OnSkinBought;
     }
+
 
     private void Start()
     {
         _currentGoodBlockScore = _goodBlockScore;
+        ChangeScore(100, ScoreChangeInitiator.Cubic);
     }
 
     private void OnDisable()
@@ -45,6 +50,7 @@ public class ScoreAllocator : MonoBehaviour
         _cubic.SteppedOnStand -= OnCubicSteppedOnStand;
         _blockStack.BlockAdded -= OnBlockAdded;
         _blockStack.BlockRemoved -= OnBlockRemoved;
+        _store.SkinBought -= OnSkinBought;
     }
 
     public override string ToString()
@@ -96,5 +102,10 @@ public class ScoreAllocator : MonoBehaviour
     private void OnCubicSteppedOnStand(PressStand pressStand)
     {
         _isCubicUnderPress = true;
+    }
+
+    private void OnSkinBought(float skinPrice)
+    {
+        ChangeScore(-skinPrice, ScoreChangeInitiator.Store);
     }
 }

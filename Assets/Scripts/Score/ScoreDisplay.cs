@@ -21,7 +21,7 @@ public class ScoreDisplay : MonoBehaviour
         _scoreAllocator.ScoreChanged += OnScoreChanged;
     }
 
-    private void Start()
+    private void Awake()
     {
         _score = GetComponent<TMP_Text>();
         SetScore(781638f);
