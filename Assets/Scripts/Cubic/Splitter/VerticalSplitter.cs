@@ -15,9 +15,25 @@ public class VerticalSplitter : Splitter
 
     public override void SplitOnePart(Transform part)
     {
+        const int AngleY = 180;
+
+        if (part.gameObject.TryGetComponent<Collider>(out Collider partCollider))
+        {
+            partCollider.enabled = true;
+        }
+
+        Vector3 startEulerAngles = transform.localEulerAngles;
+        Vector3 targetEulerAngles = new Vector3(_splitAngle, startEulerAngles.y, startEulerAngles.z);
         float localPositionZ = part.transform.localPosition.z;
+
+        if(localPositionZ < 0)
+        {
+            targetEulerAngles.y = AngleY;
+        }
+
         Rigidbody partRigidbody = part.gameObject.AddComponent<Rigidbody>();
-        part.DORotate(_splitAngle * Mathf.Sign(localPositionZ) * Vector3.right, _splitDuration)
+
+        part.DOLocalRotate(targetEulerAngles, _splitDuration)
             .SetEase(_ease)
             .OnComplete(() =>
             {
