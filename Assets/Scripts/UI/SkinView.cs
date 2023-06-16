@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SkinView : MonoBehaviour
@@ -12,16 +12,20 @@ public class SkinView : MonoBehaviour
     private Skin _skin;
     private float _currentScore;
 
-    public event UnityAction<Skin, SkinView> ChooseButtonClick;
+    public event Action<Skin, SkinView> ChooseButtonClick;
 
     private void OnEnable()
-    {
+    {     
         _choose.onClick.AddListener(OnChooseClick);
     }
 
     private void OnDisable()
     {
         _choose.onClick.RemoveListener(OnChooseClick);
+    }
+
+    public void UnsubscribeFromSkin()
+    {
         _skin.Activated -= OnSkinActivated;
         _skin.Deactivated -= OnSkinDeactivated;
     }

@@ -5,6 +5,7 @@ public class Store : MonoBehaviour
 {
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private StoreScreen _storeScreen;
+    [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private float _currentScore;
 
@@ -14,11 +15,13 @@ public class Store : MonoBehaviour
     {
         _scoreAllocator.ScoreChanged += OnScoreChanged;
         _storeScreen.SkinChoosed += OnSkinChoosed;
+        _gameStatusTracker.GameEnded += OnGameEnded;
     }
 
     private void OnDisable()
     {
         _storeScreen.SkinChoosed -= OnSkinChoosed;
+        _gameStatusTracker.GameEnded += OnGameEnded;
     }
 
     private void OnScoreChanged(Score score)
@@ -47,6 +50,11 @@ public class Store : MonoBehaviour
         }
 
         skin.TurnOnActivity();
+    }
+
+    private void OnGameEnded(GameResult gameResult)
+    {
+        _storeScreen.UnsubscribeFromSkinView();
     }
 
     private bool TrySellSkin(Skin skin)

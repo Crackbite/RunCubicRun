@@ -40,6 +40,15 @@ public class StoreScreen : Screen
         }
     }
 
+    public void UnsubscribeFromSkinView()
+    {
+        foreach (SkinView view in _skinViews)
+        {
+            view.ChooseButtonClick -= OnChooseButtonClick;
+            view.UnsubscribeFromSkin();
+        }
+    }
+
     private void AddSkinView(Skin skin, float currentScore)
     {
         SkinView view = Instantiate(_viewTemplate, _itemContainer.transform);
