@@ -40,7 +40,7 @@ public class ScoreAllocator : MonoBehaviour
     private void Start()
     {
         _currentGoodBlockScore = _goodBlockScore;
-        IncreaseScore(100, ScoreChangeInitiator.Cubic);
+        ChangeScore(100, ScoreChangeInitiator.Cubic);
     }
 
     private void OnDisable()
@@ -51,7 +51,7 @@ public class ScoreAllocator : MonoBehaviour
         _store.SkinBought -= OnSkinBought;
     }
 
-    private void IncreaseScore(float value, ScoreChangeInitiator initiator)
+    private void ChangeScore(float value, ScoreChangeInitiator initiator)
     {
         const float RoundingFactor = 10.0f;
 
@@ -62,25 +62,13 @@ public class ScoreAllocator : MonoBehaviour
         ScoreChanged?.Invoke(score);
     }
 
-    private void DicreaseScore(float value, ScoreChangeInitiator initiator)
-    {
-        const float RoundingFactor = 10.0f;
-
-        _totalScore -= Mathf.Round(value * RoundingFactor) / RoundingFactor;
-        _totalScore = Mathf.Max(_totalScore, _minScore);
-        var score = new Score(_totalScore, value, initiator);
-
-        ScoreChanged?.Invoke(score);
-    }
-
-
     private void OnBlockAdded(ColorBlock colorBlock)
     {
         _currentGoodBlockScore = _goodBlocksInRow >= _bonusGoodBlockThreshold ? _bonusGoodBlockScore : _goodBlockScore;
         _goodBlocksInRow++;
 
         float score = _currentGoodBlockScore * ScoreMultiplier;
-        IncreaseScore(score, ScoreChangeInitiator.Cubic);
+        ChangeScore(score, ScoreChangeInitiator.Cubic);
     }
 
     private void OnBlockRemoved(ColorBlock colorBlock)
@@ -101,7 +89,7 @@ public class ScoreAllocator : MonoBehaviour
             initiator = ScoreChangeInitiator.Cubic;
         }
 
-        IncreaseScore(score, initiator);
+        ChangeScore(score, initiator);
     }
 
     private void OnCubicSteppedOnStand(PressStand pressStand)
@@ -111,6 +99,6 @@ public class ScoreAllocator : MonoBehaviour
 
     private void OnSkinBought(float skinPrice)
     {
-        DicreaseScore(skinPrice, ScoreChangeInitiator.Store);
+        ChangeScore(-skinPrice, ScoreChangeInitiator.Store);
     }
 }
