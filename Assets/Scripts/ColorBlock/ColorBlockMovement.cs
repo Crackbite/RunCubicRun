@@ -28,11 +28,19 @@ public class ColorBlockMovement : MonoBehaviour
         {
             UpdateBlockPositionOnGround(ref currentPosition);
         }
-        else
+
+        transform.position = _stackCoordinator.Coordinate(currentPosition, _colorBlock.StackPosition);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isPlaced)
         {
-            UpdateBlockPositionInAir(ref currentPosition);
+            return;
         }
 
+        Vector3 currentPosition = transform.position;
+        UpdateBlockPositionInAir(ref currentPosition);
         transform.position = _stackCoordinator.Coordinate(currentPosition, _colorBlock.StackPosition);
     }
 

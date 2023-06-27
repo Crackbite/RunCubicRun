@@ -41,7 +41,18 @@ public class BlockStackCoordinator : MonoBehaviour
 
     public float GetYPositionInJump(ref float time, float lastPlacePositionY, int stackPosition)
     {
-        time += Time.deltaTime;
+        const float InitialTime = 0;
+
+        if (time == InitialTime)
+        {
+            time += Time.fixedDeltaTime;
+            GetYPositionInJump(ref time, lastPlacePositionY, stackPosition);
+        }
+        else
+        {
+            time += Time.fixedDeltaTime;
+        }
+
         float jumpForce = _cubic.JumpForce + (_gapSizeFactor * Mathf.Pow(stackPosition, 2f));
         float nextPositionY = (lastPlacePositionY + (jumpForce * time))
                               - (_cubic.JumpAcceleration * Mathf.Pow(time, 2f) / 2f);

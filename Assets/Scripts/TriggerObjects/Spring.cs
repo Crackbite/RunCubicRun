@@ -50,7 +50,7 @@ public class Spring : MonoBehaviour
 
         while (isGround == false)
         {
-            runningTime += Time.deltaTime;
+            runningTime += Time.fixedDeltaTime;
 
             Vector3 currentPosition = flyingObject.position;
             currentPosition.y = startPositionY
@@ -63,7 +63,7 @@ public class Spring : MonoBehaviour
             }
 
             flyingObject.transform.position = currentPosition;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 }

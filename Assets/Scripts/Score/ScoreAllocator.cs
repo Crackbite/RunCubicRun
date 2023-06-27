@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -18,7 +19,6 @@ public class ScoreAllocator : MonoBehaviour
     private float _goodBlocksInRow;
     private bool _isCubicUnderPress;
     private float _scoreMultiplier = 1f;
-    private float _totalScore;
 
     public event Action<Score> ScoreChanged;
 
@@ -27,6 +27,8 @@ public class ScoreAllocator : MonoBehaviour
         get => _scoreMultiplier;
         set => _scoreMultiplier = value < 1f ? 1f : value;
     }
+
+    public float TotalScore { get; private set; }
 
     private void OnEnable()
     {
@@ -51,13 +53,18 @@ public class ScoreAllocator : MonoBehaviour
         _store.SkinBought -= OnSkinBought;
     }
 
+    public override string ToString()
+    {
+        return TotalScore.ToString("# ##0", new CultureInfo("ru-RU")).Trim();
+    }
+
     private void ChangeScore(float value, ScoreChangeInitiator initiator)
     {
         const float RoundingFactor = 10.0f;
 
-        _totalScore += Mathf.Round(value * RoundingFactor) / RoundingFactor;
-        _totalScore = Mathf.Max(_totalScore, _minScore);
-        var score = new Score(_totalScore, value, initiator);
+        TotalScore += Mathf.Round(value * RoundingFactor) / RoundingFactor;
+        TotalScore = Mathf.Max(TotalScore, _minScore);
+        var score = new Score(TotalScore, value, initiator);
 
         ScoreChanged?.Invoke(score);
     }
