@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreAllocator : MonoBehaviour
 {

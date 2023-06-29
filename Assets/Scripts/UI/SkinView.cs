@@ -39,6 +39,12 @@ public class SkinView : MonoBehaviour
         Render();
     }
 
+    public void UpdateState(float currentScore)
+    {
+        _currentScore = currentScore;
+        Render();
+    }
+
     private void Render()
     {
         const float Tolerance = 0.0001f;

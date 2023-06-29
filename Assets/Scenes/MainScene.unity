@@ -652,7 +652,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292013254610440158, guid: 602ce858db5dded4f863b28a4c706b2b, type: 3}
       propertyPath: 
-      propertyPath: _chunksDebug
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -980,22 +979,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 384922422442018403, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _scoreAllocator
-      value: 
-      objectReference: {fileID: 1395986859}
-    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _windowAnimation
-      value: 
-      objectReference: {fileID: 275707984}
-    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _containerAnimation
-      value: 
-      objectReference: {fileID: 930469189}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _skins.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 11f44f5a4be94ed40b936e419b16e1e7, type: 2}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.data[1]
       value: 
@@ -1003,19 +994,27 @@ PrefabInstance:
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: b03df46547e32834db789c0dee6358ac, type: 2}
+      objectReference: {fileID: 11400000, guid: 7b63846cffbd06949b82b4224624d9a2, type: 2}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 2f84a85aa441c4c489be321f140c9ae1, type: 2}
+      objectReference: {fileID: 11400000, guid: ec03c4d5d1362ca40ac4df6f13a70a54, type: 2}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 7b63846cffbd06949b82b4224624d9a2, type: 2}
+      objectReference: {fileID: 11400000, guid: b03df46547e32834db789c0dee6358ac, type: 2}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skins.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: ec03c4d5d1362ca40ac4df6f13a70a54, type: 2}
+      objectReference: {fileID: 11400000, guid: a5e9600ebf852ad43af0d1793c03ee1f, type: 2}
+    - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _skins.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f84a85aa441c4c489be321f140c9ae1, type: 2}
+    - target: {fileID: 384922422442018403, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _scoreAllocator
+      value: 
+      objectReference: {fileID: 1395986859}
     - target: {fileID: 602586030034934222, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1656,6 +1655,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _windowAnimation
+      value: 
+      objectReference: {fileID: 275707984}
+    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _containerAnimation
+      value: 
+      objectReference: {fileID: 930469189}
     - target: {fileID: 6112402419359721503, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _scoreAllocator
       value: 
@@ -1920,10 +1927,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7381325183862270716, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _scoreAllocator
-      value: 
-      objectReference: {fileID: 1395986859}
     - target: {fileID: 6112402420382395106, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2144,6 +2147,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7381325183862270716, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _scoreAllocator
+      value: 
+      objectReference: {fileID: 1395986859}
     - target: {fileID: 7388399575987925499, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
