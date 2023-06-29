@@ -8,8 +8,11 @@ public class Store : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private float _currentScore;
+    private bool _isFilled;
 
     public event Action<float> SkinBought;
+
+    public float CurrentScore => _currentScore;
 
     private void OnEnable()
     {
@@ -21,14 +24,22 @@ public class Store : MonoBehaviour
     private void OnDisable()
     {
         _storeScreen.SkinChoosed -= OnSkinChoosed;
-        _gameStatusTracker.GameEnded += OnGameEnded;
+        _gameStatusTracker.GameEnded -= OnGameEnded;
+        _scoreAllocator.ScoreChanged -= OnScoreChanged;
     }
 
     private void OnScoreChanged(Score score)
     {
         _currentScore = score.Current;
-        _storeScreen.FillScrollView(_currentScore);
-        _scoreAllocator.ScoreChanged -= OnScoreChanged;
+
+        if (_isFilled == false)
+        {
+            _storeScreen.FillScrollView(_currentScore);
+            _isFilled = true;
+            return;
+        }
+
+        _storeScreen.UpdateScrolView(_currentScore);
     }
 
     private void OnSkinChoosed(Skin skin)

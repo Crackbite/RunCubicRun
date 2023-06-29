@@ -40,6 +40,14 @@ public class StoreScreen : Screen
         }
     }
 
+    public void UpdateScrolView(float currentScore)
+    {
+        foreach (SkinView view in _skinViews)
+        {
+            view.UpdateState(currentScore);
+        }
+    }
+
     public void UnsubscribeFromSkinView()
     {
         foreach (SkinView view in _skinViews)
