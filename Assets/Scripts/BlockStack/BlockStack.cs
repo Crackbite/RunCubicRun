@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(BlockStackAddAnimator), typeof(BlockStackDestroyAnimator))]
 public class BlockStack : MonoBehaviour
@@ -36,7 +35,7 @@ public class BlockStack : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(_cubic.transform.position.y < _groundPositionY && _cubic.IsSawing)
+        if (_cubic.transform.position.y < _groundPositionY && _cubic.IsSawing)
         {
             return;
         }
@@ -119,7 +118,12 @@ public class BlockStack : MonoBehaviour
         }
 
         _blocks.Remove(colorBlock);
-        BlockRemoved?.Invoke(colorBlock);
+
+        if (colorBlock.BlockPhysics.IsKnockedByCrossbar == false)
+        {
+            BlockRemoved?.Invoke(colorBlock);
+        }
+
 
         if (_blocks.Count < 1)
         {

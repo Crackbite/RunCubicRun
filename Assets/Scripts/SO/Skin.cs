@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSkin", menuName = "Skin", order = 51)]
 public class Skin : ScriptableObject
 {
+    [SerializeField] private string _id;
     [SerializeField] private int _price;
     [SerializeField] private Sprite _icon;
     [SerializeField] private Mesh _halfSkinMesh;
@@ -12,13 +13,10 @@ public class Skin : ScriptableObject
     [SerializeField] private bool _isActive;
     [SerializeField] private bool _isBought;
 
-    private const string ActiveKey = nameof(ActiveKey);
-    private const string BoughtKey = nameof(BoughtKey);
+    public event Action<Skin> ActivityChanged;
+    public event Action<Skin> Bought;
 
-    public event Action<Skin> Activated;
-    public event Action Deactivated;
-    public event Action Bought;
-
+    public string ID => _id;
     public float Price => _price;
     public Sprite Icon => _icon;
     public bool IsActive => _isActive;
@@ -29,18 +27,18 @@ public class Skin : ScriptableObject
     public void Buy()
     {
         _isBought = true;
-        Bought?.Invoke();
+        Bought?.Invoke(this);
     }
 
     public void TurnOnActivity()
     {
         _isActive = true;
-        Activated?.Invoke(this);
+        ActivityChanged?.Invoke(this);
     }
 
     public void TurnOffActivity()
     {
         _isActive = false;
-        Deactivated?.Invoke();
+        ActivityChanged?.Invoke(this);
     }
 }

@@ -3,29 +3,24 @@ using UnityEngine;
 
 public class SkinSetter : MonoBehaviour
 {
-    [SerializeField] private List<Skin> _skins;
     [SerializeField] private List<MeshRenderer> _cubicPartRenderers;
     [SerializeField] private List<MeshFilter> _cubicPartMeshFilters;
+    [SerializeField] private GameDataHandler _gameDataHandler;
 
 
     private void OnEnable()
     {
-        foreach (Skin skin in _skins)
+        foreach (Skin skin in _gameDataHandler.Skins)
         {
-            if (skin.IsActive)
-            {
-                Set(skin);
-            }
-
-            skin.Activated += OnSkinActivated;
+            skin.ActivityChanged += OnSkinActivityChanged;
         }
     }
 
     private void OnDisable()
     {
-        foreach (Skin skin in _skins)
+        foreach (Skin skin in _gameDataHandler.Skins)
         {
-            skin.Activated -= OnSkinActivated;
+            skin.ActivityChanged -= OnSkinActivityChanged;
         }
     }
 
@@ -50,8 +45,11 @@ public class SkinSetter : MonoBehaviour
         }
     }
 
-    private void OnSkinActivated(Skin skin)
+    private void OnSkinActivityChanged(Skin skin)
     {
-        Set(skin);
+        if (skin.IsActive)
+        {
+            Set(skin);
+        }
     }
 }

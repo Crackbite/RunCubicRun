@@ -38,12 +38,11 @@ public class BlockStackPhysics : MonoBehaviour
     public void OnCrossbarHit(int stackPosition)
     {
         const float ForceFactor = 0.2f;
-
         int brokenBlocksCount = _blockStack.Blocks.Count - stackPosition;
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor * (_currentspeed / MoveSpeed));
+            _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor * (_currentspeed / MoveSpeed), true, true);
             _blockStack.AnimateDestroy(_blockStack.Blocks[0], _blockDestroyDelay);
             _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
         }

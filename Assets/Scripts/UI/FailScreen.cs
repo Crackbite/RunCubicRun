@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class FailScreen : Screen
 {
     [SerializeField] private Button _home;
     [SerializeField] private Button _restart;
+    [SerializeField] private TMP_Text _level;
+    [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private float _maxWindowDelay = 1.5f;
     [SerializeField] private DOTweenAnimation _windowAnimation;
     [SerializeField] private DOTweenAnimation _containerAnimation;
@@ -15,6 +18,11 @@ public class FailScreen : Screen
     {
         _home.onClick.AddListener(OnHomeClicked);
         _restart.onClick.AddListener(OnRestartClicked);
+    }
+
+    private void Start()
+    {
+        _level.text += _gameDataHandler.Level.ToString();
     }
 
     private void OnDisable()
