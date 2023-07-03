@@ -13,6 +13,8 @@ public class ChunkGenerator : MonoBehaviour
     [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
     [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
     [SerializeField] private bool _debugLog;
+    [SerializeField] private GameDataHandler _gameDataHandler;
+
 
     public event Action Completed;
 
@@ -25,7 +27,7 @@ public class ChunkGenerator : MonoBehaviour
         else
         {
             var chunkComposer = new ChunkComposer(_availableChunks);
-            List<Chunk> chunks = chunkComposer.GetSuitableChunks(18, _chunksToGenerate);
+            List<Chunk> chunks = chunkComposer.GetSuitableChunks(_gameDataHandler.Level, _chunksToGenerate);
 
             GenerateLevel(chunks);
         }

@@ -5,19 +5,22 @@ using UnityEngine;
 public class ScoreAllocator : MonoBehaviour
 {
     [SerializeField] private float _minScore;
-    [Range(.5f, 10f)] [SerializeField] private float _goodBlockScore = 1f;
-    [Range(-.5f, -10f)] [SerializeField] private float _badBlockScore = -2f;
-    [Range(2, 100)] [SerializeField] private int _bonusGoodBlockThreshold = 10;
-    [Range(1f, 20f)] [SerializeField] private float _bonusGoodBlockScore = 1.5f;
+    [Range(.5f, 10f)][SerializeField] private float _goodBlockScore = 1f;
+    [Range(-.5f, -10f)][SerializeField] private float _badBlockScore = -2f;
+    [Range(2, 100)][SerializeField] private int _bonusGoodBlockThreshold = 10;
+    [Range(1f, 20f)][SerializeField] private float _bonusGoodBlockScore = 1.5f;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
     [SerializeField] private Store _store;
+    [SerializeField] private GameDataHandler _gameDataHandler;
 
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
     private bool _isCubicUnderPress;
     private float _scoreMultiplier = 1f;
+    private float _levelScore;
+    private float _totalScore;
 
     public event Action<Score> ScoreChanged;
 
@@ -27,7 +30,8 @@ public class ScoreAllocator : MonoBehaviour
         set => _scoreMultiplier = value < 1f ? 1f : value;
     }
 
-    public float TotalScore { get; private set; }
+    public float TotalScore => _totalScore;
+    public float LevelScore => _levelScore;
 
     private void OnEnable()
     {
@@ -41,7 +45,7 @@ public class ScoreAllocator : MonoBehaviour
     private void Start()
     {
         _currentGoodBlockScore = _goodBlockScore;
-        ChangeScore(100, ScoreChangeInitiator.Cubic);
+        ChangeScore(ref _totalScore, _gameDataHandler.Score, ScoreChangeInitiator.DataHandler);
     }
 
     private void OnDisable()
@@ -52,18 +56,18 @@ public class ScoreAllocator : MonoBehaviour
         _store.SkinBought -= OnSkinBought;
     }
 
-    public override string ToString()
+    public string ToString(float score)
     {
-        return TotalScore.ToString("# ##0", new CultureInfo("ru-RU")).Trim();
+        return score.ToString("# ##0", new CultureInfo("ru-RU")).Trim();
     }
 
-    private void ChangeScore(float value, ScoreChangeInitiator initiator)
+    private void ChangeScore(ref float scoreType, float value, ScoreChangeInitiator initiator)
     {
         const float RoundingFactor = 10.0f;
 
-        TotalScore += Mathf.Round(value * RoundingFactor) / RoundingFactor;
-        TotalScore = Mathf.Max(TotalScore, _minScore);
-        var score = new Score(TotalScore, value, initiator);
+        scoreType += Mathf.Round(value * RoundingFactor) / RoundingFactor;
+        scoreType = Mathf.Max(scoreType, _minScore);
+        var score = new Score(scoreType, value, initiator);
 
         ScoreChanged?.Invoke(score);
     }
@@ -74,7 +78,7 @@ public class ScoreAllocator : MonoBehaviour
         _goodBlocksInRow++;
 
         float score = _currentGoodBlockScore * ScoreMultiplier;
-        ChangeScore(score, ScoreChangeInitiator.Cubic);
+        ChangeScore(ref _levelScore, score, ScoreChangeInitiator.Cubic);
     }
 
     private void OnBlockRemoved(ColorBlock colorBlock)
@@ -95,7 +99,7 @@ public class ScoreAllocator : MonoBehaviour
             initiator = ScoreChangeInitiator.Cubic;
         }
 
-        ChangeScore(score, initiator);
+        ChangeScore(ref _levelScore, score, initiator);
     }
 
     private void OnCubicSteppedOnStand(PressStand pressStand)
@@ -105,6 +109,6 @@ public class ScoreAllocator : MonoBehaviour
 
     private void OnSkinBought(float skinPrice)
     {
-        ChangeScore(-skinPrice, ScoreChangeInitiator.Store);
+        ChangeScore(ref _totalScore, -skinPrice, ScoreChangeInitiator.Store);
     }
 }
