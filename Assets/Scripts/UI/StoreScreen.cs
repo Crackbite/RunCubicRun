@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StoreScreen : Screen
 {
-    [SerializeField] private List<Skin> _skins;
+    [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private SkinView _viewTemplate;
     [SerializeField] private GameObject _itemContainer;
     [SerializeField] private Button _close;
@@ -14,8 +14,6 @@ public class StoreScreen : Screen
 
     public event Action<Skin> SkinChoosed;
     public event Action CloseClicked;
-
-    public IReadOnlyList<Skin> Skins => _skins;
 
     private void OnEnable()
     {
@@ -34,9 +32,11 @@ public class StoreScreen : Screen
 
     public void FillScrollView(float currentScore)
     {
-        for (int i = 0; i < _skins.Count; i++)
+        IReadOnlyList<Skin> skins = _gameDataHandler.Skins;
+
+        for (int i = 0; i < skins.Count; i++)
         {
-            AddSkinView(_skins[i], currentScore);
+            AddSkinView(skins[i], currentScore);
         }
     }
 

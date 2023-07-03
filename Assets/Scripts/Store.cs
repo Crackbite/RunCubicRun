@@ -6,13 +6,12 @@ public class Store : MonoBehaviour
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private GameDataHandler _gameDataHandler;
 
     private float _currentScore;
     private bool _isFilled;
 
     public event Action<float> SkinBought;
-
-    public float CurrentScore => _currentScore;
 
     private void OnEnable()
     {
@@ -52,7 +51,7 @@ public class Store : MonoBehaviour
             }
         }
 
-        foreach (Skin otherSkin in _storeScreen.Skins)
+        foreach (Skin otherSkin in _gameDataHandler.Skins)
         {
             if (otherSkin.IsActive)
             {

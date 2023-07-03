@@ -15,7 +15,7 @@ public class SkinView : MonoBehaviour
     public event Action<Skin, SkinView> ChooseButtonClick;
 
     private void OnEnable()
-    {     
+    {
         _choose.onClick.AddListener(OnChooseClick);
     }
 
@@ -26,16 +26,14 @@ public class SkinView : MonoBehaviour
 
     public void UnsubscribeFromSkin()
     {
-        _skin.Activated -= OnSkinActivated;
-        _skin.Deactivated -= OnSkinDeactivated;
+        _skin.ActivityChanged -= OnSkinActivityChanged;
     }
 
     public void Init(Skin skin, float score)
     {
         _currentScore = score;
         _skin = skin;
-        _skin.Activated += OnSkinActivated;
-        _skin.Deactivated += OnSkinDeactivated;
+        _skin.ActivityChanged += OnSkinActivityChanged;
         Render();
     }
 
@@ -89,12 +87,7 @@ public class SkinView : MonoBehaviour
         }
     }
 
-    private void OnSkinActivated(Skin skin)
-    {
-        Render();
-    }
-
-    private void OnSkinDeactivated()
+    private void OnSkinActivityChanged(Skin skin)
     {
         Render();
     }
