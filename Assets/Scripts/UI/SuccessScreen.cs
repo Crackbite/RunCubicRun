@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,11 +7,18 @@ public class SuccessScreen : Screen
 {
     [SerializeField] private Button _next;
     [SerializeField] private Button _restart;
+    [SerializeField] private TMP_Text _level;
+    [SerializeField] private GameDataHandler _gameDataHandler;
 
     private void OnEnable()
     {
         _next.onClick.AddListener(OnNextClicked);
         _restart.onClick.AddListener(OnRestartClicked);
+    }
+
+    private void Start()
+    {
+        _level.text += (_gameDataHandler.Level - 1).ToString();
     }
 
     private void OnDisable()
