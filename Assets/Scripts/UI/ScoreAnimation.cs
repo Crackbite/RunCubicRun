@@ -15,26 +15,27 @@ public class ScoreAnimation : MonoBehaviour
     private void Start()
     {
         List<Tween> tweens = _containerAnimation.GetTweens();
-        
+
         if (tweens.Count < 1)
         {
-            _score.text = _fromZero ? _scoreAllocator.ToString() : "0";
+            _score.text = _fromZero ? _scoreAllocator.ToString(_scoreAllocator.TotalScore) : "0";
             return;
         }
 
         tweens[0].OnComplete(OnContainerShow);
-        _score.text = _fromZero ? "0" : _scoreAllocator.ToString();
+        _score.text = _fromZero ? _scoreAllocator.ToString(_scoreAllocator.TotalScore)
+            : _scoreAllocator.ToString(_scoreAllocator.LevelScore);
     }
 
     private void OnContainerShow()
     {
-        int fromValue = (int)_scoreAllocator.TotalScore;
+        int fromValue = (int)_scoreAllocator.LevelScore;
         int endValue = 0;
 
         if (_fromZero)
         {
-            fromValue = 0;
-            endValue = (int)_scoreAllocator.TotalScore;
+            fromValue = (int)_scoreAllocator.TotalScore;
+            endValue = (int)_scoreAllocator.TotalScore + (int)_scoreAllocator.LevelScore;
         }
 
         _score.DOCounter(fromValue, endValue, _scoreSpeed, true, new CultureInfo("ru-RU"));
