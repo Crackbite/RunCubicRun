@@ -10,6 +10,8 @@ public class ColorBlockPhysics : MonoBehaviour
 
     public event Action<int> CrossbarHit;
 
+    public bool IsKnockedByCrossbar { get; private set; }
+
     private void Awake()
     {
         _colorBlock = GetComponent<ColorBlock>();
@@ -26,7 +28,7 @@ public class ColorBlockPhysics : MonoBehaviour
         }
     }
 
-    public void FallOff(Vector3 pushForce, float forceFactor, bool removeParent = true)
+    public void FallOff(Vector3 pushForce, float forceFactor, bool removeParent = true, bool isKnockedByCrossbar = false)
     {
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(_colorBlock.StackPosition * forceFactor * pushForce);
@@ -34,6 +36,11 @@ public class ColorBlockPhysics : MonoBehaviour
         if (removeParent)
         {
             transform.parent = null;
+        }
+
+        if (isKnockedByCrossbar)
+        {
+            IsKnockedByCrossbar = true;
         }
 
         _colorBlock.StopFollow();
