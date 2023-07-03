@@ -62,7 +62,6 @@ public class GameDataHandler : MonoBehaviour
 
         if (_isActiveSkinChoosed == false)
         {
-            Debug.Log("Not Active");
             _skins[0].Buy();
             _skins[0].TurnOnActivity();
         }
@@ -123,7 +122,6 @@ public class GameDataHandler : MonoBehaviour
 
     private void OnSkinBought(Skin skin)
     {
-        Debug.Log("SetBought");
         PlayerPrefs.SetInt(skin.ID + BoughtKey, Convert.ToInt32(true));
     }
 
