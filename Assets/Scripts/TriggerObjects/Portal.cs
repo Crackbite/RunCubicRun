@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _effect;
+    [SerializeField] private List<ParticleSystem> _effects;
     [SerializeField] private float _alphaValue = .4f;
 
     private Color _initialColor;
@@ -36,9 +37,14 @@ public class Portal : MonoBehaviour
         }
 
         Color = color;
-        ParticleSystem.MainModule main = _effect.main;
-        color.a = _alphaValue;
-        main.startColor = color;
+
+        foreach (ParticleSystem effect in _effects)
+        {
+            ParticleSystem.MainModule main = effect.main;
+            color.a = _alphaValue;
+            main.startColor = color;
+        }
+
         IsColored = true;
     }
 
