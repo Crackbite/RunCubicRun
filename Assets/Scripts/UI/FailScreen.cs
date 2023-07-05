@@ -18,17 +18,14 @@ public class FailScreen : Screen
     {
         _home.onClick.AddListener(OnHomeClicked);
         _restart.onClick.AddListener(OnRestartClicked);
-    }
-
-    private void Start()
-    {
-        _level.text += _gameDataHandler.Level.ToString();
+        _gameDataHandler.DataRestored += OnDataRestored;
     }
 
     private void OnDisable()
     {
         _home.onClick.RemoveListener(OnHomeClicked);
         _restart.onClick.RemoveListener(OnRestartClicked);
+        _gameDataHandler.DataRestored -= OnDataRestored;
     }
 
     public void Enter(GameResult gameResult)
@@ -53,6 +50,11 @@ public class FailScreen : Screen
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    private void OnDataRestored()
+    {
+        _level.text += _gameDataHandler.Level.ToString();
     }
 
     private void OnHomeClicked()
