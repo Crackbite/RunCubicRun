@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spring : MonoBehaviour
 {
     [SerializeField] private Abyss _abyss;
+    [SerializeField] private ParticleSystem _landingEffect;
 
     private readonly int _tossHash = Animator.StringToHash("Toss");
 
@@ -59,6 +60,8 @@ public class Spring : MonoBehaviour
             if (currentPosition.y < startPositionY)
             {
                 currentPosition.y = startPositionY;
+                _landingEffect.transform.position = new Vector3(currentPosition.x, _landingEffect.transform.position.y, currentPosition.z);
+                _landingEffect.Play(); 
                 isGround = true;
             }
 
