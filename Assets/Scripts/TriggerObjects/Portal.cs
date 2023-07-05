@@ -5,6 +5,7 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] private List<ParticleSystem> _effects;
+    [SerializeField] private ParticleSystem _passageEffect;
     [SerializeField] private float _alphaValue = .4f;
 
     private Color _initialColor;
@@ -26,6 +27,7 @@ public class Portal : MonoBehaviour
         if (collision.TryGetComponent(out Cubic _))
         {
             CubicEntered?.Invoke(this);
+            _passageEffect.Play();
         }
     }
 
