@@ -39,13 +39,12 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockAdded += OnBlockAdded;
         _blockStack.BlockRemoved += OnBlockRemoved;
         _store.SkinBought += OnSkinBought;
+        _gameDataHandler.DataRestored += OnDataRestored;
     }
-
 
     private void Start()
     {
         _currentGoodBlockScore = _goodBlockScore;
-        ChangeScore(ref _totalScore, _gameDataHandler.Score, ScoreChangeInitiator.DataHandler);
     }
 
     private void OnDisable()
@@ -54,6 +53,8 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockAdded -= OnBlockAdded;
         _blockStack.BlockRemoved -= OnBlockRemoved;
         _store.SkinBought -= OnSkinBought;
+        _gameDataHandler.DataRestored -= OnDataRestored;
+
     }
 
     public string ToString(float score)
@@ -70,6 +71,11 @@ public class ScoreAllocator : MonoBehaviour
         var score = new Score(scoreType, value, initiator);
 
         ScoreChanged?.Invoke(score);
+    }
+
+    private void OnDataRestored()
+    {
+        ChangeScore(ref _totalScore, _gameDataHandler.Score, ScoreChangeInitiator.DataHandler);
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)
