@@ -14,23 +14,25 @@ public class SuccessScreen : Screen
     {
         _next.onClick.AddListener(OnNextClicked);
         _restart.onClick.AddListener(OnRestartClicked);
-    }
-
-    private void Start()
-    {
-        _level.text += (_gameDataHandler.Level - 1).ToString();
+        _gameDataHandler.DataRestored += OnDataRestored;
     }
 
     private void OnDisable()
     {
         _next.onClick.RemoveListener(OnNextClicked);
         _restart.onClick.RemoveListener(OnRestartClicked);
+        _gameDataHandler.DataRestored -= OnDataRestored;
     }
 
     private void LoadScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    private void OnDataRestored()
+    {
+        _level.text += (_gameDataHandler.Level - 1).ToString();
     }
 
     private void OnNextClicked()

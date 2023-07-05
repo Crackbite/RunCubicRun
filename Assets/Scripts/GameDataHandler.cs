@@ -17,6 +17,8 @@ public class GameDataHandler : MonoBehaviour
     private int _level = 1;
     private bool _isActiveSkinChoosed;
 
+    public event Action DataRestored;
+
     public float Score => _score;
     public int Level => _level;
     public IReadOnlyList<Skin> Skins => _skins;
@@ -34,7 +36,7 @@ public class GameDataHandler : MonoBehaviour
         _gameStatusTracker.GameEnded += OnGameEnded;
     }
 
-    private void Awake()
+    private void Start()
     {
         _score = TryRestoreData(ScoreKey, _score);
         _level = TryRestoreData(LevelKey, _level);
@@ -65,6 +67,8 @@ public class GameDataHandler : MonoBehaviour
             _skins[0].Buy();
             _skins[0].TurnOnActivity();
         }
+
+        DataRestored?.Invoke();
     }
 
     private void OnDisable()
