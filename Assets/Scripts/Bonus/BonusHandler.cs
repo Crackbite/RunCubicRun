@@ -57,6 +57,9 @@ public class BonusHandler : MonoBehaviour
 
     private void OnCubicBonusReceived(Bonus receivedBonus)
     {
+        ParticleSystem pickupEffect = receivedBonus.Info.PickupEffect;
+        Instantiate(pickupEffect, receivedBonus.transform.position, Quaternion.Euler(-90f, 30f, 0f));
+        pickupEffect.Play();
         RemoveBonusFromScene(receivedBonus);
 
         if (_activeBonuses.TryGetValue(receivedBonus.Info, out BonusItem bonusItem))

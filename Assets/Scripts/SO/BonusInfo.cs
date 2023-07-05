@@ -7,9 +7,12 @@ public class BonusInfo : ScriptableObject
     [SerializeField] private string _description;
     [SerializeField] private float _duration;
     [SerializeField] private bool _isPositive;
-    
+    [SerializeField] protected ParticleSystem _pickupEffect;
+
+
     public string Description => _description;
     public float Duration => _duration;
     public Sprite Icon => _icon;
     public bool IsPositive => _isPositive;
+    public ParticleSystem PickupEffect => _pickupEffect;
 }
