@@ -8,17 +8,16 @@ public class Trap : MonoBehaviour
     [SerializeField] private TrapType _type;
     [SerializeField] private List<GameObject> _splitBodys;
     [SerializeField] private List<GameObject> _wholeBodys;
+    [SerializeField] protected ParticleSystem HitEffect;
     [SerializeField] protected Animator Animator;
     [SerializeField] protected float MinSpeed = .6f;
     [SerializeField] protected float MaxSpeed = 1.2f;
 
-    protected readonly int SpeedHash = Animator.StringToHash("Speed");
-
-    protected Collider Collider;
-
     private bool _isCubicCollided;
-
     private List<Rigidbody> _piecesRigidbody = new List<Rigidbody>();
+
+    protected readonly int SpeedHash = Animator.StringToHash("Speed");
+    protected Collider Collider;
 
     public bool IsSideCollision { get; private set; }
     public TrapType Type => _type;
@@ -63,7 +62,7 @@ public class Trap : MonoBehaviour
             float trapHeight = Collider.bounds.max.y;
             cubic.HitTrap(this, contactPoint, trapHeight);
 
-            CompleteCollision();
+            CompleteCollision(contactPoint);
         }
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
         {
@@ -81,13 +80,15 @@ public class Trap : MonoBehaviour
         }
     }
 
-    protected virtual void CompleteCollision()
+    protected virtual void CompleteCollision(Vector3 contactPoint)
     {
         if (this is Saw)
         {
             return;
         }
 
+        Instantiate(HitEffect, contactPoint, Quaternion.identity);
+        HitEffect.Play();
         Stop();
         Collider.isTrigger = false;
     }

@@ -1,11 +1,15 @@
-﻿public class VerticalSaw : Saw
+﻿using UnityEngine;
+
+public class VerticalSaw : Saw
 {
     private const int MinPatrolSpeed = 0;
 
-    protected override void CompleteCollision()
+    protected override void CompleteCollision(Vector3 contactPoint)
     {
         if (IsSideCollision)
         {
+            Instantiate(HitEffect, contactPoint, Quaternion.identity);
+            HitEffect.Play();
             Stop();
         }
         else if (Type == TrapType.PatrolSaw)
