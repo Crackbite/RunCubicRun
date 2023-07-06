@@ -4,18 +4,22 @@ namespace SciFiArsenal
 {
     public class ParticlesRotator : MonoBehaviour
     {
-        [Header("Rotate axises by degrees per second")]
-        public Vector3 rotateVector = Vector3.zero;
- 
-        public enum spaceEnum { Local, World };
-        public spaceEnum rotateSpace;
- 
-        void Update()
+        [SerializeField] private Vector3 _rotateVector = Vector3.zero;
+
+        private SpaceEnum _rotateSpace;
+
+        private enum SpaceEnum { Local, World };
+
+        private void Update()
         {
-            if (rotateSpace == spaceEnum.Local)
-                transform.Rotate(rotateVector * Time.deltaTime);
-            if (rotateSpace == spaceEnum.World)
-                transform.Rotate(rotateVector * Time.deltaTime, Space.World);
+            if (_rotateSpace == SpaceEnum.Local)
+            {
+                transform.Rotate(_rotateVector * Time.deltaTime);
+            }
+            if (_rotateSpace == SpaceEnum.World)
+            {
+                transform.Rotate(_rotateVector * Time.deltaTime, Space.World);
+            }
         }
     }
 }

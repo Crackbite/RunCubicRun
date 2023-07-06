@@ -3,6 +3,7 @@ using UnityEngine;
 public class Exploder : Bonus
 {
     [SerializeField] private BlockStack _blockStack;
+    [SerializeField] private ParticleSystem _explosionEffect;
     [SerializeField] private int _blocksPercentage = 50;
     [SerializeField] private float _initialForce = .3f;
     [SerializeField] private float _additionalForce = .1f;
@@ -25,6 +26,8 @@ public class Exploder : Bonus
         }
 
         int brokenBlocksCount = (int)(_blockStack.Blocks.Count * (_blocksPercentage / 100f));
+        Vector3 explosionPosition = _blockStack.Blocks[brokenBlocksCount - 1].transform.position;
+        Instantiate(_explosionEffect, explosionPosition, Quaternion.identity);
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {

@@ -2,7 +2,7 @@
 
 namespace AllIn1VfxToolkit
 {
-    public class All1VfxRandomTimeSeed : MonoBehaviour
+    public class RandomTimeSeeder : MonoBehaviour
     {
         [SerializeField] private float minSeedValue = 0;
         [SerializeField] private float maxSeedValue = 100f;
