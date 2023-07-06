@@ -8,7 +8,7 @@ public class VerticalSaw : Saw
     {
         if (IsSideCollision)
         {
-            Instantiate(HitEffect, contactPoint, Quaternion.identity);
+            HitEffect.transform.position = contactPoint;
             HitEffect.Play();
             Stop();
         }

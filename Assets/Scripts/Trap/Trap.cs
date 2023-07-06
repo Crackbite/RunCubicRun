@@ -8,6 +8,7 @@ public class Trap : MonoBehaviour
     [SerializeField] private TrapType _type;
     [SerializeField] private List<GameObject> _splitBodys;
     [SerializeField] private List<GameObject> _wholeBodys;
+    [SerializeField] private List<ParticleSystem> _crushEffects;
     [SerializeField] protected ParticleSystem HitEffect;
     [SerializeField] protected Animator Animator;
     [SerializeField] protected float MinSpeed = .6f;
@@ -46,6 +47,8 @@ public class Trap : MonoBehaviour
         if (collision.TryGetComponent(out Cubic cubic))
         {
             _isCubicCollided = true;
+            Vector3 cubicPosition = cubic.transform.position;
+            Vector3 contactPoint = Collider.ClosestPoint(cubicPosition);
 
             if (cubic.CanDestroy)
             {
@@ -53,15 +56,11 @@ public class Trap : MonoBehaviour
                 return;
             }
 
-            Vector3 cubicPosition = cubic.transform.position;
-            Vector3 contactPoint = Collider.ClosestPoint(cubicPosition);
-
             IsSideCollision = Mathf.Abs(cubicPosition.z - contactPoint.z) > Threshold ||
                 transform.position.x < cubicPosition.x;
 
             float trapHeight = Collider.bounds.max.y;
             cubic.HitTrap(this, contactPoint, trapHeight);
-
             CompleteCollision(contactPoint);
         }
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
@@ -87,7 +86,7 @@ public class Trap : MonoBehaviour
             return;
         }
 
-        Instantiate(HitEffect, contactPoint, Quaternion.identity);
+        HitEffect.transform.position = contactPoint;
         HitEffect.Play();
         Stop();
         Collider.isTrigger = false;
@@ -124,6 +123,11 @@ public class Trap : MonoBehaviour
         Stop();
         SwitchActivity(_wholeBodys, false);
         SwitchActivity(_splitBodys, true);
+
+        foreach (ParticleSystem crushEffect in _crushEffects)
+        {
+            crushEffect.Play();
+        }
 
         foreach (Rigidbody piece in _piecesRigidbody)
         {
