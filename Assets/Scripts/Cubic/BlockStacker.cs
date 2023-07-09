@@ -7,6 +7,7 @@ public class BlockStacker : MonoBehaviour
     [SerializeField] private Cubic _cubic;
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private BlockStack _blockStack;
+    [SerializeField] private ParticleSystem _pickUpEffect;
 
     private bool _isCubicHit;
     private float _stackYPosition;
@@ -55,11 +56,19 @@ public class BlockStacker : MonoBehaviour
         blockTransform.SetParent(containerTransform);
 
         _blockStack.Add(colorBlock);
+        PlayPickupEffect(colorBlock.BlockRenderer.CurrentColor);
     }
 
     private void OnDisable()
     {
         _cubic.Hit -= OnCubicHit;
+    }
+
+    private void PlayPickupEffect(Color blockColor)
+    {
+        ParticleSystem.MainModule main = _pickUpEffect.main;
+        main.startColor = blockColor;
+        _pickUpEffect.Play();
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
