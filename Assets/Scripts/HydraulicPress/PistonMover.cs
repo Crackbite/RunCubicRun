@@ -5,6 +5,7 @@ using UnityEngine;
 public class PistonMover : MonoBehaviour
 {
     [SerializeField] private PressStand _pressStand;
+    [SerializeField] private ParticleSystem _afterCrushEffect;
 
     private float _crushedCubicSizeY;
     private bool _isCubicReached;
@@ -83,6 +84,8 @@ public class PistonMover : MonoBehaviour
     private void CrushCubic()
     {
         _cubic.FlattenOut(_pressStand.Bounds.max.y);
+        _afterCrushEffect.transform.position = _cubic.transform.position;
+        _afterCrushEffect.Play();
     }
 
     private void PistonPresserOnCubicReached(Cubic cubic)
