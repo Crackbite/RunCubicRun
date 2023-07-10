@@ -6,11 +6,7 @@ public class HorizontalSaw : Saw
     [SerializeField] private bool _canRandomizeSpeed;
     [SerializeField] private SawSide _sawSide;
 
-    private enum SawSide
-    {
-        Left,
-        Right
-    }
+    public SawSide Side => _sawSide;
 
     protected override void SetSpeed()
     {
@@ -38,4 +34,10 @@ public class HorizontalSaw : Saw
 
         return transform.position.z > CenterPositionZ ? RightRotationValue : LeftRotationValue;
     }
+}
+
+public enum SawSide
+{
+    Left,
+    Right
 }

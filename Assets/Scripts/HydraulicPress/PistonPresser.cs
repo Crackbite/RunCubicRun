@@ -10,6 +10,7 @@ public class PistonPresser : MonoBehaviour
     [SerializeField] private float _cubicPressDelay = 1f;
     [SerializeField] private Vector3 _cubicShakeStrength = new Vector3(.02f, 0f, .02f);
     [SerializeField] private CubicMovement _cubicMovement;
+    [SerializeField] private ParticleSystem _hitEffect;
 
     private BlockDestroyer _blockDestroyer;
     private bool _isCubicCollisionDisabled;
@@ -47,6 +48,8 @@ public class PistonPresser : MonoBehaviour
         {
             if (_pistonMover.IsWorking == false)
             {
+                _hitEffect.transform.position = collision.ClosestPoint(transform.position);
+                _hitEffect.Play();
                 StartCoroutine(PressAndDestroy(colorBlock));
             }
             else

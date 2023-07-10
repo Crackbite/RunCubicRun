@@ -5,6 +5,7 @@ public class BlockDestroyer : MonoBehaviour
 {
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private int _minBlocksToLeave = 8;
+    [SerializeField] private ParticleSystem _destructionEffect;
 
     public event Action LeavePressAllowed;
 
@@ -16,5 +17,7 @@ public class BlockDestroyer : MonoBehaviour
         }
 
         _blockStack.Destroy(colorBlock);
+        _destructionEffect.transform.position = colorBlock.transform.position;
+        _destructionEffect.Play();
     }
 }

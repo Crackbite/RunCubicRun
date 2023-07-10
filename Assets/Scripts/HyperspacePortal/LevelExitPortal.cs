@@ -19,6 +19,7 @@ public class LevelExitPortal : HyperspacePortal
 
     public event Action SuckedIn;
     public event Action SuckingIn;
+    public event Action Shaked;
 
     private void OnEnable()
     {
@@ -71,7 +72,8 @@ public class LevelExitPortal : HyperspacePortal
             _dragDuration,
             strength: _strength,
             vibrato: _vibration,
-            randomness: _randomness).SetEase(Ease.Linear);
+            randomness: _randomness).SetEase(Ease.Linear)
+            .OnComplete(() => { Shaked?.Invoke(); });
         Tween flight = CubicTransform.DOMove(Center.position, FlightDuration).SetEase(Ease.Linear);
         Tween scaling = CubicTransform.DOScale(TargetScale, FlightDuration).SetEase(Ease.Linear);
         Tween rotation = CubicTransform.DORotate(

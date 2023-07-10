@@ -19,6 +19,7 @@ public class Cubic : MonoBehaviour
 
     public event Action<Bonus> BonusReceived;
     public event Action<Vector3, float> Hit;
+    public event Action SawingStarted;
     public event Action<PressStand> SteppedOnStand;
 
     public Bounds Bounds => _meshRenderers[0].bounds;
@@ -123,11 +124,12 @@ public class Cubic : MonoBehaviour
 
     private bool IsStartSawing()
     {
-        if (CollisionSaw is VerticalSaw)
+        if (CollisionSaw is not HorizontalSaw && CollisionSaw.IsSideCollision)
         {
-            return CollisionSaw.IsSideCollision == false;
+            return false;
         }
 
+        SawingStarted?.Invoke();
         return true;
     }
 }
