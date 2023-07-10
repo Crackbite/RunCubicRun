@@ -34,6 +34,8 @@ public class Confetti : MonoBehaviour
     {
         const int AmountPerBurst = 2;
 
+        yield return _waitForSeconds;
+
         while (_particles.Count > 0)
         {
             for (int i = 0; i < AmountPerBurst; i++)
