@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public abstract class Saw : Trap
 {
     private bool _canSplit = true;
+
+    public event Action CameOut;
 
     private void OnTriggerExit(Collider collision)
     {
@@ -15,6 +18,7 @@ public abstract class Saw : Trap
         {
             cubic.SplitIntoPieces();
             _canSplit = false;
+            CameOut?.Invoke();
         }
     }
 }
