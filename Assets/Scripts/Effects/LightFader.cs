@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace EpicToonFX
 {
@@ -9,29 +8,30 @@ namespace EpicToonFX
         [SerializeField] private bool _killAfterLife = true;
 
         private Light _light;
-        private float _initIntensity;
+        private float _initialIntensity;
 
         private void Start()
         {
             if (TryGetComponent<Light>(out Light light))
             {
                 _light = light;
-                _initIntensity = _light.intensity;
+                _light.enabled = true;
+                _initialIntensity = _light.intensity;
             }
-            else
-                print("No light object found on " + gameObject.name);
         }
 
         private void Update()
         {
-            if (_light != null)
+            if (_light == null)
             {
-                _light.intensity -= _initIntensity * (Time.deltaTime / _lifeTime);
+                return;
+            }
 
-                if (_killAfterLife && _light.intensity <= 0)
-                {
-					Destroy(_light);
-                }
+            _light.intensity -= _initialIntensity * (Time.deltaTime / _lifeTime);
+
+            if (_killAfterLife && _light.intensity <= 0)
+            {
+                Destroy(_light);
             }
         }
     }

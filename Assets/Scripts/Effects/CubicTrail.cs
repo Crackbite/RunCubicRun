@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CubicTrail : MonoBehaviour
@@ -6,19 +5,34 @@ public class CubicTrail : MonoBehaviour
     [SerializeField] private TrailRenderer _trailRenderer;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private PistonPresser _pistonPresser;
-
-    const float LifeTime = 0.5f;
+    [SerializeField] private Cubic _cubic;
+    [SerializeField] private LevelExitPortal _levelExitPortal;
 
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
         _pistonPresser.CubicReached += OnCubicReached;
+        _cubic.SteppedOnStand += OnCubicSteppedOnStand;
+        _levelExitPortal.Shaked += OnCubicShaked;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _pistonPresser.CubicReached -= OnCubicReached;
+        _cubic.SteppedOnStand -= OnCubicSteppedOnStand;
+        _levelExitPortal.Shaked -= OnCubicShaked;
+    }
+
+
+    private void OnCubicSteppedOnStand(PressStand stand)
+    {
+        TurnOffTrail();
+    }
+
+    private void OnCubicShaked()
+    {
+        TurnOnTrail();
     }
 
     private void OnGameEnded(GameResult result)
@@ -28,7 +42,7 @@ public class CubicTrail : MonoBehaviour
             return;
         }
 
-        Invoke(nameof(TurnOffTrail), LifeTime);
+        TurnOffTrail();
     }
 
     private void OnCubicReached(Cubic cubic)
@@ -39,5 +53,10 @@ public class CubicTrail : MonoBehaviour
     private void TurnOffTrail()
     {
         _trailRenderer.enabled = false;
+    }
+
+    private void TurnOnTrail()
+    {
+        _trailRenderer.enabled = true;
     }
 }
