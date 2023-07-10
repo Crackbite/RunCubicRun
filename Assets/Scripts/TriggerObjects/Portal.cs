@@ -27,7 +27,7 @@ public class Portal : MonoBehaviour
         if (collision.TryGetComponent(out Cubic _))
         {
             CubicEntered?.Invoke(this);
-            _passageEffect.Play();
+            _passageEffect.gameObject.SetActive(true);
         }
     }
 
