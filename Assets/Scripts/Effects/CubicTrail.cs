@@ -8,6 +8,8 @@ public class CubicTrail : MonoBehaviour
     [SerializeField] private Cubic _cubic;
     [SerializeField] private LevelExitPortal _levelExitPortal;
 
+    private bool _isPressReachedCubic;
+
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
@@ -32,7 +34,10 @@ public class CubicTrail : MonoBehaviour
 
     private void OnCubicShaked()
     {
-        TurnOnTrail();
+        if (_isPressReachedCubic == false)
+        {
+            TurnOnTrail();
+        }
     }
 
     private void OnGameEnded(GameResult result)
@@ -47,7 +52,7 @@ public class CubicTrail : MonoBehaviour
 
     private void OnCubicReached(Cubic cubic)
     {
-        TurnOffTrail();
+        _isPressReachedCubic = true;
     }
 
     private void TurnOffTrail()
