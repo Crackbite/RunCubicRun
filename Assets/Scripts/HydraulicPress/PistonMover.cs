@@ -88,8 +88,10 @@ public class PistonMover : MonoBehaviour
 
     private void OnCubicFlattenedOut()
     {
-        _cubic.FlattenedOut -= OnCubicFlattenedOut;
+        _crushEffect.transform.position = _cubic.transform.position;
+        _crushEffect.Play();
         IsWorking = false;
         WorkCompleted?.Invoke();
+        _cubic.FlattenedOut -= OnCubicFlattenedOut;
     }
 }
