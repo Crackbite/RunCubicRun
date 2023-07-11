@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class Cubic : MonoBehaviour
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
     [SerializeField] private float _jumpForce = 6.5f;
     [SerializeField] private float _jumpAcceleration = 7.7f;
-    [SerializeField] private float _crushedSizeY = .1f;
     [SerializeField] private List<MeshRenderer> _meshRenderers;
 
     private Collider _collider;
@@ -21,11 +21,11 @@ public class Cubic : MonoBehaviour
     public event Action<Vector3, float> Hit;
     public event Action SawingStarted;
     public event Action<PressStand> SteppedOnStand;
+    public event Action FlattenedOut;
 
     public Bounds Bounds => _meshRenderers[0].bounds;
     public bool CanDestroy { get; set; }
     public Saw CollisionSaw { get; private set; }
-    public float CrushedSizeY => _crushedSizeY;
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
     public float JumpForce => _jumpForce;
@@ -72,16 +72,19 @@ public class Cubic : MonoBehaviour
         SteppedOnStand?.Invoke(pressStand);
     }
 
-    public void FlattenOut(float standMaxY)
+    public void FlattenOut()
     {
-        _collider.enabled = false;
+        const float Duration = 0.2f;
+        Sequence flattenSequence = DOTween.Sequence();
 
-        Vector3 localScale = transform.localScale;
-        transform.localScale = new Vector3(localScale.x, _crushedSizeY, localScale.z);
+        flattenSequence.Append(transform.DOScaleY(0.1f, Duration)).SetEase(Ease.InQuad);
+        flattenSequence.Join(transform.DOMoveY(0.05f, Duration)).SetEase(Ease.InQuad);
+        flattenSequence.OnComplete(() =>
+        {
+            FlattenedOut?.Invoke();
+        });
 
-        Vector3 position = transform.position;
-        float positionY = standMaxY + (_crushedSizeY / 2f);
-        transform.position = new Vector3(position.x, positionY, position.z);
+        flattenSequence.Play();
     }
 
     public void HitTrap(Trap trap, Vector3 contactPoint, float trapHeight)

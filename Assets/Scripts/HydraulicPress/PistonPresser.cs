@@ -39,10 +39,6 @@ public class PistonPresser : MonoBehaviour
                 CubicReached?.Invoke(cubic);
                 StartCoroutine(ShakeAndPress(cubic));
             }
-            else
-            {
-                PressCubic(cubic);
-            }
         }
         else if (collision.TryGetComponent(out ColorBlock colorBlock))
         {
@@ -77,12 +73,6 @@ public class PistonPresser : MonoBehaviour
         _blockDestroyer.DestroyBlock(colorBlock);
     }
 
-    private void PressCubic(Cubic cubic)
-    {
-        float extentsY = cubic.Bounds.extents.y;
-        cubic.transform.position = transform.TransformPoint(Vector3.down * extentsY);
-    }
-
     private IEnumerator ShakeAndPress(Cubic cubic)
     {
         const float ShakeDurationMultiplier = 2f;
@@ -98,7 +88,7 @@ public class PistonPresser : MonoBehaviour
         yield return new WaitForSeconds(_cubicPressDelay);
 
         _pistonMover.TurnOn();
-        PressCubic(cubic);
+        cubic.FlattenOut();
 
         tweener.Kill();
     }

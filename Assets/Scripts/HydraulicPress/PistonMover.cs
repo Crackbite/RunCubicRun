@@ -5,9 +5,8 @@ using UnityEngine;
 public class PistonMover : MonoBehaviour
 {
     [SerializeField] private PressStand _pressStand;
-    [SerializeField] private ParticleSystem _afterCrushEffect;
+    [SerializeField] private ParticleSystem _crushEffect;
 
-    private float _crushedCubicSizeY;
     private bool _isCubicReached;
 
     private Cubic _cubic;
@@ -38,26 +37,25 @@ public class PistonMover : MonoBehaviour
             return;
         }
 
-        float speed = _isCubicReached ? _pressSpeedHandler.CubicPressSpeed : _pressSpeedHandler.GetCurrentSpeed();
-
         Vector3 currentPosition = transform.position;
-        Vector3 newPosition = currentPosition;
+        Vector3 targetPosition = currentPosition;
 
-        float pressStandTopYPosition = _pressStand.Bounds.max.y + _crushedCubicSizeY;
-        newPosition.y = pressStandTopYPosition;
-
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(currentPosition, newPosition, step);
-
-        if (transform.position.y - newPosition.y < Threshold)
+        if (_isCubicReached == false)
         {
-            if (_isCubicReached)
-            {
-                CrushCubic();
-            }
+            targetPosition.y = _pressStand.Bounds.max.y;
+            float speed = _pressSpeedHandler.GetCurrentSpeed() * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(currentPosition, targetPosition, speed);
 
-            IsWorking = false;
-            WorkCompleted?.Invoke();
+            if (Mathf.Abs(currentPosition.y - targetPosition.y) < Threshold)
+            {
+                IsWorking = false;
+                WorkCompleted?.Invoke();
+            }
+        }
+        else
+        {
+            targetPosition.y = _cubic.Bounds.max.y;
+            transform.position = targetPosition;
         }
     }
 
@@ -81,17 +79,17 @@ public class PistonMover : MonoBehaviour
         IsWorking = true;
     }
 
-    private void CrushCubic()
-    {
-        _cubic.FlattenOut(_pressStand.Bounds.max.y);
-        _afterCrushEffect.transform.position = _cubic.transform.position;
-        _afterCrushEffect.Play();
-    }
-
     private void PistonPresserOnCubicReached(Cubic cubic)
     {
         _cubic = cubic;
-        _crushedCubicSizeY = _cubic.CrushedSizeY;
+        _cubic.FlattenedOut += OnCubicFlattenedOut;
         _isCubicReached = true;
+    }
+
+    private void OnCubicFlattenedOut()
+    {
+        _cubic.FlattenedOut -= OnCubicFlattenedOut;
+        IsWorking = false;
+        WorkCompleted?.Invoke();
     }
 }

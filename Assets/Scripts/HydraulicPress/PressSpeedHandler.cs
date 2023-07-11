@@ -6,12 +6,9 @@ public class PressSpeedHandler : MonoBehaviour
     [SerializeField] private float _maxSpeed = 5f;
     [SerializeField] private float _minSpeed = 1f;
     [SerializeField] private int _minBlocksForMinSpeed = 10;
-    [SerializeField] private float _cubicPressSpeed = 5f;
     [SerializeField] private bool _debugLog;
 
     private int _initBlockCount;
-
-    public float CubicPressSpeed => _cubicPressSpeed;
 
     public float PureSpeed { get; private set; }
 
