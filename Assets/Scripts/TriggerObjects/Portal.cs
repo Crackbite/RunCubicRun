@@ -8,6 +8,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private ParticleSystem _passageEffect;
     [SerializeField] private float _alphaValue = .4f;
 
+    private BonusHandler _bonusHandler;
     private Color _initialColor;
     private Color _originalColor;
 
@@ -15,7 +16,6 @@ public class Portal : MonoBehaviour
 
     public Color Color { get; private set; }
     public bool IsColored { get; private set; }
-    public Bonus UsedByBonus { get; set; }
 
     private void Start()
     {
@@ -29,6 +29,11 @@ public class Portal : MonoBehaviour
             CubicEntered?.Invoke(this);
             _passageEffect.gameObject.SetActive(true);
         }
+    }
+
+    public void Init(BonusHandler bonusHandler)
+    {
+        _bonusHandler = bonusHandler;
     }
 
     public void SetColor(Color color)
@@ -50,8 +55,18 @@ public class Portal : MonoBehaviour
         IsColored = true;
     }
 
-    public void SetOriginalColor()
+    public void TrySetOriginalColor()
     {
+        IReadOnlyDictionary<BonusInfo, BonusItem> _activeBonuses = _bonusHandler.ActiveBonuses;
+
+        foreach (KeyValuePair<BonusInfo, BonusItem> pair in _activeBonuses)
+        {
+            if (pair.Value.Bonus is PortalRecolorBonus)
+            {
+                return;
+            }
+        }
+
         SetColor(_originalColor);
     }
 }

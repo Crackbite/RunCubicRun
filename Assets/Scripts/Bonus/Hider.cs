@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hider : Bonus
+public class Hider : PortalRecolorBonus
 {
-    [SerializeField] private ColorBlocksContainer _colorBlocksContainer;
-    [SerializeField] private PortalsContainer _portalsContainer;
     [SerializeField] private LayerMask _hiddenLayer = 1 << 9;
     [SerializeField] private LayerMask _defaultLayer = 1 << 3;
-    [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private bool _isHideCorrectBlocks;
 
     private List<ColorBlock> _modifiedBlocks;
@@ -29,29 +26,11 @@ public class Hider : Bonus
         RestorePortalColors();
     }
 
-    private void AssignComponents()
-    {
-        if (_colorBlocksContainer == null)
-        {
-            _colorBlocksContainer = FindObjectOfType<ColorBlocksContainer>();
-        }
-
-        if (_portalsContainer == null)
-        {
-            _portalsContainer = FindObjectOfType<PortalsContainer>();
-        }
-
-        if (_blockStackRenderer == null)
-        {
-            _blockStackRenderer = FindObjectOfType<BlockStackRenderer>();
-        }
-    }
-
     private void HideUnnecessaryBlocks()
     {
         int newLayer = (int)Mathf.Log(_hiddenLayer.value, 2);
 
-        IReadOnlyList<ColorBlock> colorBlocks = _colorBlocksContainer.ColorBlocks;
+        IReadOnlyList<ColorBlock> colorBlocks = ColorBlocksContainer.ColorBlocks;
         _modifiedBlocks = new List<ColorBlock>(colorBlocks.Count);
 
         foreach (ColorBlock colorBlock in colorBlocks)
@@ -76,25 +55,9 @@ public class Hider : Bonus
         }
 
         Color currentBlockColor = colorBlock.BlockRenderer.CurrentColor;
-        Color currentCubicColor = _blockStackRenderer.CurrentColor;
+        Color currentCubicColor = BlockStackRenderer.CurrentColor;
 
         return _isHideCorrectBlocks ? currentBlockColor != currentCubicColor : currentBlockColor == currentCubicColor;
-    }
-
-    private void RestorePortalColors()
-    {
-        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-
-        foreach (Portal portal in portals)
-        {
-            if (portal.UsedByBonus != this)
-            {
-                continue;
-            }
-
-            portal.SetOriginalColor();
-            portal.UsedByBonus = null;
-        }
     }
 
     private void ShowAllBlocks()
@@ -110,17 +73,6 @@ public class Hider : Bonus
 
             colorBlock.gameObject.layer = newLayer;
             colorBlock.BlockPhysics.TurnOnTrigger();
-        }
-    }
-
-    private void UpdatePortalColors()
-    {
-        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-
-        foreach (Portal portal in portals)
-        {
-            portal.SetColor(_blockStackRenderer.CurrentColor);
-            portal.UsedByBonus = this;
         }
     }
 }

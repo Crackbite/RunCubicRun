@@ -4,6 +4,7 @@ using UnityEngine;
 public class PortalsContainer : MonoBehaviour
 {
     [SerializeField] private ChunkGenerator _chunkGenerator;
+    [SerializeField] private BonusHandler _bonusHandler;
 
     private Portal[] _portals;
 
@@ -22,6 +23,12 @@ public class PortalsContainer : MonoBehaviour
     private void OnChunkGeneratorCompleted()
     {
         _portals = FindObjectsOfType<Portal>();
+
+        foreach (Portal portal in _portals)
+        {
+            portal.Init(_bonusHandler);
+        }
+
         SortPortalsByX();
     }
 

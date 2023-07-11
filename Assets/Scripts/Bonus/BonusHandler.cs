@@ -11,6 +11,8 @@ public class BonusHandler : MonoBehaviour
 
     private Dictionary<BonusInfo, BonusItem> _activeBonuses;
 
+    public IReadOnlyDictionary<BonusInfo, BonusItem> ActiveBonuses => _activeBonuses;
+
     private void Awake()
     {
         _activeBonuses = new Dictionary<BonusInfo, BonusItem>();

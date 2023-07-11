@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Colorizer : Bonus
+public class Colorizer : PortalRecolorBonus
 {
-    [SerializeField] private ColorBlocksContainer _colorBlocksContainer;
-    [SerializeField] private PortalsContainer _portalsContainer;
-    [SerializeField] private BlockStackRenderer _blockStackRenderer;
-
     private Dictionary<ColorBlock, Color> _modifiedBlocks;
 
     private void Start()
@@ -26,24 +22,6 @@ public class Colorizer : Bonus
         RestorePortalColors();
     }
 
-    private void AssignComponents()
-    {
-        if (_colorBlocksContainer == null)
-        {
-            _colorBlocksContainer = FindObjectOfType<ColorBlocksContainer>();
-        }
-
-        if (_portalsContainer == null)
-        {
-            _portalsContainer = FindObjectOfType<PortalsContainer>();
-        }
-
-        if (_blockStackRenderer == null)
-        {
-            _blockStackRenderer = FindObjectOfType<BlockStackRenderer>();
-        }
-    }
-
     private void RestoreBlockColors()
     {
         foreach ((ColorBlock colorBlock, Color originalColor) in _modifiedBlocks)
@@ -57,47 +35,20 @@ public class Colorizer : Bonus
         }
     }
 
-    private void RestorePortalColors()
-    {
-        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-
-        foreach (Portal portal in portals)
-        {
-            if (portal.UsedByBonus != this)
-            {
-                continue;
-            }
-
-            portal.SetOriginalColor();
-            portal.UsedByBonus = null;
-        }
-    }
-
     private void UpdateBlockColors()
     {
-        IReadOnlyList<ColorBlock> colorBlocks = _colorBlocksContainer.ColorBlocks;
+        IReadOnlyList<ColorBlock> colorBlocks = ColorBlocksContainer.ColorBlocks;
         _modifiedBlocks = new Dictionary<ColorBlock, Color>(colorBlocks.Count);
 
         foreach (ColorBlock colorBlock in colorBlocks)
         {
-            if (colorBlock == null || colorBlock.BlockRenderer.CurrentColor == _blockStackRenderer.CurrentColor)
+            if (colorBlock == null || colorBlock.BlockRenderer.CurrentColor == BlockStackRenderer.CurrentColor)
             {
                 continue;
             }
 
             _modifiedBlocks.Add(colorBlock, colorBlock.BlockRenderer.CurrentColor);
-            colorBlock.BlockRenderer.SetColor(_blockStackRenderer.CurrentColor);
-        }
-    }
-
-    private void UpdatePortalColors()
-    {
-        IReadOnlyList<Portal> portals = _portalsContainer.Portals;
-
-        foreach (Portal portal in portals)
-        {
-            portal.SetColor(_blockStackRenderer.CurrentColor);
-            portal.UsedByBonus = this;
+            colorBlock.BlockRenderer.SetColor(BlockStackRenderer.CurrentColor);
         }
     }
 }
