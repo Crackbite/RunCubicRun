@@ -16,6 +16,7 @@ public class GameDataHandler : MonoBehaviour
     private float _score;
     private int _level = 1;
     private bool _isActiveSkinChoosed;
+    private bool _isSkinBought;
 
     public event Action DataRestored;
 
@@ -122,11 +123,16 @@ public class GameDataHandler : MonoBehaviour
             _level++;
             PlayerPrefs.SetInt(LevelKey, _level);
         }
+        else if (_isSkinBought)
+        {
+            PlayerPrefs.SetFloat(ScoreKey, _scoreAllocator.TotalScore);
+        }
     }
 
     private void OnSkinBought(Skin skin)
     {
         PlayerPrefs.SetInt(skin.ID + BoughtKey, Convert.ToInt32(true));
+        _isSkinBought = true;
     }
 
     private void OnSkinActivityChanged(Skin skin)
