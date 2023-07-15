@@ -248,15 +248,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cfec2520eb3fd44a0e61892297fe03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &472048008 stripped
+--- !u!114 &616178229 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1125103787561794010, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5165864138799115166, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
   m_PrefabInstance: {fileID: 1125103787765389394}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6d4c2a434fe874e917e196178eeea9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a82a97c4372ba94d8fef72f528ace08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &633029936 stripped
@@ -310,6 +310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f79364bf20f1049973af4b0459630d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &715741785 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1125103788298553187, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
+  m_PrefabInstance: {fileID: 1125103787765389394}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &741979677 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 845209441009512029, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
@@ -395,6 +400,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f16d2cc976d37294f9b9fc930c53f581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1375483697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5808037347613585001, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
+  m_PrefabInstance: {fileID: 1125103787765389394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a82a97c4372ba94d8fef72f528ace08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1395986859 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 921384242104032655, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
@@ -472,6 +488,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ca0a82de7b8744989b947846a4a991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1902382746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1125103787561794004, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
+  m_PrefabInstance: {fileID: 1125103787765389394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1902382749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902382746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a464b2e9dcbe714d8b4403364fa37bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StarterChunk: {fileID: 616178229}
+  AvailableChunks:
+  - {fileID: 5630714700059115530, guid: ebab10fb4c3380f448414e1d9273d00a, type: 3}
+  FinalChunk: {fileID: 1375483697}
+  ChunkContainer: {fileID: 715741785}
+  GameDataHandler: {fileID: 1155909879}
 --- !u!1001 &1909142951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -816,7 +855,7 @@ PrefabInstance:
     - target: {fileID: 921384242210860164, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
       propertyPath: _chunkGenerator
       value: 
-      objectReference: {fileID: 472048008}
+      objectReference: {fileID: 1902382749}
     - target: {fileID: 921384242742815016, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
       propertyPath: _cubic
       value: 
@@ -836,7 +875,7 @@ PrefabInstance:
     - target: {fileID: 921384243231030080, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
       propertyPath: _chunkGenerator
       value: 
-      objectReference: {fileID: 472048008}
+      objectReference: {fileID: 1902382749}
     - target: {fileID: 921384243231030082, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
       propertyPath: _blockStackRenderer
       value: 
@@ -931,6 +970,10 @@ PrefabInstance:
       propertyPath: _mainCamera
       value: 
       objectReference: {fileID: 2037667118}
+    - target: {fileID: 473514939, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
+      propertyPath: _chunkGenerator
+      value: 
+      objectReference: {fileID: 1902382749}
     - target: {fileID: 346026300585940553, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 18
@@ -1487,7 +1530,8 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 18
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1125103787561794010, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
 --- !u!1001 &3413011492086492272
 PrefabInstance:
@@ -2664,7 +2708,7 @@ PrefabInstance:
     - target: {fileID: 6112402420321845763, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _chunkGenerator
       value: 
-      objectReference: {fileID: 472048008}
+      objectReference: {fileID: 0}
     - target: {fileID: 6112402420321845884, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3149,7 +3193,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6112402420321845763, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
 --- !u!1001 &7101115412172582973
 PrefabInstance:
@@ -3245,7 +3290,7 @@ PrefabInstance:
     - target: {fileID: 7101115412734175887, guid: c285e6be8dd072341a3ef7b31cfb236a, type: 3}
       propertyPath: _chunkGenerator
       value: 
-      objectReference: {fileID: 472048008}
+      objectReference: {fileID: 1902382749}
     - target: {fileID: 7101115412863719094, guid: c285e6be8dd072341a3ef7b31cfb236a, type: 3}
       propertyPath: m_FollowOffset.x
       value: 0
