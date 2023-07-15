@@ -59,9 +59,11 @@ public class BonusHandler : MonoBehaviour
 
     private void OnCubicBonusReceived(Bonus receivedBonus)
     {
+        Vector3 effectPosition = new Vector3(receivedBonus.transform.position.x, 0.1f, receivedBonus.transform.position.z);
         Quaternion effectSpawnAngle = Quaternion.Euler(-90f, 30f, 0f);
         ParticleSystem pickupEffect = receivedBonus.Info.PickupEffect;
-        Instantiate(pickupEffect, receivedBonus.transform.position, effectSpawnAngle);
+
+        Instantiate(pickupEffect, effectPosition, effectSpawnAngle);
         pickupEffect.Play();
         RemoveBonusFromScene(receivedBonus);
 
