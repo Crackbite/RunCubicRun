@@ -11,7 +11,7 @@ public class Checkpoint : MonoBehaviour
         {
             return;
         }
-        Debug.Log("work");
+
         CubicPassed?.Invoke(this);
     }
 }

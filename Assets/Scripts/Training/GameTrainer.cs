@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,9 +9,15 @@ public class GameTrainer : MonoBehaviour
 {
     [SerializeField] private LevelEntryPortal _levelEntryPortal;
     [SerializeField] private CheckpointContainer _checkpointContainer;
+    [SerializeField] private PistonPresser _pistonPresser;
+    [SerializeField] private CubicInputHandler _cubicInputHandler;
+    [SerializeField] private CubicMovement _cubicMovement;
+    [SerializeField] private int _trainingStageAmount;
+
     [SerializeField] private List<string> _phrases;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private float _delay;
+    [SerializeField] private bool _hasPressTraining;
 
     private Coroutine _trainRoutine;
     private WaitForSeconds _waitForSeconds;
@@ -22,6 +29,14 @@ public class GameTrainer : MonoBehaviour
     private void OnEnable()
     {
         _levelEntryPortal.ThrownOut += OnCubicThrownOut;
+        _cubicMovement.CubicLeftPress += OnCubicLeftPress;
+        _pistonPresser.CubicReached += OnPressCubicReached;
+
+        if (_hasPressTraining)
+        {
+            _pistonPresser.StackReached += OnStackReached;
+            _cubicInputHandler.PressSpeedReduced += OnPressSpeedReduced;
+        }
     }
 
     private void Start()
@@ -32,6 +47,38 @@ public class GameTrainer : MonoBehaviour
     private void OnDisable()
     {
         _levelEntryPortal.ThrowingOut -= OnCubicThrownOut;
+        _cubicMovement.CubicLeftPress -= OnCubicLeftPress;
+        _pistonPresser.CubicReached -= OnPressCubicReached;
+
+        if (_hasPressTraining)
+        {
+            _pistonPresser.StackReached -= OnStackReached;
+        }
+    }
+
+    private void OnPressCubicReached(Cubic cubic)
+    {
+        _text.text = null;
+    }
+
+    private void OnCubicLeftPress()
+    {
+        StartTraining();
+    }
+
+    private void OnPressSpeedReduced()
+    {
+        _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
+        Time.timeScale = 1f;
+        StartTraining();
+    }
+
+    private void OnStackReached()
+    {
+        if (_hasPressTraining)
+        {
+            StartTraining(_hasPressTraining);
+        }
     }
 
     private void OnCubicThrownOut()
@@ -47,18 +94,22 @@ public class GameTrainer : MonoBehaviour
     private void OnCubicPassedCheckpoint(Checkpoint passedCheckpoint)
     {
         passedCheckpoint.CubicPassed -= OnCubicPassedCheckpoint;
+        StartTraining();
+    }
 
+    private void StartTraining(bool isPressTraining = false)
+    {
         if (_phrases.Count > _nextPhraseNumber)
         {
             _isCheckpointPassed = true;
-            StartCoroutine(Train(_phrases[_nextPhraseNumber]));
+            StartCoroutine(Train(_phrases[_nextPhraseNumber], isPressTraining));
         }
     }
 
-    private IEnumerator Train(string nextPhrase)
+    private IEnumerator Train(string nextPhrase, bool isPressTraining = false)
     {
         const float OpacityValue = 1.0f;
-        const float TransitionDuration = 2.0f;
+        const float TransitionDuration = 1.0f;
 
         _text.text = null;
         yield return _waitForSeconds;
@@ -71,6 +122,12 @@ public class GameTrainer : MonoBehaviour
             if (_isCheckpointPassed)
             {
                 tweener.Kill();
+            }
+        }).OnComplete(() =>
+        {
+            if (isPressTraining)
+            {
+                Time.timeScale = 0f;
             }
         });
 
