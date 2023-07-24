@@ -53,6 +53,7 @@ public class GameTrainer : MonoBehaviour
         if (_hasPressTraining)
         {
             _pistonPresser.StackReached -= OnStackReached;
+            _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
         }
     }
 

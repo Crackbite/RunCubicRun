@@ -7,7 +7,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Cubic cubic) == false)
+        if (collision.TryGetComponent(out Cubic cubic) == false || cubic.IsSawing)
         {
             return;
         }
