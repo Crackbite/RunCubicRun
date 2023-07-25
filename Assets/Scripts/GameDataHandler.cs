@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDataHandler : MonoBehaviour
 {
@@ -11,17 +12,21 @@ public class GameDataHandler : MonoBehaviour
 
     private const string ScoreKey = nameof(ScoreKey);
     private const string LevelKey = nameof(LevelKey);
+    private const string TrainingStageKey = nameof(TrainingStageKey);
     private const string ActiveKey = nameof(ActiveKey);
     private const string BoughtKey = nameof(BoughtKey);
     private float _score;
     private int _level = 1;
+    private int _trainingStage = 1;
     private bool _isActiveSkinChoosed;
     private bool _isSkinBought;
+    private const int TrainingStageAmount = 4;
 
     public event Action DataRestored;
 
     public float Score => _score;
     public int Level => _level;
+    public int TrainingStage => _trainingStage;
     public IReadOnlyList<Skin> Skins => _skins;
 
     private void OnValidate()
@@ -39,8 +44,18 @@ public class GameDataHandler : MonoBehaviour
 
     private void Start()
     {
+        int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+
         _score = TryRestoreData(ScoreKey, _score);
-        _level = TryRestoreData(LevelKey, _level);
+
+        if (sceneBuildIndex < TrainingStageAmount)
+        {
+            _trainingStage = TryRestoreData(TrainingStageKey, _trainingStage);
+        }
+        else
+        {
+            _level = TryRestoreData(LevelKey, _level);
+        }
 
         foreach (Skin skin in _skins)
         {
@@ -120,8 +135,17 @@ public class GameDataHandler : MonoBehaviour
         {
             _score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
             PlayerPrefs.SetFloat(ScoreKey, _score);
-            _level++;
-            PlayerPrefs.SetInt(LevelKey, _level);
+
+            if (_trainingStage <= TrainingStageAmount)
+            {
+                _trainingStage++;
+                PlayerPrefs.SetInt(TrainingStageKey, _trainingStage);
+            }
+            else
+            {
+                _level++;
+                PlayerPrefs.SetInt(LevelKey, _level);
+            }
         }
         else if (_isSkinBought)
         {

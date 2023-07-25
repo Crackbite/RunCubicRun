@@ -1,9 +1,9 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameTrainer : MonoBehaviour
 {
@@ -105,6 +105,12 @@ public class GameTrainer : MonoBehaviour
             _isCheckpointPassed = true;
             StartCoroutine(Train(_phrases[_nextPhraseNumber], isPressTraining));
         }
+    }
+
+    private void LoadNextStage()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     private IEnumerator Train(string nextPhrase, bool isPressTraining = false)
