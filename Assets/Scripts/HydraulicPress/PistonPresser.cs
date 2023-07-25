@@ -18,6 +18,7 @@ public class PistonPresser : MonoBehaviour
     private PistonMover _pistonMover;
 
     public event Action<Cubic> CubicReached;
+    public event Action StackReached;
 
     private void OnEnable()
     {
@@ -46,6 +47,7 @@ public class PistonPresser : MonoBehaviour
             {
                 _hitEffect.transform.position = collision.ClosestPoint(transform.position);
                 _hitEffect.Play();
+                StackReached?.Invoke();
                 StartCoroutine(PressAndDestroy(colorBlock));
             }
             else

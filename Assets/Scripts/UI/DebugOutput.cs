@@ -4,7 +4,7 @@ using UnityEngine;
 public class DebugOutput : MonoBehaviour
 {
     [SerializeField] private TMP_Text _outputText;
-    [SerializeField] private ChunkGenerator _chunkGenerator;
+    [SerializeField] private BasedDifficultyChunkGenerator _chunkGenerator;
 
     private void OnEnable()
     {

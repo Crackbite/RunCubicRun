@@ -5,6 +5,7 @@ public class MainScreen : Screen
 {
     [SerializeField] private TMP_Text _level;
     [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private bool _isTraining;
 
     private void OnEnable()
     {
@@ -18,6 +19,9 @@ public class MainScreen : Screen
 
     private void OnDataRestored()
     {
-        _level.text += _gameDataHandler.Level.ToString();
+        if (_isTraining == false)
+        {
+            _level.text += _gameDataHandler.Level.ToString();
+        }
     }
 }
