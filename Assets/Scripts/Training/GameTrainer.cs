@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameTrainer : MonoBehaviour
 {
@@ -10,12 +8,8 @@ public class GameTrainer : MonoBehaviour
     [SerializeField] private CubicInputHandler _cubicInputHandler;
     [SerializeField] private CubicMovement _cubicMovement;
     [SerializeField] private TrainingPhraseDisplay _phraseDisplay;
-    [SerializeField] private List<string> _phrases;
-    [SerializeField] private float _delay;
     [SerializeField] private bool _hasPressTraining;
 
-    private Coroutine _trainRoutine;
-    private WaitForSeconds _waitForSeconds;
     private int _nextPhraseNumber;
     private bool _canStopGame;
 
@@ -35,11 +29,6 @@ public class GameTrainer : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        _waitForSeconds = new WaitForSeconds(_delay);
-    }
-
     private void OnDisable()
     {
         _levelEntryPortal.ThrownOut -= OnCubicThrownOut;
@@ -52,6 +41,23 @@ public class GameTrainer : MonoBehaviour
             _pistonPresser.StackReached -= OnStackReached;
             _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
         }
+    }
+
+    private void StartTraining()
+    {
+        const float Delay = 0.5f;
+
+        if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
+        {
+            _phraseDisplay.CleanText();
+            Invoke(nameof(Train), Delay);
+        }
+    }
+
+    private void Train()
+    {
+        _phraseDisplay.Display(_nextPhraseNumber);
+        _nextPhraseNumber++;
     }
 
     private void OnDisplayCompleted()
@@ -88,7 +94,7 @@ public class GameTrainer : MonoBehaviour
 
     private void OnCubicThrownOut()
     {
-        _trainRoutine = StartCoroutine(Train());
+        StartTraining();
 
         foreach (Checkpoint checkPoint in _checkpointContainer.Checkpoints)
         {
@@ -100,21 +106,5 @@ public class GameTrainer : MonoBehaviour
     {
         passedCheckpoint.CubicPassed -= OnCubicPassedCheckpoint;
         StartTraining();
-    }
-
-    private void StartTraining()
-    {
-        if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
-        {
-            StartCoroutine(Train());
-        }
-    }
-
-    private IEnumerator Train()
-    {
-        _phraseDisplay.CleanText();
-        yield return _waitForSeconds;
-        _phraseDisplay.Display(_nextPhraseNumber);
-        _nextPhraseNumber++;
     }
 }
