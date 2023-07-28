@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using System;
 
 namespace Lean.Localization
 {
@@ -12,6 +13,8 @@ namespace Lean.Localization
 	{
 		[Tooltip("If PhraseName couldn't be found, this text will be used")]
 		public string FallbackText;
+
+		public event Action TranslationUpdated;
 
 		// This gets called every time the translation needs updating
 		public override void UpdateTranslation(LeanTranslation translation)
@@ -29,6 +32,8 @@ namespace Lean.Localization
 			{
 				text.text = LeanTranslation.FormatText(FallbackText, text.text, this, gameObject);
 			}
+
+			TranslationUpdated?.Invoke();
 		}
 
 		protected virtual void Awake()
