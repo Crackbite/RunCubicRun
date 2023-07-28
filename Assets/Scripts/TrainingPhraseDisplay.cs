@@ -43,7 +43,9 @@ public class TrainingPhraseDisplay : MonoBehaviour
 
     public void Display(int _nextPhraseNumber)
     {
-        _localizedText.TranslationName = _phrases[_nextPhraseNumber].name;
+        string emptyPhrase = "";
+
+        _localizedText.TranslationName = _phrases[_nextPhraseNumber] != null ? _phrases[_nextPhraseNumber].name : emptyPhrase;
         _text.color = new Color(_text.color.r, _text.color.g, _text.color.b, 0f);
         _tweener = _text.DOFade(OpacityValue, FadeDuration).OnUpdate(() =>
         {
