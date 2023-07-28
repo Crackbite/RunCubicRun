@@ -1,9 +1,6 @@
-﻿using DG.Tweening;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameTrainer : MonoBehaviour
 {
@@ -12,17 +9,15 @@ public class GameTrainer : MonoBehaviour
     [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private CubicInputHandler _cubicInputHandler;
     [SerializeField] private CubicMovement _cubicMovement;
-    [SerializeField] private int _trainingStageAmount;
-
+    [SerializeField] private TrainingPhraseDisplay _phraseDisplay;
     [SerializeField] private List<string> _phrases;
-    [SerializeField] private TMP_Text _text;
     [SerializeField] private float _delay;
     [SerializeField] private bool _hasPressTraining;
 
     private Coroutine _trainRoutine;
     private WaitForSeconds _waitForSeconds;
-    private bool _isCheckpointPassed;
     private int _nextPhraseNumber;
+    private bool _canStopGame;
 
     public bool IsTrainingOver { get; private set; }
 
@@ -34,6 +29,7 @@ public class GameTrainer : MonoBehaviour
 
         if (_hasPressTraining)
         {
+            _phraseDisplay.DisplayCompleted += OnDisplayCompleted;
             _pistonPresser.StackReached += OnStackReached;
             _cubicInputHandler.PressSpeedReduced += OnPressSpeedReduced;
         }
@@ -46,20 +42,30 @@ public class GameTrainer : MonoBehaviour
 
     private void OnDisable()
     {
-        _levelEntryPortal.ThrowingOut -= OnCubicThrownOut;
+        _levelEntryPortal.ThrownOut -= OnCubicThrownOut;
         _cubicMovement.CubicLeftPress -= OnCubicLeftPress;
         _pistonPresser.CubicReached -= OnPressCubicReached;
 
         if (_hasPressTraining)
         {
+            _phraseDisplay.DisplayCompleted -= OnDisplayCompleted;
             _pistonPresser.StackReached -= OnStackReached;
             _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
         }
     }
 
+    private void OnDisplayCompleted()
+    {
+        if (_canStopGame)
+        {
+            Time.timeScale = 0f;
+            _canStopGame = false;
+        }
+    }
+
     private void OnPressCubicReached(Cubic cubic)
     {
-        _text.text = null;
+        _phraseDisplay.CleanText();
     }
 
     private void OnCubicLeftPress()
@@ -76,15 +82,13 @@ public class GameTrainer : MonoBehaviour
 
     private void OnStackReached()
     {
-        if (_hasPressTraining)
-        {
-            StartTraining(_hasPressTraining);
-        }
+        _canStopGame = true;
+        StartTraining();
     }
 
     private void OnCubicThrownOut()
     {
-        _trainRoutine = StartCoroutine(Train(_phrases[0]));
+        _trainRoutine = StartCoroutine(Train());
 
         foreach (Checkpoint checkPoint in _checkpointContainer.Checkpoints)
         {
@@ -98,47 +102,19 @@ public class GameTrainer : MonoBehaviour
         StartTraining();
     }
 
-    private void StartTraining(bool isPressTraining = false)
+    private void StartTraining()
     {
-        if (_phrases.Count > _nextPhraseNumber)
+        if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
         {
-            _isCheckpointPassed = true;
-            StartCoroutine(Train(_phrases[_nextPhraseNumber], isPressTraining));
+            StartCoroutine(Train());
         }
     }
 
-    private void LoadNextStage()
+    private IEnumerator Train()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-    }
-
-    private IEnumerator Train(string nextPhrase, bool isPressTraining = false)
-    {
-        const float OpacityValue = 1.0f;
-        const float TransitionDuration = 1.0f;
-
-        _text.text = null;
+        _phraseDisplay.CleanText();
         yield return _waitForSeconds;
-
-        _text.text = nextPhrase;
-        _text.color = new Color(_text.color.r, _text.color.g, _text.color.b, 0f);
-        Tweener tweener = null;
-        tweener = _text.DOFade(OpacityValue, TransitionDuration).OnUpdate(() =>
-        {
-            if (_isCheckpointPassed)
-            {
-                tweener.Kill();
-            }
-        }).OnComplete(() =>
-        {
-            if (isPressTraining)
-            {
-                Time.timeScale = 0f;
-            }
-        });
-
-        _isCheckpointPassed = false;
+        _phraseDisplay.Display(_nextPhraseNumber);
         _nextPhraseNumber++;
     }
 }
