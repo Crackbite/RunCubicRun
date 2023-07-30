@@ -28,7 +28,10 @@ public class SidewayMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        _cubic.Hit -= OnCubicHit;
+        if (_cubic != null)
+        {
+            _cubic.Hit -= OnCubicHit;
+        }
     }
 
     public void Move(Vector3 direction)

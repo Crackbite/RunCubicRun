@@ -1,5 +1,4 @@
 using Lean.Localization;
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -18,7 +17,6 @@ public class MainScreen : Screen
         _gameDataHandler.DataRestored += OnDataRestored;
         _levelLocalizedText.TranslationUpdated += OnLevelUpdated;
     }
-
 
     private void OnDisable()
     {
