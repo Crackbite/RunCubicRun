@@ -34,7 +34,7 @@ public class ColorBlockMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isPlaced)
+        if (_isPlaced || _colorBlock.CanFollow == false)
         {
             return;
         }
