@@ -187,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LIDER TABLOSU
+  m_text: "\u041B\u0418\u0414\u0415\u0420\u0411\u041E\u0420\u0414"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -1245,6 +1245,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3703218420502323705, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: saveLoad
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703218420502323705, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
       propertyPath: currentLanguage
       value: Russian
       objectReference: {fileID: 0}
@@ -1852,8 +1856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 563, y: -305}
-  m_SizeDelta: {x: 580.4525, y: 171.58813}
+  m_AnchoredPosition: {x: 540, y: -440}
+  m_SizeDelta: {x: 808.6656, y: 186.184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &314176861
 MonoBehaviour:
@@ -1902,8 +1906,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6757,7 +6761,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "MA\u011EAZA"
+  m_text: "\u041C\u0410\u0413\u0410\u0417\u0418\u041D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -7795,11 +7799,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelEntryPortal: {fileID: 299883564}
   _checkpointContainer: {fileID: 2119831296}
-  _pistonPresser: {fileID: 157005186}
-  _cubicInputHandler: {fileID: 296935721}
-  _cubicMovement: {fileID: 296935720}
   _phraseDisplay: {fileID: 1639761236}
-  _hasPressTraining: 0
+  _cubicInputHandler: {fileID: 296935721}
 --- !u!114 &1639761236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7817,10 +7818,8 @@ MonoBehaviour:
   - {fileID: 940724271}
   - {fileID: 1894737326}
   - {fileID: 1227748421}
-  - {fileID: 0}
   - {fileID: 1755205854}
   - {fileID: 0}
-  - {fileID: 2074274518}
   _localization: {fileID: 902153349}
   _text: {fileID: 314176861}
 --- !u!1001 &1649999752
@@ -8358,7 +8357,6 @@ Transform:
   - {fileID: 1894737327}
   - {fileID: 1227748422}
   - {fileID: 1755205855}
-  - {fileID: 2074274519}
   m_Father: {fileID: 151948761}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8409,12 +8407,12 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Blinder - hides all blocks with the correct color.
+    Text: Blinder - hides all correct color blocks.
     Object: {fileID: 0}
   - Language: Russian
     Text: "Blinder - c\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0432\u0441\u0435
-      \u0431\u043B\u043E\u043A\u0438 \u0441 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u043C
-      \u0446\u0432\u0435\u0442\u043E\u043C."
+      \u0431\u043B\u043E\u043A\u0438 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0433\u043E
+      \u0446\u0432\u0435\u0442\u0430."
     Object: {fileID: 0}
   - Language: Turkish
     Text: "Blinder - do\u011Fru renkteki t\xFCm bloklar\u0131 gizler."
@@ -9131,7 +9129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OYNAT
+  m_text: "\u0418\u0413\u0420\u0410\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -9999,61 +9997,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 7101115413878097619, guid: c285e6be8dd072341a3ef7b31cfb236a, type: 3}
   m_PrefabInstance: {fileID: 7101115412172582973}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2074274518
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2074274519}
-  - component: {fileID: 2074274520}
-  m_Layer: 0
-  m_Name: Phrase5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2074274519
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074274518}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1750974941}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2074274520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074274518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Great!
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E!"
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: Harika!
-    Object: {fileID: 0}
 --- !u!1 &2103565587
 GameObject:
   m_ObjectHideFlags: 0
@@ -10784,7 +10727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E\u011E\u0130T\u0130M"
+  m_text: "\u041E\u0411\u0423\u0427\u0415\u041D\u0418\u0415"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}

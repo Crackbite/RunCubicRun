@@ -187,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LIDER TABLOSU
+  m_text: "\u041B\u0418\u0414\u0415\u0420\u0411\u041E\u0420\u0414"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -1467,8 +1467,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 563, y: -305}
-  m_SizeDelta: {x: 580.4525, y: 171.58813}
+  m_AnchoredPosition: {x: 540, y: -356}
+  m_SizeDelta: {x: 808.6656, y: 186.184}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &314176861
 MonoBehaviour:
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1517,8 +1517,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1553,10 +1553,10 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 37.348938, w: -166.79968}
+  m_margin: {x: 0, y: 0, z: -0.8649292, w: -166.79968}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &314176862
@@ -1742,7 +1742,7 @@ GameObject:
   - component: {fileID: 335032224}
   - component: {fileID: 335032225}
   m_Layer: 0
-  m_Name: Phrase9
+  m_Name: Phrase7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1761,7 +1761,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669775338}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &335032225
 MonoBehaviour:
@@ -1778,16 +1778,22 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Soon, the press will crush the collected blocks and increase your score.
+    Text: 'Soon, the press will crush the collected blocks and increase your score.
+
+      The
+      lower the block in the stack, the more points you get for it.'
     Object: {fileID: 0}
   - Language: Russian
     Text: "\u0421\u043A\u043E\u0440\u043E \u043F\u0440\u0435\u0441\u0441 \u0440\u0430\u0437\u0434\u0430\u0432\u0438\u0442
       \u0441\u043E\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u0431\u043B\u043E\u043A\u0438
       \u0438 \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0442 \u0432\u0430\u0448
-      \u0441\u0447\u0435\u0442."
+      \u0441\u0447\u0435\u0442.\n\u0427\u0435\u043C \u043D\u0438\u0436\u0435 \u0431\u043B\u043E\u043A
+      \u0432 \u0441\u0442\u043E\u043F\u043A\u0435, \u0442\u0435\u043C \u0431\u043E\u043B\u044C\u0448\u0435
+      \u0437\u0430 \u043D\u0435\u0433\u043E \u043E\u0447\u043A\u043E\u0432."
     Object: {fileID: 0}
   - Language: Turkish
-    Text: "Yak\u0131nda, pres toplanan bloklar\u0131 ezerek skorunuzu art\u0131racak."
+    Text: "Yak\u0131nda, pres toplanan bloklar\u0131 ezerek skorunuzu art\u0131racak.\nBlok
+      K\xFCp'e ne kadar yak\u0131nsa, onun i\xE7in o kadar \xE7ok puan al\u0131rs\u0131n\u0131z."
     Object: {fileID: 0}
 --- !u!1 &354957028
 GameObject:
@@ -2999,66 +3005,6 @@ MonoBehaviour:
   - Language: Turkish
     Text: "K\xFCp engelle \xE7arparsa kaybedersiniz."
     Object: {fileID: 0}
---- !u!1 &844968454
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 844968455}
-  - component: {fileID: 844968456}
-  m_Layer: 0
-  m_Name: Phrase12
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &844968455
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844968454}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669775338}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &844968456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844968454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Swipe up or press the "Up" arrow on the keyboard to save Cubic from the
-      press.
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u0421\u0432\u0430\u0439\u043F \u0432\u0432\u0435\u0440\u0445 \u0438\u043B\u0438
-      \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \"\u0412\u0432\u0435\u0440\u0445\"
-      \u043D\u0430 \u043A\u043B\u0430\u0432\u0438\u0430\u0442\u0443\u0440\u0435 \u0441\u043F\u0430\u0441\u0443\u0442
-      \u041A\u0443\u0431\u0438\u043A \u043E\u0442 \u043F\u0440\u0435\u0441\u0441\u0430."
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: "K\xFCp\xFC presden kurtarmak i\xE7in yukar\u0131 do\u011Fru kayd\u0131r\u0131n
-      veya klavyedeki \"Yukar\u0131\" ok tu\u015Funa bas\u0131n."
-    Object: {fileID: 0}
 --- !u!1 &867160061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9114075409595079697, guid: ec6b484b736c0f84ba36c4379f65b483, type: 3}
@@ -3172,7 +3118,7 @@ GameObject:
   - component: {fileID: 868054269}
   - component: {fileID: 868054270}
   m_Layer: 0
-  m_Name: Phrase6
+  m_Name: Phrase5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3191,7 +3137,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669775338}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &868054270
 MonoBehaviour:
@@ -4732,61 +4678,6 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19854642, guid: 4de72d65c2293424cbe6461a89fe2997, type: 3}
   m_PrefabInstance: {fileID: 815291142016808983}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1223619300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1223619301}
-  - component: {fileID: 1223619302}
-  m_Layer: 0
-  m_Name: Phrase8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1223619301
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223619300}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669775338}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1223619302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223619300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Perfect!
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E!"
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: "M\xFCkemmel!"
-    Object: {fileID: 0}
 --- !u!1 &1224066406
 GameObject:
   m_ObjectHideFlags: 0
@@ -5065,64 +4956,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
---- !u!1 &1248688360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1248688361}
-  - component: {fileID: 1248688363}
-  - component: {fileID: 1248688362}
-  m_Layer: 0
-  m_Name: Checkpoint (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1248688361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248688360}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.720001, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1550463629}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1248688362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248688360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 223419ec166aa6b4d906ae77d706abc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &1248688363
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248688360}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 5.452121}
-  m_Center: {x: 0, y: 0, z: -0.014549255}
 --- !u!1 &1271660402
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,64 +5091,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271660402}
   m_CullTransparentMesh: 1
---- !u!1 &1327789681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1327789682}
-  - component: {fileID: 1327789683}
-  m_Layer: 0
-  m_Name: Phrase10
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1327789682
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327789681}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669775338}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1327789683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327789681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: The lower the block in the stack, the more points you get for it.
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u0427\u0435\u043C \u043D\u0438\u0436\u0435 \u0431\u043B\u043E\u043A \u0432
-      \u0441\u0442\u043E\u043F\u043A\u0435, \u0442\u0435\u043C \u0431\u043E\u043B\u044C\u0448\u0435
-      \u0437\u0430 \u043D\u0435\u0433\u043E \u043E\u0447\u043A\u043E\u0432."
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: "Blok K\xFCp'e ne kadar yak\u0131nsa, onun i\xE7in o kadar \xE7ok puan
-      al\u0131rs\u0131n\u0131z."
-    Object: {fileID: 0}
 --- !u!1 &1331733897
 GameObject:
   m_ObjectHideFlags: 0
@@ -5485,14 +5260,21 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Hello! Let's begin.
+    Text: 'Hello!
+
+      Let''s practice first.
+
+      Tap or press "Space" to continue...'
     Object: {fileID: 0}
   - Language: Russian
-    Text: "\u041F\u0440\u0438\u0432\u0435\u0442! \u0414\u0430\u0432\u0430\u0439\u0442\u0435
-      \u043D\u0430\u0447\u043D\u0435\u043C."
+    Text: "\u041F\u0440\u0438\u0432\u0435\u0442!\n\u0421\u043D\u0430\u0447\u0430\u043B\u0430
+      \u043F\u043E\u0442\u0440\u0435\u043D\u0438\u0440\u0443\u0435\u043C\u0441\u044F.\n\u0422\u0430\u043F\u0430\u0439\u0442\u0435
+      \u043F\u043E \u044D\u043A\u0440\u0430\u043D\u0443 \u0438\u043B\u0438 \u0436\u043C\u0438\u0442\u0435
+      \"\u041F\u0440\u043E\u0431\u0435\u043B\" \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C..."
     Object: {fileID: 0}
   - Language: Turkish
-    Text: "Merhaba! Ba\u015Flayal\u0131m."
+    Text: "Merhaba!\n\xD6nce pratik yapal\u0131m.\nDevam etmek i\xE7in dokunun veya
+      \"Bo\u015Fluk\" tu\u015Funa bas\u0131n..."
     Object: {fileID: 0}
 --- !u!1 &1370642084
 GameObject:
@@ -5743,7 +5525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391839983}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.279999, y: 0, z: 0}
+  m_LocalPosition: {x: -24.779999, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6222,7 +6004,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "MA\u011EAZA"
+  m_text: "\u041C\u0410\u0413\u0410\u0417\u0418\u041D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -6481,7 +6263,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1391839984}
-  - {fileID: 1248688361}
   m_Father: {fileID: 6847548261138855480}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6930,61 +6711,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1580041944
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1580041945}
-  - component: {fileID: 1580041946}
-  m_Layer: 0
-  m_Name: Phrase4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1580041945
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580041944}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669775338}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1580041946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580041944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Great!
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041F\u0440\u0435\u043A\u0440\u0430\u0441\u043D\u043E!"
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: Harika!
-    Object: {fileID: 0}
 --- !u!1 &1602144361
 GameObject:
   m_ObjectHideFlags: 0
@@ -7118,7 +6844,7 @@ GameObject:
   - component: {fileID: 1606813324}
   - component: {fileID: 1606813325}
   m_Layer: 0
-  m_Name: Phrase7
+  m_Name: Phrase6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7137,7 +6863,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669775338}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1606813325
 MonoBehaviour:
@@ -7177,7 +6903,7 @@ GameObject:
   - component: {fileID: 1634410948}
   - component: {fileID: 1634410949}
   m_Layer: 0
-  m_Name: Phrase5
+  m_Name: Phrase4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7196,7 +6922,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669775338}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1634410949
 MonoBehaviour:
@@ -7235,7 +6961,7 @@ GameObject:
   - component: {fileID: 1638842929}
   - component: {fileID: 1638842930}
   m_Layer: 0
-  m_Name: Phrase11
+  m_Name: Phrase8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7254,7 +6980,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1669775338}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1638842930
 MonoBehaviour:
@@ -7271,17 +6997,26 @@ MonoBehaviour:
   data: 0
   entries:
   - Language: English
-    Text: Tap quickly at the end or press "Space" to release the pressure.
+    Text: 'Tap quickly or press "Space" to slow down the press before the Cube.
+
+      Swipe
+      up or press the "Up" arrow on the keyboard to save Cubic from the press.'
     Object: {fileID: 0}
   - Language: Russian
     Text: "\u0411\u044B\u0441\u0442\u0440\u043E \u0442\u0430\u043F\u0430\u0439\u0442\u0435
-      \u0432 \u043A\u043E\u043D\u0446\u0435 \u0438\u043B\u0438 \u0436\u043C\u0438\u0442\u0435
-      \"\u041F\u0440\u043E\u0431\u0435\u043B\" \u0434\u043B\u044F \u0441\u0431\u0440\u043E\u0441\u0430
-      \u0434\u0430\u0432\u043B\u0435\u043D\u0438\u044F."
+      \u0438\u043B\u0438 \u0436\u043C\u0438\u0442\u0435 \"\u041F\u0440\u043E\u0431\u0435\u043B\"
+      \u0434\u043B\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u044F
+      \u043F\u0440\u0435\u0441\u0441\u0430 \u043F\u0435\u0440\u0435\u0434 \u041A\u0443\u0431\u0438\u043A\u043E\u043C.\n\u0421\u0432\u0430\u0439\u043F
+      \u0432\u0432\u0435\u0440\u0445 \u0438\u043B\u0438 \u0441\u0442\u0440\u0435\u043B\u043A\u0430
+      \"\u0412\u0432\u0435\u0440\u0445\" \u043D\u0430 \u043A\u043B\u0430\u0432\u0438\u0430\u0442\u0443\u0440\u0435
+      \u0441\u043F\u0430\u0441\u0443\u0442 \u041A\u0443\u0431\u0438\u043A \u043E\u0442
+      \u043F\u0440\u0435\u0441\u0441\u0430."
     Object: {fileID: 0}
   - Language: Turkish
-    Text: "Sonunda h\u0131zl\u0131ca dokunun veya \"Bo\u015Fluk\" tu\u015Funa basarak
-      bas\u0131nc\u0131 b\u0131rak\u0131n."
+    Text: "H\u0131zl\u0131ca dokunun veya K\xFCp'\xFCn \xF6n\xFCnde bas\u0131nc\u0131
+      yava\u015Flatmak i\xE7in \"Bo\u015Fluk\" tu\u015Funa bas\u0131n.\nK\xFCp\xFC
+      presden kurtarmak i\xE7in yukar\u0131 do\u011Fru kayd\u0131r\u0131n veya klavyedeki
+      \"Yukar\u0131\" ok tu\u015Funa bas\u0131n."
     Object: {fileID: 0}
 --- !u!1 &1639761231
 GameObject:
@@ -7294,7 +7029,7 @@ GameObject:
   - component: {fileID: 1639761234}
   - component: {fileID: 1639761232}
   - component: {fileID: 1639761233}
-  - component: {fileID: 1639761235}
+  - component: {fileID: 1639761237}
   - component: {fileID: 1639761236}
   m_Layer: 5
   m_Name: GameScreen
@@ -7349,25 +7084,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1639761235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639761231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef463843f4b630a40b17b54c451d7402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _levelEntryPortal: {fileID: 299883564}
-  _checkpointContainer: {fileID: 2119831296}
-  _pistonPresser: {fileID: 157005186}
-  _cubicInputHandler: {fileID: 296935721}
-  _cubicMovement: {fileID: 296935720}
-  _phraseDisplay: {fileID: 1639761236}
-  _hasPressTraining: 1
 --- !u!114 &1639761236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7385,20 +7101,30 @@ MonoBehaviour:
   - {fileID: 1370482754}
   - {fileID: 1777514886}
   - {fileID: 825237960}
-  - {fileID: 1580041944}
   - {fileID: 1634410947}
   - {fileID: 868054268}
   - {fileID: 1606813323}
-  - {fileID: 1223619300}
   - {fileID: 335032223}
-  - {fileID: 1327789681}
   - {fileID: 1638842928}
-  - {fileID: 844968454}
-  - {fileID: 1745260746}
   _localization: {fileID: 1096287926}
   _text: {fileID: 314176861}
-  _defaultSpacing: 0
-  _russianSpacing: 0
+--- !u!114 &1639761237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639761231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d396d58cd552cad41a7089607c0353c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelEntryPortal: {fileID: 299883564}
+  _checkpointContainer: {fileID: 2119831296}
+  _phraseDisplay: {fileID: 1639761236}
+  _cubicInputHandler: {fileID: 296935721}
+  _cubic: {fileID: 296935703}
 --- !u!4 &1668506551 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 921384242159941299, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
@@ -7435,16 +7161,11 @@ Transform:
   - {fileID: 1370482755}
   - {fileID: 1777514887}
   - {fileID: 825237961}
-  - {fileID: 1580041945}
   - {fileID: 1634410948}
   - {fileID: 868054269}
   - {fileID: 1606813324}
-  - {fileID: 1223619301}
   - {fileID: 335032224}
-  - {fileID: 1327789682}
   - {fileID: 1638842929}
-  - {fileID: 844968455}
-  - {fileID: 1745260747}
   m_Father: {fileID: 607220458}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7760,61 +7481,6 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19854642, guid: 4de72d65c2293424cbe6461a89fe2997, type: 3}
   m_PrefabInstance: {fileID: 5128469285044856784}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1745260746
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1745260747}
-  - component: {fileID: 1745260748}
-  m_Layer: 0
-  m_Name: Phrase13
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1745260747
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745260746}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669775338}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1745260748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745260746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: English
-    Text: Fine!
-    Object: {fileID: 0}
-  - Language: Russian
-    Text: "\u041E\u0442\u043B\u0438\u0447\u043D\u043E!"
-    Object: {fileID: 0}
-  - Language: Turkish
-    Text: "S\xFCper!"
-    Object: {fileID: 0}
 --- !u!114 &1761122229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3413011493843418053, guid: e70333740e7d1284a91dcb61974675e2, type: 3}
@@ -8426,7 +8092,6 @@ MonoBehaviour:
   StarterChunk: {fileID: 616178229}
   AvailableChunks:
   - {fileID: 8873960975627514115, guid: bd0855def1a5a1943af8c29e35d1ec2b, type: 3}
-  - {fileID: 8873960975627514115, guid: 78d7d9d6d808d6c43ba10959f7280a2c, type: 3}
   - {fileID: 8873960975627514115, guid: 70b8100d62cb3f046bd5d90548929dff, type: 3}
   - {fileID: 8873960975627514115, guid: 08bf0c15b507be447807991bc33c43dd, type: 3}
   FinalChunk: {fileID: 6847548261138855483}
@@ -8492,7 +8157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OYNAT
+  m_text: "\u0418\u0413\u0420\u0410\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -10090,7 +9755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E\u011E\u0130T\u0130M"
+  m_text: "\u041E\u0411\u0423\u0427\u0415\u041D\u0418\u0415"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -12217,8 +11882,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3703218420502323705, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: saveLoad
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703218420502323705, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: detectLanguage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3703218420502323705, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
       propertyPath: currentLanguage
-      value: Turkish
+      value: Russian
       objectReference: {fileID: 0}
     - target: {fileID: 3703218420502323706, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
       propertyPath: m_Name
