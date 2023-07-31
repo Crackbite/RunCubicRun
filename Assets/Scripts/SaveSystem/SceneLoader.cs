@@ -9,11 +9,13 @@ public class SceneLoader : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static private void OnRuntimeMethodLoad()
     {
-        int level = PlayerPrefs.GetInt(LevelKey, 0);
+        const int DefaultValue = 0;
+
+        int level = PlayerPrefs.GetInt(LevelKey, DefaultValue);
 
         if (level == 0)
         {
-            int trainingStage = PlayerPrefs.GetInt(TrainingStageKey, 0);
+            int trainingStage = PlayerPrefs.GetInt(TrainingStageKey, DefaultValue);
             SceneManager.LoadScene(trainingStage);
         }
         else

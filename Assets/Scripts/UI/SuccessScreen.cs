@@ -10,7 +10,7 @@ public class SuccessScreen : Screen
     [SerializeField] private TMP_Text _level;
     [SerializeField] private GameDataHandler _gameDataHandler;
 
-    private const int TrainingStageAmount = 4;
+    private const int TrainingStageAmount = 5;
 
     private void OnEnable()
     {

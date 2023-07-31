@@ -96,14 +96,15 @@ public class GameDataHandler : MonoBehaviour
 
     private void OnGameEnded(GameResult result)
     {
-        const int LastTrainingSceneIndex = 3;
+        const int LastTrainingSceneIndex = 4;
+        const int DefaultValue = 0;
 
         if (result == GameResult.Win)
         {
             _score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
             PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, _score);
 
-            if (_level == 0 && _trainingStage < LastTrainingSceneIndex)
+            if (_level == DefaultValue && _trainingStage < LastTrainingSceneIndex)
             {
                 _trainingStage++;
                 PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage);
