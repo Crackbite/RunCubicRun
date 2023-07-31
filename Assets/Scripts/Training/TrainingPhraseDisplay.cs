@@ -11,11 +11,7 @@ public class TrainingPhraseDisplay : MonoBehaviour
     [SerializeField] private List<GameObject> _phrases;
     [SerializeField] private LeanLocalization _localization;
     [SerializeField] private TMP_Text _text;
-    [SerializeField] private float _defaultSpacing = 10f;
-    [SerializeField] private float _russianSpacing = 0f;
 
-    private string _currentLanguage;
-    private readonly string RussianLanguage = "Russian";
     private bool _isDisplayStop;
     Tweener _tweener = null;
 
@@ -29,16 +25,6 @@ public class TrainingPhraseDisplay : MonoBehaviour
     private void Start()
     {
         PhrasesAmount = _phrases.Count;
-        _currentLanguage = _localization.CurrentLanguage;
-
-        if (_currentLanguage == RussianLanguage)
-        {
-            _text.characterSpacing = _russianSpacing;
-        }
-        else
-        {
-            _text.characterSpacing = _defaultSpacing;
-        }
     }
 
     public void Display(int _nextPhraseNumber)
