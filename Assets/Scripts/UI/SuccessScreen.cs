@@ -47,7 +47,11 @@ public class SuccessScreen : Screen
 
     private void OnNextClicked()
     {
-        ChunkStorage.Instance.Restart();
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
+
         LoadScene();
     }
 

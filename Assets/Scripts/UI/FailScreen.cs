@@ -59,7 +59,11 @@ public class FailScreen : Screen
 
     private void OnHomeClicked()
     {
-        ChunkStorage.Instance.Restart();
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
+
         LoadScene();
     }
 
