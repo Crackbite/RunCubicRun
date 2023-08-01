@@ -7,6 +7,7 @@ public class SidewayMovement : MonoBehaviour
 {
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _changeLineSpeed = .1f;
+    [SerializeField] private AudioSource _lineChangingSound;
 
     private float _currentLineIndex = 1f;
     private float _initialPositionZ;
@@ -62,6 +63,11 @@ public class SidewayMovement : MonoBehaviour
     {
         _lineTweener = transform.DOMoveZ(targetPositionZ, _changeLineSpeed).OnUpdate(StopLineTweener)
             .OnComplete(() => LineReached?.Invoke());
+
+        if (_cubic.transform.position.z != targetPositionZ)
+        {
+            _lineChangingSound.Play();
+        }
     }
 
     private bool IsOnRoad()
