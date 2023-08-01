@@ -10,6 +10,7 @@ public class LevelEntryPortal : HyperspacePortal
     [SerializeField] private float _rotationDurationFactor = .8f;
     [SerializeField] private float _scalingDurationFactor = .5f;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private AudioSource _throwingSound;
 
     private float _targetYPosition;
 
@@ -43,7 +44,7 @@ public class LevelEntryPortal : HyperspacePortal
         yield return new WaitForSeconds(Delay);
 
         ThrowingOut?.Invoke();
-
+        _throwingSound.Play();
         Quaternion startRotation = CubicTransform.rotation;
         CubicTransform.position = Center.position;
 
