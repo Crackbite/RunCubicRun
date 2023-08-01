@@ -10,6 +10,7 @@ public class LevelEntryPortal : HyperspacePortal
     [SerializeField] private float _rotationDurationFactor = .8f;
     [SerializeField] private float _scalingDurationFactor = .5f;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private ParticleSystem _landingEffect;
 
     private float _targetYPosition;
 
@@ -62,6 +63,12 @@ public class LevelEntryPortal : HyperspacePortal
         throwSequence.Join(rotation);
         throwSequence.Join(flight);
 
-        throwSequence.OnComplete(() => { ThrownOut?.Invoke(); });
+        throwSequence.OnComplete(() =>
+        {
+            ThrownOut?.Invoke();
+            Vector3 effectPosition = CubicTransform.position;
+            _landingEffect.transform.position = new Vector3(effectPosition.x, _landingEffect.transform.position.y, effectPosition.z);
+            _landingEffect.Play();
+        });
     }
 }
