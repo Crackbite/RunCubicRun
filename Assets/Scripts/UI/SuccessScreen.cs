@@ -10,7 +10,7 @@ public class SuccessScreen : Screen
     [SerializeField] private TMP_Text _level;
     [SerializeField] private GameDataHandler _gameDataHandler;
 
-    private const int TrainingStageAmount = 4;
+    private const int TrainingStageAmount = 5;
 
     private void OnEnable()
     {
@@ -47,7 +47,11 @@ public class SuccessScreen : Screen
 
     private void OnNextClicked()
     {
-        ChunkStorage.Instance.Restart();
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
+
         LoadScene();
     }
 

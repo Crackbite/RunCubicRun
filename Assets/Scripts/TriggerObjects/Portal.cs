@@ -61,7 +61,9 @@ public class Portal : MonoBehaviour
 
         foreach (KeyValuePair<BonusInfo, BonusItem> pair in _activeBonuses)
         {
-            if (pair.Value.Bonus is PortalRecolorBonus)
+            Bonus bonus = pair.Value.Bonus;
+
+            if (bonus != null && bonus is PortalRecolorBonus)
             {
                 return;
             }

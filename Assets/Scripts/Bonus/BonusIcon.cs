@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class BonusIcon : MonoBehaviour
     [SerializeField] private Color _badBackground = new Color(1f, 0.33f, 0.33f);
 
     private Image _background;
+    private readonly string TimeUnitName = "TimeUnit";
 
     public void Destroy()
     {
@@ -33,6 +35,6 @@ public class BonusIcon : MonoBehaviour
 
     public void SetTime(float time)
     {
-        _time.text = $"{time:F0} sec.";
+        _time.text = string.Format("{0} {1}", time, LeanLocalization.GetTranslationText(TimeUnitName));
     }
 }
