@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1125103787561794005}
   - component: {fileID: 1125103787561794010}
+  - component: {fileID: 6699192847619413514}
   - component: {fileID: 473514939}
+  - component: {fileID: 1125103787765389398}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -43,13 +45,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125103787561794004}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c2811e00f7a91745b1d4adfc0dac6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   StarterChunk: {fileID: 5165864138799115166}
-  AvailableChunks:
+  FinalChunk: {fileID: 5808037347613585001}
+  ChunkContainer: {fileID: 1125103788298553187}
+  GameDataHandler: {fileID: 0}
+  _chunksToGenerate: 5
+  _rotateChance: 50
+  _debugLog: 1
+  _availableChunks:
   - {fileID: 6967138761191338800, guid: 62e816e84bc1e4e49ad963d695cae581, type: 3}
   - {fileID: 3603856022589679541, guid: 2b21efc7858a25c4abf3c72058eda9c8, type: 3}
   - {fileID: 8992573432406854089, guid: 735e22d251fcb9d4f97f68cf6fcde4cf, type: 3}
@@ -90,12 +98,23 @@ MonoBehaviour:
   - {fileID: 4835043034776467633, guid: 492d122890e8a8046b9ac4ddff8e44c3, type: 3}
   - {fileID: 921064305837913309, guid: 533a564d519d785459ba032fb239c136, type: 3}
   - {fileID: 3182285328914649228, guid: 5f5812d4b0952024b8c9d101266258c3, type: 3}
+--- !u!114 &6699192847619413514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125103787561794004}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a464b2e9dcbe714d8b4403364fa37bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StarterChunk: {fileID: 5165864138799115166}
   FinalChunk: {fileID: 5808037347613585001}
   ChunkContainer: {fileID: 1125103788298553187}
   GameDataHandler: {fileID: 0}
-  _chunksToGenerate: 5
-  _rotateChance: 50
-  _debugLog: 1
+  _trainingStageHolder: {fileID: 11400000, guid: d67f42baeac19364a950b1c217b26c5e, type: 2}
 --- !u!114 &473514939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +129,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 0}
   _offset: 18
-  _chunkGenerator: {fileID: 1125103787561794010}
+  _generatorStarter: {fileID: 1125103787765389398}
+--- !u!114 &1125103787765389398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125103787561794004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11aa7e2c3b3f9b84580180abebf0e0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainGenerator: {fileID: 1125103787561794010}
+  _trainingChunkGenerator: {fileID: 6699192847619413514}
+  _gameDataHandler: {fileID: 0}
+  _gameTrainer: {fileID: 0}
 --- !u!1 &1125103788298553186
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public abstract class Screen : MonoBehaviour
 
     public event Action Hidden;
     public event Action Showed;
+
+    public IReadOnlyCollection<DOTweenAnimation> TweenAnimations => _tweenAnimations;
 
     private void Start()
     {

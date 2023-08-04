@@ -10,8 +10,6 @@ public class SuccessScreen : Screen
     [SerializeField] private TMP_Text _level;
     [SerializeField] private GameDataHandler _gameDataHandler;
 
-    private const int TrainingStageAmount = 5;
-
     private void OnEnable()
     {
         _next.onClick.AddListener(OnNextClicked);
@@ -28,16 +26,8 @@ public class SuccessScreen : Screen
 
     private void LoadScene()
     {
-        int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-
-        if (sceneBuildIndex < TrainingStageAmount)
-        {
-            SceneManager.LoadScene(++sceneBuildIndex);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneBuildIndex);
-        }
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     private void OnDataRestored()
