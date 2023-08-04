@@ -53,9 +53,9 @@ Properties {
 	_WeightBold			("Weight Bold", float) = 0.5
 
 	_ShaderFlags		("Flags", float) = 0
-	_ScaleRatioA		("Scale RatioA", float) = 1
-	_ScaleRatioB		("Scale RatioB", float) = 1
-	_ScaleRatioC		("Scale RatioC", float) = 1
+	_ScaleRatioA		("Scale RatioA", float) = 5
+	_ScaleRatioB		("Scale RatioB", float) = 5
+	_ScaleRatioC		("Scale RatioC", float) = 5
 
 	_MainTex			("Font Atlas", 2D) = "white" {}
 	_TextureWidth		("Texture Width", float) = 512
@@ -200,7 +200,7 @@ SubShader {
 
 			float bScale = scale;
 			bScale /= 1 + ((_UnderlaySoftness*_ScaleRatioC) * bScale);
-			float bBias = (0.5 - weight) * bScale - 0.5 - ((_UnderlayDilate * _ScaleRatioC) * 0.5 * bScale);
+			float bBias = (0.1 - weight) * bScale - 1 - ((_UnderlayDilate * _ScaleRatioC) * 0.1 * bScale);
 
 			float x = -(_UnderlayOffsetX * _ScaleRatioC) * _GradientScale / _TextureWidth;
 			float y = -(_UnderlayOffsetY * _ScaleRatioC) * _GradientScale / _TextureHeight;

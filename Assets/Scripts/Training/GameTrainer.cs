@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameTrainer : MonoBehaviour
 {
@@ -7,68 +6,52 @@ public class GameTrainer : MonoBehaviour
     [SerializeField] private CheckpointContainer _checkpointContainer;
     [SerializeField] private TrainingPhraseDisplay _phraseDisplay;
     [SerializeField] private CubicInputHandler _cubicInputHandler;
+    [SerializeField] private TrainingScreen _trainingScreen;
 
     private int _nextPhraseNumber;
     private bool _isGamePaused;
 
-    protected virtual void OnEnable()
+    public TrainingScreen TrainingScreen => _trainingScreen;
+
+    private void OnEnable()
     {
         _levelEntryPortal.ThrownOut += OnCubicThrownOut;
         _cubicInputHandler.PressSpeedReduced += OnPressSpeedReduced;
-        _cubicInputHandler.LineChanged += OnLineChanged;
-        _phraseDisplay.DisplayCompleted += OnDisplayCompleted;
+        _phraseDisplay.Completed += OnPhraseDisplayCompleted;
     }
 
-    protected virtual void OnDisable()
+    private void OnDisable()
     {
         _levelEntryPortal.ThrownOut -= OnCubicThrownOut;
         _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
-        _cubicInputHandler.LineChanged -= OnLineChanged;
-        _phraseDisplay.DisplayCompleted -= OnDisplayCompleted;
+        _phraseDisplay.Completed -= OnPhraseDisplayCompleted;
     }
 
-    protected void StartTraining()
+    public void StartTraining()
     {
-        const float Delay = 0.5f;
-
         if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
         {
-            Invoke(nameof(Train), Delay);
+            _phraseDisplay.Display(_nextPhraseNumber);
+            _trainingScreen.Enter();
+            _nextPhraseNumber++;
         }
     }
-    protected void Unpause()
+
+    private void OnPressSpeedReduced()
     {
         if (_isGamePaused)
         {
-            Time.timeScale = 1f;
-            _phraseDisplay.CleanText();
-            _isGamePaused = false;
+            _trainingScreen.Exit();
+            _phraseDisplay.End();
         }
     }
 
-    protected virtual void OnPressSpeedReduced()
+    private void OnPhraseDisplayCompleted()
     {
-        Unpause();
+        const int PauseValue = 0;
+
+        _isGamePaused = Time.timeScale == PauseValue;
     }
-
-    protected virtual void OnLineChanged(Vector3 direction)
-    {
-        Unpause();
-    }
-
-
-    private void Train()
-    {
-        _phraseDisplay.Display(_nextPhraseNumber);
-        _nextPhraseNumber++;
-    }
-
-    private void OnDisplayCompleted()
-    {
-        Time.timeScale = 0f;
-        _isGamePaused = true;
-    }
-
 
     private void OnCubicThrownOut()
     {

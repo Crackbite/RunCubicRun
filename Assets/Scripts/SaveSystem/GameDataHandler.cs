@@ -8,10 +8,12 @@ public class GameDataHandler : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private List<Skin> _skins;
     [SerializeField] private bool _deletePlayerPrefs;
+    [SerializeField] private TrainingStageHolder _trainingStageHolder;
 
     private float _score;
     private int _level;
-    private int _trainingStage;
+    private int _trainingStage = 1;
+    private int _trainingStageAmount;
     private bool _isActiveSkinChoosed;
     private bool _isSkinBought;
 
@@ -19,6 +21,8 @@ public class GameDataHandler : MonoBehaviour
 
     public float Score => _score;
     public int Level => _level;
+    public int TrainingStageNumber => _trainingStage;
+    public int TrainingStageAmount => _trainingStageAmount;
     public IReadOnlyList<Skin> Skins => _skins;
 
     private void OnValidate()
@@ -38,12 +42,13 @@ public class GameDataHandler : MonoBehaviour
     {
         const int DefaultValue = 0;
 
+        _trainingStageAmount = _trainingStageHolder.StageAmount;
         _score = PlayerPrefs.GetFloat(PlayerPrafsKeys.ScoreKey, DefaultValue);
         _level = PlayerPrefs.GetInt(PlayerPrafsKeys.LevelKey, DefaultValue);
 
         if (_level == DefaultValue)
         {
-            _trainingStage = PlayerPrefs.GetInt(PlayerPrafsKeys.TrainingStageKey, 0);
+            _trainingStage = PlayerPrefs.GetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage);
         }
 
         foreach (Skin skin in _skins)
@@ -96,7 +101,6 @@ public class GameDataHandler : MonoBehaviour
 
     private void OnGameEnded(GameResult result)
     {
-        const int LastTrainingSceneIndex = 4;
         const int DefaultValue = 0;
 
         if (result == GameResult.Win)
@@ -104,15 +108,13 @@ public class GameDataHandler : MonoBehaviour
             _score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
             PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, _score);
 
-            if (_level == DefaultValue && _trainingStage < LastTrainingSceneIndex)
+            if (_level == DefaultValue && _trainingStage < _trainingStageAmount)
             {
-                _trainingStage++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage);
+                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage + 1);
             }
             else
             {
-                _level++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _level);
+                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _level + 1);
             }
         }
         else if (_isSkinBought)

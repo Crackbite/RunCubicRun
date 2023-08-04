@@ -10,8 +10,9 @@ public class MainCameraTarget : MonoBehaviour
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private MeshRenderer _starterRoad;
     [SerializeField] private MeshRenderer _finalRoad;
-    [SerializeField] private ChunkGenerator _chunkGenerator;
+    [SerializeField] private LevelGenerationStarter _generatorStarter;
 
+    private ChunkGenerator _currentGenerator;
     private bool _hasStarted;
     private bool _isPositionChangeStopped;
     private float _leftLimit;
@@ -20,7 +21,7 @@ public class MainCameraTarget : MonoBehaviour
 
     private void OnEnable()
     {
-        _chunkGenerator.Completed += OnChunkGeneratorCompleted;
+        _generatorStarter.GeneratorStarted += OnGeneratorStarted;
         _cubic.Hit += OnCubicHit;
     }
 
@@ -44,7 +45,8 @@ public class MainCameraTarget : MonoBehaviour
 
     private void OnDisable()
     {
-        _chunkGenerator.Completed -= OnChunkGeneratorCompleted;
+        _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
+        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
         _cubic.Hit -= OnCubicHit;
     }
 
@@ -92,5 +94,11 @@ public class MainCameraTarget : MonoBehaviour
             _rightLimit - halfCamWidth);
 
         transform.position = new Vector3(clampedX, LimitOnY, LimitOnZ);
+    }
+
+    private void OnGeneratorStarted(ChunkGenerator currentGenerator)
+    {
+        _currentGenerator = currentGenerator;
+        _currentGenerator.Completed += OnChunkGeneratorCompleted;
     }
 }

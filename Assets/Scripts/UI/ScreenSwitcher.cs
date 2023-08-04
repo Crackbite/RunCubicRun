@@ -91,15 +91,15 @@ public class ScreenSwitcher : MonoBehaviour
         SetScreen(_menuScreen);
     }
 
+    private void SetSuccessScreen()
+    {
+        SetScreen(_successScreen);
+    }
+
     private void SetScreen(Screen newScreen)
     {
         SwitchCurrentScreen(newScreen);
         _currentScreen.Enter();
-    }
-
-    private void SetSuccessScreen()
-    {
-        SetScreen(_successScreen);
     }
 
     private void SwitchCurrentScreen(Screen newScreen)
