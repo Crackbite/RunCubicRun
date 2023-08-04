@@ -52,7 +52,7 @@ public class CubicMovement : MonoBehaviour
         if (_canMove)
         {
             _cubic.transform.Translate(
-                _cubicSpeedController.CurrentSpeed * Time.deltaTime * Vector3.right,
+                _cubicSpeedController.CurrentSpeed * UnityEngine.Time.deltaTime * Vector3.right,
                 Space.World);
         }
     }
@@ -138,7 +138,12 @@ public class CubicMovement : MonoBehaviour
 
     private void OnLineChanged(Vector3 direction)
     {
-        MoveToSide(direction);
+        const float pausedScale = 0;
+
+        if (Time.timeScale != pausedScale)
+        {
+            MoveToSide(direction);
+        }
     }
 
     private void OnLineReached()
