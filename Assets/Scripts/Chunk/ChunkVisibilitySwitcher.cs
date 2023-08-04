@@ -4,7 +4,9 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private float _offset = 1f;
-    [SerializeField] private ChunkGenerator _chunkGenerator;
+    [SerializeField] private LevelGenerationStarter _generatorStarter;
+
+    private ChunkGenerator _currentGenerator;
 
     private Chunk[] _chunks;
     private float[] _leftEdges;
@@ -12,13 +14,15 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        _chunkGenerator.Completed += OnGenerationCompleted;
+        _generatorStarter.GeneratorStarted += OnGeneratorStarted;
     }
 
     private void OnDisable()
     {
-        _chunkGenerator.Completed -= OnGenerationCompleted;
+        _currentGenerator.Completed -= OnChunkGenerationCompleted;
+        _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
     }
+
     private void DisableChunkAbroadScreen()
     {
         float camWidth = _mainCamera.orthographicSize * 2f * _mainCamera.aspect;
@@ -43,7 +47,13 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
         }
     }
 
-    private void OnGenerationCompleted()
+    private void OnGeneratorStarted(ChunkGenerator currentGenerator)
+    {
+        _currentGenerator = currentGenerator;
+        _currentGenerator.Completed += OnChunkGenerationCompleted;
+    }
+
+    private void OnChunkGenerationCompleted()
     {
         const float Dilay = 0f;
         const float RepeatRate = 0.25f;
