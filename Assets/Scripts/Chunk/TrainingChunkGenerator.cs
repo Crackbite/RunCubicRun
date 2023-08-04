@@ -1,20 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainingChunkGenerator : ChunkGenerator
 {
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private TrainingStageHolder _trainingStageHolder;
 
-    private void Start()
+    private void OnEnable()
     {
-        GenerateLevel();
+        int stage = GameDataHandler.TrainingStageNumber;
+
+            if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
+            {
+                GenerateLevel(currentStageInfo.Chunks);
+                CompleteGeneration();
+                return;
+            }
+
         CompleteGeneration();
     }
 
-    private void GenerateLevel()
+    private void GenerateLevel(IReadOnlyList<Chunk> availableChunks)
     {
         Chunk lastChunk = StarterChunk;
 
-        foreach (Chunk chunk in AvailableChunks)
+        foreach (Chunk chunk in availableChunks)
         {
             Vector3 chunkPosition = CalculateNewChunkPosition(lastChunk, chunk);
             lastChunk = Instantiate(chunk, chunkPosition, Quaternion.identity, ChunkContainer);
