@@ -9,6 +9,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
     [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
     [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
     [SerializeField] private bool _debugLog;
+    [SerializeField] protected Chunk[] _availableChunks;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
         }
         else
         {
-            var chunkComposer = new ChunkComposer(AvailableChunks);
+            var chunkComposer = new ChunkComposer(_availableChunks);
             List<Chunk> chunks = chunkComposer.GetSuitableChunks(GameDataHandler.Level, _chunksToGenerate);
 
             GenerateLevel(chunks);
@@ -45,7 +46,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
             }
             else if (chunks[i] is ChunkData chunkData)
             {
-                newChunk = AvailableChunks.FirstOrDefault(chunk => chunkData.Name.StartsWith(chunk.name));
+                newChunk = _availableChunks.FirstOrDefault(chunk => chunkData.Name.StartsWith(chunk.name));
 
                 if (newChunk == null)
                 {
