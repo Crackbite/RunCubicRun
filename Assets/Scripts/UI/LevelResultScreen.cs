@@ -14,6 +14,8 @@ public class LevelResultScreen : Screen
 
     private int _gameFirstLevel = 1;
 
+    protected bool IsTraining;
+
     protected virtual void OnEnable()
     {
         _restart.onClick.AddListener(OnRestartClicked);
@@ -25,6 +27,7 @@ public class LevelResultScreen : Screen
         }
         else
         {
+            IsTraining = true;
             _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
         }
     }

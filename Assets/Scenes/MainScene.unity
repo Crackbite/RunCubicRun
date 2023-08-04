@@ -383,6 +383,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cf01c57d481ce4196fb9cdb9ae4979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1753133644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6112402420483504828, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+  m_PrefabInstance: {fileID: 6112402420131175870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1761122229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3413011493843418053, guid: e70333740e7d1284a91dcb61974675e2, type: 3}
@@ -1231,6 +1242,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 373516357}
     - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _refresh
+      value: 
+      objectReference: {fileID: 1753133644}
+    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameDataHandler
       value: 
       objectReference: {fileID: 1155909879}
@@ -1248,11 +1263,11 @@ PrefabInstance:
       objectReference: {fileID: 123472312}
     - target: {fileID: 6112402419462169894, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_text
-      value: "\u041C\u0410\u0413\u0410\u0417\u0418\u041D"
+      value: STORE
       objectReference: {fileID: 0}
     - target: {fileID: 6112402419886943275, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_text
-      value: "\u0418\u0413\u0420\u0410\u0422\u042C"
+      value: PLAY
       objectReference: {fileID: 0}
     - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameDataHandler
@@ -1264,11 +1279,11 @@ PrefabInstance:
       objectReference: {fileID: 895385473}
     - target: {fileID: 6112402420125128332, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_text
-      value: "\u0423\u0420\u041E\u0412\u0415\u041D\u042C"
+      value: LEVEL
       objectReference: {fileID: 0}
     - target: {fileID: 6112402420140730201, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_text
-      value: "\u041B\u0418\u0414\u0415\u0420\u0411\u041E\u0420\u0414"
+      value: LEADERBOARD
       objectReference: {fileID: 0}
     - target: {fileID: 6112402420321845760, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameStatusTracker
@@ -1365,6 +1380,18 @@ PrefabInstance:
     - target: {fileID: 6112402420321845884, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402420483504828, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 0.49716982
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402420483504828, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 0.49716982
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402420483504828, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7381325183862270716, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _scoreAllocator

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class FailScreen : LevelResultScreen
 {
     [SerializeField] private Button _home;
+    [SerializeField] private Button _refresh;
     [SerializeField] private float _maxWindowDelay = 1.5f;
     [SerializeField] private DOTweenAnimation _windowAnimation;
     [SerializeField] private DOTweenAnimation _containerAnimation;
@@ -13,6 +14,11 @@ public class FailScreen : LevelResultScreen
     {
         base.OnEnable();
         _home.onClick.AddListener(OnHomeClicked);
+
+        if (IsTraining)
+        {
+            _refresh.interactable = false;
+        }
     }
 
     protected override void OnDisable()
