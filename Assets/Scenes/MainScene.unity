@@ -188,6 +188,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624353c9221a8c7469bc355c388761de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &228487528 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1155883743, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+  m_PrefabInstance: {fileID: 6112402420131175870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &296935703 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9114075409595079696, guid: ec6b484b736c0f84ba36c4379f65b483, type: 3}
@@ -253,6 +264,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2811e00f7a91745b1d4adfc0dac6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &581378640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2004482912, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+  m_PrefabInstance: {fileID: 6112402420131175870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!23 &633029936 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2005661003326047089, guid: ea13bf7272b3b70448530baa969d3bb2, type: 3}
@@ -272,6 +294,11 @@ MonoBehaviour:
 --- !u!1 &868392493 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3502618509486106617, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+  m_PrefabInstance: {fileID: 6758868821474518652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &895385473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3703218420709900622, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
   m_PrefabInstance: {fileID: 6758868821474518652}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &940948793 stripped
@@ -822,6 +849,10 @@ PrefabInstance:
       propertyPath: _gameDataHandler
       value: 
       objectReference: {fileID: 1155909879}
+    - target: {fileID: 988137716252708907, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
+      propertyPath: _deletePlayerPrefs
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3696435025986357439, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
       propertyPath: _storeScreen
       value: 
@@ -1100,6 +1131,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 314176860, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1025
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155883743, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: FallbackText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155883743, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: translationName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2004482912, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: translationName
+      value: Level
+      objectReference: {fileID: 0}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameDataHandler
       value: 
@@ -1156,6 +1203,14 @@ PrefabInstance:
       propertyPath: _gameDataHandler
       value: 
       objectReference: {fileID: 1155909879}
+    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _levelLocalizedText
+      value: 
+      objectReference: {fileID: 228487528}
+    - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _trainingStagePhrase
+      value: 
+      objectReference: {fileID: 895385473}
     - target: {fileID: 6112402419359721503, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _scoreAllocator
       value: 
@@ -1164,10 +1219,38 @@ PrefabInstance:
       propertyPath: _gameStatusTracker
       value: 
       objectReference: {fileID: 123472312}
+    - target: {fileID: 6112402419462169894, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_text
+      value: STORE
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402419886943275, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_text
+      value: PLAY
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _levelPhrase
+      value: 
+      objectReference: {fileID: 868392493}
     - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameDataHandler
       value: 
       objectReference: {fileID: 1155909879}
+    - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _levelLocalizedText
+      value: 
+      objectReference: {fileID: 581378640}
+    - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _trainingStagePhrase
+      value: 
+      objectReference: {fileID: 895385473}
+    - target: {fileID: 6112402420125128332, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_text
+      value: LEVEL
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112402420140730201, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: m_text
+      value: LEADERBOARD
+      objectReference: {fileID: 0}
     - target: {fileID: 6112402420321845760, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameStatusTracker
       value: 
@@ -1324,6 +1407,20 @@ PrefabInstance:
     - target: {fileID: 3703218420502323706, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
       propertyPath: m_Name
       value: LeanLocalization
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624132472506917244, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: entries.Array.data[0].Text
+      value: Hello! Let's practice to start.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624132472506917244, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: entries.Array.data[1].Text
+      value: "\u041F\u0440\u0438\u0432\u0435\u0442! \u0414\u0430\u0432\u0430\u0439\u0442\u0435
+        \u043F\u043E\u0442\u0440\u0435\u043D\u0438\u0440\u0443\u0435\u043C\u0441\u044F
+        \u0434\u043B\u044F \u043D\u0430\u0447\u0430\u043B\u0430."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624132472506917244, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}
+      propertyPath: entries.Array.data[2].Text
+      value: "Merhaba! Ba\u015Flamak i\xE7in pratik yapal\u0131m."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eede4943daac35e4aad6b783370b8e8a, type: 3}

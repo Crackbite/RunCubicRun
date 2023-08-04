@@ -1,38 +1,20 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SuccessScreen : Screen
+public class SuccessScreen : LevelResultScreen
 {
     [SerializeField] private Button _next;
-    [SerializeField] private Button _restart;
-    [SerializeField] private TMP_Text _level;
-    [SerializeField] private GameDataHandler _gameDataHandler;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         _next.onClick.AddListener(OnNextClicked);
-        _restart.onClick.AddListener(OnRestartClicked);
-        _gameDataHandler.DataRestored += OnDataRestored;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         _next.onClick.RemoveListener(OnNextClicked);
-        _restart.onClick.RemoveListener(OnRestartClicked);
-        _gameDataHandler.DataRestored -= OnDataRestored;
-    }
-
-    private void LoadScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-    }
-
-    private void OnDataRestored()
-    {
-        _level.text += (_gameDataHandler.Level - 1).ToString();
     }
 
     private void OnNextClicked()
@@ -42,11 +24,6 @@ public class SuccessScreen : Screen
             ChunkStorage.Instance.Restart();
         }
 
-        LoadScene();
-    }
-
-    private void OnRestartClicked()
-    {
         LoadScene();
     }
 }

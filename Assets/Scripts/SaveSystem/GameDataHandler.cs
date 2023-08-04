@@ -22,6 +22,7 @@ public class GameDataHandler : MonoBehaviour
     public float Score => _score;
     public int Level => _level;
     public int TrainingStageNumber => _trainingStage;
+    public int TrainingStageAmount => _trainingStageAmount;
     public IReadOnlyList<Skin> Skins => _skins;
 
     private void OnValidate()
@@ -109,13 +110,11 @@ public class GameDataHandler : MonoBehaviour
 
             if (_level == DefaultValue && _trainingStage < _trainingStageAmount)
             {
-                _trainingStage++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage);
+                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage + 1);
             }
             else
             {
-                _level++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _level);
+                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _level + 1);
             }
         }
         else if (_isSkinBought)

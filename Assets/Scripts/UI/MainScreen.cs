@@ -15,16 +15,16 @@ public class MainScreen : Screen
     private void OnEnable()
     {
         _gameDataHandler.DataRestored += OnDataRestored;
-        _levelLocalizedText.TranslationUpdated += OnLevelUpdated;
+        _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
     }
 
     private void OnDisable()
     {
         _gameDataHandler.DataRestored -= OnDataRestored;
-        _levelLocalizedText.TranslationUpdated -= OnLevelUpdated;
+        _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
-    private void OnLevelUpdated()
+    private void OnLevelTranslationUpdated()
     {
         if (_canUpdateLevel)
         {
@@ -46,7 +46,12 @@ public class MainScreen : Screen
 
         if (currentLevel > TrainingValue)
         {
+            _levelLocalizedText.TranslationName = _levelHeaderPhrase.name;
             _level.text = $"{_level.text} {currentLevel}";
+        }
+        else
+        {
+            _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
         }
     }
 }
