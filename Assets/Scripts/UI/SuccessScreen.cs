@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SuccessScreen : LevelResultScreen
 {
     [SerializeField] private Button _next;
+
+    public event Action NextLevelLoading;
 
     protected override void OnEnable()
     {
@@ -15,6 +18,11 @@ public class SuccessScreen : LevelResultScreen
     {
         base.OnDisable();
         _next.onClick.RemoveListener(OnNextClicked);
+    }
+
+    protected override void RestartLevel()
+    {
+        NextLevelLoading?.Invoke();
     }
 
     private void OnNextClicked()

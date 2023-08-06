@@ -4,21 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelResultScreen : Screen
+public abstract class LevelResultScreen : Screen
 {
-    [SerializeField] private Button _restart;
+    [SerializeField] private Button _home;
     [SerializeField] private TMP_Text _level;
     [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
     [SerializeField] private GameObject _trainingStagePhrase;
 
     private int _gameFirstLevel = 1;
+    private bool _isLevelRestarting = true;
 
     protected bool IsTraining;
 
     protected virtual void OnEnable()
     {
-        _restart.onClick.AddListener(OnRestartClicked);
+        _home.onClick.AddListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
 
         if (_gameDataHandler.Level >= _gameFirstLevel)
@@ -34,7 +35,7 @@ public class LevelResultScreen : Screen
 
     protected virtual void OnDisable()
     {
-        _restart.onClick.RemoveListener(OnRestartClicked);
+        _home.onClick.RemoveListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
@@ -42,7 +43,14 @@ public class LevelResultScreen : Screen
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
+
+        if (_isLevelRestarting)
+        {
+            RestartLevel();
+        }
     }
+
+    protected abstract void RestartLevel();
 
     private void UpdateTrainingStageText()
     {
@@ -63,8 +71,9 @@ public class LevelResultScreen : Screen
         UpdateTrainingStageText();
     }
 
-    private void OnRestartClicked()
+    private void OnHomeClicked()
     {
+        _isLevelRestarting = false;
         LoadScene();
     }
 }

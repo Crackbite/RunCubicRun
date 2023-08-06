@@ -1,19 +1,22 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FailScreen : LevelResultScreen
 {
-    [SerializeField] private Button _home;
+    [SerializeField] private Button _restart;
     [SerializeField] private Button _refresh;
     [SerializeField] private float _maxWindowDelay = 1.5f;
     [SerializeField] private DOTweenAnimation _windowAnimation;
     [SerializeField] private DOTweenAnimation _containerAnimation;
 
+    public event Action LevelRestarting;
+
     protected override void OnEnable()
     {
         base.OnEnable();
-        _home.onClick.AddListener(OnHomeClicked);
+        _restart.onClick.AddListener(OnRestartClicked);
 
         if (IsTraining)
         {
@@ -24,7 +27,7 @@ public class FailScreen : LevelResultScreen
     protected override void OnDisable()
     {
         base.OnDisable();
-        _home.onClick.RemoveListener(OnHomeClicked);
+        _restart.onClick.RemoveListener(OnRestartClicked);
     }
 
     public void Enter(GameResult gameResult)
@@ -45,8 +48,12 @@ public class FailScreen : LevelResultScreen
         base.Enter();
     }
 
+    protected override void RestartLevel()
+    {
+        LevelRestarting?.Invoke();
+    }
 
-    private void OnHomeClicked()
+    private void OnRestartClicked()
     {
         if (ChunkStorage.Instance != null)
         {

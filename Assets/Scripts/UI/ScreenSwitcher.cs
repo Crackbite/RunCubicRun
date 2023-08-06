@@ -10,24 +10,24 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private GameDataHandler _gameDataHandler;
 
     private Screen _currentScreen;
 
+    public event Action GameScreenSet;
+
     private void OnEnable()
     {
+        _gameDataHandler.DataRestored += OnDataRestored;
         _menuScreen.StartClicked += OnMenuStartClicked;
         _menuScreen.StoreClicked += OnMenuStoreClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
         _storeScreen.CloseClicked += OnStoreCloseClicked;
     }
 
-    private void Start()
-    {
-        SetDefaultScreen();
-    }
-
     private void OnDisable()
     {
+        _gameDataHandler.DataRestored -= OnDataRestored;
         _menuScreen.StartClicked -= OnMenuStartClicked;
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
@@ -58,6 +58,18 @@ public class ScreenSwitcher : MonoBehaviour
         SetStoreScreen();
     }
 
+    private void OnDataRestored()
+    {
+        if (_gameDataHandler.IsLevelRestarting)
+        {
+            SetGameScreen();
+        }
+        else
+        {
+            SetDefaultScreen();
+        }
+    }
+
     private void OnStoreCloseClicked()
     {
         SetScreen(_menuScreen);
@@ -84,6 +96,7 @@ public class ScreenSwitcher : MonoBehaviour
     private void SetGameScreen()
     {
         SetScreen(_gameScreen);
+        GameScreenSet?.Invoke();
     }
 
     private void SetMenuScreen()

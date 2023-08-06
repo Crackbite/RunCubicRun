@@ -9,6 +9,8 @@ public class GameDataHandler : MonoBehaviour
     [SerializeField] private List<Skin> _skins;
     [SerializeField] private bool _deletePlayerPrefs;
     [SerializeField] private TrainingStageHolder _trainingStageHolder;
+    [SerializeField] private SuccessScreen _successScreen;
+    [SerializeField] private FailScreen _failScreen;
 
     private float _score;
     private int _level;
@@ -24,6 +26,7 @@ public class GameDataHandler : MonoBehaviour
     public int TrainingStageNumber => _trainingStage;
     public int TrainingStageAmount => _trainingStageAmount;
     public IReadOnlyList<Skin> Skins => _skins;
+    public bool IsLevelRestarting { get; private set; }
 
     private void OnValidate()
     {
@@ -36,12 +39,15 @@ public class GameDataHandler : MonoBehaviour
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
+        _successScreen.NextLevelLoading += OnNextLevelLoaging;
+        _failScreen.LevelRestarting += OnLevelrestarting;
     }
 
     private void Start()
     {
         const int DefaultValue = 0;
 
+        IsLevelRestarting = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrafsKeys.RestartKey, DefaultValue));
         _trainingStageAmount = _trainingStageHolder.StageAmount;
         _score = PlayerPrefs.GetFloat(PlayerPrafsKeys.ScoreKey, DefaultValue);
         _level = PlayerPrefs.GetInt(PlayerPrafsKeys.LevelKey, DefaultValue);
@@ -79,17 +85,22 @@ public class GameDataHandler : MonoBehaviour
         }
 
         DataRestored?.Invoke();
+        IsLevelRestarting = false;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
+        _successScreen.NextLevelLoading -= OnNextLevelLoaging;
+        _failScreen.LevelRestarting -= OnLevelrestarting;
 
         foreach (Skin skin in _skins)
         {
             skin.ActivityChanged -= OnSkinActivityChanged;
             skin.Bought -= OnSkinBought;
         }
+
+        SaveIsLevelRestarting();
     }
 
     private bool RestoreBooleanData(string key, string skinID)
@@ -97,6 +108,11 @@ public class GameDataHandler : MonoBehaviour
         const int FalseIndex = 0;
 
         return Convert.ToBoolean(PlayerPrefs.GetInt(skinID + key, FalseIndex));
+    }
+
+    private void SaveIsLevelRestarting()
+    {
+        PlayerPrefs.SetInt(PlayerPrafsKeys.RestartKey, Convert.ToInt32(IsLevelRestarting));
     }
 
     private void OnGameEnded(GameResult result)
@@ -132,5 +148,15 @@ public class GameDataHandler : MonoBehaviour
     private void OnSkinActivityChanged(Skin skin)
     {
         PlayerPrefs.SetInt(skin.ID + PlayerPrafsKeys.ActiveKey, Convert.ToInt32(skin.IsActive));
+    }
+
+    private void OnNextLevelLoaging()
+    {
+        IsLevelRestarting = true;
+    }
+
+    private void OnLevelrestarting()
+    {
+        IsLevelRestarting = true;
     }
 }

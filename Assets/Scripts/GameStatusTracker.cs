@@ -7,7 +7,7 @@ public class GameStatusTracker : MonoBehaviour
     [SerializeField] private CubicMovement _cubicMovement;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private LevelExitPortal _exitPortal;
-    [SerializeField] private MenuScreen _menuScreen;
+    [SerializeField] private ScreenSwitcher _screenSwitcher;
 
     private bool _isCubicLeftPress;
     private bool _isCubicSteppedOnStand;
@@ -22,7 +22,7 @@ public class GameStatusTracker : MonoBehaviour
         _cubicMovement.CubicLeftPress += OnCubicLeftPress;
         _blockStack.BlocksEnded += OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn += OnExitPortalSuckedIn;
-        _menuScreen.StartClicked += OnMenuStartClicked;
+        _screenSwitcher.GameScreenSet += OnGameScreenSet;
     }
 
     private void OnDisable()
@@ -32,7 +32,7 @@ public class GameStatusTracker : MonoBehaviour
         _cubicMovement.CubicLeftPress -= OnCubicLeftPress;
         _blockStack.BlocksEnded -= OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn -= OnExitPortalSuckedIn;
-        _menuScreen.StartClicked -= OnMenuStartClicked;
+        _screenSwitcher.GameScreenSet -= OnGameScreenSet;
     }
 
     private void OnBlockStackBlocksEnded()
@@ -63,7 +63,7 @@ public class GameStatusTracker : MonoBehaviour
         GameEnded?.Invoke(_isCubicLeftPress ? GameResult.Win : GameResult.LoseWithPortalSuckedIn);
     }
 
-    private void OnMenuStartClicked()
+    private void OnGameScreenSet()
     {
         GameStarted?.Invoke();
     }
