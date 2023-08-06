@@ -8,7 +8,7 @@ public class TrainingStageHolder : ScriptableObject
 
     public int StageAmount { get; private set; }
 
-    private void OnValidate()
+    private void Awake()
     {
         StageAmount = _stageInfoList.Count;
     }
