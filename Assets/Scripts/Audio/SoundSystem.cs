@@ -4,7 +4,7 @@ using UnityEngine;
 public class SoundSystem : MonoBehaviour
 {
     [SerializeField] private List<SoundInfo> _soundTypes;
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private List<AudioSource> _audioSources;
 
     public void Play(SoundEvent soundEvent)
     {
@@ -12,10 +12,19 @@ public class SoundSystem : MonoBehaviour
         {
             if (soundType.SoundEvent == soundEvent)
             {
-                _audioSource.clip = soundType.Clip;
-                _audioSource.volume = soundType.Volume;
-                _audioSource.pitch = soundType.Pitch;
-                _audioSource.Play();
+                foreach (AudioSource audioSource in _audioSources)
+                {
+                    if (audioSource.isPlaying == false)
+                    {
+                        audioSource.clip = soundType.Clip;
+                        audioSource.volume = soundType.Volume;
+                        audioSource.pitch = soundType.Pitch;
+                        audioSource.Play();
+                        return;
+                    }
+                }
+
+                return;
             }
         }
     }
