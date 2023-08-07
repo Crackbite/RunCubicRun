@@ -61,7 +61,7 @@ public class Trap : MonoBehaviour
 
             float trapHeight = Collider.bounds.max.y;
             cubic.HitTrap(this, contactPoint, trapHeight);
-            CompleteCollision(contactPoint);
+            CompleteCollision(contactPoint, cubic);
         }
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
         {
@@ -79,13 +79,14 @@ public class Trap : MonoBehaviour
         }
     }
 
-    protected virtual void CompleteCollision(Vector3 contactPoint)
+    protected virtual void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
-        if (this is Saw)
+        if (this is HorizontalSaw)
         {
             return;
         }
 
+        cubic.SoundSystem.Play(SoundEvent.Hit);
         HitEffect.transform.position = contactPoint;
         HitEffect.Play();
         Stop();
