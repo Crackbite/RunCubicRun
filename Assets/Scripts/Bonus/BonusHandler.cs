@@ -50,11 +50,11 @@ public class BonusHandler : MonoBehaviour
 
     private void DeactivateBonus(BonusItem bonusItem)
     {
+        _activeBonuses.Remove(bonusItem.Bonus.Info);
+        UnsubscribeFromBonusTimerEvents(bonusItem.BonusTimer);
+
         bonusItem.Bonus.Cancel();
         bonusItem.BonusIcon.Destroy();
-
-        UnsubscribeFromBonusTimerEvents(bonusItem.BonusTimer);
-        _activeBonuses.Remove(bonusItem.Bonus.Info);
     }
 
     private void OnCubicBonusReceived(Bonus receivedBonus)

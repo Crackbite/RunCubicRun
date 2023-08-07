@@ -23,10 +23,15 @@ public class PortalColorizer : MonoBehaviour
 
     private void AssignColorsToPortals()
     {
+        if (_portalsContainer.Portals == null)
+        {
+            return;
+        }
+
         IReadOnlyList<Portal> portals = _portalsContainer.Portals;
         _previousColors = new List<Color>();
 
-        foreach (Portal portal in portals)
+        foreach (Portal portal in _portalsContainer?.Portals)
         {
             Color nextColor;
 
@@ -68,7 +73,7 @@ public class PortalColorizer : MonoBehaviour
     {
         const int FirstPortalIndex = 0;
 
-        if (_portalsContainer.Portals.Count > 0)
+        if (_portalsContainer.Portals?.Count > 0)
         {
             _nextPortalPositionX = _portalsContainer.Portals[FirstPortalIndex].transform.position.x;
         }

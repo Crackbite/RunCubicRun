@@ -7,43 +7,51 @@ public class MainScreen : Screen
     [SerializeField] private TMP_Text _level;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
     [SerializeField] private GameDataHandler _gameDataHandler;
-    [SerializeField] private bool _isTraining;
+    [SerializeField] private GameObject _trainingHeaderPhrase;
+    [SerializeField] private GameObject _levelHeaderPhrase;
 
-    private string _currentLevel = "";
     private bool _canUpdateLevel;
 
     private void OnEnable()
     {
         _gameDataHandler.DataRestored += OnDataRestored;
-        _levelLocalizedText.TranslationUpdated += OnLevelUpdated;
+        _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
     }
 
     private void OnDisable()
     {
         _gameDataHandler.DataRestored -= OnDataRestored;
-        _levelLocalizedText.TranslationUpdated -= OnLevelUpdated;
+        _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
-    private void OnLevelUpdated()
+    private void OnLevelTranslationUpdated()
     {
         if (_canUpdateLevel)
         {
-            UpdateLevelText();
+            UpdateLevelText(_gameDataHandler.Level);
         }
     }
 
     private void OnDataRestored()
     {
-        if (_isTraining == false)
-        {
-            UpdateLevelText();
-            _canUpdateLevel = true;
-        }
+        UpdateLevelText(_gameDataHandler.Level);
+        _canUpdateLevel = true;
     }
 
-    private void UpdateLevelText()
+    private void UpdateLevelText(int currentLevel)
     {
-        _currentLevel = _gameDataHandler.Level.ToString();
-        _level.text = $"{_level.text} {_currentLevel}";
+        const int TrainingValue = 0;
+
+        _levelLocalizedText.TranslationName = currentLevel > TrainingValue ? _levelHeaderPhrase.name : _trainingHeaderPhrase.name;
+
+        if (currentLevel > TrainingValue)
+        {
+            _levelLocalizedText.TranslationName = _levelHeaderPhrase.name;
+            _level.text = $"{_level.text} {currentLevel}";
+        }
+        else
+        {
+            _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
+        }
     }
 }

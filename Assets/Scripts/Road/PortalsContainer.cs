@@ -3,24 +3,26 @@ using UnityEngine;
 
 public class PortalsContainer : MonoBehaviour
 {
-    [SerializeField] private ChunkGenerator _chunkGenerator;
     [SerializeField] private BonusHandler _bonusHandler;
+    [SerializeField] private LevelGenerationStarter _generatorStarter;
 
+    private ChunkGenerator _currentGenerator;
     private Portal[] _portals;
 
     public IReadOnlyList<Portal> Portals => _portals;
 
     private void OnEnable()
     {
-        _chunkGenerator.Completed += OnChunkGeneratorCompleted;
+        _generatorStarter.GeneratorStarted += OnGeneratorStarted;
     }
 
     private void OnDisable()
     {
-        _chunkGenerator.Completed -= OnChunkGeneratorCompleted;
+        _currentGenerator.Completed -= OnChunkGenerationCompleted;
+        _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
     }
 
-    private void OnChunkGeneratorCompleted()
+    private void OnChunkGenerationCompleted()
     {
         _portals = FindObjectsOfType<Portal>();
 
@@ -48,5 +50,11 @@ public class PortalsContainer : MonoBehaviour
 
             _portals[j + 1] = keyPortal;
         }
+    }
+
+    private void OnGeneratorStarted(ChunkGenerator currentGenerator)
+    {
+        _currentGenerator = currentGenerator;
+        _currentGenerator.Completed += OnChunkGenerationCompleted;
     }
 }

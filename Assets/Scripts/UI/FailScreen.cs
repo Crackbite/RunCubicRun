@@ -1,31 +1,33 @@
 using DG.Tweening;
-using TMPro;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class FailScreen : Screen
+public class FailScreen : LevelResultScreen
 {
-    [SerializeField] private Button _home;
     [SerializeField] private Button _restart;
-    [SerializeField] private TMP_Text _level;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private Button _refresh;
     [SerializeField] private float _maxWindowDelay = 1.5f;
     [SerializeField] private DOTweenAnimation _windowAnimation;
     [SerializeField] private DOTweenAnimation _containerAnimation;
 
-    private void OnEnable()
+    public event Action LevelRestarting;
+
+    protected override void OnEnable()
     {
-        _home.onClick.AddListener(OnHomeClicked);
+        base.OnEnable();
         _restart.onClick.AddListener(OnRestartClicked);
-        _gameDataHandler.DataRestored += OnDataRestored;
+
+        if (IsTraining)
+        {
+            _refresh.interactable = false;
+        }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        _home.onClick.RemoveListener(OnHomeClicked);
+        base.OnDisable();
         _restart.onClick.RemoveListener(OnRestartClicked);
-        _gameDataHandler.DataRestored -= OnDataRestored;
     }
 
     public void Enter(GameResult gameResult)
@@ -46,29 +48,18 @@ public class FailScreen : Screen
         base.Enter();
     }
 
-    private void LoadScene()
+    protected override void RestartLevel()
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
+        LevelRestarting?.Invoke();
     }
 
-    private void OnDataRestored()
-    {
-        _level.text += _gameDataHandler.Level.ToString();
-    }
-
-    private void OnHomeClicked()
+    private void OnRestartClicked()
     {
         if (ChunkStorage.Instance != null)
         {
             ChunkStorage.Instance.Restart();
         }
 
-        LoadScene();
-    }
-
-    private void OnRestartClicked()
-    {
         LoadScene();
     }
 }

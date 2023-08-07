@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class GameDataHandler : MonoBehaviour
 {
-    [SerializeField] private ScoreAllocator _scoreAllocator;
-    [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private SkinsRestorer _skinsRestorer;
     [SerializeField] private List<Skin> _skins;
+    [SerializeField] private TrainingStageHolder _trainingStageHolder;
+    [SerializeField] private SuccessScreen _successScreen;
+    [SerializeField] private FailScreen _failScreen;
     [SerializeField] private bool _deletePlayerPrefs;
-
-    private float _score;
-    private int _level;
-    private int _trainingStage;
-    private bool _isActiveSkinChoosed;
-    private bool _isSkinBought;
 
     public event Action DataRestored;
 
-    public float Score => _score;
-    public int Level => _level;
+    public float Score { get; private set; }
+    public int Level { get; private set; }
+    public int TrainingStageNumber { get; private set; } = 1;
+    public int TrainingStageAmount { get; private set; }
+    public bool IsLevelRestarting { get; private set; }
     public IReadOnlyList<Skin> Skins => _skins;
 
     private void OnValidate()
@@ -31,104 +30,42 @@ public class GameDataHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameStatusTracker.GameEnded += OnGameEnded;
+        _successScreen.NextLevelLoading += OnNextLevelLoaging;
+        _failScreen.LevelRestarting += OnLevelrestarting;
     }
 
     private void Start()
     {
         const int DefaultValue = 0;
 
-        _score = PlayerPrefs.GetFloat(PlayerPrafsKeys.ScoreKey, DefaultValue);
-        _level = PlayerPrefs.GetInt(PlayerPrafsKeys.LevelKey, DefaultValue);
+        IsLevelRestarting = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrafsKeys.RestartKey, DefaultValue));
+        TrainingStageAmount = _trainingStageHolder.StageAmount;
+        Score = PlayerPrefs.GetFloat(PlayerPrafsKeys.ScoreKey, DefaultValue);
+        Level = PlayerPrefs.GetInt(PlayerPrafsKeys.LevelKey, DefaultValue);
 
-        if (_level == DefaultValue)
+        if (Level == DefaultValue)
         {
-            _trainingStage = PlayerPrefs.GetInt(PlayerPrafsKeys.TrainingStageKey, 0);
+            TrainingStageNumber = PlayerPrefs.GetInt(PlayerPrafsKeys.TrainingStageKey, TrainingStageNumber);
         }
 
-        foreach (Skin skin in _skins)
-        {
-            skin.ActivityChanged += OnSkinActivityChanged;
-            skin.Bought += OnSkinBought;
-
-            if (RestoreBooleanData(PlayerPrafsKeys.BoughtKey, skin.ID))
-            {
-                skin.Buy();
-            }
-
-            if (RestoreBooleanData(PlayerPrafsKeys.ActiveKey, skin.ID) && _isActiveSkinChoosed == false)
-            {
-                skin.TurnOnActivity();
-                _isActiveSkinChoosed = true;
-            }
-            else
-            {
-                skin.TurnOffActivity();
-            }
-        }
-
-        if (_isActiveSkinChoosed == false)
-        {
-            _skins[0].Buy();
-            _skins[0].TurnOnActivity();
-        }
-
+        _skinsRestorer.Restore(Skins);
         DataRestored?.Invoke();
+        IsLevelRestarting = false;
     }
 
     private void OnDisable()
     {
-        _gameStatusTracker.GameEnded -= OnGameEnded;
-
-        foreach (Skin skin in _skins)
-        {
-            skin.ActivityChanged -= OnSkinActivityChanged;
-            skin.Bought -= OnSkinBought;
-        }
+        _successScreen.NextLevelLoading -= OnNextLevelLoaging;
+        _failScreen.LevelRestarting -= OnLevelrestarting;
     }
 
-    private bool RestoreBooleanData(string key, string skinID)
+    private void OnNextLevelLoaging()
     {
-        const int FalseIndex = 0;
-
-        return Convert.ToBoolean(PlayerPrefs.GetInt(skinID + key, FalseIndex));
+        IsLevelRestarting = true;
     }
 
-    private void OnGameEnded(GameResult result)
+    private void OnLevelrestarting()
     {
-        const int LastTrainingSceneIndex = 4;
-        const int DefaultValue = 0;
-
-        if (result == GameResult.Win)
-        {
-            _score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
-            PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, _score);
-
-            if (_level == DefaultValue && _trainingStage < LastTrainingSceneIndex)
-            {
-                _trainingStage++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _trainingStage);
-            }
-            else
-            {
-                _level++;
-                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _level);
-            }
-        }
-        else if (_isSkinBought)
-        {
-            PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, _scoreAllocator.TotalScore);
-        }
-    }
-
-    private void OnSkinBought(Skin skin)
-    {
-        PlayerPrefs.SetInt(skin.ID + PlayerPrafsKeys.BoughtKey, Convert.ToInt32(true));
-        _isSkinBought = true;
-    }
-
-    private void OnSkinActivityChanged(Skin skin)
-    {
-        PlayerPrefs.SetInt(skin.ID + PlayerPrafsKeys.ActiveKey, Convert.ToInt32(skin.IsActive));
+        IsLevelRestarting = true;
     }
 }

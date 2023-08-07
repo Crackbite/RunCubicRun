@@ -3,22 +3,24 @@ using UnityEngine;
 
 public class ColorBlocksContainer : MonoBehaviour
 {
-    [SerializeField] private ChunkGenerator _chunkGenerator;
     [SerializeField] private Cubic _cubic;
+    [SerializeField] private LevelGenerationStarter _generatorStarter;
 
+    private ChunkGenerator _currentGenerator;
     private ColorBlock[] _colorBlocks;
 
     public IReadOnlyList<ColorBlock> ColorBlocks => _colorBlocks;
 
     private void OnEnable()
     {
-        _chunkGenerator.Completed += OnChunkGeneratorCompleted;
+        _generatorStarter.GeneratorStarted += OnGeneratorStarted;
         _cubic.Hit += OnCubicHit;
     }
 
     private void OnDisable()
     {
-        _chunkGenerator.Completed -= OnChunkGeneratorCompleted;
+        _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
+        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
         _cubic.Hit -= OnCubicHit;
     }
 
@@ -31,6 +33,12 @@ public class ColorBlocksContainer : MonoBehaviour
                 block.BlockPhysics.TurnOffTrigger();
             }
         }
+    }
+
+    private void OnGeneratorStarted(ChunkGenerator currentGenerator)
+    {
+        _currentGenerator = currentGenerator;
+        _currentGenerator.Completed += OnChunkGeneratorCompleted;
     }
 
     private void OnChunkGeneratorCompleted()

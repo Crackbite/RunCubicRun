@@ -59,11 +59,9 @@ public class Portal : MonoBehaviour
     {
         IReadOnlyDictionary<BonusInfo, BonusItem> _activeBonuses = _bonusHandler.ActiveBonuses;
 
-        foreach (KeyValuePair<BonusInfo, BonusItem> pair in _activeBonuses)
+        foreach (KeyValuePair<BonusInfo, BonusItem> bonus in _activeBonuses)
         {
-            Bonus bonus = pair.Value.Bonus;
-
-            if (bonus != null && bonus is PortalRecolorBonus)
+            if (bonus.Key.CanColorize)
             {
                 return;
             }
