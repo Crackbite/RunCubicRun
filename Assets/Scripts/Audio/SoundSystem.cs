@@ -3,15 +3,19 @@ using UnityEngine;
 
 public class SoundSystem : MonoBehaviour
 {
-    [SerializeField] private List<SoundType> _soundTypes;
+    [SerializeField] private List<SoundInfo> _soundTypes;
+    [SerializeField] private AudioSource _audioSource;
 
     public void Play(SoundEvent soundEvent)
     {
-        foreach (SoundType soundType in _soundTypes)
+        foreach (SoundInfo soundType in _soundTypes)
         {
             if (soundType.SoundEvent == soundEvent)
             {
-                soundType.Sound.Play();
+                _audioSource.clip = soundType.Clip;
+                _audioSource.volume = soundType.Volume;
+                _audioSource.pitch = soundType.Pitch;
+                _audioSource.Play();
             }
         }
     }
