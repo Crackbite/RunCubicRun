@@ -56,7 +56,7 @@ public class PauseSystem : MonoBehaviour
         if (_scaleRoutine != null)
         {
             _isStop = true;
-            return;
+            _scaleRoutine = null;
         }
 
         Time.timeScale = 0;
@@ -83,7 +83,6 @@ public class PauseSystem : MonoBehaviour
 
         if (_isStop)
         {
-            Time.timeScale = 0;
             yield break;
         }
 
