@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class Cubic : MonoBehaviour
 {
+    [SerializeField] private SoundSystem _soundSystem;
     [SerializeField] private VerticalSplitter _verticalSplitter;
     [SerializeField] private HorizontalSplitter _horizontalSplitter;
     [SerializeField] private float _jumpForce = 6.5f;
@@ -23,6 +24,7 @@ public class Cubic : MonoBehaviour
     public event Action<PressStand> SteppedOnStand;
     public event Action FlattenedOut;
 
+    public SoundSystem SoundSystem => _soundSystem;
     public Bounds Bounds => _meshRenderers[0].bounds;
     public bool CanDestroy { get; set; }
     public Saw CollisionSaw { get; private set; }

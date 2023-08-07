@@ -8,7 +8,6 @@ public class BlockStacker : MonoBehaviour
     [SerializeField] private BlockStackRenderer _blockStackRenderer;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private ParticleSystem _pickUpEffect;
-    [SerializeField] private AudioSource _pickupSound;
 
     private bool _isCubicHit;
     private float _stackYPosition;
@@ -69,9 +68,7 @@ public class BlockStacker : MonoBehaviour
     {
         ParticleSystem.MainModule main = _pickUpEffect.main;
         main.startColor = blockColor;
-        _pickUpEffect.Play();
-        _pickupSound.Stop();
-        _pickupSound.Play();
+        _cubic.SoundSystem.Play(SoundEvent.BlockPickup);
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)

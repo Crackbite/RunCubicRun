@@ -7,7 +7,6 @@ public class SidewayMovement : MonoBehaviour
 {
     [SerializeField] private float _shiftPerMove = 1.3f;
     [SerializeField] private float _changeLineSpeed = .1f;
-    [SerializeField] private AudioSource _lineChangingSound;
 
     private float _currentLineIndex = 1f;
     private float _initialPositionZ;
@@ -66,7 +65,8 @@ public class SidewayMovement : MonoBehaviour
 
         if (_cubic.transform.position.z != targetPositionZ)
         {
-            _lineChangingSound.Play();
+            SoundSystem soundSystem = _cubic.SoundSystem;
+            soundSystem.Play(SoundEvent.Swipe);
         }
     }
 
