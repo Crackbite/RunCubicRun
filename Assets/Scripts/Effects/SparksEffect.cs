@@ -41,7 +41,7 @@ public class SparksEffect : MonoBehaviour
                     _sparks.Stop();
                 }
             })
-            .OnComplete(() => 
+            .OnComplete(() =>
             {
                 _sparks.Stop();
                 _cubic.CollisionSaw.CameOut -= OnSawCameOut;
@@ -49,7 +49,7 @@ public class SparksEffect : MonoBehaviour
 
     }
 
-    private void OnSawCameOut()
+    private void OnSawCameOut(Cubic cubic)
     {
         _isSawCameOut = true;
     }

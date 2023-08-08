@@ -28,5 +28,25 @@ public class SoundSystem : MonoBehaviour
             }
         }
     }
+
+    public void Stop(SoundEvent soundEvent)
+    {
+        foreach (SoundInfo soundType in _soundTypes)
+        {
+            if (soundType.SoundEvent == soundEvent)
+            {
+                foreach (AudioSource audioSource in _audioSources)
+                {
+                    if (audioSource.clip == soundType.Clip && audioSource.isPlaying)
+                    {
+                        audioSource.Stop();
+                        return;
+                    }
+                }
+
+                return;
+            }
+        }
+    }
 }
 

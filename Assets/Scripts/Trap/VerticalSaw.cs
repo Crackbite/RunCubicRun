@@ -14,12 +14,15 @@ public class VerticalSaw : Saw
         if (IsSideCollision)
         {
             base.CompleteCollision(contactPoint, cubic);
+            return;
         }
         else if (Type == TrapType.PatrolSaw)
         {
             Animator.SetFloat(SpeedHash, MinPatrolSpeed);
         }
 
+        cubic.SoundSystem.Play(SoundEvent.Sawing);
+        StartCoroutine(CheckIntersectionWithCubic(cubic));
         Collider.isTrigger = false;
     }
 

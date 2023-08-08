@@ -44,7 +44,7 @@ public class Trap : MonoBehaviour
     {
         const float Threshold = 0.001f;
 
-        if (collision.TryGetComponent(out Cubic cubic))
+        if (collision.TryGetComponent(out Cubic cubic) && cubic.IsSawing == false)
         {
             _isCubicCollided = true;
             Vector3 cubicPosition = cubic.transform.position;
@@ -81,11 +81,6 @@ public class Trap : MonoBehaviour
 
     protected virtual void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
-        if (this is HorizontalSaw)
-        {
-            return;
-        }
-
         cubic.SoundSystem.Play(SoundEvent.Hit);
         HitEffect.transform.position = contactPoint;
         HitEffect.Play();

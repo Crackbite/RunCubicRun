@@ -4,5 +4,6 @@ public enum SoundEvent
     GroundImpact,
     Swipe,
     BlockPickup,
-    Hit
+    Hit,
+    Sawing
 }

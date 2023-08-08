@@ -31,6 +31,7 @@ public class Cubic : MonoBehaviour
     public bool IsSawing { get; private set; }
     public float JumpAcceleration => _jumpAcceleration;
     public float JumpForce => _jumpForce;
+    public IReadOnlyList<MeshRenderer> MeshRenderers => _meshRenderers;
 
     private void Start()
     {

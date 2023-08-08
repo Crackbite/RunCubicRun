@@ -21,6 +21,14 @@ public class HorizontalSaw : Saw
         }
     }
 
+    protected override void CompleteCollision(Vector3 contactPoint, Cubic cubic)
+    {
+        cubic.SoundSystem.Play(SoundEvent.Sawing);
+        StartCoroutine(CheckIntersectionWithCubic(cubic));
+        CameOut += OnSawCameOutCubic;
+        Collider.isTrigger = false;
+    }
+
     private int GetRotationDirection()
     {
         const float CenterPositionZ = 0f;
@@ -33,6 +41,12 @@ public class HorizontalSaw : Saw
         }
 
         return transform.position.z > CenterPositionZ ? RightRotationValue : LeftRotationValue;
+    }
+
+    private void OnSawCameOutCubic(Cubic cubic)
+    {
+        CameOut -= OnSawCameOutCubic;
+        cubic.SplitIntoPieces();
     }
 }
 

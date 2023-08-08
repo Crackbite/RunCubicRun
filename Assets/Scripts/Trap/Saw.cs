@@ -1,24 +1,35 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Saw : Trap
 {
-    private bool _canSplit = true;
+    [SerializeField] private MeshRenderer _meshRenderer;
 
-    public event Action CameOut;
+    private Bounds _bounds => _meshRenderer.bounds;
 
-    private void OnTriggerExit(Collider collision)
+    public event Action<Cubic> CameOut;
+
+    protected IEnumerator CheckIntersectionWithCubic(Cubic cubic)
     {
-        if (collision.TryGetComponent(out Cubic cubic) == false || cubic.CanDestroy)
+        bool canStopChecking = false;
+
+        while (canStopChecking == false)
         {
-            return;
+            canStopChecking = true;
+
+            foreach (MeshRenderer meshRenderer in cubic.MeshRenderers)
+            {
+                if (_bounds.Intersects(meshRenderer.bounds))
+                {
+                    canStopChecking = false;
+                }
+            }
+
+            yield return null;
         }
 
-        if (this is not VerticalSaw && _canSplit)
-        {
-            cubic.SplitIntoPieces();
-            _canSplit = false;
-            CameOut?.Invoke();
-        }
+        cubic.SoundSystem.Stop(SoundEvent.Sawing);
+        CameOut?.Invoke(cubic);
     }
 }
