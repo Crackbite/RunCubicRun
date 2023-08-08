@@ -5,5 +5,6 @@ public enum SoundEvent
     Swipe,
     BlockPickup,
     Hit,
-    Sawing
+    Sawing,
+    BonusPickup
 }

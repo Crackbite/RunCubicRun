@@ -62,6 +62,7 @@ public class BonusHandler : MonoBehaviour
         Vector3 effectPosition = new Vector3(receivedBonus.transform.position.x, 0.1f, receivedBonus.transform.position.z);
         Quaternion effectSpawnAngle = Quaternion.Euler(-90f, 30f, 0f);
         ParticleSystem pickupEffect = receivedBonus.Info.PickupEffect;
+        _cubic.SoundSystem.Play(SoundEvent.BonusPickup);
 
         Instantiate(pickupEffect, effectPosition, effectSpawnAngle);
         pickupEffect.Play();
