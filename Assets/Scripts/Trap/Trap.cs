@@ -52,6 +52,7 @@ public class Trap : MonoBehaviour
 
             if (cubic.CanDestroy)
             {
+                cubic.SoundSystem.Play(SoundEvent.Crush);
                 Break();
                 return;
             }
