@@ -9,6 +9,7 @@ public class ColorBlockPhysics : MonoBehaviour
     private Rigidbody _rigidbody;
 
     public event Action<int> CrossbarHit;
+    public event Action<ColorBlock> RoadHit;
 
     public bool IsKnockedByCrossbar { get; private set; }
 
@@ -25,6 +26,20 @@ public class ColorBlockPhysics : MonoBehaviour
         {
             TurnOffTrigger();
             CrossbarHit?.Invoke(_colorBlock.StackPosition);
+            return;
+        }
+
+        if (collision.TryGetComponent(out Road _))
+        {
+            RoadHit?.Invoke(_colorBlock);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.TryGetComponent(out Road _))
+        {
+            RoadHit?.Invoke(_colorBlock);
         }
     }
 

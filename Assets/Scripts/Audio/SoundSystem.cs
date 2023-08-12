@@ -31,6 +31,14 @@ public class SoundSystem : MonoBehaviour
 
     public void Stop(SoundEvent soundEvent)
     {
+        if (CheckSoundPlaying(soundEvent, out AudioSource audioSource))
+        {
+            audioSource.Stop();
+        }
+    }
+
+    public bool CheckSoundPlaying(SoundEvent soundEvent, out AudioSource playingAudioSource)
+    {
         foreach (SoundInfo soundType in _soundTypes)
         {
             if (soundType.SoundEvent == soundEvent)
@@ -39,14 +47,15 @@ public class SoundSystem : MonoBehaviour
                 {
                     if (audioSource.clip == soundType.Clip && audioSource.isPlaying)
                     {
-                        audioSource.Stop();
-                        return;
+                        playingAudioSource = audioSource;
+                        return true;
                     }
                 }
-
-                return;
             }
         }
+
+        playingAudioSource = null;
+        return false;
     }
 }
 

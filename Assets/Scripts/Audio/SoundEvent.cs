@@ -8,5 +8,6 @@ public enum SoundEvent
     CrossbarHit,
     Sawing,
     BonusPickup,
-    Crush
+    Crush,
+    BlocksFall
 }

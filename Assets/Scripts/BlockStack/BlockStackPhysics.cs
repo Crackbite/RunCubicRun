@@ -88,6 +88,19 @@ public class BlockStackPhysics : MonoBehaviour
     private void OnBlockAdded(ColorBlock colorBlock)
     {
         colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
+        colorBlock.BlockPhysics.RoadHit += OnRoadHit;
+    }
+
+    private void OnRoadHit(ColorBlock colorBlock)
+    {
+        colorBlock.BlockPhysics.RoadHit -= OnRoadHit;
+
+        if (_cubic.SoundSystem.CheckSoundPlaying(SoundEvent.BlocksFall, out AudioSource _))
+        {
+            return;
+        }
+
+        _cubic.SoundSystem.Play(SoundEvent.BlocksFall);
     }
 
     private void OnCubicSuckingIn()
