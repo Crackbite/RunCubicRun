@@ -82,7 +82,7 @@ public class Trap : MonoBehaviour
 
     protected virtual void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
-        cubic.SoundSystem.Play(SoundEvent.Hit);
+        cubic.SoundSystem.Play(SoundEvent.TrapHit);
         HitEffect.transform.position = contactPoint;
         HitEffect.Play();
         Stop();

@@ -4,7 +4,8 @@ public enum SoundEvent
     GroundImpact,
     Swipe,
     BlockPickup,
-    Hit,
+    TrapHit,
+    CrossbarHit,
     Sawing,
     BonusPickup,
     Crush
