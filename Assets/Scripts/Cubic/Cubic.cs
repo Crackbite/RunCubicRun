@@ -87,6 +87,7 @@ public class Cubic : MonoBehaviour
             FlattenedOut?.Invoke();
         });
 
+        _soundSystem.Play(SoundEvent.FlattenOut);
         flattenSequence.Play();
     }
 

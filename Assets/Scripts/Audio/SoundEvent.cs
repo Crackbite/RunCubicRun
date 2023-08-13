@@ -13,5 +13,6 @@ public enum SoundEvent
     PortalEntry,
     PressHit,
     BlockCrush,
-    Shaking
+    Shaking,
+    FlattenOut
 }
