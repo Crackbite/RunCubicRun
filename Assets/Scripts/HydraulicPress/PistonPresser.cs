@@ -81,6 +81,7 @@ public class PistonPresser : MonoBehaviour
 
         _isCubicReached = true;
         _pistonMover.TurnOff();
+        cubic.SoundSystem.Play(SoundEvent.Shaking);
 
         Tweener tweener = cubic.transform.DOShakePosition(
             _cubicPressDelay * ShakeDurationMultiplier,
@@ -89,6 +90,7 @@ public class PistonPresser : MonoBehaviour
 
         yield return new WaitForSeconds(_cubicPressDelay);
 
+        cubic.SoundSystem.Stop(SoundEvent.Shaking);
         _pistonMover.TurnOn();
         cubic.FlattenOut();
 
