@@ -10,5 +10,6 @@ public enum SoundEvent
     BonusPickup,
     Crush,
     BlocksFall,
-    PortalEntry
+    PortalEntry,
+    PressHit
 }

@@ -114,6 +114,7 @@ public class CameraChanger : MonoBehaviour
         }
         else if (ReferenceEquals(newCamera, _pressCamera))
         {
+            _cubic.SoundSystem.Play(SoundEvent.PressHit);
             CubicPressBlendFinished?.Invoke();
         }
     }
