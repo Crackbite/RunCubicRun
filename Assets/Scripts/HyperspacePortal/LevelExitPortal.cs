@@ -62,7 +62,7 @@ public class LevelExitPortal : HyperspacePortal
         yield return new WaitForSeconds(Delay);
 
         SuckingIn?.Invoke();
-
+        
         TargetScale = Vector3.zero;
         Sequence dragSequence = DOTween.Sequence();
 
@@ -73,7 +73,11 @@ public class LevelExitPortal : HyperspacePortal
             strength: _strength,
             vibrato: _vibration,
             randomness: _randomness).SetEase(Ease.Linear)
-            .OnComplete(() => { Shaked?.Invoke(); });
+            .OnComplete(() => 
+            {
+                Cubic.SoundSystem.Play(SoundEvent.PortalEntry);
+                Shaked?.Invoke(); 
+            });
         Tween flight = CubicTransform.DOMove(Center.position, FlightDuration).SetEase(Ease.Linear);
         Tween scaling = CubicTransform.DOScale(TargetScale, FlightDuration).SetEase(Ease.Linear);
         Tween rotation = CubicTransform.DORotate(

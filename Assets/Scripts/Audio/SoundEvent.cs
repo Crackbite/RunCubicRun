@@ -9,5 +9,6 @@ public enum SoundEvent
     Sawing,
     BonusPickup,
     Crush,
-    BlocksFall
+    BlocksFall,
+    PortalEntry
 }
