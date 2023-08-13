@@ -11,5 +11,6 @@ public enum SoundEvent
     Crush,
     BlocksFall,
     PortalEntry,
-    PressHit
+    PressHit,
+    BlockCrush
 }

@@ -50,7 +50,7 @@ public class CubicTrail : MonoBehaviour
         TurnOffTrail();
     }
 
-    private void OnCubicReached(Cubic cubic)
+    private void OnCubicReached()
     {
         _isPressReachedCubic = true;
     }

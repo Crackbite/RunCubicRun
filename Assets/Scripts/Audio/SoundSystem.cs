@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class SoundSystem : MonoBehaviour
 {
-    [SerializeField] private List<SoundInfo> _soundTypes;
+    [SerializeField] private List<SoundInfo> _soundInfoList;
     [SerializeField] private List<AudioSource> _audioSources;
 
     public void Play(SoundEvent soundEvent)
     {
-        foreach (SoundInfo soundType in _soundTypes)
+        foreach (SoundInfo soundInfo in _soundInfoList)
         {
-            if (soundType.SoundEvent == soundEvent)
+            if (soundInfo.SoundEvent == soundEvent)
             {
                 foreach (AudioSource audioSource in _audioSources)
                 {
                     if (audioSource.isPlaying == false)
                     {
-                        audioSource.clip = soundType.Clip;
-                        audioSource.volume = soundType.Volume;
-                        audioSource.pitch = soundType.Pitch;
+                        audioSource.clip = soundInfo.Clip;
+                        audioSource.volume = soundInfo.Volume;
+                        audioSource.pitch = soundInfo.Pitch;
                         audioSource.Play();
                         return;
                     }
@@ -39,13 +39,13 @@ public class SoundSystem : MonoBehaviour
 
     public bool CheckSoundPlaying(SoundEvent soundEvent, out AudioSource playingAudioSource)
     {
-        foreach (SoundInfo soundType in _soundTypes)
+        foreach (SoundInfo soundInfo in _soundInfoList)
         {
-            if (soundType.SoundEvent == soundEvent)
+            if (soundInfo.SoundEvent == soundEvent)
             {
                 foreach (AudioSource audioSource in _audioSources)
                 {
-                    if (audioSource.clip == soundType.Clip && audioSource.isPlaying)
+                    if (audioSource.clip == soundInfo.Clip && audioSource.isPlaying)
                     {
                         playingAudioSource = audioSource;
                         return true;

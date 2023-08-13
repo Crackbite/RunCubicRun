@@ -6,10 +6,11 @@ public class PistonMover : MonoBehaviour
 {
     [SerializeField] private PressStand _pressStand;
     [SerializeField] private ParticleSystem _crushEffect;
+    [SerializeField] private Cubic _cubic;
 
     private bool _isCubicReached;
+    const float Threshold = 0.001f;
 
-    private Cubic _cubic;
     private PistonPresser _pistonPresser;
     private PressSpeedHandler _pressSpeedHandler;
 
@@ -26,12 +27,12 @@ public class PistonMover : MonoBehaviour
     private void OnEnable()
     {
         _pistonPresser.CubicReached += PistonPresserOnCubicReached;
+        _pistonPresser.BlockDestroyed += PistonPresserOnBlockDestroyed;
+        _cubic.FlattenedOut += OnCubicFlattenedOut;
     }
 
     private void Update()
     {
-        const float Threshold = 0.001f;
-
         if (IsWorking == false)
         {
             return;
@@ -48,7 +49,7 @@ public class PistonMover : MonoBehaviour
 
             if (Mathf.Abs(currentPosition.y - targetPosition.y) < Threshold)
             {
-                IsWorking = false;
+                TurnOff();
                 WorkCompleted?.Invoke();
             }
         }
@@ -61,7 +62,9 @@ public class PistonMover : MonoBehaviour
 
     private void OnDisable()
     {
+        _cubic.FlattenedOut -= OnCubicFlattenedOut;
         _pistonPresser.CubicReached -= PistonPresserOnCubicReached;
+        _pistonPresser.BlockDestroyed -= PistonPresserOnBlockDestroyed;
     }
 
     public void Init()
@@ -79,11 +82,14 @@ public class PistonMover : MonoBehaviour
         IsWorking = true;
     }
 
-    private void PistonPresserOnCubicReached(Cubic cubic)
+    private void PistonPresserOnCubicReached()
     {
-        _cubic = cubic;
-        _cubic.FlattenedOut += OnCubicFlattenedOut;
         _isCubicReached = true;
+    }
+
+    private void PistonPresserOnBlockDestroyed()
+    {
+        _cubic.SoundSystem.Play(SoundEvent.BlockCrush);
     }
 
     private void OnCubicFlattenedOut()
@@ -92,6 +98,5 @@ public class PistonMover : MonoBehaviour
         _crushEffect.Play();
         IsWorking = false;
         WorkCompleted?.Invoke();
-        _cubic.FlattenedOut -= OnCubicFlattenedOut;
     }
 }

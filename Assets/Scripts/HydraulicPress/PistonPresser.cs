@@ -17,7 +17,8 @@ public class PistonPresser : MonoBehaviour
     private bool _isCubicReached;
     private PistonMover _pistonMover;
 
-    public event Action<Cubic> CubicReached;
+    public event Action CubicReached;
+    public event Action BlockDestroyed;
 
     private void OnEnable()
     {
@@ -36,7 +37,7 @@ public class PistonPresser : MonoBehaviour
         {
             if (_isCubicReached == false)
             {
-                CubicReached?.Invoke(cubic);
+                CubicReached?.Invoke();
                 StartCoroutine(ShakeAndPress(cubic));
             }
         }
@@ -51,6 +52,7 @@ public class PistonPresser : MonoBehaviour
             else
             {
                 _blockDestroyer.DestroyBlock(colorBlock);
+                BlockDestroyed?.Invoke();
             }
         }
     }
