@@ -36,6 +36,7 @@ public class Spring : MonoBehaviour
     public void Toss(Cubic cubic)
     {
         _animator.SetTrigger(_tossHash);
+        cubic.SoundSystem.Play(SoundEvent.Spring);
 
         if(cubic.IsSawing == false)
         {

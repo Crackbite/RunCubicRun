@@ -16,5 +16,6 @@ public enum SoundEvent
     Shaking,
     FlattenOut,
     PressHum,
-    Win
+    Win,
+    Spring
 }
