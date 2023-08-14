@@ -50,6 +50,7 @@ public class PistonMover : MonoBehaviour
             if (Mathf.Abs(currentPosition.y - targetPosition.y) < Threshold)
             {
                 TurnOff();
+                _cubic.SoundSystem.Stop(SoundEvent.PressHum);
                 WorkCompleted?.Invoke();
             }
         }
@@ -80,6 +81,12 @@ public class PistonMover : MonoBehaviour
     public void TurnOn()
     {
         IsWorking = true;
+        bool isPressHumPlaying = _cubic.SoundSystem.CheckSoundPlaying(SoundEvent.PressHum, out AudioSource _);
+
+        if (isPressHumPlaying == false)
+        {
+            _cubic.SoundSystem.Play(SoundEvent.PressHum);
+        }
     }
 
     private void PistonPresserOnCubicReached()

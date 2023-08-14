@@ -88,6 +88,8 @@ public class Cubic : MonoBehaviour
         });
 
         _soundSystem.Play(SoundEvent.FlattenOut);
+        _soundSystem.Stop(SoundEvent.PressHum);
+
         flattenSequence.Play();
     }
 

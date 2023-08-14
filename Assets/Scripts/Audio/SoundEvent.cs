@@ -14,5 +14,6 @@ public enum SoundEvent
     PressHit,
     BlockCrush,
     Shaking,
-    FlattenOut
+    FlattenOut,
+    PressHum
 }
