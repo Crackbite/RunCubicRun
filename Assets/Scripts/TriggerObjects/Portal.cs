@@ -24,9 +24,10 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Cubic _))
+        if (collision.TryGetComponent(out Cubic cubic))
         {
             CubicEntered?.Invoke(this);
+            cubic.SoundSystem.Play(SoundEvent.ColorPortal);
             _passageEffect.gameObject.SetActive(true);
         }
     }

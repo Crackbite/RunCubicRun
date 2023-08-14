@@ -17,5 +17,6 @@ public enum SoundEvent
     FlattenOut,
     PressHum,
     Win,
-    Spring
+    Spring,
+    ColorPortal
 }
