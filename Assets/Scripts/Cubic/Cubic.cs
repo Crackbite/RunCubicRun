@@ -52,6 +52,7 @@ public class Cubic : MonoBehaviour
             Vector3 contactPoint = collision.ClosestPoint(transform.position);
             float wallHeight = collision.bounds.max.y;
             Hit?.Invoke(contactPoint, wallHeight);
+            _soundSystem.Play(SoundEvent.TrapHit);
             return;
         }
 
