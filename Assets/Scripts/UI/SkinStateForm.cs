@@ -9,7 +9,6 @@ public class SkinStateForm
     [SerializeField] private SkinState _state;
 
     public SkinState State => _state;
-    public bool IsActive => _form.activeSelf;
 
     public void Set(string price)
     {

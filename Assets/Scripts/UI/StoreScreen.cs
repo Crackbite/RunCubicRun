@@ -23,11 +23,6 @@ public class StoreScreen : Screen
     private void OnDisable()
     {
         _close.onClick.RemoveListener(OnCloseClicked);
-
-        foreach (SkinView view in _skinViews)
-        {
-            view.ChooseButtonClick -= OnChooseButtonClick;
-        }
     }
 
     public void FillScrollView(float currentScore)

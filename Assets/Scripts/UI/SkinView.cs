@@ -8,9 +8,11 @@ public class SkinView : MonoBehaviour
     [SerializeField] private List<SkinStateForm> _skinStateForms;
     [SerializeField] private Image _icon;
     [SerializeField] private Button _choose;
+    [SerializeField] private AudioSource _audioSource;
 
     private Skin _skin;
     private float _currentScore;
+    private SkinStateForm _currentStateForm;
 
     public event Action<Skin, SkinView> ChooseButtonClick;
 
@@ -82,6 +84,7 @@ public class SkinView : MonoBehaviour
             if (form.State == skinState)
             {
                 form.Set(_skin.Price.ToString());
+                _currentStateForm = form;
                 return;
             }
         }
@@ -94,11 +97,12 @@ public class SkinView : MonoBehaviour
 
     private void OnChooseClick()
     {
-        if (_skin.IsActive)
+        if (_currentStateForm.State == SkinState.Selected || _currentStateForm.State == SkinState.Unaffordable)
         {
             return;
         }
 
+        _audioSource.Play();
         ChooseButtonClick?.Invoke(_skin, this);
     }
 }
