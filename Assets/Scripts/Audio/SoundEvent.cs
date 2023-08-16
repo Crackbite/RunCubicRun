@@ -18,5 +18,9 @@ public enum SoundEvent
     PressHum,
     Win,
     Spring,
-    ColorPortal
+    ColorPortal,
+    PointerDown,
+    PointerUp,
+    SwitchToggle,
+    SkinSelect
 }
