@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +8,6 @@ public class SkinView : MonoBehaviour
     [SerializeField] private List<SkinStateForm> _skinStateForms;
     [SerializeField] private Image _icon;
     [SerializeField] private Button _choose;
-    [SerializeField] private AudioSource _audioSource;
 
     private Skin _skin;
     private float _currentScore;
@@ -101,8 +100,7 @@ public class SkinView : MonoBehaviour
         {
             return;
         }
-
-        _audioSource.Play();
+ 
         ChooseButtonClick?.Invoke(_skin, this);
     }
 }

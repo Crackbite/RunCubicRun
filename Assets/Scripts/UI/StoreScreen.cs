@@ -14,6 +14,9 @@ public class StoreScreen : Screen
 
     public event Action<Skin> SkinChoosed;
     public event Action CloseClicked;
+    public event Action SkinViewsFilled;
+
+    public IReadOnlyList<SkinView> SkinViews => _skinViews;
 
     private void OnEnable()
     {
@@ -33,6 +36,8 @@ public class StoreScreen : Screen
         {
             AddSkinView(skins[i], currentScore);
         }
+
+        SkinViewsFilled?.Invoke();
     }
 
     public void UpdateScrolView(float currentScore)
