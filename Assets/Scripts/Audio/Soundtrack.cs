@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Soundtrack : MonoBehaviour
 {
-    [SerializeField] private AudioSource _menuAudio;
-    [SerializeField] private AudioSource _gameplayAudio;
+    [SerializeField] private AudioClip _menuAudio;
+    [SerializeField] private AudioClip _gameplayAudio;
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
@@ -15,13 +16,21 @@ public class Soundtrack : MonoBehaviour
 
     private void Awake()
     {
-        _menuAudio.Play();
+       Play(_menuAudio);
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameStarted -= OnGameStarted;
         _gameStatusTracker.GameEnded -= OnGameEnded;
+    private void Play(AudioClip clip)
+    {
+        if (_isMusicOn)
+        {
+            _audioSource.clip = clip;
+            _audioSource.Play();
+        }
+    }
     }
 
     private void OnGameEnded(GameResult result)
@@ -31,7 +40,7 @@ public class Soundtrack : MonoBehaviour
 
     private void OnGameStarted()
     {
-        _menuAudio.Stop();
-        _gameplayAudio.Play();
+        Play(_gameplayAudio);
+    }
     }
 }
