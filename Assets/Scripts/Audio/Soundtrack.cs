@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Soundtrack : MonoBehaviour
@@ -8,12 +9,17 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SoundSystem _soundSystem;
+    [SerializeField] private Cubic _cubic;
+    [SerializeField] private float _fadeDuration;
+
+    private bool _isMusicOn = true;
 
     private void OnEnable()
     {
         _gameStatusTracker.GameStarted += OnGameStarted;
         _gameStatusTracker.GameEnded += OnGameEnded;
         _musicSwitchToggle.ToggleChanged += OnMusicToggleChanged;
+        _cubic.SteppedOnStand += OnCubicSteppedOnStend;
     }
 
     private void Awake()
@@ -26,6 +32,9 @@ public class Soundtrack : MonoBehaviour
         _gameStatusTracker.GameStarted -= OnGameStarted;
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _musicSwitchToggle.ToggleChanged -= OnMusicToggleChanged;
+        _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
+    }
+
     private void Play(AudioClip clip)
     {
         if (_isMusicOn)
@@ -34,6 +43,17 @@ public class Soundtrack : MonoBehaviour
             _audioSource.Play();
         }
     }
+
+    private void FadeAudio()
+    {
+        const float TargetVolume = 0;
+
+        _audioSource.DOFade(TargetVolume, _fadeDuration);
+    }
+
+    private void OnCubicSteppedOnStend(PressStand _)
+    {
+        FadeAudio();
     }
 
     private void OnGameEnded(GameResult result)
