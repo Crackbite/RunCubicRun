@@ -45,6 +45,7 @@ public class GameStatusTracker : MonoBehaviour
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
     {
+        _cubic.Hit -= OnCubicHit;
         GameEnded?.Invoke(GameResult.LoseWithHit);
     }
 
