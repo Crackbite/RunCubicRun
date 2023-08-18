@@ -9,10 +9,12 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SoundSystem _soundSystem;
+    [SerializeField] private PauseSystem _pauseSystem;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private float _fadeDuration;
 
     private bool _isMusicOn = true;
+    private float _initialVolume;
 
     private void OnEnable()
     {
@@ -20,10 +22,13 @@ public class Soundtrack : MonoBehaviour
         _gameStatusTracker.GameEnded += OnGameEnded;
         _musicSwitchToggle.ToggleChanged += OnMusicToggleChanged;
         _cubic.SteppedOnStand += OnCubicSteppedOnStend;
+        _pauseSystem.TimeSlowing += OnTimeSlowing;
+        _pauseSystem.TimeAccelerating += OnTimeAccelerating;
     }
 
     private void Awake()
     {
+       _initialVolume = _audioSource.volume;
        Play(_menuAudio);
     }
 
@@ -33,6 +38,8 @@ public class Soundtrack : MonoBehaviour
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _musicSwitchToggle.ToggleChanged -= OnMusicToggleChanged;
         _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
+        _pauseSystem.TimeSlowing -= OnTimeSlowing;
+        _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
     }
 
     private void Play(AudioClip clip)
@@ -44,16 +51,16 @@ public class Soundtrack : MonoBehaviour
         }
     }
 
-    private void FadeAudio()
+    private void FadeAudio(float targetVolume)
     {
-        const float TargetVolume = 0;
-
-        _audioSource.DOFade(TargetVolume, _fadeDuration);
+        _audioSource.DOFade(targetVolume, _fadeDuration);
     }
 
     private void OnCubicSteppedOnStend(PressStand _)
     {
-        FadeAudio();
+        const float OnStandVolume = 0;
+
+        FadeAudio(OnStandVolume);
     }
 
     private void OnGameEnded(GameResult result)
@@ -79,5 +86,17 @@ public class Soundtrack : MonoBehaviour
         {
             _audioSource.Play();
         }
+    }
+
+    private void OnTimeSlowing()
+    {
+        const float SlowedVolumePercent = 0.1f;
+
+        FadeAudio(SlowedVolumePercent * _initialVolume);
+    }
+
+    private void OnTimeAccelerating()
+    {
+        FadeAudio(_initialVolume);
     }
 }

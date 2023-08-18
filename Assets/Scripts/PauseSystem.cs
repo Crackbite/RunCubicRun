@@ -12,6 +12,8 @@ public class PauseSystem : MonoBehaviour
     private bool _isStop;
 
     public event Action TimeChanged;
+    public event Action TimeSlowing;
+    public event Action TimeAccelerating;
 
     private void OnEnable()
     {
@@ -30,6 +32,7 @@ public class PauseSystem : MonoBehaviour
         const float targetValue = 0f;
         const float initialValue = 1f;
 
+        TimeSlowing.Invoke();
         _scaleRoutine = StartCoroutine(ScaleTime(initialValue, targetValue, _slowdownDuration));
     }
 
@@ -38,6 +41,7 @@ public class PauseSystem : MonoBehaviour
         const float targetValue = 1f;
         const float initialValue = 0f;
 
+        TimeAccelerating.Invoke();
         StartCoroutine(ScaleTime(initialValue, targetValue, _resetDuration));
     }
 
