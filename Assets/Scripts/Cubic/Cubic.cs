@@ -17,6 +17,7 @@ public class Cubic : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private bool _steppedOnStand;
+    private bool _isHit;
 
     public event Action<Bonus> BonusReceived;
     public event Action<Vector3, float> Hit;
@@ -41,7 +42,7 @@ public class Cubic : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.TryGetComponent(out Bonus bonus))
+        if (collision.TryGetComponent(out Bonus bonus) && _isHit == false)
         {
             BonusReceived?.Invoke(bonus);
             return;
@@ -111,6 +112,8 @@ public class Cubic : MonoBehaviour
         {
             _rigidbody.isKinematic = false;
         }
+
+        _isHit = true;
     }
 
     public void SplitIntoPieces()
