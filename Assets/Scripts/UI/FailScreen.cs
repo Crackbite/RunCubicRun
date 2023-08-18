@@ -55,11 +55,6 @@ public class FailScreen : LevelResultScreen
 
     private void OnRestartClicked()
     {
-        if (ChunkStorage.Instance != null)
-        {
-            ChunkStorage.Instance.Restart();
-        }
-
         LoadScene();
     }
 }

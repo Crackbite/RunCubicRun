@@ -1,4 +1,4 @@
-public class PlayerPrafsKeys 
+public static class PlayerPrafsKeys 
 {
     public const string ScoreKey = nameof(ScoreKey);
     public const string LevelKey = nameof(LevelKey);
