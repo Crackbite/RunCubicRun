@@ -44,7 +44,7 @@ public class LevelEntryPortal : HyperspacePortal
         yield return new WaitForSeconds(Delay);
 
         ThrowingOut?.Invoke();
-
+        Cubic.SoundSystem.Play(SoundEvent.PortalExit);
         Quaternion startRotation = CubicTransform.rotation;
         CubicTransform.position = Center.position;
 
@@ -69,6 +69,7 @@ public class LevelEntryPortal : HyperspacePortal
             Vector3 effectPosition = CubicTransform.position;
             _landingEffect.transform.position = new Vector3(effectPosition.x, _landingEffect.transform.position.y, effectPosition.z);
             _landingEffect.Play();
+            Cubic.SoundSystem.Play(SoundEvent.GroundImpact);
         });
     }
 }

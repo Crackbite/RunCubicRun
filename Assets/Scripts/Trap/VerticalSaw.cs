@@ -9,19 +9,20 @@ public class VerticalSaw : Saw
         SetSpeed();
     }
 
-    protected override void CompleteCollision(Vector3 contactPoint)
+    protected override void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
         if (IsSideCollision)
         {
-            HitEffect.transform.position = contactPoint;
-            HitEffect.Play();
-            Stop();
+            base.CompleteCollision(contactPoint, cubic);
+            return;
         }
         else if (Type == TrapType.PatrolSaw)
         {
             Animator.SetFloat(SpeedHash, MinPatrolSpeed);
         }
 
+        cubic.SoundSystem.Play(SoundEvent.Sawing);
+        StartCoroutine(CheckIntersectionWithCubic(cubic));
         Collider.isTrigger = false;
     }
 

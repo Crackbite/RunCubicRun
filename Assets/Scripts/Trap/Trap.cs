@@ -44,7 +44,7 @@ public class Trap : MonoBehaviour
     {
         const float Threshold = 0.001f;
 
-        if (collision.TryGetComponent(out Cubic cubic))
+        if (collision.TryGetComponent(out Cubic cubic) && cubic.IsSawing == false)
         {
             _isCubicCollided = true;
             Vector3 cubicPosition = cubic.transform.position;
@@ -52,6 +52,7 @@ public class Trap : MonoBehaviour
 
             if (cubic.CanDestroy)
             {
+                cubic.SoundSystem.Play(SoundEvent.Crush);
                 Break();
                 return;
             }
@@ -61,7 +62,7 @@ public class Trap : MonoBehaviour
 
             float trapHeight = Collider.bounds.max.y;
             cubic.HitTrap(this, contactPoint, trapHeight);
-            CompleteCollision(contactPoint);
+            CompleteCollision(contactPoint, cubic);
         }
         else if (collision.TryGetComponent(out ColorBlock block) && block.CanFollow == false)
         {
@@ -79,13 +80,9 @@ public class Trap : MonoBehaviour
         }
     }
 
-    protected virtual void CompleteCollision(Vector3 contactPoint)
+    protected virtual void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
-        if (this is Saw)
-        {
-            return;
-        }
-
+        cubic.SoundSystem.Play(SoundEvent.TrapHit);
         HitEffect.transform.position = contactPoint;
         HitEffect.Play();
         Stop();

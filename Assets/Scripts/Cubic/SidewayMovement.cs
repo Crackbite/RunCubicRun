@@ -62,6 +62,12 @@ public class SidewayMovement : MonoBehaviour
     {
         _lineTweener = transform.DOMoveZ(targetPositionZ, _changeLineSpeed).OnUpdate(StopLineTweener)
             .OnComplete(() => LineReached?.Invoke());
+
+        if (_cubic.transform.position.z != targetPositionZ)
+        {
+            SoundSystem soundSystem = _cubic.SoundSystem;
+            soundSystem.Play(SoundEvent.Swipe);
+        }
     }
 
     private bool IsOnRoad()

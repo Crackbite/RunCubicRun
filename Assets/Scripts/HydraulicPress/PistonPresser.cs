@@ -11,14 +11,15 @@ public class PistonPresser : MonoBehaviour
     [SerializeField] private Vector3 _cubicShakeStrength = new Vector3(.02f, 0f, .02f);
     [SerializeField] private CubicMovement _cubicMovement;
     [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private SoundSystem _soundSystem;
 
     private BlockDestroyer _blockDestroyer;
     private bool _isCubicCollisionDisabled;
     private bool _isCubicReached;
     private PistonMover _pistonMover;
 
-    public event Action<Cubic> CubicReached;
-    public event Action StackReached;
+    public event Action CubicReached;
+    public event Action BlockDestroyed;
 
     private void OnEnable()
     {
@@ -37,7 +38,7 @@ public class PistonPresser : MonoBehaviour
         {
             if (_isCubicReached == false)
             {
-                CubicReached?.Invoke(cubic);
+                CubicReached?.Invoke();
                 StartCoroutine(ShakeAndPress(cubic));
             }
         }
@@ -45,14 +46,15 @@ public class PistonPresser : MonoBehaviour
         {
             if (_pistonMover.IsWorking == false)
             {
+                _soundSystem.Play(SoundEvent.PressHit);
                 _hitEffect.transform.position = collision.ClosestPoint(transform.position);
                 _hitEffect.Play();
-                StackReached?.Invoke();
                 StartCoroutine(PressAndDestroy(colorBlock));
             }
             else
             {
                 _blockDestroyer.DestroyBlock(colorBlock);
+                BlockDestroyed?.Invoke();
             }
         }
     }
@@ -81,6 +83,7 @@ public class PistonPresser : MonoBehaviour
 
         _isCubicReached = true;
         _pistonMover.TurnOff();
+        cubic.SoundSystem.Play(SoundEvent.Shaking);
 
         Tweener tweener = cubic.transform.DOShakePosition(
             _cubicPressDelay * ShakeDurationMultiplier,
@@ -89,6 +92,7 @@ public class PistonPresser : MonoBehaviour
 
         yield return new WaitForSeconds(_cubicPressDelay);
 
+        cubic.SoundSystem.Stop(SoundEvent.Shaking);
         _pistonMover.TurnOn();
         cubic.FlattenOut();
 

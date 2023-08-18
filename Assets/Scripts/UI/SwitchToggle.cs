@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class SwitchToggle : MonoBehaviour
 
     private Vector2 _handlePosition;
     private Toggle _toggle;
+
+    public event Action<bool> ToggleChanged;
 
     private void Awake()
     {
@@ -38,5 +41,6 @@ public class SwitchToggle : MonoBehaviour
     private void OnSwitch(bool isOn)
     {
         ChangeHandlePosition(isOn);
+        ToggleChanged?.Invoke(isOn);
     }
 }

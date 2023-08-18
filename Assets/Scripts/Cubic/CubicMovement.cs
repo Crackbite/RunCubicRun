@@ -80,7 +80,9 @@ public class CubicMovement : MonoBehaviour
         }
 
         float newPositionX = _cubic.transform.position.x + _leavePressDistance;
-        _cubic.transform.DOMoveX(newPositionX, _leavePressTime).SetEase(Ease.OutQuart);
+        _cubic.transform.DOMoveX(newPositionX, _leavePressTime)
+            .SetEase(Ease.OutQuart)
+            .OnComplete(() => { _cubic.SoundSystem.Play(SoundEvent.Win); });
 
         _canLeavePress = false;
         _blockDestroyer.LeavePressAllowed -= OnLeavePressAllowed;
@@ -156,7 +158,7 @@ public class CubicMovement : MonoBehaviour
         EscapeFromPress();
     }
 
-    private void WholePistonOnCubicReached(Cubic cubic)
+    private void WholePistonOnCubicReached()
     {
         _canLeavePress = false;
     }

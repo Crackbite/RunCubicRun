@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ public class SkinView : MonoBehaviour
 
     private Skin _skin;
     private float _currentScore;
+    private SkinStateForm _currentStateForm;
 
     public event Action<Skin, SkinView> ChooseButtonClick;
 
@@ -82,6 +83,7 @@ public class SkinView : MonoBehaviour
             if (form.State == skinState)
             {
                 form.Set(_skin.Price.ToString());
+                _currentStateForm = form;
                 return;
             }
         }
@@ -94,11 +96,11 @@ public class SkinView : MonoBehaviour
 
     private void OnChooseClick()
     {
-        if (_skin.IsActive)
+        if (_currentStateForm.State == SkinState.Selected || _currentStateForm.State == SkinState.Unaffordable)
         {
             return;
         }
-
+ 
         ChooseButtonClick?.Invoke(_skin, this);
     }
 }

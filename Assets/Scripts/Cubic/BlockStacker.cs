@@ -69,6 +69,7 @@ public class BlockStacker : MonoBehaviour
         ParticleSystem.MainModule main = _pickUpEffect.main;
         main.startColor = blockColor;
         _pickUpEffect.Play();
+        _cubic.SoundSystem.Play(SoundEvent.BlockPickup);
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)

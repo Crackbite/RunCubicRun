@@ -8,6 +8,7 @@ public class BlockStackPhysics : MonoBehaviour
     [SerializeField] private float _blockDestroyDelay = 5f;
     [SerializeField] private LevelExitPortal _levelExitPortal;
 
+    private bool _isStackCollapsed;
     private Vector3 _previousPosition;
     private float _currentspeed;
     private const float MoveSpeed = 7f;
@@ -40,6 +41,8 @@ public class BlockStackPhysics : MonoBehaviour
         const float ForceFactor = 0.2f;
         int brokenBlocksCount = _blockStack.Blocks.Count - stackPosition;
 
+        _cubic.SoundSystem.Play(SoundEvent.CrossbarHit);
+
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
             _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor * (_currentspeed / MoveSpeed), true, true);
@@ -54,7 +57,7 @@ public class BlockStackPhysics : MonoBehaviour
         {
             return;
         }
-
+        _isStackCollapsed = true;
         Vector3 fallDirection = GetFallDirection(contactPoint, obstacleHeight);
 
         foreach (ColorBlock block in _blockStack.Blocks)
@@ -86,6 +89,30 @@ public class BlockStackPhysics : MonoBehaviour
     private void OnBlockAdded(ColorBlock colorBlock)
     {
         colorBlock.BlockPhysics.CrossbarHit += OnCrossbarHit;
+        colorBlock.BlockPhysics.RoadHit += OnRoadHit;
+    }
+
+    private void OnRoadHit(ColorBlock colorBlock)
+    {
+        colorBlock.BlockPhysics.RoadHit -= OnRoadHit;
+        bool isFallSoundPlaying = _cubic.SoundSystem.CheckSoundPlaying(SoundEvent.BlocksFall, out AudioSource _);
+        float halfStack = _blockStack.Blocks.Count / 2;
+
+        if (isFallSoundPlaying)
+        {
+            return;
+        }
+        else if (_isStackCollapsed)
+        {
+            if (colorBlock.StackPosition > halfStack)
+            {
+                _cubic.SoundSystem.Play(SoundEvent.BlocksFall);
+            }
+        }
+        else
+        {
+            _cubic.SoundSystem.Play(SoundEvent.BlocksFall);
+        }
     }
 
     private void OnCubicSuckingIn()

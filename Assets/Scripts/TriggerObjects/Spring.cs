@@ -36,36 +36,38 @@ public class Spring : MonoBehaviour
     public void Toss(Cubic cubic)
     {
         _animator.SetTrigger(_tossHash);
+        cubic.SoundSystem.Play(SoundEvent.Spring);
 
         if(cubic.IsSawing == false)
         {
-             StartCoroutine(ThrowOverAbyss(cubic.transform, cubic.JumpForce, cubic.JumpAcceleration));
+             StartCoroutine(ThrowOverAbyss(cubic));
         }
     }
 
-    private IEnumerator ThrowOverAbyss(Transform flyingObject, float throwForce, float acceleration)
+    private IEnumerator ThrowOverAbyss(Cubic cubic)
     {
         float runningTime = 0f;
-        float startPositionY = flyingObject.position.y;
+        float startPositionY = cubic.transform.position.y;
         bool isGround = false;
 
         while (isGround == false)
         {
             runningTime += Time.fixedDeltaTime;
 
-            Vector3 currentPosition = flyingObject.position;
+            Vector3 currentPosition = cubic.transform.position;
             currentPosition.y = startPositionY
-                                + ((throwForce * runningTime) - ((acceleration * Mathf.Pow(runningTime, 2f)) / 2f));
+                                + ((cubic.JumpForce * runningTime) - ((cubic.JumpAcceleration * Mathf.Pow(runningTime, 2f)) / 2f));
 
             if (currentPosition.y < startPositionY)
             {
                 currentPosition.y = startPositionY;
                 _landingEffect.transform.position = new Vector3(currentPosition.x, _landingEffect.transform.position.y, currentPosition.z);
-                _landingEffect.Play(); 
+                _landingEffect.Play();
+                cubic.SoundSystem.Play(SoundEvent.GroundImpact);
                 isGround = true;
             }
 
-            flyingObject.transform.position = currentPosition;
+            cubic.transform.position = currentPosition;
             yield return new WaitForFixedUpdate();
         }
     }
