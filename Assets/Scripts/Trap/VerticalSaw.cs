@@ -4,11 +4,6 @@ public class VerticalSaw : Saw
 {
     private const int MinPatrolSpeed = 0;
 
-    private void OnEnable()
-    {
-        SetSpeed();
-    }
-
     protected override void CompleteCollision(Vector3 contactPoint, Cubic cubic)
     {
         if (IsSideCollision)

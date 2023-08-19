@@ -5,6 +5,7 @@ public class HorizontalSaw : Saw
     [SerializeField] private float _defaultSpeed = 1.4f;
     [SerializeField] private bool _canRandomizeSpeed;
     [SerializeField] private SawSide _sawSide;
+    [SerializeField] private RotationDirection _rotationDirection;
 
     public SawSide Side => _sawSide;
 
@@ -13,11 +14,24 @@ public class HorizontalSaw : Saw
         if (_canRandomizeSpeed)
         {
             float speed = Random.Range(MinSpeed, MaxSpeed) * GetRotationDirection();
-            Animator.SetFloat(SpeedHash, speed);
+
+            if (_rotationDirection == RotationDirection.Forward)
+            {
+                Animator.SetFloat(SpeedHash, speed);
+                return;
+            }
+
+            Animator.SetFloat(SpeedHash, -speed);
         }
         else
         {
-            Animator.SetFloat(SpeedHash, _defaultSpeed * GetRotationDirection());
+            if (_rotationDirection == RotationDirection.Forward)
+            {
+                Animator.SetFloat(SpeedHash, _defaultSpeed * GetRotationDirection());
+                return;
+            }
+
+            Animator.SetFloat(SpeedHash, -_defaultSpeed * GetRotationDirection());
         }
     }
 
@@ -32,15 +46,15 @@ public class HorizontalSaw : Saw
     private int GetRotationDirection()
     {
         const float CenterPositionZ = 0f;
-        const int RightRotationValue = 1;
-        const int LeftRotationValue = -1;
+        const int ForwardRotationValue = 1;
+        const int ReverseRotationValue = -1;
 
         if (_sawSide == SawSide.Right)
         {
-            return transform.position.z < CenterPositionZ ? RightRotationValue : LeftRotationValue;
+            return transform.position.z < CenterPositionZ ? ForwardRotationValue : ReverseRotationValue;
         }
 
-        return transform.position.z > CenterPositionZ ? RightRotationValue : LeftRotationValue;
+        return transform.position.z > CenterPositionZ ? ForwardRotationValue : ReverseRotationValue;
     }
 
     private void OnSawCameOutCubic(Cubic cubic)
@@ -54,4 +68,10 @@ public enum SawSide
 {
     Left,
     Right
+}
+
+public enum RotationDirection
+{
+    Forward,
+    Reverse
 }

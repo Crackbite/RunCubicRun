@@ -23,7 +23,12 @@ public class Trap : MonoBehaviour
     public bool IsSideCollision { get; private set; }
     public TrapType Type => _type;
 
-    private void Awake()
+    private void OnEnable()
+    {
+        SetSpeed();
+    }
+
+    private void Start()
     {
         foreach (GameObject splitBody in _splitBodys)
         {
@@ -36,8 +41,6 @@ public class Trap : MonoBehaviour
         }
 
         Collider = GetComponent<Collider>();
-
-        SetSpeed();
     }
 
     private void OnTriggerEnter(Collider collision)
