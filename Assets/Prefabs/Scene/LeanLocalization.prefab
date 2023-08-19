@@ -1114,6 +1114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3703218420502323704}
   - component: {fileID: 3703218420502323705}
+  - component: {fileID: 6758868821474518654}
   m_Layer: 0
   m_Name: LeanLocalization
   m_TagString: Untagged
@@ -1150,11 +1151,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806f0696300aeac44a0e17efee222854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLanguage: English
+  currentLanguage: Russian
   detectLanguage: 1
   defaultLanguage: 
-  saveLoad: 1
+  saveLoad: 0
   prefabs: []
+--- !u!114 &6758868821474518654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703218420502323706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce1ee714ab6ec64d940baa061fc748c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sdk: {fileID: 0}
 --- !u!1 &3703218420578942383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,6 +1930,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 38436736}
     m_Modifications:
+    - target: {fileID: 2152831233591811209, guid: 80c39e0f94ea9954b993e21f8a4e4d1c, type: 3}
+      propertyPath: entries.Array.data[0].Text
+      value: Hello! Let's practice to start.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152831233591811209, guid: 80c39e0f94ea9954b993e21f8a4e4d1c, type: 3}
+      propertyPath: entries.Array.data[1].Text
+      value: "\u041F\u0440\u0438\u0432\u0435\u0442! \u0414\u0430\u0432\u0430\u0439\u0442\u0435
+        \u043F\u043E\u0442\u0440\u0435\u043D\u0438\u0440\u0443\u0435\u043C\u0441\u044F
+        \u0434\u043B\u044F \u043D\u0430\u0447\u0430\u043B\u0430."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152831233591811209, guid: 80c39e0f94ea9954b993e21f8a4e4d1c, type: 3}
+      propertyPath: entries.Array.data[2].Text
+      value: "Merhaba! Ba\u015Flamak i\xE7in pratik yapal\u0131m."
+      objectReference: {fileID: 0}
     - target: {fileID: 2152831233591811214, guid: 80c39e0f94ea9954b993e21f8a4e4d1c, type: 3}
       propertyPath: m_RootOrder
       value: 0
