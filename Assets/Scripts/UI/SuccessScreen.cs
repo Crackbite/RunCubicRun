@@ -7,6 +7,7 @@ public class SuccessScreen : LevelResultScreen
     [SerializeField] private Button _next;
 
     public event Action NextLevelLoading;
+    public event Action NextButtonClicked;
 
     protected override void OnEnable()
     {
@@ -32,6 +33,7 @@ public class SuccessScreen : LevelResultScreen
             ChunkStorage.Instance.Restart();
         }
 
+        NextButtonClicked?.Invoke();
         LoadScene();
     }
 }

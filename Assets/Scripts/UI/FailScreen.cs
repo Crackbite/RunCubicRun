@@ -12,11 +12,13 @@ public class FailScreen : LevelResultScreen
     [SerializeField] private DOTweenAnimation _containerAnimation;
 
     public event Action LevelRestarting;
+    public event Action RefreshButtonClicked;
 
     protected override void OnEnable()
     {
         base.OnEnable();
         _restart.onClick.AddListener(OnRestartClicked);
+        _refresh.onClick.AddListener(OnRefreshClicked);
 
         if (IsTraining)
         {
@@ -28,6 +30,7 @@ public class FailScreen : LevelResultScreen
     {
         base.OnDisable();
         _restart.onClick.RemoveListener(OnRestartClicked);
+        _refresh.onClick.RemoveListener(OnRefreshClicked);
     }
 
     public void Enter(GameResult gameResult)
@@ -55,6 +58,17 @@ public class FailScreen : LevelResultScreen
 
     private void OnRestartClicked()
     {
+        LoadScene();
+    }
+
+    private void OnRefreshClicked()
+    {
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
+
+        RefreshButtonClicked?.Invoke();
         LoadScene();
     }
 }
