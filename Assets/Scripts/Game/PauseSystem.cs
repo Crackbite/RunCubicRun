@@ -7,6 +7,7 @@ public class PauseSystem : MonoBehaviour
     [SerializeField] private float _slowdownDuration = 2f;
     [SerializeField] private float _resetDuration = 1f;
     [SerializeField] private SettingsScreen _settingsScreen;
+    [SerializeField] private SDK _sdk;
 
     private Coroutine _scaleRoutine;
     private bool _isStop;
@@ -19,12 +20,16 @@ public class PauseSystem : MonoBehaviour
     {
         _settingsScreen.Showed += OnSettingsShowed;
         _settingsScreen.Hidden += OnSettingsHidden;
+        _sdk.AdOpened += OnAdOpened;
+        _sdk.AdClosed += OnAdClosed;
     }
 
     private void OnDisable()
     {
         _settingsScreen.Showed -= OnSettingsShowed;
         _settingsScreen.Hidden -= OnSettingsHidden;
+        _sdk.AdOpened -= OnAdOpened;
+        _sdk.AdClosed -= OnAdClosed;
     }
 
     public void SlowDownTime()
@@ -53,6 +58,16 @@ public class PauseSystem : MonoBehaviour
     private void OnSettingsShowed()
     {
         PauseGame();
+    }
+
+    private void OnAdOpened()
+    {
+        PauseGame();
+    }
+
+    private void OnAdClosed()
+    {
+        UnpauseGame();
     }
 
     private void PauseGame()

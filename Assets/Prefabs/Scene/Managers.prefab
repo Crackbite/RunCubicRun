@@ -139,6 +139,7 @@ Transform:
   - {fileID: 2412323224936604599}
   - {fileID: 3921689379827082598}
   - {fileID: 3302069274856592561}
+  - {fileID: 1253232807173209611}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -283,6 +284,7 @@ MonoBehaviour:
   _slowdownDuration: 2
   _resetDuration: 1
   _settingsScreen: {fileID: 0}
+  _sdk: {fileID: 6212348411588227601}
 --- !u!1 &921384243231030087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1532,52 @@ MonoBehaviour:
   _dataHolder: {fileID: 988137716252708907}
   _scoreAllocator: {fileID: 921384242104032655}
   _gameStatusTracker: {fileID: 921384243377587612}
+--- !u!1 &6973028504544540274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1253232807173209611}
+  - component: {fileID: 6212348411588227601}
+  m_Layer: 0
+  m_Name: SDK
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1253232807173209611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973028504544540274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 921384242159941299}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6212348411588227601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973028504544540274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eb27dca98b80e24eb61f81b26985eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _failScreen: {fileID: 0}
+  _succesScreen: {fileID: 0}
 --- !u!1029 &102900000
 DefaultAsset:
   m_ObjectHideFlags: 0
