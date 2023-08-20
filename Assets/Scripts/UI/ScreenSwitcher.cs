@@ -1,3 +1,4 @@
+using Agava.YandexGames;
 using System;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private GameDataHandler _gameDataHandler;
 
@@ -65,7 +67,13 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnLeaderboardClicked()
     {
-        SetLeaderboardScreen();
+        if (PlayerAccount.IsAuthorized)
+        {
+            SetLeaderboardScreen();
+            return;
+        }
+
+        SetAuthRequestScreen();
     }
 
     private void OnDataRestored()
@@ -110,6 +118,11 @@ public class ScreenSwitcher : MonoBehaviour
     private void SetLeaderboardScreen()
     {
         SetScreen(_leaderboardScreen);
+    }
+
+    private void SetAuthRequestScreen()
+    {
+        SetScreen(_authRequestScreen);
     }
 
     private void SetGameScreen()
