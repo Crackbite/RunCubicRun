@@ -1,6 +1,5 @@
 using UnityEngine;
 using Agava.YandexGames;
-using System;
 
 public class LeaderboardLoader : MonoBehaviour
 {
