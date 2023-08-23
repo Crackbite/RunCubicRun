@@ -67,12 +67,18 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnLeaderboardClicked()
     {
-        if (PlayerAccount.IsAuthorized)
+#if !UNITY_WEBGL || UNITY_EDITOR
+        SetLeaderboardScreen();
+        return;
+#endif
+
+        if ( PlayerAccount.IsAuthorized)
         {
+            Debug.Log("AUTHORIZED");
             SetLeaderboardScreen();
             return;
         }
-
+       
         SetAuthRequestScreen();
     }
 
