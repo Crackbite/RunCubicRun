@@ -50,6 +50,20 @@ public class PauseSystem : MonoBehaviour
         StartCoroutine(ScaleTime(initialValue, targetValue, _resetDuration));
     }
 
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            AudioListener.pause = false;
+            UnpauseGame();
+        }
+        else
+        {
+            AudioListener.pause = true;
+            PauseGame();
+        }
+    }
+
     private void OnSettingsHidden()
     {
         UnpauseGame();

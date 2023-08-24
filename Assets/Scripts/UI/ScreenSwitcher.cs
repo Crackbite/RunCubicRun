@@ -1,3 +1,4 @@
+using Agava.YandexGames;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private SuccessScreen _successScreen;
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private StoreScreen _storeScreen;
+    [SerializeField] private LeaderboardScreen _leaderboardScreen;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private GameDataHandler _gameDataHandler;
 
@@ -21,8 +24,10 @@ public class ScreenSwitcher : MonoBehaviour
         _gameDataHandler.DataRestored += OnDataRestored;
         _menuScreen.StartClicked += OnMenuStartClicked;
         _menuScreen.StoreClicked += OnMenuStoreClicked;
+        _menuScreen.LeaderboardClicked += OnLeaderboardClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
         _storeScreen.CloseClicked += OnStoreCloseClicked;
+        _leaderboardScreen.CloseClicked += OnLeaderboardCloseClicked;
     }
 
     private void OnDisable()
@@ -30,8 +35,10 @@ public class ScreenSwitcher : MonoBehaviour
         _gameDataHandler.DataRestored -= OnDataRestored;
         _menuScreen.StartClicked -= OnMenuStartClicked;
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
+        _menuScreen.LeaderboardClicked -= OnLeaderboardClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _storeScreen.CloseClicked -= OnStoreCloseClicked;
+        _leaderboardScreen.CloseClicked -= OnLeaderboardCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -58,6 +65,23 @@ public class ScreenSwitcher : MonoBehaviour
         SetStoreScreen();
     }
 
+    private void OnLeaderboardClicked()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        SetLeaderboardScreen();
+        return;
+#endif
+
+        if ( PlayerAccount.IsAuthorized)
+        {
+            Debug.Log("AUTHORIZED");
+            SetLeaderboardScreen();
+            return;
+        }
+       
+        SetAuthRequestScreen();
+    }
+
     private void OnDataRestored()
     {
         if (_gameDataHandler.IsLevelRestarting)
@@ -75,6 +99,10 @@ public class ScreenSwitcher : MonoBehaviour
         SetScreen(_menuScreen);
     }
 
+    private void OnLeaderboardCloseClicked()
+    {
+        SetScreen(_menuScreen);
+    }
 
     private void SetDefaultScreen()
     {
@@ -91,6 +119,16 @@ public class ScreenSwitcher : MonoBehaviour
     private void SetStoreScreen()
     {
         SetScreen(_storeScreen);
+    }
+
+    private void SetLeaderboardScreen()
+    {
+        SetScreen(_leaderboardScreen);
+    }
+
+    private void SetAuthRequestScreen()
+    {
+        SetScreen(_authRequestScreen);
     }
 
     private void SetGameScreen()
