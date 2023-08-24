@@ -5,25 +5,34 @@ using UnityEngine.UI;
 public class SuccessScreen : LevelResultScreen
 {
     [SerializeField] private Button _next;
+    [SerializeField] private SDK _sdk;
 
     public event Action NextLevelLoading;
-    public event Action NextButtonClicked;
+    public event Action<int> NextLevelButtonClicked;
 
     protected override void OnEnable()
     {
         base.OnEnable();
         _next.onClick.AddListener(OnNextClicked);
+        _sdk.AdClosed += OnAdClosed;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         _next.onClick.RemoveListener(OnNextClicked);
+        _sdk.AdClosed -= OnAdClosed;
     }
 
     protected override void RestartLevel()
     {
         NextLevelLoading?.Invoke();
+    }
+
+    protected override void OnHomeClicked()
+    {
+        base.OnHomeClicked();
+        NextLevelButtonClicked?.Invoke(CurrentLevel);
     }
 
     private void OnNextClicked()
@@ -33,7 +42,16 @@ public class SuccessScreen : LevelResultScreen
             ChunkStorage.Instance.Restart();
         }
 
-        NextButtonClicked?.Invoke();
+#if !UNITY_WEBGL || UNITY_EDITOR
+        LoadScene();
+        return;
+#endif
+
+        NextLevelButtonClicked?.Invoke(CurrentLevel);
+    }
+
+    private void OnAdClosed()
+    {
         LoadScene();
     }
 }

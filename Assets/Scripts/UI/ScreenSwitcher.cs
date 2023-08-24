@@ -26,8 +26,9 @@ public class ScreenSwitcher : MonoBehaviour
         _menuScreen.StoreClicked += OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked += OnLeaderboardClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
-        _storeScreen.CloseClicked += OnStoreCloseClicked;
-        _leaderboardScreen.CloseClicked += OnLeaderboardCloseClicked;
+        _storeScreen.CloseClicked += OnCloseClicked;
+        _leaderboardScreen.CloseClicked += OnCloseClicked;
+        _authRequestScreen.CloseClicked += OnCloseClicked;
     }
 
     private void OnDisable()
@@ -37,8 +38,9 @@ public class ScreenSwitcher : MonoBehaviour
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked -= OnLeaderboardClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
-        _storeScreen.CloseClicked -= OnStoreCloseClicked;
-        _leaderboardScreen.CloseClicked -= OnLeaderboardCloseClicked;
+        _storeScreen.CloseClicked -= OnCloseClicked;
+        _leaderboardScreen.CloseClicked -= OnCloseClicked;
+        _authRequestScreen.CloseClicked -= OnCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -74,7 +76,6 @@ public class ScreenSwitcher : MonoBehaviour
 
         if ( PlayerAccount.IsAuthorized)
         {
-            Debug.Log("AUTHORIZED");
             SetLeaderboardScreen();
             return;
         }
@@ -94,12 +95,7 @@ public class ScreenSwitcher : MonoBehaviour
         }
     }
 
-    private void OnStoreCloseClicked()
-    {
-        SetScreen(_menuScreen);
-    }
-
-    private void OnLeaderboardCloseClicked()
+    private void OnCloseClicked()
     {
         SetScreen(_menuScreen);
     }
