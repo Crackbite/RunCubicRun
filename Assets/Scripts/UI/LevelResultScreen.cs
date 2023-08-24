@@ -16,6 +16,7 @@ public abstract class LevelResultScreen : Screen
     private bool _isLevelRestarting = true;
 
     protected bool IsTraining;
+    protected int CurrentLevel;
 
     protected virtual void OnEnable()
     {
@@ -25,6 +26,7 @@ public abstract class LevelResultScreen : Screen
         if (_gameDataHandler.Level >= _gameFirstLevel)
         {
             _level.text += _gameDataHandler.Level.ToString();
+            CurrentLevel = _gameDataHandler.Level;
         }
         else
         {
@@ -52,6 +54,16 @@ public abstract class LevelResultScreen : Screen
 
     protected abstract void RestartLevel();
 
+    protected virtual void OnHomeClicked()
+    {
+        _isLevelRestarting = false;
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+        LoadScene();
+        return;
+#endif
+    }
+
     private void UpdateTrainingStageText()
     {
         int currentStage = _gameDataHandler.TrainingStageNumber;
@@ -69,11 +81,5 @@ public abstract class LevelResultScreen : Screen
         }
 
         UpdateTrainingStageText();
-    }
-
-    private void OnHomeClicked()
-    {
-        _isLevelRestarting = false;
-        LoadScene();
     }
 }
