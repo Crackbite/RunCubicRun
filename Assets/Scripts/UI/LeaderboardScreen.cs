@@ -25,7 +25,7 @@ public class LeaderboardScreen : Screen
        CloseClicked?.Invoke();
     }
 
-    public void AddPlayerView(int playerNumber, string playerName, int playerScore, bool isUser = false)
+    public void AddPlayerView(int playerNumber, string playerName, int playerScore)
     {
         PlayerView view = Instantiate(_template, _itemContainer.transform);
         view.Render(playerNumber, playerName, playerScore);

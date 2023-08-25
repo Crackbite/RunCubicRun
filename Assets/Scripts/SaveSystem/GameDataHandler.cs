@@ -14,6 +14,7 @@ public class GameDataHandler : MonoBehaviour
     public event Action DataRestored;
 
     public float Score { get; private set; }
+    public float LeaderboardScore { get; private set; }
     public int Level { get; private set; }
     public int TrainingStageNumber { get; private set; } = 1;
     public int TrainingStageAmount { get; private set; }
@@ -41,6 +42,7 @@ public class GameDataHandler : MonoBehaviour
         IsLevelRestarting = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrafsKeys.RestartKey, DefaultValue));
         TrainingStageAmount = _trainingStageHolder.StageAmount;
         Score = PlayerPrefs.GetFloat(PlayerPrafsKeys.ScoreKey, DefaultValue);
+        LeaderboardScore = PlayerPrefs.GetFloat(PlayerPrafsKeys.LeaderboardScoreKey, DefaultValue);
         Level = PlayerPrefs.GetInt(PlayerPrafsKeys.LevelKey, DefaultValue);
 
         if (Level == DefaultValue)
