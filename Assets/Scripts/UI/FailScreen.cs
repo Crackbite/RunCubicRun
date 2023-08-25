@@ -56,6 +56,12 @@ public class FailScreen : LevelResultScreen
         LevelRestarting?.Invoke();
     }
 
+    protected override void OnHomeClicked()
+    {
+        base.OnHomeClicked();
+        LoadScene();
+    }
+
     private void OnRestartClicked()
     {
         LoadScene();

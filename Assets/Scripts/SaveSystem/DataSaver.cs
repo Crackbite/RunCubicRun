@@ -60,6 +60,8 @@ public class DataSaver : MonoBehaviour
         {
             float score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
             PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, score);
+            float leaderboardScore = _dataHolder.LeaderboardScore + _scoreAllocator.LevelScore;
+            PlayerPrefs.SetFloat(PlayerPrafsKeys.LeaderboardScoreKey, leaderboardScore);
 
             if (_dataHolder.Level == DefaultValue && _dataHolder.TrainingStageNumber < _dataHolder.TrainingStageAmount)
             {

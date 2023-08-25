@@ -8,8 +8,6 @@ public class SDK : MonoBehaviour
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private SuccessScreen _succesScreen;
 
-    private int _interstitialAdCounter;
-
     public event Action Initialized;
     public event Action AdOpened;
     public event Action AdClosed;
@@ -17,7 +15,7 @@ public class SDK : MonoBehaviour
     private void OnEnable()
     {
         _failScreen.RefreshButtonClicked += OnRefreshButtonClicked;
-        _succesScreen.NextButtonClicked += OnNextButtonClicked;
+        _succesScreen.NextLevelButtonClicked += OnNextButtonClicked;
     }
 
     private void Awake()
@@ -25,29 +23,39 @@ public class SDK : MonoBehaviour
         YandexGamesSdk.CallbackLogging = true;
     }
 
-    private void OnDisable()
-    {
-        _failScreen.RefreshButtonClicked -= OnRefreshButtonClicked;
-        _succesScreen.NextButtonClicked -= OnNextButtonClicked;
-    }
-
-    public void ShowVideoAd()
-    {
-        VideoAd.Show(() => { AdOpened?.Invoke(); }, null, () => { AdClosed?.Invoke(); });
-    }
-
-    public void ShowInterstitialAd()
-    {
-        InterstitialAd.Show();
-        _interstitialAdCounter++;
-    }
-
     private IEnumerator Start()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         yield break;
 #endif
+
         yield return YandexGamesSdk.Initialize(Initialized);
+    }
+
+    private void OnDisable()
+    {
+        _failScreen.RefreshButtonClicked -= OnRefreshButtonClicked;
+        _succesScreen.NextLevelButtonClicked -= OnNextButtonClicked;
+    }
+
+    public void ShowVideoAd()
+    {
+        VideoAd.Show(OnAdOpened, null, OnAdClosed);
+    }
+
+    public void ShowInterstitialAd()
+    {
+        InterstitialAd.Show(OnAdOpened, (bool _) => { AdClosed?.Invoke(); });
+    }
+
+    private void OnAdOpened()
+    {
+        AdOpened?.Invoke();
+    }
+
+    private void OnAdClosed()
+    {
+        AdClosed?.Invoke();
     }
 
     private void OnRefreshButtonClicked()
@@ -55,14 +63,15 @@ public class SDK : MonoBehaviour
         ShowVideoAd();
     }
 
-    private void OnNextButtonClicked()
+    private void OnNextButtonClicked(int currentLevel)
     {
-        const int InterstitialAdCount = 3;
+        const int LevelsBetweenVideoAd = 3;
+        const int TargetRemainder = 0;
+        const int MinLevelCount = 1;
 
-        if (_interstitialAdCounter >= InterstitialAdCount)
+        if (currentLevel >= MinLevelCount && currentLevel % LevelsBetweenVideoAd == TargetRemainder)
         {
             ShowVideoAd();
-            _interstitialAdCounter -= _interstitialAdCounter;
             return;
         }
 

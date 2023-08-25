@@ -1,29 +1,28 @@
 using UnityEngine;
 using Agava.YandexGames;
+using System.Collections;
 
 public class LeaderboardLoader : MonoBehaviour
 {
-    [SerializeField] private SDK _sdk;
-    [SerializeField] private ScoreAllocator _scoreAllocator;
+    [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
     [SerializeField] private AuthRequestScreen _authRequestScreen;
 
-    private string _playerUniqueID;
+    private WaitForSecondsRealtime _waitForSDKInitializationCheck;
 
-    private const string LeaderboardName = "LeaderboardRCR";
+    private const string LeaderboardName = "Leaderboard";
     private const string AnonymousName = "Anonymous";
 
     private void OnEnable()
     {
-        _sdk.Initialized += OnSDKInitialized;
-        _scoreAllocator.ScoreChanged += OnScoreChanged;
         _authRequestScreen.PersonalDataPermissed += OnPersonalDataPermissed;
+        _gameDataHandler.DataRestored += OnGameDataRestored;
     }
 
     private void OnDisable()
     {
-        _sdk.Initialized -= OnSDKInitialized;
         _authRequestScreen.PersonalDataPermissed -= OnPersonalDataPermissed;
+        _gameDataHandler.DataRestored -= OnGameDataRestored;
     }
 
     private void OnPersonalDataPermissed()
@@ -31,20 +30,9 @@ public class LeaderboardLoader : MonoBehaviour
         GetPlayerEntries();
     }
 
-    private void OnScoreChanged(Score score)
+    private void OnGameDataRestored()
     {
-        GetPlayerEntries();
-        _scoreAllocator.ScoreChanged -= OnScoreChanged;
-    }
-
-    private void OnSDKInitialized()
-    {
-        PlayerAccount.GetProfileData((result) =>
-        {
-            _playerUniqueID = result.uniqueID;
-        });
-
-        Leaderboard.SetScore(LeaderboardName, (int)_scoreAllocator.TotalScore);
+        StartCoroutine(SetScoreToLeaderboard());
     }
 
     private void GetPlayerEntries()
@@ -56,12 +44,23 @@ public class LeaderboardLoader : MonoBehaviour
                 string name = result.entries[i].player.publicName;
 
                 if (string.IsNullOrEmpty(name))
+                {
                     name = AnonymousName;
+                }
 
-                bool isUser = result.entries[i].player.uniqueID == _playerUniqueID;
-
-                _leaderboardScreen.AddPlayerView(i + 1, name, result.entries[i].score, isUser);
+                _leaderboardScreen.AddPlayerView(i + 1, name, result.entries[i].score);
             }
         });
+    }
+
+    private IEnumerator SetScoreToLeaderboard()
+    {
+        while (YandexGamesSdk.IsInitialized == false)
+        {
+            yield return _waitForSDKInitializationCheck;
+        }
+
+        Leaderboard.SetScore(LeaderboardName, (int)_gameDataHandler.LeaderboardScore);
+        GetPlayerEntries();
     }
 }
