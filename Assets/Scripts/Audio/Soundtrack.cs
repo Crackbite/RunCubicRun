@@ -7,6 +7,7 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private AudioClip _gameplayAudio;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private MenuScreen _menuScreen;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SoundSystem _soundSystem;
     [SerializeField] private PauseSystem _pauseSystem;
@@ -20,6 +21,7 @@ public class Soundtrack : MonoBehaviour
     {
         _gameStatusTracker.GameStarted += OnGameStarted;
         _gameStatusTracker.GameEnded += OnGameEnded;
+        _menuScreen.Set += OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged += OnMusicToggleChanged;
         _cubic.SteppedOnStand += OnCubicSteppedOnStend;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
@@ -28,14 +30,14 @@ public class Soundtrack : MonoBehaviour
 
     private void Awake()
     {
-       _initialVolume = _audioSource.volume;
-       Play(_menuAudio);
+        _initialVolume = _audioSource.volume;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameStarted -= OnGameStarted;
         _gameStatusTracker.GameEnded -= OnGameEnded;
+        _menuScreen.Set -= OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged -= OnMusicToggleChanged;
         _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
@@ -73,16 +75,24 @@ public class Soundtrack : MonoBehaviour
         Play(_gameplayAudio);
     }
 
-    private void OnMusicToggleChanged(bool isSoundOn)
+    private void OnMenuScreenSet()
+    {
+        if (_audioSource.isPlaying == false || _audioSource.clip != _menuAudio)
+        {
+            Play(_menuAudio);
+        }
+    }
+
+    private void OnMusicToggleChanged(bool isMusicOn)
     {
         _soundSystem.Play(SoundEvent.SwitchToggle);
-        _isMusicOn = isSoundOn;
+        _isMusicOn = isMusicOn;
 
         if (_isMusicOn == false)
         {
             _audioSource.Pause();
         }
-        else if(_audioSource.isPlaying == false)
+        else if (_audioSource.isPlaying == false)
         {
             _audioSource.Play();
         }

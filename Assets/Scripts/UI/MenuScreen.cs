@@ -8,6 +8,7 @@ public class MenuScreen : Screen
     [SerializeField] private Button _store;
     [SerializeField] private Button _leaderboard;
 
+    public event Action Set;
     public event Action StartClicked;
     public event Action StoreClicked;
     public event Action LeaderboardClicked;
@@ -17,6 +18,8 @@ public class MenuScreen : Screen
         _start.onClick.AddListener(OnStartClicked);
         _store.onClick.AddListener(OnStoreClicked);
         _leaderboard.onClick.AddListener(OnLeaderboardClicked);
+
+        Set?.Invoke();
     }
 
     private void OnDisable()
