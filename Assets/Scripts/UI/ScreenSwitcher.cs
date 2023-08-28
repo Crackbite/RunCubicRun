@@ -14,6 +14,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private LeaderboardLoader _leaderboardLoader;
 
     private Screen _currentScreen;
 
@@ -74,36 +75,30 @@ public class ScreenSwitcher : MonoBehaviour
         return;
 #endif
 
-        if ( PlayerAccount.IsAuthorized)
+        if (PlayerAccount.IsAuthorized && _leaderboardLoader.HasNotAuth == false)
         {
             SetLeaderboardScreen();
             return;
         }
-       
+
         SetAuthRequestScreen();
     }
 
     private void OnDataRestored()
     {
-        if (_gameDataHandler.IsLevelRestarting)
+        if (_gameDataHandler.IsStartWithoutMenu)
         {
             SetGameScreen();
         }
         else
         {
-            SetDefaultScreen();
+            SetMenuScreen();
         }
     }
 
     private void OnCloseClicked()
     {
         SetScreen(_menuScreen);
-    }
-
-    private void SetDefaultScreen()
-    {
-        _mainScreen.Enter();
-        SetMenuScreen();
     }
 
     private void SetFailScreen(GameResult gameResult)

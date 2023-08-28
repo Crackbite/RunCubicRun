@@ -19,7 +19,6 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
 
     private void OnDisable()
     {
-        _currentGenerator.Completed -= OnChunkGenerationCompleted;
         _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
     }
 
@@ -63,6 +62,7 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
         _rightEdges = new float[_chunks.Length];
         DefineEdges();
         InvokeRepeating(nameof(DisableChunkAbroadScreen), Dilay, RepeatRate);
+        _currentGenerator.Completed -= OnChunkGenerationCompleted;
     }
 }
 

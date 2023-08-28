@@ -46,7 +46,6 @@ public class MainCameraTarget : MonoBehaviour
     private void OnDisable()
     {
         _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
-        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
         _cubic.Hit -= OnCubicHit;
     }
 
@@ -69,6 +68,7 @@ public class MainCameraTarget : MonoBehaviour
     private void OnChunkGeneratorCompleted()
     {
         _hasStarted = true;
+        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)

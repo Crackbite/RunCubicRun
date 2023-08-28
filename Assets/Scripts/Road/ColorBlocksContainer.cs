@@ -20,7 +20,6 @@ public class ColorBlocksContainer : MonoBehaviour
     private void OnDisable()
     {
         _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
-        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
         _cubic.Hit -= OnCubicHit;
     }
 
@@ -28,7 +27,7 @@ public class ColorBlocksContainer : MonoBehaviour
     {
         foreach (ColorBlock block in _colorBlocks)
         {
-            if(block != null && block.IsInStack == false)
+            if (block != null && block.IsInStack == false)
             {
                 block.BlockPhysics.TurnOffTrigger();
             }
@@ -44,5 +43,6 @@ public class ColorBlocksContainer : MonoBehaviour
     private void OnChunkGeneratorCompleted()
     {
         _colorBlocks = FindObjectsOfType<ColorBlock>();
+        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
     }
 }

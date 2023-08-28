@@ -18,7 +18,7 @@ public class PortalsContainer : MonoBehaviour
 
     private void OnDisable()
     {
-        _currentGenerator.Completed -= OnChunkGenerationCompleted;
+
         _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
     }
 
@@ -32,6 +32,7 @@ public class PortalsContainer : MonoBehaviour
         }
 
         SortPortalsByX();
+        _currentGenerator.Completed -= OnChunkGenerationCompleted;
     }
 
     private void SortPortalsByX()
