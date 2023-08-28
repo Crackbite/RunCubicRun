@@ -60,7 +60,9 @@ public class LeaderboardLoader : MonoBehaviour
             yield return _waitForSDKInitializationCheck;
         }
 
-        Leaderboard.SetScore(LeaderboardName, (int)_gameDataHandler.LeaderboardScore);
-        GetPlayerEntries();
+        Leaderboard.SetScore(LeaderboardName, _gameDataHandler.LeaderboardScore, () =>
+        {
+            GetPlayerEntries();
+        });
     }
 }
