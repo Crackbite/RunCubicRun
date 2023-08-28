@@ -8,8 +8,8 @@ public class AuthRequestScreen : Screen
     [SerializeField] private Button _authButton;
     [SerializeField] private Button _closeButton;
 
-    public event Action PersonalDataPermissed;
     public event Action CloseClicked;
+    public event Action PlayerAuthorized;
 
     private void OnEnable()
     {
@@ -36,7 +36,7 @@ public class AuthRequestScreen : Screen
 
     private void OnAuthorized()
     {
-        PlayerAccount.RequestPersonalProfileDataPermission(PersonalDataPermissed);
+        PlayerAccount.RequestPersonalProfileDataPermission(PlayerAuthorized);
     }
 
     private void OnCloseButtonClicked()

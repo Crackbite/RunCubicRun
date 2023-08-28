@@ -1,38 +1,42 @@
 using UnityEngine;
 using Agava.YandexGames;
 using System.Collections;
+using System;
 
 public class LeaderboardLoader : MonoBehaviour
 {
     [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
-    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
 
     private const string LeaderboardName = "Leaderboard";
     private const string AnonymousName = "Anonymous";
 
+    public event Action PlayerLogOut;
+
+    public bool HasNotAuth { get; private set; }
+
     private void OnEnable()
     {
-        _authRequestScreen.PersonalDataPermissed += OnPersonalDataPermissed;
         _gameDataHandler.DataRestored += OnGameDataRestored;
     }
 
     private void OnDisable()
     {
-        _authRequestScreen.PersonalDataPermissed -= OnPersonalDataPermissed;
         _gameDataHandler.DataRestored -= OnGameDataRestored;
-    }
-
-    private void OnPersonalDataPermissed()
-    {
-        GetPlayerEntries();
     }
 
     private void OnGameDataRestored()
     {
-        StartCoroutine(SetScoreToLeaderboard());
+#if !UNITY_WEBGL || UNITY_EDITOR
+        return;
+#endif
+
+        if (PlayerAccount.IsAuthorized)
+        {
+            StartCoroutine(SetScoreToLeaderboard());
+        }
     }
 
     private void GetPlayerEntries()
@@ -48,9 +52,14 @@ public class LeaderboardLoader : MonoBehaviour
                     name = AnonymousName;
                 }
 
-                _leaderboardScreen.AddPlayerView(i + 1, name, result.entries[i].score);
+                int rank = result.entries[i].rank;
+                _leaderboardScreen.AddPlayerView(rank, name, result.entries[i].score);
             }
-        });
+        }, (string _) =>
+            {
+                HasNotAuth = true;
+                PlayerLogOut?.Invoke();
+            });
     }
 
     private IEnumerator SetScoreToLeaderboard()
