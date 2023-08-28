@@ -24,7 +24,6 @@ public class ScoreDisplay : MonoBehaviour
     private void Awake()
     {
         _score = GetComponent<TMP_Text>();
-        SetScore(781638f);
     }
 
     private void OnDisable()
