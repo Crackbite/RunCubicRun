@@ -39,7 +39,7 @@ public class GameTrainer : MonoBehaviour
 
     private void OnPressSpeedReduced()
     {
-        if (_isGamePaused)
+        if (_isGamePaused && _phraseDisplay.CanEndTrainingPause())
         {
             _trainingScreen.Exit();
             _phraseDisplay.End();

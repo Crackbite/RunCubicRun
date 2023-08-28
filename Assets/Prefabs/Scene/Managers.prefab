@@ -247,6 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 921384242762046231}
   - component: {fileID: 921384242762046224}
+  - component: {fileID: 8322293769394966067}
   m_Layer: 0
   m_Name: PauseSystem
   m_TagString: Untagged
@@ -282,7 +283,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slowdownDuration: 2
-  _resetDuration: 1
+  _accelerationDuration: 1
+--- !u!114 &8322293769394966067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921384242762046230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b806fc0c8fd6b47b974100bba0bf85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pauseSystem: {fileID: 921384242762046224}
   _settingsScreen: {fileID: 0}
   _sdk: {fileID: 6212348411588227601}
 --- !u!1 &921384243231030087
@@ -707,6 +721,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttons:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -1345,6 +1361,7 @@ MonoBehaviour:
   _gameplayAudio: {fileID: 8300000, guid: dda6b38a691fffd4d8f1509191b2ecb2, type: 3}
   _audioSource: {fileID: 3206372189326420595}
   _gameStatusTracker: {fileID: 921384243377587612}
+  _menuScreen: {fileID: 0}
   _musicSwitchToggle: {fileID: 0}
   _soundSystem: {fileID: 8151059560338112128}
   _pauseSystem: {fileID: 921384242762046224}
@@ -1360,7 +1377,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6960f3bee4f0f2343a60272df5332237, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b178c8b3511d4324aaf67da3edbba66d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
@@ -1502,8 +1519,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a5e9600ebf852ad43af0d1793c03ee1f, type: 2}
   - {fileID: 11400000, guid: 2f84a85aa441c4c489be321f140c9ae1, type: 2}
   _trainingStageHolder: {fileID: 11400000, guid: d67f42baeac19364a950b1c217b26c5e, type: 2}
-  _successScreen: {fileID: 0}
-  _failScreen: {fileID: 0}
   _sdk: {fileID: 6212348411588227601}
   _deletePlayerPrefs: 0
 --- !u!114 &1155909881
@@ -1544,6 +1559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1253232807173209611}
   - component: {fileID: 6212348411588227601}
+  - component: {fileID: 921384243500010536}
   m_Layer: 0
   m_Name: SDK
   m_TagString: Untagged
@@ -1580,6 +1596,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _failScreen: {fileID: 0}
   _succesScreen: {fileID: 0}
+--- !u!114 &921384243500010536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973028504544540274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf29e295f76ce941beb8a8d0fa614b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameDataHandler: {fileID: 988137716252708907}
+  _leaderboardScreen: {fileID: 0}
 --- !u!1029 &102900000
 DefaultAsset:
   m_ObjectHideFlags: 0

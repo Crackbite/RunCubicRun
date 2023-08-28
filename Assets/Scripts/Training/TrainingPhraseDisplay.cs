@@ -1,6 +1,5 @@
 ﻿using Lean.Localization;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainingPhraseDisplay : MonoBehaviour
@@ -30,17 +29,6 @@ public class TrainingPhraseDisplay : MonoBehaviour
         _gameDataHandler.DataRestored -= OnDataRestored;
     }
 
-    private void OnDataRestored()
-    {
-        int stage = _gameDataHandler.TrainingStageNumber;
-
-        if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
-        {
-            _currentStageInfo = currentStageInfo;
-            PhrasesAmount = currentStageInfo.TrainingPhrases.Count;
-        }
-    }
-
     public void Display(int _nextPhraseNumber)
     {
         string emptyPhrase = "";
@@ -54,6 +42,22 @@ public class TrainingPhraseDisplay : MonoBehaviour
     public void End()
     {
         _pauseSystem.AccelerateTime();
+    }
+
+    public bool CanEndTrainingPause()
+    {
+        return _pauseSystem.CanEndTrainingPause;
+    }
+
+    private void OnDataRestored()
+    {
+        int stage = _gameDataHandler.TrainingStageNumber;
+
+        if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
+        {
+            _currentStageInfo = currentStageInfo;
+            PhrasesAmount = currentStageInfo.TrainingPhrases.Count;
+        }
     }
 
     private void OnTimeScaled()
