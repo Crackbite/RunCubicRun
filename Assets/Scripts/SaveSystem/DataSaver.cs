@@ -9,24 +9,25 @@ public class DataSaver : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private List<Skin> _skins = new List<Skin>();
-    private bool _isSkinBought;
+    private Skin _boughtSkin;
+    private string _uniqueID;
 
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
+        _dataHolder.DataRestored += OnDataRestored;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
+        _dataHolder.DataRestored -= OnDataRestored;
 
         foreach (Skin skin in _skins)
         {
             skin.ActivityChanged -= OnSkinActivityChanged;
             skin.Bought -= OnSkinBought;
         }
-
-        SaveIsLevelRestarting();
     }
 
     public void SubscribeToSkinChanges(Skin skin)
@@ -36,45 +37,76 @@ public class DataSaver : MonoBehaviour
         skin.Bought += OnSkinBought;
     }
 
-    private void SaveIsLevelRestarting()
-    {
-        PlayerPrefs.SetInt(PlayerPrafsKeys.RestartKey, Convert.ToInt32(_dataHolder.IsLevelRestarting));
-    }
-
-    private void OnSkinBought(Skin skin)
-    {
-        PlayerPrefs.SetInt(skin.ID + PlayerPrafsKeys.BoughtKey, Convert.ToInt32(skin.IsBought));
-        _isSkinBought = true;
-    }
-
-    private void OnSkinActivityChanged(Skin skin)
-    {
-        PlayerPrefs.SetInt(skin.ID + PlayerPrafsKeys.ActiveKey, Convert.ToInt32(skin.IsActive));
-    }
-
-    private void OnGameEnded(GameResult result)
+    private void SaveLevelData(GameResult result)
     {
         const int DefaultValue = 0;
 
         if (result == GameResult.Win)
         {
-            float score = _scoreAllocator.TotalScore + _scoreAllocator.LevelScore;
-            PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, score);
-            float leaderboardScore = _dataHolder.LeaderboardScore + _scoreAllocator.LevelScore;
-            PlayerPrefs.SetFloat(PlayerPrafsKeys.LeaderboardScoreKey, leaderboardScore);
+            int leaderboardScore = (int)(_dataHolder.LeaderboardScore + _scoreAllocator.LevelScore);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.LeaderboardScoreKey + _uniqueID, leaderboardScore);
 
             if (_dataHolder.Level == DefaultValue && _dataHolder.TrainingStageNumber < _dataHolder.TrainingStageAmount)
             {
-                PlayerPrefs.SetInt(PlayerPrafsKeys.TrainingStageKey, _dataHolder.TrainingStageNumber + 1);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.TrainingStageKey + _uniqueID, _dataHolder.TrainingStageNumber + 1);
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrafsKeys.LevelKey, _dataHolder.Level + 1);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LevelKey + _uniqueID, _dataHolder.Level + 1);
             }
         }
-        else if (_isSkinBought)
+
+        float score = result == GameResult.Win ? _scoreAllocator.TotalScore + _scoreAllocator.LevelScore : _scoreAllocator.TotalScore;
+        PlayerPrefs.SetFloat(PlayerPrefsKeys.ScoreKey + _uniqueID, score);
+
+        if (_boughtSkin != null)
         {
-            PlayerPrefs.SetFloat(PlayerPrafsKeys.ScoreKey, _scoreAllocator.TotalScore);
+            PlayerPrefs.SetInt(_boughtSkin.ID + PlayerPrefsKeys.BoughtKey + _uniqueID, Convert.ToInt32(_boughtSkin.IsBought));
         }
+    }
+
+    private void ClearAnonymousData()
+    {
+        foreach (string key in PlayerPrefsKeys.Keys)
+        {
+            if (key == PlayerPrefsKeys.BoughtKey || key == PlayerPrefsKeys.ActiveKey)
+            {
+                foreach (Skin skin in _dataHolder.Skins)
+                {
+                    PlayerPrefs.DeleteKey(skin.ID + key);
+                }
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey(key);
+            }
+        }
+    }
+
+    private void OnDataRestored()
+    {
+        const string anonymousID = "";
+
+        _uniqueID = _dataHolder.UniqueID;
+
+        if (_dataHolder.HasAnonymousKey && _dataHolder.UniqueID != anonymousID)
+        {
+            ClearAnonymousData();
+        }
+    }
+
+    private void OnSkinBought(Skin skin)
+    {
+        _boughtSkin = skin;
+    }
+
+    private void OnSkinActivityChanged(Skin skin)
+    {
+        PlayerPrefs.SetInt(skin.ID + PlayerPrefsKeys.ActiveKey + _uniqueID, Convert.ToInt32(skin.IsActive));
+    }
+
+    private void OnGameEnded(GameResult result)
+    {
+        SaveLevelData(result);
     }
 }

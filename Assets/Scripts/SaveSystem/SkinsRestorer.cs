@@ -8,7 +8,7 @@ public class SkinsRestorer : MonoBehaviour
 
     private bool _isActiveSkinChoosed;
 
-    public void Restore(IReadOnlyList<Skin> skins)
+    public void Restore(IReadOnlyList<Skin> skins, string uniqueID)
     {
         const int DefaultValue = 0;
 
@@ -16,12 +16,12 @@ public class SkinsRestorer : MonoBehaviour
         {
             _dataSaver.SubscribeToSkinChanges(skin);
 
-            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrafsKeys.BoughtKey, DefaultValue)))
+            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.BoughtKey + uniqueID, DefaultValue)))
             {
                 skin.Buy();
             }
 
-            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrafsKeys.ActiveKey, DefaultValue)))
+            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.ActiveKey + uniqueID, DefaultValue)))
             {
                 if (_isActiveSkinChoosed == false)
                 {
