@@ -11,7 +11,6 @@ public class FailScreen : LevelResultScreen
     [SerializeField] private DOTweenAnimation _windowAnimation;
     [SerializeField] private DOTweenAnimation _containerAnimation;
 
-    public event Action LevelRestarting;
     public event Action RefreshButtonClicked;
 
     protected override void OnEnable()
@@ -51,20 +50,16 @@ public class FailScreen : LevelResultScreen
         base.Enter();
     }
 
-    protected override void RestartLevel()
-    {
-        LevelRestarting?.Invoke();
-    }
-
     protected override void OnHomeClicked()
     {
-        base.OnHomeClicked();
         LoadScene();
     }
 
     private void OnRestartClicked()
     {
-        LoadScene();
+        const bool IsStartWithoutMenu = true;
+
+        LoadScene(IsStartWithoutMenu);
     }
 
     private void OnRefreshClicked()

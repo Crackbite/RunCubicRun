@@ -1,7 +1,7 @@
 using Lean.Localization;
+using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class LevelResultScreen : Screen
@@ -13,10 +13,11 @@ public abstract class LevelResultScreen : Screen
     [SerializeField] private GameObject _trainingStagePhrase;
 
     private int _gameFirstLevel = 1;
-    private bool _isLevelRestarting = true;
 
     protected bool IsTraining;
     protected int CurrentLevel;
+
+    public event Action<bool> SceneLoading;
 
     protected virtual void OnEnable()
     {
@@ -41,27 +42,11 @@ public abstract class LevelResultScreen : Screen
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
-    protected void LoadScene()
+    protected abstract void OnHomeClicked();
+
+    protected void LoadScene(bool isStartWithoutMenu = false)
     {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-
-        if (_isLevelRestarting)
-        {
-            RestartLevel();
-        }
-    }
-
-    protected abstract void RestartLevel();
-
-    protected virtual void OnHomeClicked()
-    {
-        _isLevelRestarting = false;
-
-#if !UNITY_WEBGL || UNITY_EDITOR
-        LoadScene();
-        return;
-#endif
+        SceneLoading?.Invoke(isStartWithoutMenu);
     }
 
     private void UpdateTrainingStageText()

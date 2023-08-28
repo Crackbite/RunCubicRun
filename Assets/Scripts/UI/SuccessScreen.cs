@@ -7,7 +7,8 @@ public class SuccessScreen : LevelResultScreen
     [SerializeField] private Button _next;
     [SerializeField] private SDK _sdk;
 
-    public event Action NextLevelLoading;
+    private bool _isStartWithoutMenu;
+
     public event Action<int> NextLevelButtonClicked;
 
     protected override void OnEnable()
@@ -24,14 +25,13 @@ public class SuccessScreen : LevelResultScreen
         _sdk.AdClosed -= OnAdClosed;
     }
 
-    protected override void RestartLevel()
-    {
-        NextLevelLoading?.Invoke();
-    }
-
     protected override void OnHomeClicked()
     {
-        base.OnHomeClicked();
+#if !UNITY_WEBGL || UNITY_EDITOR
+        LoadScene();
+        return;
+#endif
+
         NextLevelButtonClicked?.Invoke(CurrentLevel);
     }
 
@@ -47,11 +47,12 @@ public class SuccessScreen : LevelResultScreen
         return;
 #endif
 
+        _isStartWithoutMenu = true;
         NextLevelButtonClicked?.Invoke(CurrentLevel);
     }
 
     private void OnAdClosed()
     {
-        LoadScene();
+        LoadScene(_isStartWithoutMenu);
     }
 }
