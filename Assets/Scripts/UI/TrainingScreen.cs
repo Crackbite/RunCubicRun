@@ -5,17 +5,11 @@ using static DG.Tweening.DOTweenAnimation;
 public class TrainingScreen : Screen
 {
     [SerializeField] private RectTransform _window;
-
-    private Vector3 _windowInitialPosition;
-
-    private void Awake()
-    {
-        _windowInitialPosition = _window.position;
-    }
+    [SerializeField] private Vector2 _windowOnPressPosition;
 
     public void ChangeWindowAnimation()
     {
-        _window.position = _windowInitialPosition;
+        _window.anchoredPosition = _windowOnPressPosition;
 
         if (TweenAnimations != null && TweenAnimations.Count > 0)
         {
