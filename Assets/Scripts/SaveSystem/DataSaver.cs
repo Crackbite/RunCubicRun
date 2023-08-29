@@ -7,6 +7,8 @@ public class DataSaver : MonoBehaviour
     [SerializeField] GameDataHandler _dataHolder;
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private SwitchToggle _musicSwitchToggle;
+    [SerializeField] private SwitchToggle _soundSwitchToggle;
 
     private List<Skin> _skins = new List<Skin>();
     private Skin _boughtSkin;
@@ -16,12 +18,16 @@ public class DataSaver : MonoBehaviour
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
         _dataHolder.DataRestored += OnDataRestored;
+        _musicSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
+        _soundSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _dataHolder.DataRestored -= OnDataRestored;
+        _musicSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
+        _soundSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
 
         foreach (Skin skin in _skins)
         {
@@ -108,5 +114,17 @@ public class DataSaver : MonoBehaviour
     private void OnGameEnded(GameResult result)
     {
         SaveLevelData(result);
+    }
+
+    private void OnSwitchToggleChanged(bool isOn, SwitchToggle switchToggle)
+    {
+        if (switchToggle.Type == SwitchToggleType.Music)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicToggleKey + _uniqueID, Convert.ToInt32(isOn));
+        }
+        else
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.SoundToggleKey + _uniqueID, Convert.ToInt32(isOn));
+        }
     }
 }

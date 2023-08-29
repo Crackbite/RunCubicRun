@@ -12,6 +12,7 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private SoundSystem _soundSystem;
     [SerializeField] private PauseSystem _pauseSystem;
     [SerializeField] private Cubic _cubic;
+    [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private float _fadeDuration;
 
     private bool _isMusicOn = true;
@@ -26,6 +27,7 @@ public class Soundtrack : MonoBehaviour
         _cubic.SteppedOnStand += OnCubicSteppedOnStend;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
         _pauseSystem.TimeAccelerating += OnTimeAccelerating;
+        _gameDataHandler.DataRestored += OnGameDataRestored;
     }
 
     private void Awake()
@@ -42,13 +44,27 @@ public class Soundtrack : MonoBehaviour
         _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
         _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
+        _gameDataHandler.DataRestored -= OnGameDataRestored;
     }
 
     private void Play(AudioClip clip)
     {
+        _audioSource.clip = clip;
+
         if (_isMusicOn)
         {
-            _audioSource.clip = clip;
+            _audioSource.Play();
+        }
+    }
+
+    private void CheckMusicOn()
+    {
+        if (_isMusicOn == false)
+        {
+            _audioSource.Pause();
+        }
+        else if (_audioSource.isPlaying == false)
+        {
             _audioSource.Play();
         }
     }
@@ -83,19 +99,11 @@ public class Soundtrack : MonoBehaviour
         }
     }
 
-    private void OnMusicToggleChanged(bool isMusicOn)
+    private void OnMusicToggleChanged(bool isMusicOn, SwitchToggle _)
     {
         _soundSystem.Play(SoundEvent.SwitchToggle);
         _isMusicOn = isMusicOn;
-
-        if (_isMusicOn == false)
-        {
-            _audioSource.Pause();
-        }
-        else if (_audioSource.isPlaying == false)
-        {
-            _audioSource.Play();
-        }
+        CheckMusicOn();
     }
 
     private void OnTimeSlowing()
@@ -108,5 +116,11 @@ public class Soundtrack : MonoBehaviour
     private void OnTimeAccelerating()
     {
         FadeAudio(_initialVolume);
+    }
+
+    private void OnGameDataRestored()
+    {
+        _isMusicOn = _gameDataHandler.IsMusicOn;
+        CheckMusicOn();
     }
 }

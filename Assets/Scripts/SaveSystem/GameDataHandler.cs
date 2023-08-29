@@ -23,6 +23,8 @@ public class GameDataHandler : MonoBehaviour, ISceneLoadHandler<LevelLoadConfig>
     public int Level { get; private set; }
     public int TrainingStageNumber { get; private set; } = 1;
     public int TrainingStageAmount { get; private set; }
+    public bool IsMusicOn { get; private set; }
+    public bool IsSoundOn { get; private set; }
     public bool IsStartWithoutMenu { get; private set; }
     public bool HasAnonymousKey { get; private set; }
     public IReadOnlyList<Skin> Skins => _skins;
@@ -70,10 +72,13 @@ public class GameDataHandler : MonoBehaviour, ISceneLoadHandler<LevelLoadConfig>
     private void RestoreData()
     {
         const int DefaultValue = 0;
+        const int SoundsDefaultValue = 1;
 
         Score = PlayerPrefs.GetFloat(PlayerPrefsKeys.ScoreKey + UniqueID, DefaultValue);
         LeaderboardScore = PlayerPrefs.GetInt(PlayerPrefsKeys.LeaderboardScoreKey + UniqueID, DefaultValue);
         Level = PlayerPrefs.GetInt(PlayerPrefsKeys.LevelKey + UniqueID, DefaultValue);
+        IsMusicOn = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicToggleKey + UniqueID, SoundsDefaultValue));
+        IsSoundOn = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsKeys.SoundToggleKey + UniqueID, SoundsDefaultValue));
 
         if (Level == DefaultValue)
         {
@@ -82,7 +87,6 @@ public class GameDataHandler : MonoBehaviour, ISceneLoadHandler<LevelLoadConfig>
 
         _skinsRestorer.Restore(Skins, UniqueID);
     }
-
 
     private void ChooseDataForRestoring(bool hasAuth, string defaultUniqueID)
     {
