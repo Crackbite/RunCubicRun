@@ -42,12 +42,13 @@ public class SuccessScreen : LevelResultScreen
             ChunkStorage.Instance.Restart();
         }
 
+        _isStartWithoutMenu = true;
+
 #if !UNITY_WEBGL || UNITY_EDITOR
-        LoadScene();
+        LoadScene(_isStartWithoutMenu);
         return;
 #endif
 
-        _isStartWithoutMenu = true;
         NextLevelButtonClicked?.Invoke(CurrentLevel);
     }
 
