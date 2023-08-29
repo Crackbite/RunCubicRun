@@ -41,19 +41,14 @@ public class PauseSystem : MonoBehaviour
 
     public void PauseGame()
     {
-        if (_scaleRoutine != null)
-        {
-            _isStop = true;
-            _scaleRoutine = null;
-        }
-
+        TryStopScaleRoutine();
         Time.timeScale = 0;
     }
 
     public void UnpauseGame()
     {
+        TryStopScaleRoutine();
         Time.timeScale = 1;
-        _isStop = false;
     }
 
     private void StartScaleRoutine(float initialValue, float targetValue, float duration, Action onStartCallback)
@@ -66,6 +61,16 @@ public class PauseSystem : MonoBehaviour
         onStartCallback.Invoke();
         _scaleRoutine = StartCoroutine(ScaleTime(initialValue, targetValue, duration));
         _isTrainingTime = true;
+        _isStop = false;
+    }
+
+    private void TryStopScaleRoutine()
+    {
+        if (_scaleRoutine != null)
+        {
+            _isStop = true;
+            _scaleRoutine = null;
+        }
     }
 
     private void OnApplicationFocus(bool focus)

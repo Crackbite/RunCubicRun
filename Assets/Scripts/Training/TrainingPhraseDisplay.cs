@@ -44,6 +44,11 @@ public class TrainingPhraseDisplay : MonoBehaviour
         _pauseSystem.AccelerateTime();
     }
 
+    public void EndImmediately()
+    {
+        _pauseSystem.UnpauseGame();
+    }
+
     public bool CanEndTrainingPause()
     {
         return _pauseSystem.CanEndTrainingPause;

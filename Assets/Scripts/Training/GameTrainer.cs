@@ -7,6 +7,7 @@ public class GameTrainer : MonoBehaviour
     [SerializeField] private TrainingPhraseDisplay _phraseDisplay;
     [SerializeField] private CubicInputHandler _cubicInputHandler;
     [SerializeField] private TrainingScreen _trainingScreen;
+    [SerializeField] private Cubic _cubic;
 
     private int _nextPhraseNumber;
     private bool _isGamePaused;
@@ -18,6 +19,7 @@ public class GameTrainer : MonoBehaviour
         _levelEntryPortal.ThrownOut += OnCubicThrownOut;
         _cubicInputHandler.PressSpeedReduced += OnPressSpeedReduced;
         _phraseDisplay.Completed += OnPhraseDisplayCompleted;
+        _cubic.Hit += OnCubicHit;
     }
 
     private void OnDisable()
@@ -25,6 +27,7 @@ public class GameTrainer : MonoBehaviour
         _levelEntryPortal.ThrownOut -= OnCubicThrownOut;
         _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
         _phraseDisplay.Completed -= OnPhraseDisplayCompleted;
+        _cubic.Hit -= OnCubicHit;
     }
 
     public void StartTraining()
@@ -37,13 +40,18 @@ public class GameTrainer : MonoBehaviour
         }
     }
 
-    private void OnPressSpeedReduced()
+    private void EndTraining()
     {
         if (_isGamePaused && _phraseDisplay.CanEndTrainingPause())
         {
             _trainingScreen.Exit();
             _phraseDisplay.End();
         }
+    }
+
+    private void OnPressSpeedReduced()
+    {
+        EndTraining();
     }
 
     private void OnPhraseDisplayCompleted()
@@ -67,5 +75,11 @@ public class GameTrainer : MonoBehaviour
     {
         passedCheckpoint.CubicPassed -= OnCubicPassedCheckpoint;
         StartTraining();
+    }
+
+    private void OnCubicHit(Vector3 _, float __)
+    {
+        _trainingScreen.Exit();
+        _phraseDisplay.EndImmediately();
     }
 }
