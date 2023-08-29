@@ -12,10 +12,7 @@ public class SkinStateForm
 
     public void Set(string price)
     {
-        if (_form != null)
-        {
-            _form.SetActive(false);
-        }
+        _form.SetActive(true);
 
         if (_state == SkinState.Affordable || _state == SkinState.Unaffordable)
         {
@@ -25,11 +22,7 @@ public class SkinStateForm
 
     public void TurnOffActivity()
     {
-        if (_form != null)
-        {
-            _form.SetActive(false);
-        }
-
+        _form.SetActive(false);
     }
 }
 
