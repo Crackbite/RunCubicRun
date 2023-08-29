@@ -12,6 +12,7 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private SoundSystem _soundSystem;
     [SerializeField] private PauseSystem _pauseSystem;
     [SerializeField] private Cubic _cubic;
+    [SerializeField] private PistonPresser _pistonPresser;
     [SerializeField] private GameDataHandler _gameDataHandler;
     [SerializeField] private float _fadeDuration;
 
@@ -21,10 +22,11 @@ public class Soundtrack : MonoBehaviour
     private void OnEnable()
     {
         _gameStatusTracker.GameStarted += OnGameStarted;
-        _gameStatusTracker.GameEnded += OnGameEnded;
         _menuScreen.Set += OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged += OnMusicToggleChanged;
         _cubic.SteppedOnStand += OnCubicSteppedOnStend;
+        _cubic.Hit += OnCubicHit;
+        _pistonPresser.StackReached += OnStackReached;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
         _pauseSystem.TimeAccelerating += OnTimeAccelerating;
         _gameDataHandler.DataRestored += OnGameDataRestored;
@@ -38,10 +40,11 @@ public class Soundtrack : MonoBehaviour
     private void OnDisable()
     {
         _gameStatusTracker.GameStarted -= OnGameStarted;
-        _gameStatusTracker.GameEnded -= OnGameEnded;
         _menuScreen.Set -= OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged -= OnMusicToggleChanged;
         _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
+        _cubic.Hit -= OnCubicHit;
+        _pistonPresser.StackReached -= OnStackReached;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
         _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
         _gameDataHandler.DataRestored -= OnGameDataRestored;
@@ -76,12 +79,19 @@ public class Soundtrack : MonoBehaviour
 
     private void OnCubicSteppedOnStend(PressStand _)
     {
-        const float OnStandVolume = 0;
+        const float OnStandVolume = 0.1f;
 
         FadeAudio(OnStandVolume);
     }
 
-    private void OnGameEnded(GameResult result)
+    private void OnCubicHit(Vector3 hitPoint, float trapWeight)
+    {
+        const float OnCubicHitVolume = 0f;
+
+        FadeAudio(OnCubicHitVolume);
+    }
+
+    private void OnStackReached()
     {
         _audioSource.Stop();
     }

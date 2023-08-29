@@ -19,6 +19,7 @@ public class PistonPresser : MonoBehaviour
     private PistonMover _pistonMover;
 
     public event Action CubicReached;
+    public event Action StackReached;
     public event Action BlockDestroyed;
 
     private void OnEnable()
@@ -46,6 +47,7 @@ public class PistonPresser : MonoBehaviour
         {
             if (_pistonMover.IsWorking == false)
             {
+                StackReached?.Invoke();
                 _soundSystem.Play(SoundEvent.PressHit);
                 _hitEffect.transform.position = collision.ClosestPoint(transform.position);
                 _hitEffect.Play();
