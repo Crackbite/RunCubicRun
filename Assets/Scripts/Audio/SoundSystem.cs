@@ -6,20 +6,20 @@ public class SoundSystem : MonoBehaviour
     [SerializeField] private List<SoundInfo> _soundInfoList;
     [SerializeField] private List<AudioSource> _audioSources;
     [SerializeField] private SwitchToggle _soundSwitchToggle;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private bool _isSoundOn = true;
 
     private void OnEnable()
     {
         _soundSwitchToggle.ToggleChanged += OnSoundToggleChanged;
-        _gameDataHandler.DataRestored += OnGameDataRestored;
+        _dataRestorer.DataRestored += OnGameDataRestored;
     }
 
     private void OnDisable()
     {
         _soundSwitchToggle.ToggleChanged -= OnSoundToggleChanged;
-        _gameDataHandler.DataRestored -= OnGameDataRestored;
+        _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
     public void Play(SoundEvent soundEvent)
@@ -92,7 +92,7 @@ public class SoundSystem : MonoBehaviour
 
     private void OnGameDataRestored()
     {
-        _isSoundOn = _gameDataHandler.IsSoundOn;
+        _isSoundOn = _dataRestorer.IsSoundOn;
     }
 }
 

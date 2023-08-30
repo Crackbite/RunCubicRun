@@ -10,7 +10,7 @@ public class SwitchToggle : MonoBehaviour
     [SerializeField] private float _animationDuration = 0.2f;
     [SerializeField] private RectTransform _switcherRectTransform;
     [SerializeField] private SwitchToggleType _type;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private Vector2 _handlePosition;
     private Toggle _toggle;
@@ -26,11 +26,11 @@ public class SwitchToggle : MonoBehaviour
 
         if (_type == SwitchToggleType.Music)
         {
-            ChangeHandlePosition(_gameDataHandler.IsMusicOn);
+            ChangeHandlePosition(_dataRestorer.IsMusicOn);
         }
         else
         {
-            ChangeHandlePosition(_gameDataHandler.IsSoundOn);
+            ChangeHandlePosition(_dataRestorer.IsSoundOn);
         }
     }
 

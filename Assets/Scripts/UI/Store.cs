@@ -6,7 +6,7 @@ public class Store : MonoBehaviour
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private float _currentScore;
     private bool _isFilled;
@@ -51,7 +51,7 @@ public class Store : MonoBehaviour
             }
         }
 
-        foreach (Skin otherSkin in _gameDataHandler.Skins)
+        foreach (Skin otherSkin in _dataRestorer.Skins)
         {
             if (otherSkin.IsActive)
             {

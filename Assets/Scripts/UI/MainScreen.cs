@@ -6,7 +6,7 @@ public class MainScreen : Screen
 {
     [SerializeField] private TMP_Text _level;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private GameObject _trainingHeaderPhrase;
     [SerializeField] private GameObject _levelHeaderPhrase;
 
@@ -14,13 +14,13 @@ public class MainScreen : Screen
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
@@ -28,13 +28,13 @@ public class MainScreen : Screen
     {
         if (_canUpdateLevel)
         {
-            UpdateLevelText(_gameDataHandler.Level);
+            UpdateLevelText(_dataRestorer.Level);
         }
     }
 
     private void OnDataRestored()
     {
-        UpdateLevelText(_gameDataHandler.Level);
+        UpdateLevelText(_dataRestorer.Level);
         _canUpdateLevel = true;
     }
 

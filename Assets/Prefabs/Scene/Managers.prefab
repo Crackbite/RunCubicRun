@@ -98,7 +98,7 @@ MonoBehaviour:
   _blockStack: {fileID: 0}
   _pressScoreCalculator: {fileID: 0}
   _store: {fileID: 3696435025986357439}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!1 &921384242159941298
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +410,7 @@ MonoBehaviour:
   _blockStack: {fileID: 0}
   _exitPortal: {fileID: 0}
   _screenSwitcher: {fileID: 0}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!1 &1426286199153876965
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
   _scoreAllocator: {fileID: 921384242104032655}
   _storeScreen: {fileID: 0}
   _gameStatusTracker: {fileID: 921384243377587612}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!1 &2304423418799903138
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubic: {fileID: 0}
   _gameTrainer: {fileID: 7048370365858987993}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!114 &7524240122717410981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +548,7 @@ MonoBehaviour:
   _localization: {fileID: 0}
   _continuePromptText: {fileID: 0}
   _pauseSystem: {fileID: 921384242762046224}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!1 &3110672816998477319
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +709,7 @@ MonoBehaviour:
   - {fileID: 4595025845423391693}
   - {fileID: 6302862364990607989}
   _soundSwitchToggle: {fileID: 0}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
 --- !u!114 &7578354300720954466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1368,7 +1368,8 @@ MonoBehaviour:
   _soundSystem: {fileID: 8151059560338112128}
   _pauseSystem: {fileID: 921384242762046224}
   _cubic: {fileID: 0}
-  _gameDataHandler: {fileID: 988137716252708907}
+  _pistonPresser: {fileID: 0}
+  _dataRestorer: {fileID: 988137716252708907}
   _fadeDuration: 2
 --- !u!82 &3206372189326420595
 AudioSource:
@@ -1549,7 +1550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e2f4f7eb78ee7409f5fe08c95be493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataHolder: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
   _scoreAllocator: {fileID: 921384242104032655}
   _gameStatusTracker: {fileID: 921384243377587612}
   _musicSwitchToggle: {fileID: 0}
@@ -1613,7 +1614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf29e295f76ce941beb8a8d0fa614b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameDataHandler: {fileID: 988137716252708907}
+  _dataRestorer: {fileID: 988137716252708907}
   _leaderboardScreen: {fileID: 0}
 --- !u!1029 &102900000
 DefaultAsset:

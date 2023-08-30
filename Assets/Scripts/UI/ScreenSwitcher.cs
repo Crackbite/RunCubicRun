@@ -13,7 +13,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
     [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardLoader _leaderboardLoader;
 
     private Screen _currentScreen;
@@ -22,7 +22,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
         _menuScreen.StartClicked += OnMenuStartClicked;
         _menuScreen.StoreClicked += OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked += OnLeaderboardClicked;
@@ -34,7 +34,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
         _menuScreen.StartClicked -= OnMenuStartClicked;
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked -= OnLeaderboardClicked;
@@ -86,7 +86,7 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnDataRestored()
     {
-        if (_gameDataHandler.IsStartWithoutMenu)
+        if (_dataRestorer.IsStartWithoutMenu)
         {
             SetGameScreen();
         }

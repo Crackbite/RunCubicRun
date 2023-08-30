@@ -5,7 +5,7 @@ using System;
 
 public class LeaderboardLoader : MonoBehaviour
 {
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
@@ -19,12 +19,12 @@ public class LeaderboardLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnGameDataRestored;
+        _dataRestorer.DataRestored += OnGameDataRestored;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnGameDataRestored;
+        _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
     private void OnGameDataRestored()
@@ -69,7 +69,7 @@ public class LeaderboardLoader : MonoBehaviour
             yield return _waitForSDKInitializationCheck;
         }
 
-        Leaderboard.SetScore(LeaderboardName, _gameDataHandler.LeaderboardScore, () =>
+        Leaderboard.SetScore(LeaderboardName, _dataRestorer.LeaderboardScore, () =>
         {
             GetPlayerEntries();
         });

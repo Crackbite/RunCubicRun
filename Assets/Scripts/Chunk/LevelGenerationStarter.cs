@@ -5,26 +5,26 @@ public class LevelGenerationStarter : MonoBehaviour
 {
     [SerializeField] private BasedDifficultyChunkGenerator _mainGenerator;
     [SerializeField] private TrainingChunkGenerator _trainingChunkGenerator;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private GameObject _gameTrainer;
  
     public event Action<ChunkGenerator> GeneratorStarted;
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
     }
 
     private void OnDataRestored()
     {
         const int TrainingIndex = 0;
 
-        if (_gameDataHandler.Level > TrainingIndex)
+        if (_dataRestorer.Level > TrainingIndex)
         {
            GeneratorStarted?.Invoke(_mainGenerator);
             _mainGenerator.enabled = true;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataSaver : MonoBehaviour
 {
-    [SerializeField] GameDataHandler _dataHolder;
+    [SerializeField] DataRestorer _dataRestorer;
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
@@ -17,7 +17,7 @@ public class DataSaver : MonoBehaviour
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
-        _dataHolder.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
         _musicSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
         _soundSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
     }
@@ -25,7 +25,7 @@ public class DataSaver : MonoBehaviour
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
-        _dataHolder.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
         _musicSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
         _soundSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
 
@@ -49,16 +49,16 @@ public class DataSaver : MonoBehaviour
 
         if (result == GameResult.Win)
         {
-            int leaderboardScore = (int)(_dataHolder.LeaderboardScore + _scoreAllocator.LevelScore);
+            int leaderboardScore = (int)(_dataRestorer.LeaderboardScore + _scoreAllocator.LevelScore);
             PlayerPrefs.SetInt(PlayerPrefsKeys.LeaderboardScoreKey + _uniqueID, leaderboardScore);
 
-            if (_dataHolder.Level == DefaultValue && _dataHolder.TrainingStageNumber < _dataHolder.TrainingStageAmount)
+            if (_dataRestorer.Level == DefaultValue && _dataRestorer.TrainingStageNumber < _dataRestorer.TrainingStageAmount)
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.TrainingStageKey + _uniqueID, _dataHolder.TrainingStageNumber + 1);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.TrainingStageKey + _uniqueID, _dataRestorer.TrainingStageNumber + 1);
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LevelKey + _uniqueID, _dataHolder.Level + 1);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LevelKey + _uniqueID, _dataRestorer.Level + 1);
             }
         }
 
@@ -77,7 +77,7 @@ public class DataSaver : MonoBehaviour
         {
             if (key == PlayerPrefsKeys.BoughtKey || key == PlayerPrefsKeys.ActiveKey)
             {
-                foreach (Skin skin in _dataHolder.Skins)
+                foreach (Skin skin in _dataRestorer.Skins)
                 {
                     PlayerPrefs.DeleteKey(skin.ID + key);
                 }
@@ -93,9 +93,9 @@ public class DataSaver : MonoBehaviour
     {
         const string anonymousID = "";
 
-        _uniqueID = _dataHolder.UniqueID;
+        _uniqueID = _dataRestorer.UniqueID;
 
-        if (_dataHolder.HasAnonymousKey && _dataHolder.UniqueID != anonymousID)
+        if (_dataRestorer.HasAnonymousKey && _dataRestorer.UniqueID != anonymousID)
         {
             ClearAnonymousData();
         }

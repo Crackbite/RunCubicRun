@@ -13,7 +13,7 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private PauseSystem _pauseSystem;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private PistonPresser _pistonPresser;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private float _fadeDuration;
 
     private bool _isMusicOn = true;
@@ -29,7 +29,7 @@ public class Soundtrack : MonoBehaviour
         _pistonPresser.StackReached += OnStackReached;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
         _pauseSystem.TimeAccelerating += OnTimeAccelerating;
-        _gameDataHandler.DataRestored += OnGameDataRestored;
+        _dataRestorer.DataRestored += OnGameDataRestored;
     }
 
     private void Awake()
@@ -47,7 +47,7 @@ public class Soundtrack : MonoBehaviour
         _pistonPresser.StackReached -= OnStackReached;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
         _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
-        _gameDataHandler.DataRestored -= OnGameDataRestored;
+        _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
     private void Play(AudioClip clip)
@@ -130,7 +130,7 @@ public class Soundtrack : MonoBehaviour
 
     private void OnGameDataRestored()
     {
-        _isMusicOn = _gameDataHandler.IsMusicOn;
+        _isMusicOn = _dataRestorer.IsMusicOn;
         CheckMusicOn();
     }
 }

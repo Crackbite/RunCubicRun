@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StoreScreen : Screen
 {
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private SkinView _viewTemplate;
     [SerializeField] private GameObject _itemContainer;
     [SerializeField] private Button _close;
@@ -30,7 +30,7 @@ public class StoreScreen : Screen
 
     public void FillScrollView(float currentScore)
     {
-        IReadOnlyList<Skin> skins = _gameDataHandler.Skins;
+        IReadOnlyList<Skin> skins = _dataRestorer.Skins;
 
         for (int i = 0; i < skins.Count; i++)
         {

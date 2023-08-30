@@ -20,7 +20,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
         else
         {
             var chunkComposer = new ChunkComposer(_availableChunks);
-            List<Chunk> chunks = chunkComposer.GetSuitableChunks(GameDataHandler.Level, _chunksToGenerate);
+            List<Chunk> chunks = chunkComposer.GetSuitableChunks(DataRestorer.Level, _chunksToGenerate);
 
             GenerateLevel(chunks);
         }

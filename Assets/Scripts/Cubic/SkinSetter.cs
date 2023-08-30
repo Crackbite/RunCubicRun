@@ -5,12 +5,12 @@ public class SkinSetter : MonoBehaviour
 {
     [SerializeField] private List<MeshRenderer> _cubicPartRenderers;
     [SerializeField] private List<MeshFilter> _cubicPartMeshFilters;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
 
     private void OnEnable()
     {
-        foreach (Skin skin in _gameDataHandler.Skins)
+        foreach (Skin skin in _dataRestorer.Skins)
         {
             skin.ActivityChanged += OnSkinActivityChanged;
         }
@@ -18,7 +18,7 @@ public class SkinSetter : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (Skin skin in _gameDataHandler.Skins)
+        foreach (Skin skin in _dataRestorer.Skins)
         {
             skin.ActivityChanged -= OnSkinActivityChanged;
         }

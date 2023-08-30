@@ -7,7 +7,7 @@ public class TrainingChunkGenerator : ChunkGenerator
 
     private void OnEnable()
     {
-        int stage = GameDataHandler.TrainingStageNumber;
+        int stage = DataRestorer.TrainingStageNumber;
 
             if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
             {

@@ -13,7 +13,7 @@ public class ScoreAllocator : MonoBehaviour
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
     [SerializeField] private Store _store;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
@@ -39,7 +39,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockAdded += OnBlockAdded;
         _blockStack.BlockRemoved += OnBlockRemoved;
         _store.SkinBought += OnSkinBought;
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
     }
 
     private void Start()
@@ -53,7 +53,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockAdded -= OnBlockAdded;
         _blockStack.BlockRemoved -= OnBlockRemoved;
         _store.SkinBought -= OnSkinBought;
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
 
     }
 
@@ -75,7 +75,7 @@ public class ScoreAllocator : MonoBehaviour
 
     private void OnDataRestored()
     {
-        ChangeScore(ref _totalScore, _gameDataHandler.Score, ScoreChangeInitiator.DataHandler);
+        ChangeScore(ref _totalScore, _dataRestorer.Score, ScoreChangeInitiator.DataHandler);
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)

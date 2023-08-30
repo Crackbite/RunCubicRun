@@ -6,7 +6,7 @@ public abstract class ChunkGenerator : MonoBehaviour
     [SerializeField] protected Chunk StarterChunk;
     [SerializeField] protected Chunk FinalChunk;
     [SerializeField] protected Transform ChunkContainer;
-    [SerializeField] protected GameDataHandler GameDataHandler;
+    [SerializeField] protected DataRestorer DataRestorer;
 
     public event Action Completed;
 

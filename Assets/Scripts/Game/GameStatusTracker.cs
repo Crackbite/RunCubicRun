@@ -8,7 +8,7 @@ public class GameStatusTracker : MonoBehaviour
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private LevelExitPortal _exitPortal;
     [SerializeField] private ScreenSwitcher _screenSwitcher;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private bool _isCubicLeftPress;
     private bool _isCubicSteppedOnStand;
@@ -24,7 +24,7 @@ public class GameStatusTracker : MonoBehaviour
         _blockStack.BlocksEnded += OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn += OnExitPortalSuckedIn;
         _screenSwitcher.GameScreenSet += OnGameScreenSet;
-        _gameDataHandler.DataRestored += OnGamaDataRestored;
+        _dataRestorer.DataRestored += OnGamaDataRestored;
     }
 
     private void OnDisable()
@@ -35,7 +35,7 @@ public class GameStatusTracker : MonoBehaviour
         _blockStack.BlocksEnded -= OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn -= OnExitPortalSuckedIn;
         _screenSwitcher.GameScreenSet -= OnGameScreenSet;
-        _gameDataHandler.DataRestored -= OnGamaDataRestored;
+        _dataRestorer.DataRestored -= OnGamaDataRestored;
     }
 
     private void OnBlockStackBlocksEnded()
@@ -69,7 +69,7 @@ public class GameStatusTracker : MonoBehaviour
 
     private void OnGameScreenSet()
     {
-        if (_gameDataHandler.IsStartWithoutMenu == false)
+        if (_dataRestorer.IsStartWithoutMenu == false)
         {
             GameStarted?.Invoke();
         }
@@ -77,7 +77,7 @@ public class GameStatusTracker : MonoBehaviour
 
     private void OnGamaDataRestored()
     {
-        if (_gameDataHandler.IsStartWithoutMenu)
+        if (_dataRestorer.IsStartWithoutMenu)
         {
             GameStarted?.Invoke();
         }

@@ -8,7 +8,7 @@ public abstract class LevelResultScreen : Screen
 {
     [SerializeField] private Button _home;
     [SerializeField] private TMP_Text _level;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
     [SerializeField] private GameObject _trainingStagePhrase;
 
@@ -24,10 +24,10 @@ public abstract class LevelResultScreen : Screen
         _home.onClick.AddListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
 
-        if (_gameDataHandler.Level >= _gameFirstLevel)
+        if (_dataRestorer.Level >= _gameFirstLevel)
         {
-            _level.text += _gameDataHandler.Level.ToString();
-            CurrentLevel = _gameDataHandler.Level;
+            _level.text += _dataRestorer.Level.ToString();
+            CurrentLevel = _dataRestorer.Level;
         }
         else
         {
@@ -51,8 +51,8 @@ public abstract class LevelResultScreen : Screen
 
     private void UpdateTrainingStageText()
     {
-        int currentStage = _gameDataHandler.TrainingStageNumber;
-        int trainingStageAmount = _gameDataHandler.TrainingStageAmount;
+        int currentStage = _dataRestorer.TrainingStageNumber;
+        int trainingStageAmount = _dataRestorer.TrainingStageAmount;
 
         _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
         _level.text = $"{_level.text} {currentStage}/{trainingStageAmount}";
@@ -60,7 +60,7 @@ public abstract class LevelResultScreen : Screen
 
     private void OnLevelTranslationUpdated()
     {
-        if (_gameDataHandler.Level >= _gameFirstLevel)
+        if (_dataRestorer.Level >= _gameFirstLevel)
         {
             return;
         }

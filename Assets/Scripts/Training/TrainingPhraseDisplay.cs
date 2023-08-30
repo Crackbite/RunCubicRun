@@ -9,7 +9,7 @@ public class TrainingPhraseDisplay : MonoBehaviour
     [SerializeField] private LeanLocalization _localization;
     [SerializeField] private ContinuePromptText _continuePromptText;
     [SerializeField] private PauseSystem _pauseSystem;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private TrainingStageInfo _currentStageInfo;
 
@@ -20,13 +20,13 @@ public class TrainingPhraseDisplay : MonoBehaviour
     private void OnEnable()
     {
         _pauseSystem.TimeChanged += OnTimeScaled;
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
     }
 
     private void OnDisable()
     {
         _pauseSystem.TimeChanged -= OnTimeScaled;
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
     }
 
     public void Display(int _nextPhraseNumber)
@@ -56,7 +56,7 @@ public class TrainingPhraseDisplay : MonoBehaviour
 
     private void OnDataRestored()
     {
-        int stage = _gameDataHandler.TrainingStageNumber;
+        int stage = _dataRestorer.TrainingStageNumber;
 
         if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
         {
