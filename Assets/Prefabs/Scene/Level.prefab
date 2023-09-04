@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2811e00f7a91745b1d4adfc0dac6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _authRequestScreen: {fileID: 0}
   StarterChunk: {fileID: 5165864138799115166}
   FinalChunk: {fileID: 5808037347613585001}
   ChunkContainer: {fileID: 1125103788298553187}
-  GameDataHandler: {fileID: 0}
   _chunksToGenerate: 5
   _rotateChance: 50
   _debugLog: 1
@@ -111,10 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a464b2e9dcbe714d8b4403364fa37bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _authRequestScreen: {fileID: 0}
   StarterChunk: {fileID: 5165864138799115166}
   FinalChunk: {fileID: 5808037347613585001}
   ChunkContainer: {fileID: 1125103788298553187}
-  GameDataHandler: {fileID: 0}
   _trainingStageHolder: {fileID: 11400000, guid: d67f42baeac19364a950b1c217b26c5e, type: 2}
 --- !u!114 &473514939
 MonoBehaviour:
@@ -131,6 +131,9 @@ MonoBehaviour:
   _mainCamera: {fileID: 0}
   _offset: 18
   _generatorStarter: {fileID: 1125103787765389398}
+  _authRequestScreen: {fileID: 0}
+  _finalChunk: {fileID: 5808037347613585001}
+  _starterChunk: {fileID: 5165864138799115166}
 --- !u!114 &1125103787765389398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainGenerator: {fileID: 1125103787561794010}
   _trainingChunkGenerator: {fileID: 6699192847619413514}
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
   _gameTrainer: {fileID: 0}
 --- !u!114 &9015728354247667996
 MonoBehaviour:
@@ -161,7 +164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _failScreen: {fileID: 0}
   _successScreen: {fileID: 0}
-  _authRequestScreen: {fileID: 0}
   _levelLoadConfig: {fileID: 11400000, guid: 271e239d3f003ad41b91cbae7f8b3e77, type: 2}
 --- !u!1 &1125103788298553186
 GameObject:
