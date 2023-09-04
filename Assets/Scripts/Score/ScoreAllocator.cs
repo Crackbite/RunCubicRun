@@ -14,6 +14,7 @@ public class ScoreAllocator : MonoBehaviour
     [SerializeField] private PressScoreCalculator _pressScoreCalculator;
     [SerializeField] private Store _store;
     [SerializeField] private DataRestorer _dataRestorer;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private float _currentGoodBlockScore;
     private float _goodBlocksInRow;
@@ -40,6 +41,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockRemoved += OnBlockRemoved;
         _store.SkinBought += OnSkinBought;
         _dataRestorer.DataRestored += OnDataRestored;
+        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
     }
 
     private void Start()
@@ -54,7 +56,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockRemoved -= OnBlockRemoved;
         _store.SkinBought -= OnSkinBought;
         _dataRestorer.DataRestored -= OnDataRestored;
-
+        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
     }
 
     public string ToString(float score)
@@ -73,9 +75,9 @@ public class ScoreAllocator : MonoBehaviour
         ScoreChanged?.Invoke(score);
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
-        ChangeScore(ref _totalScore, _dataRestorer.Score, ScoreChangeInitiator.DataHandler);
+        ChangeScore(ref _totalScore, playerData.Score, ScoreChangeInitiator.DataHandler);
     }
 
     private void OnBlockAdded(ColorBlock colorBlock)
@@ -116,5 +118,12 @@ public class ScoreAllocator : MonoBehaviour
     private void OnSkinBought(float skinPrice)
     {
         ChangeScore(ref _totalScore, -skinPrice, ScoreChangeInitiator.Store);
+    }
+
+    private void OnPlayerAuthorized()
+    {
+        const float StartValue = 0;
+
+        _totalScore = _levelScore = StartValue;
     }
 }

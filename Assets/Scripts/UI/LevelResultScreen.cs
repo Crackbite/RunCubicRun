@@ -23,17 +23,7 @@ public abstract class LevelResultScreen : Screen
     {
         _home.onClick.AddListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
-
-        if (_dataRestorer.Level >= _gameFirstLevel)
-        {
-            _level.text += _dataRestorer.Level.ToString();
-            CurrentLevel = _dataRestorer.Level;
-        }
-        else
-        {
-            IsTraining = true;
-            _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
-        }
+        SetLevel();
     }
 
     protected virtual void OnDisable()
@@ -51,8 +41,9 @@ public abstract class LevelResultScreen : Screen
 
     private void UpdateTrainingStageText()
     {
-        int currentStage = _dataRestorer.TrainingStageNumber;
+        int currentStage = _dataRestorer.PlayerData.TrainingStage;
         int trainingStageAmount = _dataRestorer.TrainingStageAmount;
+
 
         _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
         _level.text = $"{_level.text} {currentStage}/{trainingStageAmount}";
@@ -60,11 +51,26 @@ public abstract class LevelResultScreen : Screen
 
     private void OnLevelTranslationUpdated()
     {
-        if (_dataRestorer.Level >= _gameFirstLevel)
+        if (CurrentLevel >= _gameFirstLevel)
         {
             return;
         }
 
         UpdateTrainingStageText();
+    }
+
+    private void SetLevel()
+    {
+        CurrentLevel = _dataRestorer.PlayerData.Level;
+      
+        if (_dataRestorer.PlayerData.Level >= _gameFirstLevel)
+        {
+            _level.text += CurrentLevel.ToString();
+        }
+        else
+        {
+            IsTraining = true;
+            _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
+        }
     }
 }
