@@ -26,11 +26,11 @@ public class PressTrainer : MonoBehaviour
         StartCoroutine(StartTraining(delay));
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
         int workStageNumber = 1;
 
-        if (_dataRestorer.TrainingStageNumber != workStageNumber)
+        if (playerData.TrainingStage != workStageNumber)
         {
             enabled = false;
         }

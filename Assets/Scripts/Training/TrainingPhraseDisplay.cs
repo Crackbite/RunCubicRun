@@ -54,9 +54,9 @@ public class TrainingPhraseDisplay : MonoBehaviour
         return _pauseSystem.CanEndTrainingPause;
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
-        int stage = _dataRestorer.TrainingStageNumber;
+        int stage = playerData.TrainingStage;
 
         if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
         {

@@ -177,7 +177,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794499044}
   m_LocalRotation: {x: -0.000000014901159, y: -0, z: 0.25713277, w: 0.9663761}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000013257952}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -648,6 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _window: {fileID: 794499045}
+  _windowOnPressPosition: {x: -100, y: -55}
 --- !u!1 &1719483847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,9 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   translationName: AuthorizationReqwest
-  FallbackText: "\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0443\u0439\u0442\u0435\u0441\u044C,
-    \u0447\u0442\u043E\u0431\u044B \u0432\u0438\u0434\u0435\u0442\u044C \u0441\u0432\u043E\u0435
-    \u0438\u043C\u044F \u043D\u0430 \u043B\u0438\u0434\u0435\u0440\u0431\u043E\u0440\u0434\u0435"
+  FallbackText: Authorize to display your name on the leaderboard
 --- !u!1 &1022301893794758657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,8 +1898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 972.72626}
-  m_SizeDelta: {x: 0, y: 115}
+  m_AnchoredPosition: {x: -0.0009248583, y: 972.7265}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1536531672937986320
 MonoBehaviour:
@@ -1992,9 +1991,9 @@ RectTransform:
   m_Father: {fileID: 6524157448750580138}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 383, y: -70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 648.1017, y: 103.2612}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6928323294565094904
@@ -2977,10 +2976,10 @@ RectTransform:
   m_Father: {fileID: 6112402420321845884}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.73979175}
-  m_AnchorMax: {x: 1, y: 0.73979175}
-  m_AnchoredPosition: {x: 0, y: -460}
-  m_SizeDelta: {x: -649, y: 800}
+  m_AnchorMin: {x: 0, y: 0.7384582}
+  m_AnchorMax: {x: 1, y: 0.7384582}
+  m_AnchoredPosition: {x: 0, y: -457.5}
+  m_SizeDelta: {x: -649, y: 799}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1501337625223100863
 CanvasRenderer:
@@ -3430,7 +3429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _level: {fileID: 6112402420125128332}
   _levelLocalizedText: {fileID: 6112402420131175890}
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
   _trainingHeaderPhrase: {fileID: 0}
   _levelHeaderPhrase: {fileID: 0}
 --- !u!114 &827757765718277610
@@ -4470,7 +4469,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!114 &6112402419088187422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4486,7 +4485,8 @@ MonoBehaviour:
   _animationDuration: 0.2
   _switcherRectTransform: {fileID: 6112402419660059214}
   _type: 1
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
+  _toggle: {fileID: 6112402419088187423}
 --- !u!1 &6112402419088567612
 GameObject:
   m_ObjectHideFlags: 0
@@ -5480,7 +5480,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!114 &6112402419203561686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5496,7 +5496,8 @@ MonoBehaviour:
   _animationDuration: 0.2
   _switcherRectTransform: {fileID: 6112402420886207262}
   _type: 0
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
+  _toggle: {fileID: 6112402419203561687}
 --- !u!1 &6112402419226730365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5999,7 +6000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _home: {fileID: 6112402419555332815}
   _level: {fileID: 6112402420614297938}
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
   _levelLocalizedText: {fileID: 1155883743}
   _trainingStagePhrase: {fileID: 0}
   _restart: {fileID: 6112402420382395110}
@@ -6103,7 +6104,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
   m_sharedMaterial: {fileID: 2367470752988478089, guid: c8c5f4a94d2e87a4589ccdd4cf153ba0, type: 2}
@@ -9521,6 +9522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activateButton: {fileID: 6112402419991069326}
   _settingsScreen: {fileID: 6112402419547893076}
+  _musicSwitchToggle: {fileID: 6112402419203561686}
+  _soundSwitchToggle: {fileID: 6112402419088187422}
+  _dataRestorer: {fileID: 0}
 --- !u!114 &2886781589662462318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9983,7 +9987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _home: {fileID: 6112402419977232541}
   _level: {fileID: 6112402420760653162}
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
   _levelLocalizedText: {fileID: 2004482912}
   _trainingStagePhrase: {fileID: 0}
   _next: {fileID: 6112402419663913339}
@@ -10977,9 +10981,8 @@ MonoBehaviour:
   _failScreen: {fileID: 6112402419350129435}
   _storeScreen: {fileID: 62195429350696795}
   _leaderboardScreen: {fileID: 3663766962751928770}
-  _authRequestScreen: {fileID: 7652886598943001436}
   _gameStatusTracker: {fileID: 0}
-  _gameDataHandler: {fileID: 0}
+  _dataRestorer: {fileID: 0}
   _leaderboardLoader: {fileID: 0}
 --- !u!114 &6112402420321845763
 MonoBehaviour:
@@ -11007,6 +11010,7 @@ GameObject:
   - component: {fileID: 6112402420365634953}
   - component: {fileID: 6112402420365634952}
   - component: {fileID: 6112402420365634955}
+  - component: {fileID: 1356054613772136075}
   m_Layer: 5
   m_Name: LeaderboardButton
   m_TagString: Untagged
@@ -11172,6 +11176,20 @@ MonoBehaviour:
   optionalScrambleMode: 0
   optionalShakeRandomnessMode: 0
   optionalString: 
+--- !u!114 &1356054613772136075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6112402420365634957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0122d5ce7483fa4c9c1380c6718181b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _authRequestScreen: {fileID: 7652886598943001436}
+  _menuScreen: {fileID: 6112402421177284448}
 --- !u!1 &6112402420382395113
 GameObject:
   m_ObjectHideFlags: 0
@@ -13431,7 +13449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   translationName: LogIn
-  FallbackText: Log in
+  FallbackText: Log In
 --- !u!1 &7120577390412938591
 GameObject:
   m_ObjectHideFlags: 0
@@ -13685,9 +13703,9 @@ RectTransform:
   m_Father: {fileID: 6524157448750580138}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -29.8}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 944.05084, y: -70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 74, y: 74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7592597597593951063
@@ -14399,7 +14417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6251422961628749a0cc8cebd3c15b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameDataHandler: {fileID: 0}
+  _skinsRestorer: {fileID: 0}
   _viewTemplate: {fileID: 5621486280583104098, guid: e25a845aee6f4cf4d88e2d8b3b6666c2, type: 3}
   _itemContainer: {fileID: 1178118362775703109}
   _close: {fileID: 7148187464858955507}

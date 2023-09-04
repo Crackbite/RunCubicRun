@@ -11,6 +11,7 @@ public class MainScreen : Screen
     [SerializeField] private GameObject _levelHeaderPhrase;
 
     private bool _canUpdateLevel;
+    private int _currentLevel;
 
     private void OnEnable()
     {
@@ -28,13 +29,14 @@ public class MainScreen : Screen
     {
         if (_canUpdateLevel)
         {
-            UpdateLevelText(_dataRestorer.Level);
+            UpdateLevelText(_currentLevel);
         }
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
-        UpdateLevelText(_dataRestorer.Level);
+        _currentLevel = playerData.Level;
+        UpdateLevelText(_currentLevel);
         _canUpdateLevel = true;
     }
 
