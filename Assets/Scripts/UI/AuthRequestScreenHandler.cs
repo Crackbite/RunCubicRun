@@ -26,6 +26,9 @@ public class AuthRequestScreenHandler : MonoBehaviour
 
     private void OnLeaderboardClicked()
     {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        return;
+#endif
         if (PlayerAccount.IsAuthorized == false)
         {
             _authRequestScreen.Enter();
