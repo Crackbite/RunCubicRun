@@ -9,15 +9,15 @@ public class PlayerData
     [SerializeField] private int _leaderboardScore;
     [SerializeField] private int _level;
     [SerializeField] private int _trainingStage = 1;
-    [SerializeField] private bool _isMusicOn = true;
-    [SerializeField] private bool _isSoundOn = true;
+    [SerializeField] private bool _isMusicOn;
+    [SerializeField] private bool _isSoundOn;
     [SerializeField] private List<SkinStateInfo> _skinStateInfos = new List<SkinStateInfo>();
     [SerializeField] private List<ChunkData> _chunks = new List<ChunkData>();
 
     public float Score => _score;
     public int LeaderboardScore => _leaderboardScore;
     public int Level => _level;
-    public int TrainingStage => _trainingStage;
+    public int TrainingStage => _trainingStage != 0 ? _trainingStage : 1;
     public bool IsMusicOn => _isMusicOn;
     public bool IsSoundOn => _isSoundOn;
     public IReadOnlyList<SkinStateInfo> SkinStateInfos => _skinStateInfos;
