@@ -1,44 +1,71 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkinsRestorer : MonoBehaviour
 {
-    [SerializeField] private DataSaver _dataSaver;
+    [SerializeField] private List<Skin> _skins;
+    [SerializeField] private DataStorageSelector _dataStorageSelector;
 
     private bool _isActiveSkinChoosed;
 
-    public void Restore(IReadOnlyList<Skin> skins, string uniqueID)
+    public IReadOnlyList<Skin> Skins => _skins;
+
+    private void OnEnable()
     {
-        const int DefaultValue = 0;
+        _dataStorageSelector.StorageSelected += OnDataStorageSelected;
+    }
 
-        foreach (Skin skin in skins)
+    private void OnDisable()
+    {
+        _dataStorageSelector.StorageSelected -= OnDataStorageSelected;
+    }
+
+    public void RestoreSkinStateInfos(PlayerData playerData)
+    {
+        foreach (Skin skin in _skins)
         {
-            _dataSaver.SubscribeToSkinChanges(skin);
-
-            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.BoughtKey + uniqueID, DefaultValue)))
+            foreach (SkinStateInfo info in playerData.SkinStateInfos)
             {
-                skin.Buy();
-            }
-
-            if (Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.ActiveKey + uniqueID, DefaultValue)))
-            {
-                if (_isActiveSkinChoosed == false)
+                if (skin.ID == info.ID)
                 {
-                    skin.TurnOnActivity();
-                    _isActiveSkinChoosed = true;
+                    if (info.IsActive)
+                    {
+                        if (_isActiveSkinChoosed)
+                        {
+                            skin.StateInfo.Init(info.IsActive == false, info.IsBought);
+                        }
+                        else
+                        {
+                            skin.StateInfo.SetIsBought(info.IsBought);
+                            skin.TurnOnActivity();
+                            _isActiveSkinChoosed = true;
+                        }
+                    }
+                    else
+                    {
+                        skin.StateInfo.Init(info.IsActive, info.IsBought);
+                    }
                 }
-            }
-            else
-            {
-                skin.TurnOffActivity();
             }
         }
 
+        TryChooseDefoultSkin();
+        playerData.SetSkinsStateInfos(Skins);
+    }
+
+    private void TryChooseDefoultSkin()
+    {
         if (_isActiveSkinChoosed == false)
         {
-            skins[0].Buy();
-            skins[0].TurnOnActivity();
+            _skins[0].StateInfo.AssignDefoult();
+        }
+    }
+
+    private void OnDataStorageSelected(DataSaver dataSaver)
+    {
+        foreach (Skin skin in _skins)
+        {
+            dataSaver.SubscribeToSkinChanges(skin);
         }
     }
 }

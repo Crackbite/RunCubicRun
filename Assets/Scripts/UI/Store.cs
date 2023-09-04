@@ -6,7 +6,7 @@ public class Store : MonoBehaviour
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private SkinsRestorer _skinsRestorer;
 
     private float _currentScore;
     private bool _isFilled;
@@ -18,12 +18,14 @@ public class Store : MonoBehaviour
         _scoreAllocator.ScoreChanged += OnScoreChanged;
         _storeScreen.SkinChoosed += OnSkinChoosed;
         _gameStatusTracker.GameEnded += OnGameEnded;
+        _gameStatusTracker.GameStarted += OnGameStarted;
     }
 
     private void OnDisable()
     {
         _storeScreen.SkinChoosed -= OnSkinChoosed;
         _gameStatusTracker.GameEnded -= OnGameEnded;
+        _gameStatusTracker.GameStarted -= OnGameStarted;
         _scoreAllocator.ScoreChanged -= OnScoreChanged;
     }
 
@@ -38,7 +40,7 @@ public class Store : MonoBehaviour
             return;
         }
 
-        _storeScreen.UpdateScrolView(_currentScore);
+        _storeScreen.UpdateScrollView(_currentScore);
     }
 
     private void OnSkinChoosed(Skin skin)
@@ -51,7 +53,7 @@ public class Store : MonoBehaviour
             }
         }
 
-        foreach (Skin otherSkin in _gameDataHandler.Skins)
+        foreach (Skin otherSkin in _skinsRestorer.Skins)
         {
             if (otherSkin.IsActive)
             {
@@ -65,6 +67,11 @@ public class Store : MonoBehaviour
     private void OnGameEnded(GameResult gameResult)
     {
         _storeScreen.UnsubscribeFromSkinView();
+    }
+
+    private void OnGameStarted()
+    {
+        _scoreAllocator.ScoreChanged -= OnScoreChanged;
     }
 
     private bool TrySellSkin(Skin skin)

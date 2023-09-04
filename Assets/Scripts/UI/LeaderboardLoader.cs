@@ -5,7 +5,7 @@ using System;
 
 public class LeaderboardLoader : MonoBehaviour
 {
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
@@ -15,19 +15,17 @@ public class LeaderboardLoader : MonoBehaviour
 
     public event Action PlayerLogOut;
 
-    public bool HasNotAuth { get; private set; }
-
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnGameDataRestored;
+        _dataRestorer.DataRestored += OnGameDataRestored;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnGameDataRestored;
+        _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
-    private void OnGameDataRestored()
+    private void OnGameDataRestored(PlayerData playerData)
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         return;
@@ -35,7 +33,7 @@ public class LeaderboardLoader : MonoBehaviour
 
         if (PlayerAccount.IsAuthorized)
         {
-            StartCoroutine(SetScoreToLeaderboard());
+            StartCoroutine(SetScoreToLeaderboard(playerData));
         }
     }
 
@@ -55,21 +53,17 @@ public class LeaderboardLoader : MonoBehaviour
                 int rank = result.entries[i].rank;
                 _leaderboardScreen.AddPlayerView(rank, name, result.entries[i].score);
             }
-        }, (string _) =>
-            {
-                HasNotAuth = true;
-                PlayerLogOut?.Invoke();
-            });
+        });
     }
 
-    private IEnumerator SetScoreToLeaderboard()
+    private IEnumerator SetScoreToLeaderboard(PlayerData playerData)
     {
         while (YandexGamesSdk.IsInitialized == false)
         {
             yield return _waitForSDKInitializationCheck;
         }
 
-        Leaderboard.SetScore(LeaderboardName, _gameDataHandler.LeaderboardScore, () =>
+        Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
         {
             GetPlayerEntries();
         });

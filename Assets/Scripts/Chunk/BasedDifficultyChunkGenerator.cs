@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 public class BasedDifficultyChunkGenerator : ChunkGenerator
 {
-    [Range(1, 50)] [SerializeField] private int _chunksToGenerate = 5;
-    [Range(0, 100)] [SerializeField] private int _rotateChance = 50;
+    [Range(1, 50)][SerializeField] private int _chunksToGenerate = 5;
+    [Range(0, 100)][SerializeField] private int _rotateChance = 50;
     [SerializeField] private bool _debugLog;
     [SerializeField] protected Chunk[] _availableChunks;
 
-    private void Start()
+    protected override void OnStartGeneration()
     {
         if (ChunkStorage.Instance.Chunks?.Count > 0)
         {
@@ -20,7 +20,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
         else
         {
             var chunkComposer = new ChunkComposer(_availableChunks);
-            List<Chunk> chunks = chunkComposer.GetSuitableChunks(GameDataHandler.Level, _chunksToGenerate);
+            List<Chunk> chunks = chunkComposer.GetSuitableChunks(Level, _chunksToGenerate);
 
             GenerateLevel(chunks);
         }
@@ -28,7 +28,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
         CompleteGeneration();
     }
 
-    private void GenerateLevel(IReadOnlyList<object> chunks)
+    protected override void GenerateLevel(IReadOnlyList<object> chunks)
     {
         Chunk lastChunk = StarterChunk;
         int chunksNumber = Mathf.Min(_chunksToGenerate, chunks.Count);
@@ -62,6 +62,7 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
 
             Vector3 chunkPosition = CalculateNewChunkPosition(lastChunk, newChunk);
             lastChunk = Instantiate(newChunk, chunkPosition, rotation, ChunkContainer);
+            _chunks.Add(lastChunk);
         }
 
         FinalChunk.transform.position = CalculateNewChunkPosition(lastChunk, FinalChunk);

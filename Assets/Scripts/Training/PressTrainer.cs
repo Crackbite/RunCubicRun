@@ -5,17 +5,17 @@ public class PressTrainer : MonoBehaviour
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private GameTrainer _gameTrainer;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
         _cubic.SteppedOnStand += OnCubicSteppedOnStand;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
         _cubic.SteppedOnStand -= OnCubicSteppedOnStand;
     }
 
@@ -26,11 +26,11 @@ public class PressTrainer : MonoBehaviour
         StartCoroutine(StartTraining(delay));
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
         int workStageNumber = 1;
 
-        if (_gameDataHandler.TrainingStageNumber != workStageNumber)
+        if (playerData.TrainingStage != workStageNumber)
         {
             enabled = false;
         }

@@ -5,28 +5,27 @@ public class TrainingChunkGenerator : ChunkGenerator
 {
     [SerializeField] private TrainingStageHolder _trainingStageHolder;
 
-    private void OnEnable()
+    protected override void OnStartGeneration()
     {
-        int stage = GameDataHandler.TrainingStageNumber;
-
-            if (_trainingStageHolder.TryGetStageInfo(stage, out TrainingStageInfo currentStageInfo))
-            {
-                GenerateLevel(currentStageInfo.Chunks);
-                CompleteGeneration();
-                return;
-            }
+        if (_trainingStageHolder.TryGetStageInfo(TraininStage, out TrainingStageInfo currentStageInfo))
+        {
+            GenerateLevel(currentStageInfo.Chunks);
+            CompleteGeneration();
+            return;
+        }
 
         CompleteGeneration();
     }
 
-    private void GenerateLevel(IReadOnlyList<Chunk> availableChunks)
+    protected override void GenerateLevel(IReadOnlyList<object> chunks)
     {
         Chunk lastChunk = StarterChunk;
 
-        foreach (Chunk chunk in availableChunks)
+        foreach (Chunk chunk in chunks)
         {
             Vector3 chunkPosition = CalculateNewChunkPosition(lastChunk, chunk);
             lastChunk = Instantiate(chunk, chunkPosition, Quaternion.identity, ChunkContainer);
+            _chunks.Add(lastChunk);
         }
 
         FinalChunk.transform.position = CalculateNewChunkPosition(lastChunk, FinalChunk);

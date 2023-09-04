@@ -27,8 +27,14 @@ public class AuthRequestScreen : Screen
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         CloseClicked?.Invoke();
+        PlayerAuthorized?.Invoke();
         return;
 #endif
+
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
 
         CloseClicked?.Invoke();
         PlayerAccount.Authorize(OnAuthorized);

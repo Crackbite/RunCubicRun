@@ -8,7 +8,7 @@ public abstract class LevelResultScreen : Screen
 {
     [SerializeField] private Button _home;
     [SerializeField] private TMP_Text _level;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
     [SerializeField] private GameObject _trainingStagePhrase;
 
@@ -23,17 +23,7 @@ public abstract class LevelResultScreen : Screen
     {
         _home.onClick.AddListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
-
-        if (_gameDataHandler.Level >= _gameFirstLevel)
-        {
-            _level.text += _gameDataHandler.Level.ToString();
-            CurrentLevel = _gameDataHandler.Level;
-        }
-        else
-        {
-            IsTraining = true;
-            _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
-        }
+        SetLevel();
     }
 
     protected virtual void OnDisable()
@@ -51,8 +41,9 @@ public abstract class LevelResultScreen : Screen
 
     private void UpdateTrainingStageText()
     {
-        int currentStage = _gameDataHandler.TrainingStageNumber;
-        int trainingStageAmount = _gameDataHandler.TrainingStageAmount;
+        int currentStage = _dataRestorer.PlayerData.TrainingStage;
+        int trainingStageAmount = _dataRestorer.TrainingStageAmount;
+
 
         _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
         _level.text = $"{_level.text} {currentStage}/{trainingStageAmount}";
@@ -60,11 +51,26 @@ public abstract class LevelResultScreen : Screen
 
     private void OnLevelTranslationUpdated()
     {
-        if (_gameDataHandler.Level >= _gameFirstLevel)
+        if (CurrentLevel >= _gameFirstLevel)
         {
             return;
         }
 
         UpdateTrainingStageText();
+    }
+
+    private void SetLevel()
+    {
+        CurrentLevel = _dataRestorer.PlayerData.Level;
+      
+        if (_dataRestorer.PlayerData.Level >= _gameFirstLevel)
+        {
+            _level.text += CurrentLevel.ToString();
+        }
+        else
+        {
+            IsTraining = true;
+            _levelLocalizedText.TranslationName = _trainingStagePhrase.name;
+        }
     }
 }

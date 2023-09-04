@@ -1,23 +1,21 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataSaver : MonoBehaviour
+public abstract class DataSaver : MonoBehaviour
 {
-    [SerializeField] GameDataHandler _dataHolder;
-    [SerializeField] private ScoreAllocator _scoreAllocator;
+    [SerializeField] protected ScoreAllocator _scoreAllocator;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SwitchToggle _soundSwitchToggle;
 
     private List<Skin> _skins = new List<Skin>();
-    private Skin _boughtSkin;
-    private string _uniqueID;
+    private int _trainingStageAmount;
+
+    protected PlayerData CurrentPlayerData;
 
     private void OnEnable()
     {
         _gameStatusTracker.GameEnded += OnGameEnded;
-        _dataHolder.DataRestored += OnDataRestored;
         _musicSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
         _soundSwitchToggle.ToggleChanged += OnSwitchToggleChanged;
     }
@@ -25,106 +23,132 @@ public class DataSaver : MonoBehaviour
     private void OnDisable()
     {
         _gameStatusTracker.GameEnded -= OnGameEnded;
-        _dataHolder.DataRestored -= OnDataRestored;
         _musicSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
         _soundSwitchToggle.ToggleChanged -= OnSwitchToggleChanged;
 
         foreach (Skin skin in _skins)
         {
             skin.ActivityChanged -= OnSkinActivityChanged;
-            skin.Bought -= OnSkinBought;
         }
+    }
+
+    public void Init(PlayerData playerData, int trainingStageAmount)
+    {
+        CurrentPlayerData = playerData;
+        _trainingStageAmount = trainingStageAmount;
     }
 
     public void SubscribeToSkinChanges(Skin skin)
     {
         _skins.Add(skin);
         skin.ActivityChanged += OnSkinActivityChanged;
-        skin.Bought += OnSkinBought;
     }
 
-    private void SaveLevelData(GameResult result)
+    protected abstract void SaveToStorage(string data);
+
+    private void Save(GameResult result)
+    {
+        int leaderboardScore = (int)(CurrentPlayerData.LeaderboardScore + _scoreAllocator.LevelScore);
+        int level = CurrentPlayerData.Level;
+        int trainingStage = CurrentPlayerData.TrainingStage;
+        float score = result == GameResult.Win ? _scoreAllocator.TotalScore + _scoreAllocator.LevelScore : _scoreAllocator.TotalScore;
+        bool isMusicOn = CurrentPlayerData.IsMusicOn;
+        bool isSoundOn = CurrentPlayerData.IsSoundOn;
+
+
+        if (IsTrainingStage(level, trainingStage))
+        {
+            trainingStage++;
+        }
+        else
+        {
+            level++;
+        }
+
+        PlayerData playerData = new PlayerData(score, leaderboardScore, level, trainingStage, isMusicOn, isSoundOn);
+        SetSkinStatesToPlayerData(playerData);
+        CurrentPlayerData = playerData;
+        SaveToStorage(SerializePlayerDataToString());
+    }
+
+    private void SaveSettings(bool isOn, SwitchToggle switchToggle)
+    {
+        if (switchToggle.Type == SettingsType.Music && CurrentPlayerData.IsMusicOn != isOn)
+        {
+            CurrentPlayerData.ResetSettings(SettingsType.Music, isOn);
+            SaveToStorage(SerializePlayerDataToString());
+        }
+        else if (switchToggle.Type == SettingsType.Sound && CurrentPlayerData.IsSoundOn != isOn)
+        {
+            CurrentPlayerData.ResetSettings(SettingsType.Sound, isOn);
+            SaveToStorage(SerializePlayerDataToString());
+        }
+    }
+    private void SaveSkinState(Skin skin)
+    {
+        if (CurrentPlayerData != null)
+        {
+            float score = _scoreAllocator.TotalScore;
+            CurrentPlayerData.ResetSkinStates(skin);
+            CurrentPlayerData.ResetScore(score);
+            SaveToStorage(SerializePlayerDataToString());
+        }
+    }
+
+    private void SaveChunks()
+    {
+        CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
+        SaveToStorage(SerializePlayerDataToString());
+    }
+
+    private string SerializePlayerDataToString()
+    {
+        return JsonUtility.ToJson(CurrentPlayerData);
+    }
+
+    private void SetSkinStatesToPlayerData(PlayerData playerData)
+    {
+        playerData.SetSkinsStateInfos(_skins);
+    }
+
+    private bool IsTrainingStage(int level, int trainingStage)
     {
         const int DefaultValue = 0;
 
-        if (result == GameResult.Win)
+        if (level == DefaultValue && trainingStage < _trainingStageAmount)
         {
-            int leaderboardScore = (int)(_dataHolder.LeaderboardScore + _scoreAllocator.LevelScore);
-            PlayerPrefs.SetInt(PlayerPrefsKeys.LeaderboardScoreKey + _uniqueID, leaderboardScore);
-
-            if (_dataHolder.Level == DefaultValue && _dataHolder.TrainingStageNumber < _dataHolder.TrainingStageAmount)
-            {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.TrainingStageKey + _uniqueID, _dataHolder.TrainingStageNumber + 1);
-            }
-            else
-            {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LevelKey + _uniqueID, _dataHolder.Level + 1);
-            }
+            return true;
         }
-
-        float score = result == GameResult.Win ? _scoreAllocator.TotalScore + _scoreAllocator.LevelScore : _scoreAllocator.TotalScore;
-        PlayerPrefs.SetFloat(PlayerPrefsKeys.ScoreKey + _uniqueID, score);
-
-        if (_boughtSkin != null)
+        else
         {
-            PlayerPrefs.SetInt(_boughtSkin.ID + PlayerPrefsKeys.BoughtKey + _uniqueID, Convert.ToInt32(_boughtSkin.IsBought));
+            return false;
         }
-    }
-
-    private void ClearAnonymousData()
-    {
-        foreach (string key in PlayerPrefsKeys.Keys)
-        {
-            if (key == PlayerPrefsKeys.BoughtKey || key == PlayerPrefsKeys.ActiveKey)
-            {
-                foreach (Skin skin in _dataHolder.Skins)
-                {
-                    PlayerPrefs.DeleteKey(skin.ID + key);
-                }
-            }
-            else
-            {
-                PlayerPrefs.DeleteKey(key);
-            }
-        }
-    }
-
-    private void OnDataRestored()
-    {
-        const string anonymousID = "";
-
-        _uniqueID = _dataHolder.UniqueID;
-
-        if (_dataHolder.HasAnonymousKey && _dataHolder.UniqueID != anonymousID)
-        {
-            ClearAnonymousData();
-        }
-    }
-
-    private void OnSkinBought(Skin skin)
-    {
-        _boughtSkin = skin;
-    }
-
-    private void OnSkinActivityChanged(Skin skin)
-    {
-        PlayerPrefs.SetInt(skin.ID + PlayerPrefsKeys.ActiveKey + _uniqueID, Convert.ToInt32(skin.IsActive));
     }
 
     private void OnGameEnded(GameResult result)
     {
-        SaveLevelData(result);
+        if (result == GameResult.Win)
+        {
+            if (ChunkStorage.Instance != null)
+            {
+                ChunkStorage.Instance.Restart();
+            }
+
+            Save(result);
+        }
+        else
+        {
+            SaveChunks();
+        }
     }
 
     private void OnSwitchToggleChanged(bool isOn, SwitchToggle switchToggle)
     {
-        if (switchToggle.Type == SwitchToggleType.Music)
-        {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicToggleKey + _uniqueID, Convert.ToInt32(isOn));
-        }
-        else
-        {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.SoundToggleKey + _uniqueID, Convert.ToInt32(isOn));
-        }
+        SaveSettings(isOn, switchToggle);
+    }
+
+    private void OnSkinActivityChanged(Skin skin)
+    {
+        SaveSkinState(skin);
     }
 }

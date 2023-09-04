@@ -6,21 +6,22 @@ public class MainScreen : Screen
 {
     [SerializeField] private TMP_Text _level;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private GameObject _trainingHeaderPhrase;
     [SerializeField] private GameObject _levelHeaderPhrase;
 
     private bool _canUpdateLevel;
+    private int _currentLevel;
 
     private void OnEnable()
     {
-        _gameDataHandler.DataRestored += OnDataRestored;
+        _dataRestorer.DataRestored += OnDataRestored;
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
     }
 
     private void OnDisable()
     {
-        _gameDataHandler.DataRestored -= OnDataRestored;
+        _dataRestorer.DataRestored -= OnDataRestored;
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
     }
 
@@ -28,30 +29,33 @@ public class MainScreen : Screen
     {
         if (_canUpdateLevel)
         {
-            UpdateLevelText(_gameDataHandler.Level);
+            UpdateLevelText(_currentLevel);
         }
     }
 
-    private void OnDataRestored()
+    private void OnDataRestored(PlayerData playerData)
     {
-        UpdateLevelText(_gameDataHandler.Level);
-        _canUpdateLevel = true;
+        if(_currentLevel != playerData.Level || _currentLevel == 0)
+        {
+            UpdateLevelText(playerData.Level);
+            _canUpdateLevel = true;
+        }
     }
 
-    private void UpdateLevelText(int currentLevel)
+    private void UpdateLevelText(int level)
     {
         const int TrainingValue = 0;
 
-        _levelLocalizedText.TranslationName = currentLevel > TrainingValue ? _levelHeaderPhrase.name : _trainingHeaderPhrase.name;
-
-        if (currentLevel > TrainingValue)
+        if (level > TrainingValue)
         {
             _levelLocalizedText.TranslationName = _levelHeaderPhrase.name;
-            _level.text = $"{_level.text} {currentLevel}";
+            _level.text = $"{_level.text} {level}";
+            _currentLevel = level;
         }
         else
         {
-            _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
+
+           _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
         }
     }
 }

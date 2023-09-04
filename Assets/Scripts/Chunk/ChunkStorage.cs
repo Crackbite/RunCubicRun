@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -6,31 +7,27 @@ using UnityEngine;
 public class ChunkStorage : MonoBehaviour
 {
     [SerializeField] private string _chunksDebug;
+    [SerializeField] private DataRestorer _dataRestorer;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private List<ChunkData> _chunks;
+
+    public event Action<PlayerData> Initialized;
 
     public static ChunkStorage Instance { get; private set; }
 
     public IReadOnlyList<ChunkData> Chunks => _chunks;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+        _dataRestorer.DataRestored += OnDataRestored;
+        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
+    }
 
-            Restart();
-
-            if (string.IsNullOrEmpty(_chunksDebug) == false)
-            {
-                DebugChunks();
-            }
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+    private void OnDisable()
+    {
+        _dataRestorer.DataRestored -= OnDataRestored;
+        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
     }
 
     public void Add(ChunkData chunkData)
@@ -62,6 +59,34 @@ public class ChunkStorage : MonoBehaviour
         _chunks = new List<ChunkData>();
     }
 
+    private void Initialize(PlayerData playerData)
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            Restart();
+
+            foreach (ChunkData chunk in playerData.Chunks)
+            {
+                _chunks.Add(chunk);
+            }
+
+            if (string.IsNullOrEmpty(_chunksDebug) == false)
+            {
+                DebugChunks();
+            }
+
+            Initialized?.Invoke(playerData);
+        }
+        else
+        {
+            Initialized?.Invoke(playerData);
+            Destroy(gameObject);
+        }
+    }
+
     private void DebugChunks()
     {
         Debug.LogWarning("Chunks Debug");
@@ -78,5 +103,15 @@ public class ChunkStorage : MonoBehaviour
 
             _chunks.Add(chunkData);
         }
+    }
+
+    private void OnDataRestored(PlayerData playerData)
+    {
+        Initialize(playerData);
+    }
+
+    private void OnPlayerAuthorized()
+    {
+        Instance = null;
     }
 }

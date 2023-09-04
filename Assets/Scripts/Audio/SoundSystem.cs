@@ -6,20 +6,21 @@ public class SoundSystem : MonoBehaviour
     [SerializeField] private List<SoundInfo> _soundInfoList;
     [SerializeField] private List<AudioSource> _audioSources;
     [SerializeField] private SwitchToggle _soundSwitchToggle;
-    [SerializeField] private GameDataHandler _gameDataHandler;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private bool _isSoundOn = true;
+    private bool _isFirstTime = true;
 
     private void OnEnable()
     {
         _soundSwitchToggle.ToggleChanged += OnSoundToggleChanged;
-        _gameDataHandler.DataRestored += OnGameDataRestored;
+        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
     }
 
     private void OnDisable()
     {
         _soundSwitchToggle.ToggleChanged -= OnSoundToggleChanged;
-        _gameDataHandler.DataRestored -= OnGameDataRestored;
+        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
     }
 
     public void Play(SoundEvent soundEvent)
@@ -87,12 +88,20 @@ public class SoundSystem : MonoBehaviour
     private void OnSoundToggleChanged(bool isSoundOn, SwitchToggle _)
     {
         _isSoundOn = isSoundOn;
-        Play(SoundEvent.SwitchToggle);
+
+        if (_isFirstTime == false)
+        {
+            Play(SoundEvent.SwitchToggle);
+        }
+        else
+        {
+            _isFirstTime = false;
+        }
     }
 
-    private void OnGameDataRestored()
+    private void OnPlayerAuthorized()
     {
-        _isSoundOn = _gameDataHandler.IsSoundOn;
+        _isFirstTime = true;
     }
 }
 
