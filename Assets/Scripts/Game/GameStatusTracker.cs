@@ -1,13 +1,14 @@
+using IJunior.TypedScenes;
 using System;
 using UnityEngine;
 
-public class GameStatusTracker : MonoBehaviour
+public class GameStatusTracker : MonoBehaviour, ISceneLoadHandler<LevelLoadConfig>
 {
     [SerializeField] private Cubic _cubic;
     [SerializeField] private CubicMovement _cubicMovement;
     [SerializeField] private BlockStack _blockStack;
     [SerializeField] private LevelExitPortal _exitPortal;
-    [SerializeField] private ScreenSwitcher _screenSwitcher;
+    [SerializeField] private MenuScreen _menuScreen;
     [SerializeField] private DataRestorer _dataRestorer;
 
     private bool _isCubicLeftPress;
@@ -16,6 +17,8 @@ public class GameStatusTracker : MonoBehaviour
     public event Action<GameResult> GameEnded;
     public event Action GameStarted;
 
+    public bool IsStartWithoutMenu { get; private set; }
+
     private void OnEnable()
     {
         _cubic.Hit += OnCubicHit;
@@ -23,7 +26,7 @@ public class GameStatusTracker : MonoBehaviour
         _cubicMovement.CubicLeftPress += OnCubicLeftPress;
         _blockStack.BlocksEnded += OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn += OnExitPortalSuckedIn;
-        _screenSwitcher.GameScreenSet += OnGameScreenSet;
+        _menuScreen.StartClicked += OnMenuStartClicked;
         _dataRestorer.DataRestored += OnGamaDataRestored;
     }
 
@@ -34,8 +37,13 @@ public class GameStatusTracker : MonoBehaviour
         _cubicMovement.CubicLeftPress -= OnCubicLeftPress;
         _blockStack.BlocksEnded -= OnBlockStackBlocksEnded;
         _exitPortal.SuckedIn -= OnExitPortalSuckedIn;
-        _screenSwitcher.GameScreenSet -= OnGameScreenSet;
+        _menuScreen.StartClicked -= OnMenuStartClicked;
         _dataRestorer.DataRestored -= OnGamaDataRestored;
+    }
+
+    public void OnSceneLoaded(LevelLoadConfig levelLoadConfig)
+    {
+        IsStartWithoutMenu = levelLoadConfig.IsStartWithoutMenu;
     }
 
     private void OnBlockStackBlocksEnded()
@@ -67,17 +75,14 @@ public class GameStatusTracker : MonoBehaviour
         GameEnded?.Invoke(_isCubicLeftPress ? GameResult.Win : GameResult.LoseWithPortalSuckedIn);
     }
 
-    private void OnGameScreenSet()
+    private void OnMenuStartClicked()
     {
-        if (_dataRestorer.IsStartWithoutMenu == false)
-        {
-            GameStarted?.Invoke();
-        }
+        GameStarted?.Invoke();
     }
 
-    private void OnGamaDataRestored()
+    private void OnGamaDataRestored(PlayerData playerData)
     {
-        if (_dataRestorer.IsStartWithoutMenu)
+        if (IsStartWithoutMenu)
         {
             GameStarted?.Invoke();
         }
