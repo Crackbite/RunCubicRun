@@ -5,40 +5,39 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSkin", menuName = "Skin", order = 51)]
 public class Skin : ScriptableObject
 {
-    [SerializeField] private string _id;
     [SerializeField] private int _price;
     [SerializeField] private Sprite _icon;
     [SerializeField] private Mesh _halfSkinMesh;
     [SerializeField] private List<Material> _materials;
-    [SerializeField] private bool _isActive;
-    [SerializeField] private bool _isBought;
+    [SerializeField] private SkinStateInfo _stateInfo;
 
     public event Action<Skin> ActivityChanged;
     public event Action<Skin> Bought;
 
-    public string ID => _id;
+    public string ID => _stateInfo.ID;
     public float Price => _price;
     public Sprite Icon => _icon;
-    public bool IsActive => _isActive;
-    public bool IsBought => _isBought;
+    public bool IsActive => _stateInfo.IsActive;
+    public bool IsBought => _stateInfo.IsBought;
+    public SkinStateInfo StateInfo => _stateInfo;
     public Mesh HalfSkinMesh => _halfSkinMesh;
     public IReadOnlyList<Material> Materials => _materials;
 
     public void Buy()
     {
-        _isBought = true;
+        _stateInfo.SetIsBought(true);
         Bought?.Invoke(this);
     }
 
     public void TurnOnActivity()
     {
-        _isActive = true;
+        _stateInfo.SetIsActive(true);
         ActivityChanged?.Invoke(this);
     }
 
     public void TurnOffActivity()
     {
-        _isActive = false;
+        _stateInfo.SetIsActive(false);
         ActivityChanged?.Invoke(this);
     }
 }
