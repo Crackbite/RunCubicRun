@@ -8,8 +8,9 @@ public class ChunkStorage : MonoBehaviour
 {
     [SerializeField] private string _chunksDebug;
     [SerializeField] private DataRestorer _dataRestorer;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
-    private List<ChunkData> _chunks = new List<ChunkData>();
+    private List<ChunkData> _chunks;
 
     public event Action<PlayerData> Initialized;
 
@@ -20,11 +21,13 @@ public class ChunkStorage : MonoBehaviour
     private void OnEnable()
     {
         _dataRestorer.DataRestored += OnDataRestored;
+        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
     }
 
     private void OnDisable()
     {
         _dataRestorer.DataRestored -= OnDataRestored;
+        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
     }
 
     public void Add(ChunkData chunkData)
@@ -60,15 +63,15 @@ public class ChunkStorage : MonoBehaviour
     {
         if (Instance == null)
         {
-            foreach (ChunkData chunk in playerData.Chunks)
-            {
-                _chunks.Add(chunk);
-            }
-
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
             Restart();
+
+            foreach (ChunkData chunk in playerData.Chunks)
+            {
+                _chunks.Add(chunk);
+            }
 
             if (string.IsNullOrEmpty(_chunksDebug) == false)
             {
@@ -105,5 +108,10 @@ public class ChunkStorage : MonoBehaviour
     private void OnDataRestored(PlayerData playerData)
     {
         Initialize(playerData);
+    }
+
+    private void OnPlayerAuthorized()
+    {
+        Instance = null;
     }
 }

@@ -31,6 +31,11 @@ public class AuthRequestScreen : Screen
         return;
 #endif
 
+        if (ChunkStorage.Instance != null)
+        {
+            ChunkStorage.Instance.Restart();
+        }
+
         CloseClicked?.Invoke();
         PlayerAccount.Authorize(OnAuthorized);
     }
