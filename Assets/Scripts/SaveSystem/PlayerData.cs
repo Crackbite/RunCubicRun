@@ -43,9 +43,10 @@ public class PlayerData
         }
     }
 
-    public void SetChunksData(IReadOnlyList<Chunk> chunks)
+    public void SetChunksData(IReadOnlyList<ChunkData> chunks)
     {
-        foreach (ChunkData chunk in _chunks)
+        _chunks.Clear();
+        foreach (ChunkData chunk in chunks)
         {
             _chunks.Add(chunk);
         }

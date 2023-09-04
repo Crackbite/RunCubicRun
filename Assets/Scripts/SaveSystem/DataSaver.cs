@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public abstract class DataSaver : MonoBehaviour
@@ -96,6 +95,12 @@ public abstract class DataSaver : MonoBehaviour
         }
     }
 
+    private void SaveChunks()
+    {
+        CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
+        SaveToStorage(SerializePlayerDataToString());
+    }
+
     private string SerializePlayerDataToString()
     {
         return JsonUtility.ToJson(CurrentPlayerData);
@@ -130,6 +135,10 @@ public abstract class DataSaver : MonoBehaviour
             }
 
             Save(result);
+        }
+        else
+        {
+            SaveChunks();
         }
     }
 
