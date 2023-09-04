@@ -34,9 +34,13 @@ public class DataStorageSelector : MonoBehaviour
         {
             _playerPrefsDataSaver.enabled = false;
             _cloudDataSaver.enabled = true;
-            _cloudDataSaver.Init(playerData);
+            _cloudDataSaver.Init(playerData, _dataRestorer.TrainingStageAmount);
             StorageSelected?.Invoke(_cloudDataSaver);
-            PlayerPrefs.DeleteAll();
+
+            if (_dataRestorer.IsJustLoggedIn == false)
+            {
+                PlayerPrefs.DeleteAll();
+            }
         }
         else
         {
