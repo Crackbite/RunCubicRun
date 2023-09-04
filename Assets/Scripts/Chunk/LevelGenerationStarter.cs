@@ -5,22 +5,22 @@ public class LevelGenerationStarter : MonoBehaviour
 {
     [SerializeField] private BasedDifficultyChunkGenerator _mainGenerator;
     [SerializeField] private TrainingChunkGenerator _trainingChunkGenerator;
-    [SerializeField] private DataRestorer _dataRestorer;
+    [SerializeField] private ChunkStorage _chunkStorage;
     [SerializeField] private GameObject _gameTrainer;
 
     public event Action<ChunkGenerator> GeneratorStarted;
 
     private void OnEnable()
     {
-        _dataRestorer.DataRestored += OnDataRestored;
+        _chunkStorage.Initialized += OnChunkStorageInitialized;
     }
 
     private void OnDisable()
     {
-        _dataRestorer.DataRestored -= OnDataRestored;
+        _chunkStorage.Initialized -= OnChunkStorageInitialized;
     }
 
-    private void OnDataRestored(PlayerData playerData)
+    private void StartGeneration(PlayerData playerData)
     {
         const int TrainingIndex = 0;
 
@@ -37,5 +37,10 @@ public class LevelGenerationStarter : MonoBehaviour
             _trainingChunkGenerator.Init(playerData.Level, playerData.TrainingStage);
             _trainingChunkGenerator.enabled = true;
         }
+    }
+
+    private void OnChunkStorageInitialized(PlayerData playerData)
+    {
+        StartGeneration(playerData);
     }
 }

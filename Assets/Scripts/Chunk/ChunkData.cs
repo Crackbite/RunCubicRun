@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class ChunkData
 {
     public ChunkData(string name, Quaternion rotation)
