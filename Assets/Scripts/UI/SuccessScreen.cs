@@ -37,11 +37,6 @@ public class SuccessScreen : LevelResultScreen
 
     private void OnNextClicked()
     {
-        if (ChunkStorage.Instance != null)
-        {
-            ChunkStorage.Instance.Restart();
-        }
-
         _isStartWithoutMenu = true;
 
 #if !UNITY_WEBGL || UNITY_EDITOR
