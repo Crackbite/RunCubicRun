@@ -10,6 +10,9 @@ public class DataRestorer : MonoBehaviour
     [SerializeField] private LevelGenerationStarter _levelGenerationStarter;
     [SerializeField] private bool _deletePlayerPrefs;
 
+    private const string EmptyData = "{}";
+    private const string PlayerDataKey = nameof(PlayerDataKey);
+
     private ChunkGenerator _chunkGenerator;
     private PlayerData _playerData;
     private bool _isDataRestoring;
@@ -39,7 +42,7 @@ public class DataRestorer : MonoBehaviour
         TrainingStageAmount = _trainingStageHolder.StageAmount;
 
 #if !UNITY_WEBGL || UNITY_EDITOR
-        RestoreFromPlayerPrefs();
+        GetPlayerPrefsData(CompleteRestoring);
         return;
 #endif
 
@@ -60,47 +63,17 @@ public class DataRestorer : MonoBehaviour
     {
         _isDataRestoring = true;
 
-        if (PlayerAccount.IsAuthorized || IsJustLoggedIn)
+        if (PlayerAccount.IsAuthorized)
         {
-            GetPlayerData(ChooseSaveStorage);
+            GetCloudData(CheckIsJustLoggedIn);
         }
         else
         {
-            RestoreFromPlayerPrefs();
+            GetPlayerPrefsData(CompleteRestoring);
         }
     }
 
-    private void RestoreFromCoud(string data)
-    {
-        _playerData = JsonUtility.FromJson<PlayerData>(data);
-        _skinsRestorer.RestoreFromCloud(_playerData);
-        DataRestored?.Invoke(_playerData);
-    }
-
-    private void RestoreFromPlayerPrefs()
-    {
-        const int SoundsDefaultValue = 1;
-        int defaultValue = 0;
-
-        float score = PlayerPrefs.GetFloat(PlayerPrefsKeys.ScoreKey, defaultValue);
-        int leaderboardScore = PlayerPrefs.GetInt(PlayerPrefsKeys.LeaderboardScoreKey, defaultValue);
-        int level = PlayerPrefs.GetInt(PlayerPrefsKeys.LevelKey, defaultValue);
-        bool isMusicOn = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicToggleKey, SoundsDefaultValue));
-        bool isSoundOn = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsKeys.SoundToggleKey, SoundsDefaultValue));
-        int trainingStage = defaultValue;
-        trainingStage++;
-
-        if (level == defaultValue)
-        {
-            trainingStage = PlayerPrefs.GetInt(PlayerPrefsKeys.TrainingStageKey, trainingStage);
-        }
-
-        _playerData = new PlayerData(score, leaderboardScore, level, trainingStage, isMusicOn, isSoundOn);
-        _skinsRestorer.RestoreFromPlayerPrefs(_playerData);
-        DataRestored?.Invoke(_playerData);
-    }
-
-    private void GetPlayerData(Action<string> callBack)
+    private void GetCloudData(Action<string> callBack)
     {
         PlayerAccount.GetPlayerData((data) =>
         {
@@ -108,19 +81,36 @@ public class DataRestorer : MonoBehaviour
         });
     }
 
-    private void ChooseSaveStorage(string data)
+    private void GetPlayerPrefsData(Action<string> callBack)
     {
-        const string EmptyData = "{}";
+        string data = PlayerPrefs.GetString(PlayerDataKey, EmptyData);
+        callBack?.Invoke(data);
+    }
+
+    private void CompleteRestoring(string data)
+    {
+        _playerData = JsonUtility.FromJson<PlayerData>(data);
 
         if (data == EmptyData)
         {
-            IsJustLoggedIn = true;
-            RestoreFromPlayerPrefs();
+            _playerData.ResetSettings(SettingsType.Sound, true);
+            _playerData.ResetSettings(SettingsType.Music, true);
         }
-        else
+
+        _skinsRestorer.RestoreSkinStateInfos(_playerData);
+        DataRestored?.Invoke(_playerData);
+    }
+
+    private void CheckIsJustLoggedIn(string data)
+    {
+        if (data == EmptyData)
         {
-            RestoreFromCoud(data);
+            IsJustLoggedIn = true;
+            GetPlayerPrefsData(CompleteRestoring);
+            return;
         }
+
+        CompleteRestoring(data);
     }
 
     private void OnSDKInitialized()

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,35 +20,7 @@ public class SkinsRestorer : MonoBehaviour
         _dataStorageSelector.StorageSelected -= OnDataStorageSelected;
     }
 
-    public void RestoreFromPlayerPrefs(PlayerData playerData)
-    {
-        const int DefaultValue = 0;
-
-        foreach (Skin skin in _skins)
-        {
-            bool isActive = Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.ActiveKey, DefaultValue));
-            bool isBought = Convert.ToBoolean(PlayerPrefs.GetInt(skin.ID + PlayerPrefsKeys.BoughtKey, DefaultValue));
-
-            if (isActive)
-            {
-                if (_isActiveSkinChoosed)
-                {
-                    isActive = false;
-                }
-                else
-                {
-                    _isActiveSkinChoosed = true;
-                }
-            }
-
-            skin.StateInfo.Init(isActive, isBought);
-        }
-
-        TryChooseDefoultSkin();
-        playerData.SetSkinsStateInfos(Skins);
-    }
-
-    public void RestoreFromCloud(PlayerData playerData)
+    public void RestoreSkinStateInfos(PlayerData playerData)
     {
         foreach (Skin skin in _skins)
         {
@@ -65,7 +36,8 @@ public class SkinsRestorer : MonoBehaviour
                         }
                         else
                         {
-                            skin.StateInfo.Init(info.IsActive, info.IsBought);
+                            skin.StateInfo.SetIsBought(info.IsBought);
+                            skin.TurnOnActivity();
                             _isActiveSkinChoosed = true;
                         }
                     }
