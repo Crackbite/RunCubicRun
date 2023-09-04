@@ -35,25 +35,27 @@ public class MainScreen : Screen
 
     private void OnDataRestored(PlayerData playerData)
     {
-        _currentLevel = playerData.Level;
-        UpdateLevelText(_currentLevel);
-        _canUpdateLevel = true;
+        if(_currentLevel != playerData.Level || _currentLevel == 0)
+        {
+            UpdateLevelText(playerData.Level);
+            _canUpdateLevel = true;
+        }
     }
 
-    private void UpdateLevelText(int currentLevel)
+    private void UpdateLevelText(int level)
     {
         const int TrainingValue = 0;
 
-        _levelLocalizedText.TranslationName = currentLevel > TrainingValue ? _levelHeaderPhrase.name : _trainingHeaderPhrase.name;
-
-        if (currentLevel > TrainingValue)
+        if (level > TrainingValue)
         {
             _levelLocalizedText.TranslationName = _levelHeaderPhrase.name;
-            _level.text = $"{_level.text} {currentLevel}";
+            _level.text = $"{_level.text} {level}";
+            _currentLevel = level;
         }
         else
         {
-            _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
+
+           _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
         }
     }
 }
