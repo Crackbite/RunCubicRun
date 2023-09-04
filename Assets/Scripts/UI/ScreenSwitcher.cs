@@ -11,7 +11,6 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
-    [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardLoader _leaderboardLoader;
@@ -29,7 +28,6 @@ public class ScreenSwitcher : MonoBehaviour
         _gameStatusTracker.GameEnded += OnGameEnded;
         _storeScreen.CloseClicked += OnCloseClicked;
         _leaderboardScreen.CloseClicked += OnCloseClicked;
-        _authRequestScreen.CloseClicked += OnCloseClicked;
     }
 
     private void OnDisable()
@@ -41,7 +39,6 @@ public class ScreenSwitcher : MonoBehaviour
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _storeScreen.CloseClicked -= OnCloseClicked;
         _leaderboardScreen.CloseClicked -= OnCloseClicked;
-        _authRequestScreen.CloseClicked -= OnCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -56,6 +53,18 @@ public class ScreenSwitcher : MonoBehaviour
         }
 
         _mainScreen.Exit();
+    }
+
+    private void OnDataRestored(PlayerData playerData)
+    {
+        if (_gameStatusTracker.IsStartWithoutMenu)
+        {
+            SetGameScreen();
+        }
+        else
+        {
+            SetMenuScreen();
+        }
     }
 
     private void OnMenuStartClicked()
@@ -75,24 +84,10 @@ public class ScreenSwitcher : MonoBehaviour
         return;
 #endif
 
-        if (PlayerAccount.IsAuthorized && _leaderboardLoader.HasNotAuth == false)
+        if (PlayerAccount.IsAuthorized)
         {
             SetLeaderboardScreen();
             return;
-        }
-
-        SetAuthRequestScreen();
-    }
-
-    private void OnDataRestored()
-    {
-        if (_dataRestorer.IsStartWithoutMenu)
-        {
-            SetGameScreen();
-        }
-        else
-        {
-            SetMenuScreen();
         }
     }
 
@@ -117,11 +112,6 @@ public class ScreenSwitcher : MonoBehaviour
         SetScreen(_leaderboardScreen);
     }
 
-    private void SetAuthRequestScreen()
-    {
-        SetScreen(_authRequestScreen);
-    }
-
     private void SetGameScreen()
     {
         SetScreen(_gameScreen);
@@ -140,8 +130,11 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void SetScreen(Screen newScreen)
     {
-        SwitchCurrentScreen(newScreen);
-        _currentScreen.Enter();
+        if (_currentScreen != newScreen)
+        {
+            SwitchCurrentScreen(newScreen);
+            _currentScreen.Enter();
+        }
     }
 
     private void SwitchCurrentScreen(Screen newScreen)
