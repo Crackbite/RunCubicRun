@@ -13,10 +13,11 @@ public class Soundtrack : MonoBehaviour
     [SerializeField] private PauseSystem _pauseSystem;
     [SerializeField] private Cubic _cubic;
     [SerializeField] private PistonPresser _pistonPresser;
-    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private float _fadeDuration;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private bool _isMusicOn = true;
+    private bool _isFirstTime = true;
     private float _initialVolume;
 
     private void OnEnable()
@@ -29,7 +30,7 @@ public class Soundtrack : MonoBehaviour
         _pistonPresser.StackReached += OnStackReached;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
         _pauseSystem.TimeAccelerating += OnTimeAccelerating;
-        _dataRestorer.DataRestored += OnGameDataRestored;
+        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
     }
 
     private void Awake()
@@ -47,7 +48,7 @@ public class Soundtrack : MonoBehaviour
         _pistonPresser.StackReached -= OnStackReached;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
         _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
-        _dataRestorer.DataRestored -= OnGameDataRestored;
+        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
     }
 
     private void Play(AudioClip clip)
@@ -111,7 +112,15 @@ public class Soundtrack : MonoBehaviour
 
     private void OnMusicToggleChanged(bool isMusicOn, SwitchToggle _)
     {
-        _soundSystem.Play(SoundEvent.SwitchToggle);
+        if (_isFirstTime == false)
+        {
+            _soundSystem.Play(SoundEvent.SwitchToggle);
+        }
+        else
+        {
+            _isFirstTime = false;
+        }
+
         _isMusicOn = isMusicOn;
         CheckMusicOn();
     }
@@ -128,9 +137,8 @@ public class Soundtrack : MonoBehaviour
         FadeAudio(_initialVolume);
     }
 
-    private void OnGameDataRestored()
+    private void OnPlayerAuthorized()
     {
-        _isMusicOn = _dataRestorer.IsMusicOn;
-        CheckMusicOn();
+        _isFirstTime = true;
     }
 }

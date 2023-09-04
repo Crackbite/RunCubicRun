@@ -27,6 +27,7 @@ public class AuthRequestScreen : Screen
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         CloseClicked?.Invoke();
+        PlayerAuthorized?.Invoke();
         return;
 #endif
 
