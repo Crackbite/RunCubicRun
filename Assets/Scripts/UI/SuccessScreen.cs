@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class SuccessScreen : LevelResultScreen
 {
     [SerializeField] private Button _next;
-    [SerializeField] private SDK _sdk;
 
     private bool _isStartWithoutMenu;
 
@@ -15,14 +14,12 @@ public class SuccessScreen : LevelResultScreen
     {
         base.OnEnable();
         _next.onClick.AddListener(OnNextClicked);
-        _sdk.AdClosed += OnAdClosed;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         _next.onClick.RemoveListener(OnNextClicked);
-        _sdk.AdClosed -= OnAdClosed;
     }
 
     protected override void OnHomeClicked()
@@ -35,6 +32,14 @@ public class SuccessScreen : LevelResultScreen
         NextLevelButtonClicked?.Invoke(CurrentLevel);
     }
 
+    protected override void OnAdClosed()
+    {
+        if (enabled)
+        {
+            LoadScene(_isStartWithoutMenu);
+        }
+    }
+
     private void OnNextClicked()
     {
         _isStartWithoutMenu = true;
@@ -45,10 +50,5 @@ public class SuccessScreen : LevelResultScreen
 #endif
 
         NextLevelButtonClicked?.Invoke(CurrentLevel);
-    }
-
-    private void OnAdClosed()
-    {
-        LoadScene(_isStartWithoutMenu);
     }
 }

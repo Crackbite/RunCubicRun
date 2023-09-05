@@ -55,6 +55,14 @@ public class FailScreen : LevelResultScreen
         LoadScene();
     }
 
+    protected override void OnAdClosed()
+    {
+        if (enabled)
+        {
+            LoadScene();
+        }
+    }
+
     private void OnRestartClicked()
     {
         const bool IsStartWithoutMenu = true;
@@ -69,7 +77,11 @@ public class FailScreen : LevelResultScreen
             ChunkStorage.Instance.Restart();
         }
 
-        RefreshButtonClicked?.Invoke();
+#if !UNITY_WEBGL || UNITY_EDITOR
         LoadScene();
+        return;
+#endif
+
+        RefreshButtonClicked?.Invoke();
     }
 }

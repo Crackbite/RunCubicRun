@@ -11,6 +11,7 @@ public abstract class LevelResultScreen : Screen
     [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
     [SerializeField] private GameObject _trainingStagePhrase;
+    [SerializeField] private SDK _sdk;
 
     private int _gameFirstLevel = 1;
 
@@ -23,6 +24,7 @@ public abstract class LevelResultScreen : Screen
     {
         _home.onClick.AddListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
+        _sdk.AdClosed += OnAdClosed;
         SetLevel();
     }
 
@@ -30,9 +32,12 @@ public abstract class LevelResultScreen : Screen
     {
         _home.onClick.RemoveListener(OnHomeClicked);
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
+        _sdk.AdClosed -= OnAdClosed;
     }
 
     protected abstract void OnHomeClicked();
+
+    protected abstract void OnAdClosed();
 
     protected void LoadScene(bool isStartWithoutMenu = false)
     {
@@ -62,7 +67,7 @@ public abstract class LevelResultScreen : Screen
     private void SetLevel()
     {
         CurrentLevel = _dataRestorer.PlayerData.Level;
-      
+
         if (_dataRestorer.PlayerData.Level >= _gameFirstLevel)
         {
             _level.text += CurrentLevel.ToString();
