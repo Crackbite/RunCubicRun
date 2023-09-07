@@ -9,7 +9,6 @@ public class SettingsScreenHandler : MonoBehaviour
     [SerializeField] private SwitchToggle _soundSwitchToggle;
     [SerializeField] private DataRestorer _dataRestorer;
 
-
     private void OnEnable()
     {
         _activateButton.onClick.AddListener(OnSettingsScreenActivated);
