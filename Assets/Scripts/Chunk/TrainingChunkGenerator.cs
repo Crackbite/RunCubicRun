@@ -5,9 +5,16 @@ public class TrainingChunkGenerator : ChunkGenerator
 {
     [SerializeField] private TrainingStageHolder _trainingStageHolder;
 
+    private int _traininStage;
+
+    public void Init(int trainingStage)
+    {
+        _traininStage = trainingStage;
+    }
+
     protected override void OnStartGeneration()
     {
-        if (_trainingStageHolder.TryGetStageInfo(TraininStage, out TrainingStageInfo currentStageInfo))
+        if (_trainingStageHolder.TryGetStageInfo(_traininStage, out TrainingStageInfo currentStageInfo))
         {
             GenerateLevel(currentStageInfo.Chunks);
             CompleteGeneration();

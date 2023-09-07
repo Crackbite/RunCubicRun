@@ -8,8 +8,17 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
 {
     [Range(1, 50)][SerializeField] private int _chunksToGenerate = 5;
     [Range(0, 100)][SerializeField] private int _rotateChance = 50;
+    [SerializeField] private LevelLoadConfig _levelLoadConfig;
     [SerializeField] private bool _debugLog;
-    [SerializeField] protected Chunk[] _availableChunks;
+    [SerializeField] protected List<Chunk> _availableChunks;
+
+    int _level;
+    const float RotationDegree = 180f;
+
+    public void Init(int level)
+    {
+        _level = level;
+    }
 
     protected override void OnStartGeneration()
     {
@@ -19,8 +28,8 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
         }
         else
         {
-            var chunkComposer = new ChunkComposer(_availableChunks);
-            List<Chunk> chunks = chunkComposer.GetSuitableChunks(Level, _chunksToGenerate);
+            var chunkComposer = new ChunkComposer(_availableChunks, _chunksToGenerate);
+            List<Chunk> chunks = chunkComposer.GetSuitableChunks(_level, _chunksToGenerate);
 
             GenerateLevel(chunks);
         }
@@ -39,10 +48,21 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
 
             if (chunks[i] is Chunk newChunk)
             {
-                rotation = GetRandomRotation(newChunk);
+                string newChunkName = newChunk.name;
 
-                var chunkData = new ChunkData(newChunk.name, rotation);
+                if (_levelLoadConfig.IsUsedChunk(newChunkName, out rotation))
+                {
+                    rotation *= Quaternion.Euler(0, RotationDegree, 0);
+                }
+                else
+                {
+                    rotation = GetRandomRotation(newChunk);
+                }
+
+                var chunkData = new ChunkData(newChunkName, rotation);
                 ChunkStorage.Instance.Add(chunkData);
+
+                _levelLoadConfig.AddUsedChunk(chunkData);
             }
             else if (chunks[i] is ChunkData chunkData)
             {
@@ -71,8 +91,6 @@ public class BasedDifficultyChunkGenerator : ChunkGenerator
 
     private Quaternion GetRandomRotation(Chunk chunk)
     {
-        const float RotationDegree = 180f;
-
         Quaternion defaultRotation = Quaternion.identity;
         Quaternion newRotation = Quaternion.Euler(0f, RotationDegree, 0f);
 

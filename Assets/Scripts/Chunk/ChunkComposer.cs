@@ -9,9 +9,9 @@ public class ChunkComposer
     private List<Chunk> _hardChunks;
     private List<Chunk> _mediumChunks;
 
-    public ChunkComposer(Chunk[] chunks)
+    public ChunkComposer(IReadOnlyList<Chunk> chunks, int chunksToGenerate)
     {
-        SortChunks(chunks);
+        SortChunks(chunks, chunksToGenerate);
     }
 
     public void DebugStatistic()
@@ -123,11 +123,11 @@ public class ChunkComposer
         return chunk.Difficulty >= 9 && chunk.Difficulty <= 17;
     }
 
-    private void SortChunks(Chunk[] chunks)
+    private void SortChunks(IReadOnlyList<Chunk> chunks, int chunksToGenerate)
     {
-        _easyChunks = new List<Chunk>(chunks.Length);
-        _mediumChunks = new List<Chunk>(chunks.Length);
-        _hardChunks = new List<Chunk>(chunks.Length);
+        _easyChunks = new List<Chunk>(chunksToGenerate);
+        _mediumChunks = new List<Chunk>(chunksToGenerate);
+        _hardChunks = new List<Chunk>(chunksToGenerate);
 
         foreach (Chunk chunk in chunks)
         {

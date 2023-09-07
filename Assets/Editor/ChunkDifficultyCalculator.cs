@@ -218,7 +218,7 @@ public class ChunkDifficultyCalculator : EditorWindow
     {
         Chunk[] chunks = GetChunks();
 
-        var chunkComposer = new ChunkComposer(chunks);
+        var chunkComposer = new ChunkComposer(chunks, chunks.Length);
         chunkComposer.DebugStatistic();
     }
 }

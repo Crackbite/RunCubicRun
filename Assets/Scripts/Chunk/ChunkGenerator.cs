@@ -10,8 +10,6 @@ public abstract class ChunkGenerator : MonoBehaviour
     [SerializeField] protected Transform ChunkContainer;
 
     protected List<Chunk> _chunks;
-    protected int Level;
-    protected int TraininStage;
 
     public event Action Completed;
     public event Action ChunksRemoved;
@@ -28,11 +26,6 @@ public abstract class ChunkGenerator : MonoBehaviour
     private void OnDisable()
     {
         _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
-    }
-    public void Init(int level, int trainingStage)
-    {
-        Level = level;
-        TraininStage = trainingStage;
     }
 
     protected abstract void OnStartGeneration();

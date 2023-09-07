@@ -1,3 +1,4 @@
+using IJunior.TypedScenes;
 using System;
 using UnityEngine;
 
@@ -27,14 +28,14 @@ public class LevelGenerationStarter : MonoBehaviour
         if (playerData.Level > TrainingIndex)
         {
             GeneratorStarted?.Invoke(_mainGenerator);
-            _mainGenerator.Init(playerData.Level, playerData.TrainingStage);
+            _mainGenerator.Init(playerData.Level);
             _mainGenerator.enabled = true;
             _gameTrainer.SetActive(false);
         }
         else
         {
             GeneratorStarted?.Invoke(_trainingChunkGenerator);
-            _trainingChunkGenerator.Init(playerData.Level, playerData.TrainingStage);
+            _trainingChunkGenerator.Init(playerData.TrainingStage);
             _trainingChunkGenerator.enabled = true;
         }
     }
