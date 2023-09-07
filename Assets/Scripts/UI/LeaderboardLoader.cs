@@ -9,6 +9,8 @@ public class LeaderboardLoader : MonoBehaviour
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
+    private bool _hasResult;
+    private PlayerData _playerData;
 
     private const string LeaderboardName = "Leaderboard";
     private const string AnonymousName = "Anonymous";
@@ -31,6 +33,8 @@ public class LeaderboardLoader : MonoBehaviour
         return;
 #endif
 
+        _playerData = playerData;
+
         if (PlayerAccount.IsAuthorized)
         {
             StartCoroutine(SetScoreToLeaderboard(playerData));
@@ -41,6 +45,8 @@ public class LeaderboardLoader : MonoBehaviour
     {
         Leaderboard.GetEntries(LeaderboardName, (result) =>
         {
+            _hasResult = true;
+
             for (int i = 0; i < result.entries.Length; i++)
             {
                 string name = result.entries[i].player.publicName;
@@ -52,6 +58,12 @@ public class LeaderboardLoader : MonoBehaviour
 
                 int rank = result.entries[i].rank;
                 _leaderboardScreen.AddPlayerView(rank, name, result.entries[i].score);
+            }
+        }, (error) =>
+        {
+            if (_hasResult == false)
+            {
+                StartCoroutine(SetScoreToLeaderboard(_playerData));
             }
         });
     }
