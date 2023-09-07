@@ -9,11 +9,6 @@ public abstract class HyperspacePortal : MonoBehaviour
     [SerializeField] protected float RotationAngle = 360f;
     [SerializeField] protected float RotationSpeed = 2f;
 
-    protected Transform CubicTransform;
+    protected Transform CubicTransform => Cubic.transform;
     protected Vector3 TargetScale;
-
-    private void Awake()
-    {
-        CubicTransform = Cubic.transform;
-    }
 }

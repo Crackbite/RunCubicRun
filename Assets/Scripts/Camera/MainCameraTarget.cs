@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class MainCameraTarget : MonoBehaviour
@@ -11,17 +12,19 @@ public class MainCameraTarget : MonoBehaviour
     [SerializeField] private MeshRenderer _starterRoad;
     [SerializeField] private MeshRenderer _finalRoad;
     [SerializeField] private LevelGenerationStarter _generatorStarter;
+    [SerializeField] private GameStatusTracker _gameStatusTracker;
+    [SerializeField] private LevelEntryPortal _levelEntryPortal;
 
-    private ChunkGenerator _currentGenerator;
     private bool _hasStarted;
     private bool _isPositionChangeStopped;
     private float _leftLimit;
     private float _previousCameraAspect;
     private float _rightLimit;
 
+
     private void OnEnable()
     {
-        _generatorStarter.GeneratorStarted += OnGeneratorStarted;
+        _levelEntryPortal.ThrowingOut += OnCubicTwrowingOut;
         _cubic.Hit += OnCubicHit;
     }
 
@@ -45,7 +48,7 @@ public class MainCameraTarget : MonoBehaviour
 
     private void OnDisable()
     {
-        _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
+        _levelEntryPortal.ThrowingOut -= OnCubicTwrowingOut;
         _cubic.Hit -= OnCubicHit;
     }
 
@@ -65,10 +68,9 @@ public class MainCameraTarget : MonoBehaviour
         }
     }
 
-    private void OnChunkGeneratorCompleted()
+    private void OnCubicTwrowingOut()
     {
         _hasStarted = true;
-        _currentGenerator.Completed -= OnChunkGeneratorCompleted;
     }
 
     private void OnCubicHit(Vector3 contactPoint, float obstacleHeight)
@@ -78,7 +80,7 @@ public class MainCameraTarget : MonoBehaviour
 
     private void UpdatePosition(float cameraAspect)
     {
-        const float LimitOnY = .5f;
+        const float LimitOnY = 0f;
         const float LimitOnZ = 0f;
 
         if (_isPositionChangeStopped)
@@ -94,11 +96,5 @@ public class MainCameraTarget : MonoBehaviour
             _rightLimit - halfCamWidth);
 
         transform.position = new Vector3(clampedX, LimitOnY, LimitOnZ);
-    }
-
-    private void OnGeneratorStarted(ChunkGenerator currentGenerator)
-    {
-        _currentGenerator = currentGenerator;
-        _currentGenerator.Completed += OnChunkGeneratorCompleted;
     }
 }
