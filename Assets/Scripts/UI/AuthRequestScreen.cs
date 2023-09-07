@@ -25,18 +25,26 @@ public class AuthRequestScreen : Screen
 
     private void OnAuthButtonClicked()
     {
+        const float DelayBeforeAuth = 0.5f;
+
 #if !UNITY_WEBGL || UNITY_EDITOR
         CloseClicked?.Invoke();
         PlayerAuthorized?.Invoke();
         return;
 #endif
 
+        CloseClicked?.Invoke();
+
         if (ChunkStorage.Instance != null)
         {
             ChunkStorage.Instance.Restart();
         }
 
-        CloseClicked?.Invoke();
+        Invoke(nameof(Authorize), DelayBeforeAuth);
+    }
+
+    private void Authorize()
+    {
         PlayerAccount.Authorize(OnAuthorized);
     }
 

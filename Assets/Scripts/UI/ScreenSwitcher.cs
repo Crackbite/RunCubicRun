@@ -1,5 +1,6 @@
 using Agava.YandexGames;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ScreenSwitcher : MonoBehaviour
@@ -11,6 +12,7 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private FailScreen _failScreen;
     [SerializeField] private StoreScreen _storeScreen;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
+    [SerializeField] private AuthRequestScreen _authRequestScreen;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardLoader _leaderboardLoader;
@@ -22,23 +24,27 @@ public class ScreenSwitcher : MonoBehaviour
     private void OnEnable()
     {
         _dataRestorer.DataRestored += OnDataRestored;
+        _mainScreen.Showed += OnMainScreenShowed;
         _menuScreen.StartClicked += OnMenuStartClicked;
         _menuScreen.StoreClicked += OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked += OnLeaderboardClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
         _storeScreen.CloseClicked += OnCloseClicked;
         _leaderboardScreen.CloseClicked += OnCloseClicked;
+        _authRequestScreen.CloseClicked += OnAuthRequestCloseClicked;
     }
 
     private void OnDisable()
     {
         _dataRestorer.DataRestored -= OnDataRestored;
+        _mainScreen.Showed -= OnMainScreenShowed;
         _menuScreen.StartClicked -= OnMenuStartClicked;
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked -= OnLeaderboardClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
         _storeScreen.CloseClicked -= OnCloseClicked;
         _leaderboardScreen.CloseClicked -= OnCloseClicked;
+        _authRequestScreen.CloseClicked -= OnAuthRequestCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -56,6 +62,18 @@ public class ScreenSwitcher : MonoBehaviour
     }
 
     private void OnDataRestored(PlayerData playerData)
+    {
+        if (_mainScreen.IsHidden)
+        {
+            _mainScreen.Enter();
+        }
+        else
+        {
+            StartCoroutine(WaitForMainScreenToHide());
+        }
+    }
+
+    private void OnMainScreenShowed()
     {
         if (_gameStatusTracker.IsStartWithoutMenu)
         {
@@ -94,6 +112,11 @@ public class ScreenSwitcher : MonoBehaviour
     private void OnCloseClicked()
     {
         SetScreen(_menuScreen);
+    }
+
+    private void OnAuthRequestCloseClicked()
+    {
+        _mainScreen.Exit();
     }
 
     private void SetFailScreen(GameResult gameResult)
@@ -145,5 +168,15 @@ public class ScreenSwitcher : MonoBehaviour
         }
 
         _currentScreen = newScreen;
+    }
+
+    private IEnumerator WaitForMainScreenToHide()
+    {
+        while (_mainScreen.IsHidden == false)
+        {
+            yield return null;
+        }
+
+        _mainScreen.Enter();
     }
 }

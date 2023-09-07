@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -12,6 +13,7 @@ public abstract class Screen : MonoBehaviour
     public event Action Hidden;
     public event Action Showed;
 
+    public bool IsHidden { get; private set; } = true;
     public IReadOnlyCollection<DOTweenAnimation> TweenAnimations => _tweenAnimations;
 
     private void Start()
@@ -22,6 +24,8 @@ public abstract class Screen : MonoBehaviour
 
     public virtual void Enter()
     {
+        IsHidden = false;
+
         if (_canvasGroup != null)
         {
             _canvasGroup.interactable = true;
@@ -55,12 +59,34 @@ public abstract class Screen : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
+        IsHidden = true;
         Hidden?.Invoke();
     }
 
     private void Show()
     {
         gameObject.SetActive(true);
-        Showed?.Invoke();
+
+        if (this is not GameScreen)
+        {
+            StartCoroutine(WaitForShowingToComplete());
+        }
+    }
+
+    private IEnumerator WaitForShowingToComplete()
+    {
+        while (_tweenAnimations == null)
+        {
+            yield return null;
+        }
+
+        if (_tweenAnimations[0] != null)
+        {
+            _tweenAnimations[0].tween.OnComplete(() => Showed?.Invoke());
+        }
+        else
+        {
+            Showed?.Invoke();
+        }
     }
 }
