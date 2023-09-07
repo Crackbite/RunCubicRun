@@ -28,7 +28,7 @@ public class SDK : MonoBehaviour
 #if !UNITY_WEBGL || UNITY_EDITOR
         yield break;
 #endif
-     
+
         yield return YandexGamesSdk.Initialize(Initialized);
     }
 
@@ -60,6 +60,7 @@ public class SDK : MonoBehaviour
 
     private void OnRefreshButtonClicked()
     {
+        _failScreen.RefreshButtonClicked -= OnRefreshButtonClicked;
         ShowVideoAd();
     }
 
@@ -68,6 +69,8 @@ public class SDK : MonoBehaviour
         const int LevelsBetweenVideoAd = 3;
         const int TargetRemainder = 0;
         const int MinLevelCount = 1;
+
+        _succesScreen.NextLevelButtonClicked -= OnNextButtonClicked;
 
         if (currentLevel >= MinLevelCount && currentLevel % LevelsBetweenVideoAd == TargetRemainder)
         {
