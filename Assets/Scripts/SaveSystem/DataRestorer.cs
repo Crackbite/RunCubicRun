@@ -21,7 +21,8 @@ public class DataRestorer : MonoBehaviour
 
     public bool IsJustLoggedIn { get; private set; }
     public int TrainingStageAmount { get; private set; }
-    public PlayerData PlayerData => _playerData;
+    public int CurrentLevel => _playerData.Level;
+    public int CurrentTrainingStage => _playerData.TrainingStage;
 
     private void OnValidate()
     {
