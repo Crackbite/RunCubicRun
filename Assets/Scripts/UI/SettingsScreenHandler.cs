@@ -9,6 +9,12 @@ public class SettingsScreenHandler : MonoBehaviour
     [SerializeField] private SwitchToggle _soundSwitchToggle;
     [SerializeField] private DataRestorer _dataRestorer;
 
+    private void Awake()
+    {
+        _musicSwitchToggle.SetHandlePosition();
+        _soundSwitchToggle.SetHandlePosition();
+    }
+
     private void OnEnable()
     {
         _activateButton.onClick.AddListener(OnSettingsScreenActivated);
@@ -35,9 +41,7 @@ public class SettingsScreenHandler : MonoBehaviour
 
     private void OnDataRestored(PlayerData playerData)
     {
-        _musicSwitchToggle.SetHandlePosition();
         _musicSwitchToggle.ChangeHandlePosition(playerData.IsMusicOn);
-        _soundSwitchToggle.SetHandlePosition();
         _soundSwitchToggle.ChangeHandlePosition(playerData.IsSoundOn);
     }
 }
