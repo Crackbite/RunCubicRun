@@ -19,13 +19,13 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
     private void OnEnable()
     {
         _generatorStarter.GeneratorStarted += OnGeneratorStarted;
-        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked += OmAuthClicked;
     }
 
     private void OnDisable()
     {
         _generatorStarter.GeneratorStarted -= OnGeneratorStarted;
-        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked -= OmAuthClicked;
         _currentGenerator.Completed -= OnChunkGenerationCompleted;
     }
 
@@ -84,7 +84,7 @@ public class ChunkVisibilitySwitcher : MonoBehaviour
         InvokeRepeating(nameof(DisableChunkAbroadScreen), Dilay, RepeatRate);
     }
 
-    private void OnPlayerAuthorized()
+    private void OmAuthClicked()
     {
         CancelInvoke(nameof(DisableChunkAbroadScreen));
     }

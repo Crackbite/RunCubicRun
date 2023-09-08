@@ -21,13 +21,13 @@ public class ChunkStorage : MonoBehaviour
     private void OnEnable()
     {
         _dataRestorer.DataRestored += OnDataRestored;
-        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked += OnAuthClicked;
     }
 
     private void OnDisable()
     {
         _dataRestorer.DataRestored -= OnDataRestored;
-        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked -= OnAuthClicked;
     }
 
     public void Add(ChunkData chunkData)
@@ -110,7 +110,7 @@ public class ChunkStorage : MonoBehaviour
         Initialize(playerData);
     }
 
-    private void OnPlayerAuthorized()
+    private void OnAuthClicked()
     {
         Instance = null;
     }

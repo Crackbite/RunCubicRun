@@ -41,7 +41,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockRemoved += OnBlockRemoved;
         _store.SkinBought += OnSkinBought;
         _dataRestorer.DataRestored += OnDataRestored;
-        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked += OnAuthClicked;
     }
 
     private void Start()
@@ -56,7 +56,7 @@ public class ScoreAllocator : MonoBehaviour
         _blockStack.BlockRemoved -= OnBlockRemoved;
         _store.SkinBought -= OnSkinBought;
         _dataRestorer.DataRestored -= OnDataRestored;
-        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
+        _authRequestScreen.AuthClicked -= OnAuthClicked;
     }
 
     public string ToString(float score)
@@ -120,7 +120,7 @@ public class ScoreAllocator : MonoBehaviour
         ChangeScore(ref _totalScore, -skinPrice, ScoreChangeInitiator.Store);
     }
 
-    private void OnPlayerAuthorized()
+    private void OnAuthClicked()
     {
         const float StartValue = 0;
 

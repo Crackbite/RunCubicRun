@@ -9,6 +9,7 @@ public class AuthRequestScreen : Screen
     [SerializeField] private Button _closeButton;
 
     public event Action CloseClicked;
+    public event Action AuthClicked;
     public event Action PlayerAuthorized;
 
     private void OnEnable()
@@ -25,22 +26,15 @@ public class AuthRequestScreen : Screen
 
     private void OnAuthButtonClicked()
     {
-        const float DelayBeforeAuth = 0.5f;
-
-#if !UNITY_WEBGL || UNITY_EDITOR
         CloseClicked?.Invoke();
-        PlayerAuthorized?.Invoke();
-        return;
-#endif
-
-        CloseClicked?.Invoke();
+        AuthClicked?.Invoke();
 
         if (ChunkStorage.Instance != null)
         {
             ChunkStorage.Instance.Restart();
         }
 
-        Invoke(nameof(Authorize), DelayBeforeAuth);
+        Authorize();
     }
 
     private void Authorize()
@@ -50,7 +44,7 @@ public class AuthRequestScreen : Screen
 
     private void OnAuthorized()
     {
-        PlayerAccount.RequestPersonalProfileDataPermission(PlayerAuthorized);
+        PlayerAccount.RequestPersonalProfileDataPermission(PlayerAuthorized, (error) => { PlayerAuthorized?.Invoke(); });
     }
 
     private void OnCloseButtonClicked()
