@@ -121,6 +121,7 @@ public class DataRestorer : MonoBehaviour
 
     private void OnChunksRemoved()
     {
+        _chunkGenerator.ChunksRemoved -= OnChunksRemoved;
         Restore();
     }
 
