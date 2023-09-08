@@ -3,41 +3,30 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
 public class ScoreDisplay : MonoBehaviour
 {
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private float _scoreResetSpeed = .5f;
     [SerializeField] private bool _isDebug;
+    [SerializeField] private TMP_Text _score;
 
     private readonly CultureInfo _cultureInfo = new CultureInfo("ru-RU");
 
-    private TMP_Text _score;
 
     private void OnEnable()
     {
         _gameStatusTracker.GameStarted += OnGameStarted;
-        _scoreAllocator.ScoreChanged += OnScoreChanged;
-    }
-
-    private void Awake()
-    {
-        _score = GetComponent<TMP_Text>();
+        _scoreAllocator.ScoreChanged += Display;
     }
 
     private void OnDisable()
     {
         _gameStatusTracker.GameStarted -= OnGameStarted;
-        _scoreAllocator.ScoreChanged -= OnScoreChanged;
+        _scoreAllocator.ScoreChanged -= Display;
     }
 
-    private void OnGameStarted()
-    {
-        SetScoreWithAnimation(0f);
-    }
-
-    private void OnScoreChanged(Score score)
+    public void Display(Score score)
     {
         SetScore(score.Current);
 
@@ -45,6 +34,11 @@ public class ScoreDisplay : MonoBehaviour
         {
             Debug.Log($"{score.Current} | {score.Change} | {score.Initiator}");
         }
+    }
+
+    private void OnGameStarted()
+    {
+        SetScoreWithAnimation(0f);
     }
 
     private void SetScore(float score)

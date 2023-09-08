@@ -13,7 +13,6 @@ public abstract class Screen : MonoBehaviour
     public event Action Hidden;
     public event Action Showed;
 
-    public bool IsHidden { get; private set; } = true;
     public IReadOnlyCollection<DOTweenAnimation> TweenAnimations => _tweenAnimations;
 
     private void Start()
@@ -24,8 +23,6 @@ public abstract class Screen : MonoBehaviour
 
     public virtual void Enter()
     {
-        IsHidden = false;
-
         if (_canvasGroup != null)
         {
             _canvasGroup.interactable = true;
@@ -59,7 +56,6 @@ public abstract class Screen : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
-        IsHidden = true;
         Hidden?.Invoke();
     }
 

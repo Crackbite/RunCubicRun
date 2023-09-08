@@ -537,6 +537,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1391310420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6112402419359721501, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+  m_PrefabInstance: {fileID: 6112402420131175870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1395986859 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 921384242104032655, guid: 24358e19aabe9f646a491664e5d165b7, type: 3}
@@ -1631,6 +1642,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1420071936, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _dataRestorer
+      value: 
+      objectReference: {fileID: 1155909879}
+    - target: {fileID: 1420071936, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _scoreAllocator
+      value: 
+      objectReference: {fileID: 1395986859}
     - target: {fileID: 62195429350696795, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _skinsRestorer
       value: 
@@ -1656,10 +1675,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1444538055}
     - target: {fileID: 2232320174667823776, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _dataRestorer
-      value: 
-      objectReference: {fileID: 1155909879}
-    - target: {fileID: 2232320174667823776, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _levelHeaderPhrase
       value: 
       objectReference: {fileID: 868392493}
@@ -1671,18 +1686,6 @@ PrefabInstance:
       propertyPath: _dataRestorer
       value: 
       objectReference: {fileID: 1155909879}
-    - target: {fileID: 6112402419088187422, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _dataRestorer
-      value: 
-      objectReference: {fileID: 1155909879}
-    - target: {fileID: 6112402419203561686, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _dataRestorer
-      value: 
-      objectReference: {fileID: 1155909879}
-    - target: {fileID: 6112402419226730363, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: delay
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6112402419350129435, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _sdk
       value: 
@@ -1695,6 +1698,10 @@ PrefabInstance:
       propertyPath: _trainingStagePhrase
       value: 
       objectReference: {fileID: 895385473}
+    - target: {fileID: 6112402419359721503, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
+      propertyPath: _score
+      value: 
+      objectReference: {fileID: 1391310420}
     - target: {fileID: 6112402419359721503, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _scoreAllocator
       value: 
@@ -1703,10 +1710,6 @@ PrefabInstance:
       propertyPath: _gameStatusTracker
       value: 
       objectReference: {fileID: 123472312}
-    - target: {fileID: 6112402419618207985, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6112402420096383246, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _sdk
       value: 
@@ -1719,14 +1722,6 @@ PrefabInstance:
       propertyPath: _trainingStagePhrase
       value: 
       objectReference: {fileID: 895385473}
-    - target: {fileID: 6112402420100298707, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: delay
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112402420321845760, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: _dataRestorer
-      value: 
-      objectReference: {fileID: 1155909879}
     - target: {fileID: 6112402420321845760, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: _gameStatusTracker
       value: 
@@ -1825,10 +1820,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6112402420321845884, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112402420365634955, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
-      propertyPath: delay
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7381325183862270716, guid: 27edfef099bc51948b9d8616aa2efc41, type: 3}
@@ -2011,7 +2002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7101115412639263754, guid: c285e6be8dd072341a3ef7b31cfb236a, type: 3}
       propertyPath: m_ZDamping
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7101115412639263754, guid: c285e6be8dd072341a3ef7b31cfb236a, type: 3}
       propertyPath: m_BindingMode

@@ -88,7 +88,7 @@ public class BlockStack : MonoBehaviour
         return DefaultPosition;
     }
 
-    public void PlaceInStack(ColorBlock colorBlock)
+    private void PlaceInStack(ColorBlock colorBlock)
     {
         colorBlock.Init(this, _stackCoordinator);
     }

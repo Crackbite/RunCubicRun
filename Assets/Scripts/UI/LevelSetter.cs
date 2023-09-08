@@ -1,4 +1,5 @@
 using Lean.Localization;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -6,20 +7,18 @@ public class LevelSetter : MonoBehaviour
 {
     [SerializeField] private TMP_Text _level;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _levelLocalizedText;
-    [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private GameObject _trainingHeaderPhrase;
     [SerializeField] private GameObject _levelHeaderPhrase;
-    [SerializeField] private AuthRequestScreen _authRequestScreen;
 
     private bool _canUpdateLevel;
     private int _currentLevel;
     private string _header;
 
+    public event Action Set;
+
     private void OnEnable()
     {
-        _dataRestorer.DataRestored += OnDataRestored;
         _levelLocalizedText.TranslationUpdated += OnLevelTranslationUpdated;
-        _authRequestScreen.PlayerAuthorized += OnPlayerAuthorized;
     }
 
     private void Awake()
@@ -29,9 +28,20 @@ public class LevelSetter : MonoBehaviour
 
     private void OnDisable()
     {
-        _dataRestorer.DataRestored -= OnDataRestored;
         _levelLocalizedText.TranslationUpdated -= OnLevelTranslationUpdated;
-        _authRequestScreen.PlayerAuthorized -= OnPlayerAuthorized;
+    }
+
+    public void SetLevel(PlayerData playerData)
+    {
+        _level.text = _header;
+
+        if (_currentLevel != playerData.Level || _currentLevel == 0)
+        {
+            UpdateLevelText(playerData.Level);
+            _canUpdateLevel = true;
+        }
+
+        Set?.Invoke();
     }
 
     private void OnLevelTranslationUpdated()
@@ -41,20 +51,6 @@ public class LevelSetter : MonoBehaviour
             _canUpdateLevel = false;
             UpdateLevelText(_currentLevel);
         }
-    }
-
-    private void OnDataRestored(PlayerData playerData)
-    {
-        if (_currentLevel != playerData.Level || _currentLevel == 0)
-        {
-            UpdateLevelText(playerData.Level);
-            _canUpdateLevel = true;
-        }
-    }
-
-    private void OnPlayerAuthorized()
-    {
-        _level.text = _header;
     }
 
     private void UpdateLevelText(int level)

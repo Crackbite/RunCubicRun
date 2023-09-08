@@ -4480,7 +4480,6 @@ MonoBehaviour:
   _animationDuration: 0.2
   _switcherRectTransform: {fileID: 6112402419660059214}
   _type: 1
-  _dataRestorer: {fileID: 0}
   _toggle: {fileID: 6112402419088187423}
 --- !u!1 &6112402419088567612
 GameObject:
@@ -5491,7 +5490,6 @@ MonoBehaviour:
   _animationDuration: 0.2
   _switcherRectTransform: {fileID: 6112402420886207262}
   _type: 0
-  _dataRestorer: {fileID: 0}
   _toggle: {fileID: 6112402419203561687}
 --- !u!1 &6112402419226730365
 GameObject:
@@ -5607,7 +5605,7 @@ MonoBehaviour:
   targetIsSelf: 1
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
-  delay: 0.5
+  delay: 0
   duration: 0.5
   easeType: 6
   easeCurve:
@@ -10113,7 +10111,7 @@ MonoBehaviour:
   targetIsSelf: 1
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
-  delay: 0.5
+  delay: 0
   duration: 0.5
   easeType: 6
   easeCurve:
@@ -10843,6 +10841,7 @@ GameObject:
   - component: {fileID: 6112402420321845763}
   - component: {fileID: 2232320174667823776}
   - component: {fileID: 2686774785385941678}
+  - component: {fileID: 1420071936}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -10963,7 +10962,6 @@ MonoBehaviour:
   _leaderboardScreen: {fileID: 3663766962751928770}
   _authRequestScreen: {fileID: 7652886598943001436}
   _gameStatusTracker: {fileID: 0}
-  _dataRestorer: {fileID: 0}
   _leaderboardLoader: {fileID: 0}
 --- !u!114 &6112402420321845763
 MonoBehaviour:
@@ -10993,7 +10991,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _level: {fileID: 6112402420125128332}
   _levelLocalizedText: {fileID: 6112402420131175890}
-  _dataRestorer: {fileID: 0}
   _trainingHeaderPhrase: {fileID: 0}
   _levelHeaderPhrase: {fileID: 0}
   _authRequestScreen: {fileID: 7652886598943001436}
@@ -11014,6 +11011,24 @@ MonoBehaviour:
   _musicSwitchToggle: {fileID: 6112402419203561686}
   _soundSwitchToggle: {fileID: 6112402419088187422}
   _dataRestorer: {fileID: 0}
+--- !u!114 &1420071936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6112402420321845762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820b29c323d3e874db10707de819b882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainScreen: {fileID: 5664785338642729192}
+  _dataRestorer: {fileID: 0}
+  _authRequestScreen: {fileID: 7652886598943001436}
+  _levelSetter: {fileID: 2232320174667823776}
+  _scoreAllocator: {fileID: 0}
+  _scoreDisplay: {fileID: 6112402419359721503}
 --- !u!1 &6112402420365634957
 GameObject:
   m_ObjectHideFlags: 0
@@ -11129,7 +11144,7 @@ MonoBehaviour:
   targetIsSelf: 1
   targetGO: {fileID: 0}
   tweenTargetIsTargetGO: 1
-  delay: 0.5
+  delay: 0
   duration: 0.5
   easeType: 6
   easeCurve:
