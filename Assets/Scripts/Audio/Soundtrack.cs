@@ -23,10 +23,10 @@ public class Soundtrack : MonoBehaviour
     private void OnEnable()
     {
         _gameStatusTracker.GameStarted += OnGameStarted;
+        _gameStatusTracker.GameEnded += OnGameEnded;
         _menuScreen.Set += OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged += OnMusicToggleChanged;
         _cubic.SteppedOnStand += OnCubicSteppedOnStend;
-        _cubic.Hit += OnCubicHit;
         _pistonPresser.StackReached += OnStackReached;
         _pauseSystem.TimeSlowing += OnTimeSlowing;
         _pauseSystem.TimeAccelerating += OnTimeAccelerating;
@@ -41,10 +41,10 @@ public class Soundtrack : MonoBehaviour
     private void OnDisable()
     {
         _gameStatusTracker.GameStarted -= OnGameStarted;
+        _gameStatusTracker.GameEnded -= OnGameEnded;
         _menuScreen.Set -= OnMenuScreenSet;
         _musicSwitchToggle.ToggleChanged -= OnMusicToggleChanged;
         _cubic.SteppedOnStand -= OnCubicSteppedOnStend;
-        _cubic.Hit -= OnCubicHit;
         _pistonPresser.StackReached -= OnStackReached;
         _pauseSystem.TimeSlowing -= OnTimeSlowing;
         _pauseSystem.TimeAccelerating -= OnTimeAccelerating;
@@ -85,11 +85,14 @@ public class Soundtrack : MonoBehaviour
         FadeAudio(OnStandVolume);
     }
 
-    private void OnCubicHit(Vector3 hitPoint, float trapWeight)
+    private void OnGameEnded(GameResult gameResult)
     {
         const float OnCubicHitVolume = 0f;
 
-        FadeAudio(OnCubicHitVolume);
+        if (gameResult != GameResult.LoseWithPortalSuckedIn && gameResult != GameResult.Win)
+        {
+            FadeAudio(OnCubicHitVolume);
+        }
     }
 
     private void OnStackReached()
