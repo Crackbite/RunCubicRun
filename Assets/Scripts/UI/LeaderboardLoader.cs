@@ -10,7 +10,6 @@ public class LeaderboardLoader : MonoBehaviour
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
     private bool _hasResult;
-    private PlayerData _playerData;
 
     private const string LeaderboardName = "Leaderboard";
     private const string AnonymousName = "Anonymous";
@@ -27,21 +26,31 @@ public class LeaderboardLoader : MonoBehaviour
         _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
+    public void SetScore(PlayerData playerData)
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        return;
+#endif
+
+        Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
+        {
+            GetPlayerEntries(playerData);
+        });
+    }
+
     private void OnGameDataRestored(PlayerData playerData)
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         return;
 #endif
 
-        _playerData = playerData;
-
         if (PlayerAccount.IsAuthorized)
         {
-            StartCoroutine(SetScoreToLeaderboard(playerData));
+            StartCoroutine(WaitForSDKInitialization(playerData));
         }
     }
 
-    private void GetPlayerEntries()
+    private void GetPlayerEntries(PlayerData playerData)
     {
         Leaderboard.GetEntries(LeaderboardName, (result) =>
         {
@@ -63,21 +72,18 @@ public class LeaderboardLoader : MonoBehaviour
         {
             if (_hasResult == false)
             {
-                StartCoroutine(SetScoreToLeaderboard(_playerData));
+                StartCoroutine(WaitForSDKInitialization(playerData));
             }
         });
     }
 
-    private IEnumerator SetScoreToLeaderboard(PlayerData playerData)
+    private IEnumerator WaitForSDKInitialization(PlayerData playerData)
     {
         while (YandexGamesSdk.IsInitialized == false)
         {
             yield return _waitForSDKInitializationCheck;
         }
 
-        Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
-        {
-            GetPlayerEntries();
-        });
+        SetScore(playerData);
     }
 }

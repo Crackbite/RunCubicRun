@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public abstract class DataSaver : MonoBehaviour
     [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SwitchToggle _soundSwitchToggle;
+    [SerializeField] private LeaderboardLoader _leaderBoardLoader;
 
     private List<Skin> _skins = new List<Skin>();
     private int _trainingStageAmount;
@@ -56,17 +58,21 @@ public abstract class DataSaver : MonoBehaviour
         bool isSoundOn = CurrentPlayerData.IsSoundOn;
 
 
-        if (IsTrainingStage(level, trainingStage))
+        if (IsNextTrainingStage(level, trainingStage))
         {
             trainingStage++;
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"The player progressed to stage {trainingStage} of training");
         }
         else
         {
             level++;
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, $"The player progressed to level  {level}");
         }
 
         PlayerData playerData = new PlayerData(score, leaderboardScore, level, trainingStage, isMusicOn, isSoundOn);
+
         SetSkinStatesToPlayerData(playerData);
+        _leaderBoardLoader.SetScore(playerData);
         CurrentPlayerData = playerData;
         SaveToStorage(SerializePlayerDataToString());
     }
@@ -111,7 +117,7 @@ public abstract class DataSaver : MonoBehaviour
         playerData.SetSkinsStateInfos(_skins);
     }
 
-    private bool IsTrainingStage(int level, int trainingStage)
+    private bool IsNextTrainingStage(int level, int trainingStage)
     {
         const int DefaultValue = 0;
 
