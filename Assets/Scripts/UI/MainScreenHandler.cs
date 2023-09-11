@@ -8,6 +8,7 @@ public class MainScreenHandler : MonoBehaviour
     [SerializeField] private LevelSetter _levelSetter;
     [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private ScoreDisplay _scoreDisplay;
+    [SerializeField] private GameStatusTracker _gameStatusTracker;
 
     private PlayerData _playerData;
     private Score _score;
@@ -20,6 +21,7 @@ public class MainScreenHandler : MonoBehaviour
         _authRequestScreen.AuthClicked += OnAuthClicked;
         _levelSetter.Set += OnLevelSet;
         _scoreAllocator.ScoreChanged += OnScoreChanged;
+        _gameStatusTracker.GameStarted += OnGameStarted;
     }
 
     private void OnDisable()
@@ -29,6 +31,7 @@ public class MainScreenHandler : MonoBehaviour
         _levelSetter.Set -= OnLevelSet;
         _scoreAllocator.ScoreChanged -= OnScoreChanged;
         _mainScreen.Hidden -= OnHidden;
+        _gameStatusTracker.GameStarted -= OnGameStarted;
     }
 
     private void OnDataRestored(PlayerData playerData)
@@ -80,5 +83,12 @@ public class MainScreenHandler : MonoBehaviour
             _scoreDisplay.Display(_score);
             _canSetScore = false;
         }
+    }
+
+    private void OnGameStarted()
+    {
+        const float EndScoreValue = 0;
+
+        _scoreDisplay.SetScoreWithAnimation(EndScoreValue);
     }
 }

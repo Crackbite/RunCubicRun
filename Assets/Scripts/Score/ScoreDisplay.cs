@@ -6,7 +6,6 @@ using UnityEngine;
 public class ScoreDisplay : MonoBehaviour
 {
     [SerializeField] private ScoreAllocator _scoreAllocator;
-    [SerializeField] private GameStatusTracker _gameStatusTracker;
     [SerializeField] private float _scoreResetSpeed = .5f;
     [SerializeField] private bool _isDebug;
     [SerializeField] private TMP_Text _score;
@@ -16,13 +15,11 @@ public class ScoreDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameStatusTracker.GameStarted += OnGameStarted;
         _scoreAllocator.ScoreChanged += Display;
     }
 
     private void OnDisable()
     {
-        _gameStatusTracker.GameStarted -= OnGameStarted;
         _scoreAllocator.ScoreChanged -= Display;
     }
 
@@ -36,21 +33,16 @@ public class ScoreDisplay : MonoBehaviour
         }
     }
 
-    private void OnGameStarted()
-    {
-        SetScoreWithAnimation(0f);
-    }
-
-    private void SetScore(float score)
-    {
-        _score.text = score.ToString("# ##0", _cultureInfo);
-    }
-
-    private void SetScoreWithAnimation(float score)
+    public void SetScoreWithAnimation(float score)
     {
         int fromValue = int.Parse(_score.text.Replace(" ", string.Empty));
         int endValue = int.Parse(score.ToString(_cultureInfo));
 
         _score.DOCounter(fromValue, endValue, _scoreResetSpeed, true, _cultureInfo);
+    }
+
+    private void SetScore(float score)
+    {
+        _score.text = score.ToString("# ##0", _cultureInfo);
     }
 }
