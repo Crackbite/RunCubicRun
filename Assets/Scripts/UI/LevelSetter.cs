@@ -48,8 +48,14 @@ public class LevelSetter : MonoBehaviour
     {
         if (_canUpdateLevel)
         {
-            _canUpdateLevel = false;
-            UpdateLevelText(_currentLevel);
+            if (_currentLevel > 0)
+            {
+                _level.text = $"{_level.text} {_currentLevel}";
+            }
+            else
+            {
+                _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
+            }
         }
     }
 
