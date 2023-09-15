@@ -39,15 +39,20 @@ public class BlockStackPhysics : MonoBehaviour
     public void OnCrossbarHit(int stackPosition)
     {
         const float ForceFactor = 0.2f;
-        int brokenBlocksCount = _blockStack.Blocks.Count - stackPosition;
+        const int MinBlocksAmount = 1;
+
+        int brokenBlocksCount = _blockStack.Blocks.Count - (stackPosition - MinBlocksAmount);
 
         _cubic.SoundSystem.Play(SoundEvent.CrossbarHit);
 
         for (int i = 1; i <= brokenBlocksCount; i++)
         {
-            _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor * (_currentspeed / MoveSpeed), true, true);
-            _blockStack.AnimateDestroy(_blockStack.Blocks[0], _blockDestroyDelay);
-            _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
+            if (_blockStack.Blocks.Count >= MinBlocksAmount)
+            {
+                _blockStack.Blocks[0].BlockPhysics.CrossbarHit -= OnCrossbarHit;
+                _blockStack.Blocks[0].BlockPhysics.FallOff(GetCurrentPushForce(Vector3.left), ForceFactor * (_currentspeed / MoveSpeed), true, true);
+                _blockStack.AnimateDestroy(_blockStack.Blocks[0], _blockDestroyDelay);
+            }
         }
     }
 
