@@ -2,17 +2,19 @@ using UnityEngine;
 using Agava.YandexGames;
 using System.Collections;
 using System;
+using Lean.Localization;
 
 public class LeaderboardLoader : MonoBehaviour
 {
     [SerializeField] private DataRestorer _dataRestorer;
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
+    [SerializeField] private GameObject _anonymousPhrase;
 
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
     private bool _hasResult;
+    private string _anonymousName;
 
     private const string LeaderboardName = "Leaderboard";
-    private const string AnonymousName = "Anonymous";
 
     public event Action PlayerLogOut;
 
@@ -44,6 +46,8 @@ public class LeaderboardLoader : MonoBehaviour
         return;
 #endif
 
+        _anonymousName = LeanLocalization.GetTranslationText(_anonymousPhrase.name);
+
         if (PlayerAccount.IsAuthorized)
         {
             StartCoroutine(WaitForSDKInitialization(playerData));
@@ -62,7 +66,7 @@ public class LeaderboardLoader : MonoBehaviour
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    name = AnonymousName;
+                    name = _anonymousName;
                 }
 
                 int rank = result.entries[i].rank;
