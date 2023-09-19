@@ -6,6 +6,8 @@ public class LanguageSwitch : MonoBehaviour
 {
     [SerializeField] private SDK _sdk;
 
+    private bool _canSwitch = true;
+
     public IReadOnlyDictionary<string, string> _languages = new Dictionary<string, string>()
     {
         {"en","English" },
@@ -16,6 +18,18 @@ public class LanguageSwitch : MonoBehaviour
     private void OnEnable()
     {
         _sdk.Initialized += OnSDKInizialixed;
+    }
+
+    private void Awake()
+    {
+#if !UNITY_WEBGL || UNITY_EDITOR
+        return;
+#endif
+
+        if (YandexGamesSdk.IsInitialized && _canSwitch)
+        {
+            Switch();
+        }
     }
 
     private void OnDisable()
@@ -31,6 +45,7 @@ public class LanguageSwitch : MonoBehaviour
     private void Switch()
     {
         string currentLanguage = YandexGamesSdk.Environment.i18n.lang;
+        _canSwitch = false;
 
         foreach (KeyValuePair<string, string> language in _languages)
         {
