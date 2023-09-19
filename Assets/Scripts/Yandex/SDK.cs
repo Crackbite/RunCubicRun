@@ -45,7 +45,7 @@ public class SDK : MonoBehaviour
 
     public void ShowInterstitialAd()
     {
-        InterstitialAd.Show(OnAdOpened, (bool _) => { AdClosed?.Invoke(); });
+        InterstitialAd.Show(OnAdOpened, (bool _) => { AdClosed?.Invoke(); }, (error) => { Debug.Log("ERROR AD: " + error); });
     }
 
     private void OnAdOpened()
@@ -64,20 +64,9 @@ public class SDK : MonoBehaviour
         ShowVideoAd();
     }
 
-    private void OnNextButtonClicked(int currentLevel)
+    private void OnNextButtonClicked()
     {
-        const int LevelsBetweenVideoAd = 3;
-        const int TargetRemainder = 0;
-        const int MinLevelCount = 1;
-
         _succesScreen.NextLevelButtonClicked -= OnNextButtonClicked;
-
-        if (currentLevel >= MinLevelCount && currentLevel % LevelsBetweenVideoAd == TargetRemainder)
-        {
-            ShowVideoAd();
-            return;
-        }
-
         ShowInterstitialAd();
     }
 }

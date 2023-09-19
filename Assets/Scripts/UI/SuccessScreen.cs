@@ -8,7 +8,7 @@ public class SuccessScreen : LevelResultScreen
 
     private bool _isStartWithoutMenu;
 
-    public event Action<int> NextLevelButtonClicked;
+    public event Action NextLevelButtonClicked;
 
     protected override void OnEnable()
     {
@@ -29,7 +29,7 @@ public class SuccessScreen : LevelResultScreen
         return;
 #endif
 
-        NextLevelButtonClicked?.Invoke(CurrentLevel);
+        NextLevelButtonClicked?.Invoke();
     }
 
     protected override void OnAdClosed()
@@ -49,6 +49,6 @@ public class SuccessScreen : LevelResultScreen
         return;
 #endif
 
-        NextLevelButtonClicked?.Invoke(CurrentLevel);
+        NextLevelButtonClicked?.Invoke();
     }
 }

@@ -17,7 +17,6 @@ public abstract class LevelResultScreen : Screen
     private bool _canUpdateLevel;
 
     protected bool IsTraining;
-    protected int CurrentLevel;
 
     public event Action<bool> SceneLoading;
 
@@ -59,12 +58,11 @@ public abstract class LevelResultScreen : Screen
     {
         int currentStage = _dataRestorer.CurrentTrainingStage;
         int trainingStageAmount = _dataRestorer.TrainingStageAmount;
+        int currentLevel = _dataRestorer.CurrentLevel;
 
-        CurrentLevel = _dataRestorer.CurrentLevel;
-
-        if (CurrentLevel >= _gameFirstLevel)
+        if (currentLevel >= _gameFirstLevel)
         {
-            _level.text = $"{_level.text} {CurrentLevel}";
+            _level.text = $"{_level.text} {currentLevel}";
         }
         else
         {
