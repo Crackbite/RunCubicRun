@@ -7,10 +7,9 @@ public class PauseSystem : MonoBehaviour
     [SerializeField] private float _slowdownDuration = 2f;
     [SerializeField] private float _accelerationDuration = 1f;
 
-
     private Coroutine _scaleRoutine;
     private Coroutine _allowUnpauseRoutine;
-    private bool _isStop;
+    private bool _isStopTimeScaling;
     private bool _isTrainingTime;
     private float _initialTimeScale;
     private float _targetTimeScale;
@@ -51,6 +50,45 @@ public class PauseSystem : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void FocusGame()
+    {
+        AudioListener.pause = false;
+
+        if (_isTrainingTime)
+        {
+            _isStopTimeScaling = false;
+
+            if (_initialTimeScale != _targetTimeScale)
+            {
+                _scaleRoutine = StartCoroutine(ScaleTime(_initialTimeScale, _targetTimeScale, _scaleDuration - _elapsedTime));
+            }
+
+            _allowUnpauseRoutine = StartCoroutine(AllowUnpause(_scaleDuration - _elapsedTime));
+        }
+        else
+        {
+            UnpauseGame();
+        }
+    }
+
+    public void UnfocusGame()
+    {
+        AudioListener.pause = true;
+
+        if (_isTrainingTime)
+        {
+            if (_allowUnpauseRoutine != null)
+            {
+                StopCoroutine(_allowUnpauseRoutine);
+            }
+
+            CanEndTrainingPause = false;
+            _initialTimeScale = Time.timeScale;
+        }
+
+        PauseGame();
+    }
+
     private void StartScaleRoutine(float initialValue, float targetValue, float duration, Action onStartCallback)
     {
         const float InitialElapsedTime = 0;
@@ -61,64 +99,25 @@ public class PauseSystem : MonoBehaviour
         onStartCallback.Invoke();
         _scaleRoutine = StartCoroutine(ScaleTime(initialValue, targetValue, duration));
         _isTrainingTime = true;
-        _isStop = false;
+        _isStopTimeScaling = false;
     }
 
     private void TryStopScaleRoutine()
     {
         if (_scaleRoutine != null)
         {
-            _isStop = true;
+            _isStopTimeScaling = true;
             _scaleRoutine = null;
-        }
-    }
-
-    private void OnApplicationFocus(bool focus)
-    {
-        if (focus)
-        {
-            AudioListener.pause = false;
-
-            if (_isTrainingTime)
-            {
-                _isStop = false;
-
-                if (_initialTimeScale != _targetTimeScale)
-                {
-                    _scaleRoutine = StartCoroutine(ScaleTime(_initialTimeScale, _targetTimeScale, _scaleDuration - _elapsedTime));
-                }
-
-                _allowUnpauseRoutine = StartCoroutine(AllowUnpause(_scaleDuration - _elapsedTime));
-            }
-            else
-            {
-                UnpauseGame();
-            }
-        }
-        else
-        {
-            AudioListener.pause = true;
-
-            if (_isTrainingTime)
-            {
-                if (_allowUnpauseRoutine != null)
-                {
-                    StopCoroutine(_allowUnpauseRoutine);
-                }
-
-                CanEndTrainingPause = false;
-                _initialTimeScale = Time.timeScale;
-            }
-
-            PauseGame();
         }
     }
 
     private IEnumerator ScaleTime(float initialValue, float targetValue, float duration)
     {
+        const float PauseScale = 0;
+
         _scaleDuration = duration;
 
-        while (_elapsedTime < _scaleDuration && _isStop == false)
+        while (_elapsedTime < _scaleDuration && _isStopTimeScaling == false)
         {
             float interpolationRatio = _elapsedTime / _scaleDuration;
             float newTimeScale = Mathf.Lerp(initialValue, targetValue, interpolationRatio);
@@ -127,14 +126,14 @@ public class PauseSystem : MonoBehaviour
             yield return null;
         }
 
-        if (_isStop)
+        if (_isStopTimeScaling)
         {
             yield break;
         }
 
         Time.timeScale = targetValue;
 
-        if (targetValue > 0)
+        if (targetValue > PauseScale)
         {
             _isTrainingTime = false;
         }
