@@ -19,7 +19,7 @@ public class OrthographicSizeChanger : MonoBehaviour
     private void LateUpdate()
     {
         float cameraAspect = _mainCamera.aspect;
-
+        
         if (Mathf.Approximately(cameraAspect, _lastCameraAspect))
         {
             return;
