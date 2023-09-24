@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Agava.YandexGames;
 using System.Collections;
 using System;
 using Lean.Localization;
+using System.Xml;
 
 public class LeaderboardLoader : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class LeaderboardLoader : MonoBehaviour
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
     private bool _hasResult;
     private string _anonymousName;
+    private string _playerUniqueID;
 
     private const string LeaderboardName = "Leaderboard";
 
@@ -70,7 +72,8 @@ public class LeaderboardLoader : MonoBehaviour
                 }
 
                 int rank = result.entries[i].rank;
-                _leaderboardScreen.AddPlayerView(rank, name, result.entries[i].score);
+                bool isPlayer = result.entries[i].player.uniqueID == _playerUniqueID ? true : false;
+                _leaderboardScreen.AddPlayerView(rank, name, result.entries[i].score, isPlayer);
             }
         }, (error) =>
         {
@@ -88,6 +91,10 @@ public class LeaderboardLoader : MonoBehaviour
             yield return _waitForSDKInitializationCheck;
         }
 
-        SetScore(playerData);
+        PlayerAccount.GetProfileData((result) =>
+        {
+            _playerUniqueID = result.uniqueID;
+            SetScore(playerData);
+        });
     }
 }

@@ -27,8 +27,8 @@ public class ScreenSwitcher : MonoBehaviour
         _menuScreen.StoreClicked += OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked += OnLeaderboardClicked;
         _gameStatusTracker.GameEnded += OnGameEnded;
-        _storeScreen.CloseClicked += OnCloseClicked;
-        _leaderboardScreen.CloseClicked += OnCloseClicked;
+        _storeScreen.CloseClicked += OnStoreCloseClicked;
+        _leaderboardScreen.CloseClicked += OnLeaderboardCloseClicked;
     }
 
     private void Start()
@@ -46,8 +46,8 @@ public class ScreenSwitcher : MonoBehaviour
         _menuScreen.StoreClicked -= OnMenuStoreClicked;
         _menuScreen.LeaderboardClicked -= OnLeaderboardClicked;
         _gameStatusTracker.GameEnded -= OnGameEnded;
-        _storeScreen.CloseClicked -= OnCloseClicked;
-        _leaderboardScreen.CloseClicked -= OnCloseClicked;
+        _storeScreen.CloseClicked -= OnStoreCloseClicked;
+        _leaderboardScreen.CloseClicked -= OnLeaderboardCloseClicked;
     }
 
     private void OnGameEnded(GameResult gameResult)
@@ -85,26 +85,34 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnMenuStoreClicked()
     {
+        _mainScreen.Exit();
         SetStoreScreen();
     }
 
     private void OnLeaderboardClicked()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
+        _mainScreen.Exit();
         SetLeaderboardScreen();
         return;
 #endif
 
         if (PlayerAccount.IsAuthorized)
         {
+            _mainScreen.Exit();
             SetLeaderboardScreen();
             return;
         }
     }
 
-    private void OnCloseClicked()
+    private void OnStoreCloseClicked()
     {
-        SetScreen(_menuScreen);
+        _storeScreen.Exit();
+    }
+
+    private void OnLeaderboardCloseClicked()
+    {
+        _leaderboardScreen.Exit();
     }
 
     private void SetFailScreen(GameResult gameResult)

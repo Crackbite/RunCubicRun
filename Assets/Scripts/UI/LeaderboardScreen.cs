@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,8 @@ public class LeaderboardScreen : Screen
     [SerializeField] private Button _close;
 
     public event Action CloseClicked;
+
+    public PlayerView Player { get; private set; }
 
     private void OnEnable()
     {
@@ -22,12 +24,17 @@ public class LeaderboardScreen : Screen
 
     private void OnCloseClicked()
     {
-       CloseClicked?.Invoke();
+        CloseClicked?.Invoke();
     }
 
-    public void AddPlayerView(int playerNumber, string playerName, int playerScore)
+    public void AddPlayerView(int playerNumber, string playerName, int playerScore, bool isPlayer)
     {
         PlayerView view = Instantiate(_template, _itemContainer.transform);
         view.Render(playerNumber, playerName, playerScore);
+
+        if (isPlayer)
+        {
+            Player = view;
+        }
     }
 }
