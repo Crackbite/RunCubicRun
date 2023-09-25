@@ -64,13 +64,13 @@ public class PauseEventSystem : MonoBehaviour
     private void OnAdOpened()
     {
         _canUnpause = false;
-        _pauseSystem.PauseGame();
+        _pauseSystem.UnfocusGame();
     }
 
     private void OnAdClosed()
     {
         _canUnpause = true;
-        _pauseSystem.UnpauseGame();
+        _pauseSystem.FocusGame();
     }
 
     private void OnGameStarted()
