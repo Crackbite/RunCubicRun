@@ -12,7 +12,8 @@ public class LevelSetter : MonoBehaviour
 
     private bool _canUpdateLevel;
     private int _currentLevel;
-    private string _header;
+    private string _levelHeader;
+    private string _trainingHeader;
 
     public event Action Set;
 
@@ -23,7 +24,8 @@ public class LevelSetter : MonoBehaviour
 
     private void Awake()
     {
-        _header = _levelHeaderPhrase.name;
+        _levelHeader = _levelHeaderPhrase.name;
+        _trainingHeader = _trainingHeaderPhrase.name;
     }
 
     private void OnDisable()
@@ -33,8 +35,6 @@ public class LevelSetter : MonoBehaviour
 
     public void SetLevel(PlayerData playerData)
     {
-        _level.text = _header;
-
         if (_currentLevel != playerData.Level || _currentLevel == 0)
         {
             UpdateLevelText(playerData.Level);
@@ -46,28 +46,27 @@ public class LevelSetter : MonoBehaviour
 
     private void OnLevelTranslationUpdated()
     {
+        const int FirstLevel = 1;
 
-        if (_canUpdateLevel)
+        if (_canUpdateLevel && _currentLevel >= FirstLevel)
         {
-            _canUpdateLevel = false;
-            UpdateLevelText(_currentLevel);
+            _level.text = $"{_level.text} {_currentLevel}";
         }
     }
 
     private void UpdateLevelText(int level)
     {
-        const int TrainingValue = 0;
+        const int FirstLevel = 1;
 
-        if (level > TrainingValue)
+        if (level >= FirstLevel)
         {
-            _levelLocalizedText.TranslationName = _levelHeaderPhrase.name;
-            _header = _level.text;
+            _levelLocalizedText.TranslationName = _levelHeader;
             _level.text = $"{_level.text} {level}";
             _currentLevel = level;
         }
         else
         {
-            _levelLocalizedText.TranslationName = _trainingHeaderPhrase.name;
+            _levelLocalizedText.TranslationName = _trainingHeader;
         }
     }
 }

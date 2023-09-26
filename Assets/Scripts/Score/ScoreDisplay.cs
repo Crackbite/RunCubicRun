@@ -5,23 +5,11 @@ using UnityEngine;
 
 public class ScoreDisplay : MonoBehaviour
 {
-    [SerializeField] private ScoreAllocator _scoreAllocator;
     [SerializeField] private float _scoreResetSpeed = .5f;
     [SerializeField] private bool _isDebug;
     [SerializeField] private TMP_Text _score;
 
     private readonly CultureInfo _cultureInfo = new CultureInfo("ru-RU");
-
-
-    private void OnEnable()
-    {
-        _scoreAllocator.ScoreChanged += Display;
-    }
-
-    private void OnDisable()
-    {
-        _scoreAllocator.ScoreChanged -= Display;
-    }
 
     public void Display(Score score)
     {

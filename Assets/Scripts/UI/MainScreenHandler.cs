@@ -40,6 +40,8 @@ public class MainScreenHandler : MonoBehaviour
 
         if (_wasAuth)
         {
+            _mainScreen.Hidden += OnHidden;
+            _mainScreen.Exit();
             return;
         }
 
@@ -48,15 +50,12 @@ public class MainScreenHandler : MonoBehaviour
 
     private void OnAuthClicked()
     {
-        _mainScreen.Hidden += OnHidden;
         _wasAuth = true;
-        _mainScreen.Exit();
     }
 
     private void OnHidden()
     {
         _mainScreen.Hidden -= OnHidden;
-        _wasAuth = false;
         _levelSetter.SetLevel(_playerData);
     }
 
