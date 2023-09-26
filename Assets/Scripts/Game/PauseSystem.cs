@@ -10,7 +10,7 @@ public class PauseSystem : MonoBehaviour
     private Coroutine _scaleRoutine;
     private Coroutine _allowUnpauseRoutine;
     private bool _isStopTimeScaling;
-    private bool _isTrainingTime;
+    private bool _isScalingTime;
     private float _initialTimeScale;
     private float _targetTimeScale;
     private float _elapsedTime;
@@ -54,7 +54,7 @@ public class PauseSystem : MonoBehaviour
     {
         AudioListener.pause = false;
 
-        if (_isTrainingTime)
+        if (_isScalingTime)
         {
             _isStopTimeScaling = false;
 
@@ -67,7 +67,7 @@ public class PauseSystem : MonoBehaviour
         }
         else
         {
-            UnpauseGame();
+            Time.timeScale = 1;
         }
     }
 
@@ -75,7 +75,7 @@ public class PauseSystem : MonoBehaviour
     {
         AudioListener.pause = true;
 
-        if (_isTrainingTime)
+        if (_isScalingTime)
         {
             if (_allowUnpauseRoutine != null)
             {
@@ -86,7 +86,7 @@ public class PauseSystem : MonoBehaviour
             _initialTimeScale = Time.timeScale;
         }
 
-        PauseGame();
+        Time.timeScale = 0;
     }
 
     private void StartScaleRoutine(float initialValue, float targetValue, float duration, Action onStartCallback)
@@ -98,7 +98,7 @@ public class PauseSystem : MonoBehaviour
         _targetTimeScale = targetValue;
         onStartCallback.Invoke();
         _scaleRoutine = StartCoroutine(ScaleTime(initialValue, targetValue, duration));
-        _isTrainingTime = true;
+        _isScalingTime = true;
         _isStopTimeScaling = false;
     }
 
@@ -135,7 +135,7 @@ public class PauseSystem : MonoBehaviour
 
         if (targetValue > PauseScale)
         {
-            _isTrainingTime = false;
+            _isScalingTime = false;
         }
 
         TimeChanged?.Invoke();
