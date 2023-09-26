@@ -3,7 +3,6 @@ using Agava.YandexGames;
 using System.Collections;
 using System;
 using Lean.Localization;
-using System.Xml;
 
 public class LeaderboardLoader : MonoBehaviour
 {
@@ -36,10 +35,13 @@ public class LeaderboardLoader : MonoBehaviour
         return;
 #endif
 
-        Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
+        if (PlayerAccount.IsAuthorized)
         {
-            GetPlayerEntries(playerData);
-        });
+            Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
+            {
+                GetPlayerEntries(playerData);
+            });
+        }
     }
 
     private void OnGameDataRestored(PlayerData playerData)
