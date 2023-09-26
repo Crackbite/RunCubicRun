@@ -48,7 +48,15 @@ public abstract class DataSaver : MonoBehaviour
 
     protected abstract void SaveToStorage(string data);
 
-    private void Save(GameResult result)
+    protected virtual void OnGameEnded(GameResult result)
+    {
+        if (result == GameResult.Win)
+        {
+            Save(result);
+        }
+    }
+
+    protected void Save(GameResult result)
     {
         int leaderboardScore = (int)(CurrentPlayerData.LeaderboardScore + _scoreAllocator.LevelScore);
         int level = CurrentPlayerData.Level;
@@ -77,6 +85,12 @@ public abstract class DataSaver : MonoBehaviour
         SaveToStorage(SerializePlayerDataToString());
     }
 
+    protected void SaveChunks()
+    {
+        CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
+        SaveToStorage(SerializePlayerDataToString());
+    }
+
     private void SaveSettings(bool isOn, SwitchToggle switchToggle)
     {
         if (switchToggle.Type == SettingsType.Music && CurrentPlayerData.IsMusicOn != isOn)
@@ -90,6 +104,7 @@ public abstract class DataSaver : MonoBehaviour
             SaveToStorage(SerializePlayerDataToString());
         }
     }
+
     private void SaveSkinState(Skin skin)
     {
         if (CurrentPlayerData != null)
@@ -99,12 +114,6 @@ public abstract class DataSaver : MonoBehaviour
             CurrentPlayerData.ResetScore(score);
             SaveToStorage(SerializePlayerDataToString());
         }
-    }
-
-    private void SaveChunks()
-    {
-        CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
-        SaveToStorage(SerializePlayerDataToString());
     }
 
     private string SerializePlayerDataToString()
@@ -128,23 +137,6 @@ public abstract class DataSaver : MonoBehaviour
         else
         {
             return false;
-        }
-    }
-
-    private void OnGameEnded(GameResult result)
-    {
-        if (result == GameResult.Win)
-        {
-            if (ChunkStorage.Instance != null)
-            {
-                ChunkStorage.Instance.Restart();
-            }
-
-            Save(result);
-        }
-        else
-        {
-            SaveChunks();
         }
     }
 

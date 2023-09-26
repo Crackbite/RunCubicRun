@@ -107,7 +107,16 @@ public class ChunkStorage : MonoBehaviour
 
     private void OnDataRestored(PlayerData playerData)
     {
-        Initialize(playerData);
+        const int FirstLevel = 1;
+
+        if (playerData.Level >= FirstLevel)
+        {
+            Initialize(playerData);
+        }
+        else
+        {
+            Initialized?.Invoke(playerData);
+        }
     }
 
     private void OnAuthClicked()

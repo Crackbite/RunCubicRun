@@ -29,6 +29,7 @@ public class LevelGenerationStarter : MonoBehaviour
             GeneratorStarted?.Invoke(_mainGenerator);
             _mainGenerator.Init(playerData.Level);
             _mainGenerator.enabled = true;
+            _trainingChunkGenerator.enabled = false;
             _gameTrainer.SetActive(false);
         }
         else
@@ -36,6 +37,7 @@ public class LevelGenerationStarter : MonoBehaviour
             GeneratorStarted?.Invoke(_trainingChunkGenerator);
             _trainingChunkGenerator.Init(playerData.TrainingStage);
             _trainingChunkGenerator.enabled = true;
+            _mainGenerator.enabled = false;
         }
     }
 
