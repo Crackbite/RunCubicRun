@@ -19,11 +19,16 @@ public class GameLoader : MonoBehaviour
         _successScreen.SceneLoading -= OnSceneLoading;
     }
 
+    public void Load()
+    {
+        MainScene.Load(_levelLoadConfig);
+    }
+
     private void OnSceneLoading(bool isStartWithoutMenu)
     {
         _failScreen.SceneLoading -= OnSceneLoading;
         _successScreen.SceneLoading -= OnSceneLoading;
         _levelLoadConfig.IsStartWithoutMenu = isStartWithoutMenu;
-        MainScene.Load(_levelLoadConfig);
+        Load();
     }
 }
