@@ -24,6 +24,7 @@ public class Cubic : MonoBehaviour
     public event Action SawingStarted;
     public event Action<PressStand> SteppedOnStand;
     public event Action FlattenedOut;
+    public event Action TrapCrushed;
 
     public SoundSystem SoundSystem => _soundSystem;
     public Bounds Bounds => _meshRenderers[0].bounds;
@@ -66,6 +67,11 @@ public class Cubic : MonoBehaviour
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             _rigidbody.AddForce(Vector3.up * PushForce, ForceMode.Impulse);
             return;
+        }
+
+        if (CanDestroy && collision.TryGetComponent(out Trap _))
+        {
+            TrapCrushed?.Invoke();
         }
 
         if (_steppedOnStand || collision.TryGetComponent(out PressStand pressStand) == false)

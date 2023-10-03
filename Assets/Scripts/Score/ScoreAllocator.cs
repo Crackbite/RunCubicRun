@@ -1,12 +1,14 @@
 using System;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreAllocator : MonoBehaviour
 {
     [SerializeField] private float _minScore;
     [Range(.5f, 10f)][SerializeField] private float _goodBlockScore = 1f;
     [Range(-.5f, -10f)][SerializeField] private float _badBlockScore = -2f;
+    [Range(-.5f, -10f)][SerializeField] private float _trapCrushingScore = 5f;
     [Range(2, 100)][SerializeField] private int _bonusGoodBlockThreshold = 10;
     [Range(1f, 20f)][SerializeField] private float _bonusGoodBlockScore = 1.5f;
     [SerializeField] private Cubic _cubic;
@@ -37,6 +39,7 @@ public class ScoreAllocator : MonoBehaviour
     private void OnEnable()
     {
         _cubic.SteppedOnStand += OnCubicSteppedOnStand;
+        _cubic.TrapCrushed += OnCubicTrapCrushed;
         _blockStack.BlockAdded += OnBlockAdded;
         _blockStack.BlockRemoved += OnBlockRemoved;
         _store.SkinBought += OnSkinBought;
@@ -52,6 +55,7 @@ public class ScoreAllocator : MonoBehaviour
     private void OnDisable()
     {
         _cubic.SteppedOnStand -= OnCubicSteppedOnStand;
+        _cubic.TrapCrushed -= OnCubicTrapCrushed;
         _blockStack.BlockAdded -= OnBlockAdded;
         _blockStack.BlockRemoved -= OnBlockRemoved;
         _store.SkinBought -= OnSkinBought;
@@ -113,6 +117,11 @@ public class ScoreAllocator : MonoBehaviour
     private void OnCubicSteppedOnStand(PressStand pressStand)
     {
         _isCubicUnderPress = true;
+    }
+
+    private void OnCubicTrapCrushed()
+    {
+        ChangeScore(ref _levelScore, _trapCrushingScore, ScoreChangeInitiator.Cubic);
     }
 
     private void OnSkinBought(float skinPrice)
