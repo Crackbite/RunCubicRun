@@ -10,6 +10,7 @@ public class LeaderboardLoader : MonoBehaviour
     [SerializeField] private LeaderboardScreen _leaderboardScreen;
     [SerializeField] private GameObject _anonymousPhrase;
 
+    private int _lastLeaderboardScore;
     private WaitForSecondsRealtime _waitForSDKInitializationCheck;
     private bool _hasResult;
     private string _anonymousName;
@@ -29,17 +30,19 @@ public class LeaderboardLoader : MonoBehaviour
         _dataRestorer.DataRestored -= OnGameDataRestored;
     }
 
-    public void SetScore(PlayerData playerData)
+    public void SetScore(int leaderboardScore)
     {
 #if !UNITY_WEBGL || UNITY_EDITOR
         return;
 #endif
 
+        _lastLeaderboardScore = leaderboardScore;
+
         if (PlayerAccount.IsAuthorized)
         {
-            Leaderboard.SetScore(LeaderboardName, playerData.LeaderboardScore, () =>
+            Leaderboard.SetScore(LeaderboardName, _lastLeaderboardScore, () =>
             {
-                GetPlayerEntries(playerData);
+                GetPlayerEntries();
             });
         }
     }
@@ -50,15 +53,16 @@ public class LeaderboardLoader : MonoBehaviour
         return;
 #endif
 
+        _lastLeaderboardScore = playerData.LeaderboardScore;
         _anonymousName = LeanLocalization.GetTranslationText(_anonymousPhrase.name);
 
         if (PlayerAccount.IsAuthorized)
         {
-            StartCoroutine(WaitForSDKInitialization(playerData));
+            StartCoroutine(WaitForSDKInitialization());
         }
     }
 
-    private void GetPlayerEntries(PlayerData playerData)
+    private void GetPlayerEntries()
     {
         Leaderboard.GetEntries(LeaderboardName, (result) =>
         {
@@ -81,12 +85,12 @@ public class LeaderboardLoader : MonoBehaviour
         {
             if (_hasResult == false)
             {
-                StartCoroutine(WaitForSDKInitialization(playerData));
+                StartCoroutine(WaitForSDKInitialization());
             }
         });
     }
 
-    private IEnumerator WaitForSDKInitialization(PlayerData playerData)
+    private IEnumerator WaitForSDKInitialization()
     {
         while (YandexGamesSdk.IsInitialized == false)
         {
@@ -96,7 +100,7 @@ public class LeaderboardLoader : MonoBehaviour
         PlayerAccount.GetProfileData((result) =>
         {
             _playerUniqueID = result.uniqueID;
-            SetScore(playerData);
+            SetScore(_lastLeaderboardScore);
         });
     }
 }

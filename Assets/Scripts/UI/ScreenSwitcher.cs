@@ -99,9 +99,13 @@ public class ScreenSwitcher : MonoBehaviour
 
         if (PlayerAccount.IsAuthorized)
         {
+            if (PlayerAccount.HasPersonalProfileDataPermission == false)
+            {
+                PlayerAccount.RequestPersonalProfileDataPermission();
+            }
+
             _mainScreen.Exit();
             SetLeaderboardScreen();
-            return;
         }
     }
 
