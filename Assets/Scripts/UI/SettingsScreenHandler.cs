@@ -8,6 +8,7 @@ public class SettingsScreenHandler : MonoBehaviour
     [SerializeField] private SwitchToggle _musicSwitchToggle;
     [SerializeField] private SwitchToggle _soundSwitchToggle;
     [SerializeField] private DataRestorer _dataRestorer;
+    [SerializeField] private GameTrainer _gameTrainer;
 
     private void Awake()
     {
@@ -20,6 +21,8 @@ public class SettingsScreenHandler : MonoBehaviour
         _activateButton.onClick.AddListener(OnSettingsScreenActivated);
         _settingsScreen.CloseClicked += OnSettingsCloseClicked;
         _dataRestorer.DataRestored += OnDataRestored;
+        _gameTrainer.TrainingStarted += OnTrainingStarted;
+        _gameTrainer.TrainingEnded += OnTrainingEnded;
     }
 
     private void OnDisable()
@@ -27,6 +30,8 @@ public class SettingsScreenHandler : MonoBehaviour
         _activateButton.onClick.RemoveListener(OnSettingsScreenActivated);
         _settingsScreen.CloseClicked -= OnSettingsCloseClicked;
         _dataRestorer.DataRestored -= OnDataRestored;
+        _gameTrainer.TrainingStarted -= OnTrainingStarted;
+        _gameTrainer.TrainingEnded -= OnTrainingEnded;
     }
 
     private void OnSettingsCloseClicked()
@@ -43,5 +48,15 @@ public class SettingsScreenHandler : MonoBehaviour
     {
         _musicSwitchToggle.ChangeHandlePosition(playerData.IsMusicOn);
         _soundSwitchToggle.ChangeHandlePosition(playerData.IsSoundOn);
+    }
+
+    private void OnTrainingStarted()
+    {
+        _activateButton.interactable = false;
+    }
+
+    private void OnTrainingEnded()
+    {
+        _activateButton.interactable = true;
     }
 }

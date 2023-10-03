@@ -11,6 +11,8 @@ public class GameTrainer : MonoBehaviour
 
     private int _nextPhraseNumber;
     private bool _isGamePaused;
+    public event Action TrainingStarted;
+    public event Action TrainingEnded;
 
     public TrainingScreen TrainingScreen => _trainingScreen;
 
@@ -34,6 +36,7 @@ public class GameTrainer : MonoBehaviour
     {
         if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
         {
+            TrainingStarted.Invoke();
             _phraseDisplay.Display(_nextPhraseNumber);
             _trainingScreen.Enter();
             _nextPhraseNumber++;
@@ -44,6 +47,7 @@ public class GameTrainer : MonoBehaviour
     {
         if (_isGamePaused && _phraseDisplay.CanEndTrainingPause())
         {
+            TrainingEnded?.Invoke();
             _trainingScreen.Exit();
             _phraseDisplay.End();
         }
