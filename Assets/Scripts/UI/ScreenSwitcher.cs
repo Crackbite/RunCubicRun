@@ -16,7 +16,6 @@ public class ScreenSwitcher : MonoBehaviour
     [SerializeField] private LeaderboardLoader _leaderboardLoader;
 
     private Screen _currentScreen;
-    private bool _isMainScreenShowed;
 
     public event Action GameScreenSet;
 
@@ -29,14 +28,6 @@ public class ScreenSwitcher : MonoBehaviour
         _gameStatusTracker.GameEnded += OnGameEnded;
         _storeScreen.CloseClicked += OnStoreCloseClicked;
         _leaderboardScreen.CloseClicked += OnLeaderboardCloseClicked;
-    }
-
-    private void Start()
-    {
-        if (_mainScreen.enabled && _isMainScreenShowed == false)
-        {
-            OnMainScreenShowed();
-        }
     }
 
     private void OnDisable()
@@ -66,8 +57,6 @@ public class ScreenSwitcher : MonoBehaviour
 
     private void OnMainScreenShowed()
     {
-        _isMainScreenShowed = true;
-
         if (_gameStatusTracker.IsStartWithoutMenu)
         {
             SetGameScreen();
