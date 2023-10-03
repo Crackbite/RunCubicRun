@@ -48,14 +48,6 @@ public abstract class DataSaver : MonoBehaviour
 
     protected abstract void SaveToStorage(string data);
 
-    protected virtual void OnGameEnded(GameResult result)
-    {
-        if (result == GameResult.Win)
-        {
-            Save(result);
-        }
-    }
-
     protected void Save(GameResult result)
     {
         int leaderboardScore = (int)(CurrentPlayerData.LeaderboardScore + _scoreAllocator.LevelScore);
@@ -80,15 +72,20 @@ public abstract class DataSaver : MonoBehaviour
         PlayerData playerData = new PlayerData(score, leaderboardScore, level, trainingStage, isMusicOn, isSoundOn);
 
         SetSkinStatesToPlayerData(playerData);
-        _leaderBoardLoader.SetScore(playerData);
+        _leaderBoardLoader.SetScore(leaderboardScore);
         CurrentPlayerData = playerData;
         SaveToStorage(SerializePlayerDataToString());
     }
 
     protected void SaveChunks()
     {
-        CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
-        SaveToStorage(SerializePlayerDataToString());
+        const int FirstLevel = 1;
+
+        if (CurrentPlayerData.Level >= FirstLevel)
+        {
+            CurrentPlayerData.SetChunksData(ChunkStorage.Instance.Chunks);
+            SaveToStorage(SerializePlayerDataToString());
+        }
     }
 
     private void SaveSettings(bool isOn, SwitchToggle switchToggle)
@@ -137,6 +134,23 @@ public abstract class DataSaver : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    private void OnGameEnded(GameResult result)
+    {
+        if (result == GameResult.Win)
+        {
+            if (ChunkStorage.Instance != null)
+            {
+                ChunkStorage.Instance.Restart();
+            }
+
+            Save(result);
+        }
+        else
+        {
+            SaveChunks();
         }
     }
 

@@ -6,21 +6,4 @@ public class CloudDataSaver : DataSaver
     {
         PlayerAccount.SetPlayerData(data);
     }
-
-    protected override void OnGameEnded(GameResult result)
-    {
-        if (result == GameResult.Win)
-        {
-            if (ChunkStorage.Instance != null)
-            {
-                ChunkStorage.Instance.Restart();
-            }
-
-            Save(result);
-        }
-        else
-        {
-            SaveChunks();
-        }
-    }
 }
