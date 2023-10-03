@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class GameTrainer : MonoBehaviour
 {
@@ -8,9 +10,12 @@ public class GameTrainer : MonoBehaviour
     [SerializeField] private CubicInputHandler _cubicInputHandler;
     [SerializeField] private TrainingScreen _trainingScreen;
     [SerializeField] private Cubic _cubic;
+    [SerializeField] private SettingsScreen _settingsScreen;
 
     private int _nextPhraseNumber;
     private bool _isGamePaused;
+    private bool _isSettingsShowed;
+
     public event Action TrainingStarted;
     public event Action TrainingEnded;
 
@@ -22,6 +27,8 @@ public class GameTrainer : MonoBehaviour
         _cubicInputHandler.PressSpeedReduced += OnPressSpeedReduced;
         _phraseDisplay.Completed += OnPhraseDisplayCompleted;
         _cubic.Hit += OnCubicHit;
+        _settingsScreen.Showing += OnSettingsScreenShowing;
+        _settingsScreen.Hidden += OnSettingsScreenHidden;
     }
 
     private void OnDisable()
@@ -30,12 +37,20 @@ public class GameTrainer : MonoBehaviour
         _cubicInputHandler.PressSpeedReduced -= OnPressSpeedReduced;
         _phraseDisplay.Completed -= OnPhraseDisplayCompleted;
         _cubic.Hit -= OnCubicHit;
+        _settingsScreen.Showing -= OnSettingsScreenShowing;
+        _settingsScreen.Hidden -= OnSettingsScreenHidden;
     }
 
     public void StartTraining()
     {
         if (_phraseDisplay.PhrasesAmount > _nextPhraseNumber)
         {
+            if (_isSettingsShowed)
+            {
+                StartCoroutine(WaitForSettingsHidden(() => StartTraining()));
+                return;
+            }
+
             TrainingStarted.Invoke();
             _phraseDisplay.Display(_nextPhraseNumber);
             _trainingScreen.Enter();
@@ -47,6 +62,12 @@ public class GameTrainer : MonoBehaviour
     {
         if (_isGamePaused && _phraseDisplay.CanEndTrainingPause())
         {
+            if (_isSettingsShowed)
+            {
+                StartCoroutine(WaitForSettingsHidden(() => EndTraining()));
+                return;
+            }
+
             TrainingEnded?.Invoke();
             _trainingScreen.Exit();
             _phraseDisplay.End();
@@ -85,5 +106,25 @@ public class GameTrainer : MonoBehaviour
     {
         _trainingScreen.Exit();
         _phraseDisplay.EndImmediately();
+    }
+
+    private void OnSettingsScreenShowing()
+    {
+        _isSettingsShowed = true;
+    }
+
+    private void OnSettingsScreenHidden()
+    {
+        _isSettingsShowed = false;
+    }
+
+    private IEnumerator WaitForSettingsHidden(Action callBack)
+    {
+        while (_isSettingsShowed)
+        {
+            yield return null;
+        }
+
+        callBack();
     }
 }

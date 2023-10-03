@@ -7,6 +7,7 @@ public class SettingsScreen : Screen
     [SerializeField] private Button _close;
 
     public event Action CloseClicked;
+    public event Action Showing;
 
     private void OnEnable()
     {
@@ -16,6 +17,12 @@ public class SettingsScreen : Screen
     private void OnDisable()
     {
         _close.onClick.RemoveListener(OnCloseClicked);
+    }
+
+    public override void Enter()
+    {
+        Showing?.Invoke();
+        base.Enter();
     }
 
     private void OnCloseClicked()

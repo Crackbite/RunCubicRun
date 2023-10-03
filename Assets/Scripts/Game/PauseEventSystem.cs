@@ -12,6 +12,7 @@ public class PauseEventSystem : MonoBehaviour
 
     private void OnEnable()
     {
+        _settingsScreen.Showing += OnSettingsScreenShowing;
         _settingsScreen.Showed += OnSettingsScreenShowed;
         _settingsScreen.Hidden += OnSettingsScreenHidden;
         _sdk.AdOpened += OnAdOpened;
@@ -21,6 +22,7 @@ public class PauseEventSystem : MonoBehaviour
 
     private void OnDisable()
     {
+        _settingsScreen.Showed -= OnSettingsScreenShowing;
         _settingsScreen.Showed -= OnSettingsScreenShowed;
         _settingsScreen.Hidden -= OnSettingsScreenHidden;
         _sdk.AdOpened -= OnAdOpened;
@@ -52,11 +54,19 @@ public class PauseEventSystem : MonoBehaviour
         }
     }
 
-    private void OnSettingsScreenShowed()
+    private void OnSettingsScreenShowing()
     {
         if (_gameStarted)
         {
             _canUnpause = false;
+            _pauseSystem.TryStopScaleRoutine();
+        }
+    }
+
+    private void OnSettingsScreenShowed()
+    {
+        if (_gameStarted)
+        {
             _pauseSystem.UnfocusGame();
         }
     }
