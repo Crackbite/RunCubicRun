@@ -51,6 +51,7 @@ public class MainScreenHandler : MonoBehaviour
     private void OnAuthClicked()
     {
         _wasAuth = true;
+        _canSetScore = false;
     }
 
     private void OnHidden()
@@ -65,11 +66,8 @@ public class MainScreenHandler : MonoBehaviour
         {
             _scoreDisplay.Display(_score);
         }
-        else
-        {
-            _canSetScore = true;
-        }
 
+        _canSetScore = true;
         _mainScreen.Enter();
     }
 
@@ -80,7 +78,6 @@ public class MainScreenHandler : MonoBehaviour
         if (_canSetScore)
         {
             _scoreDisplay.Display(_score);
-            _canSetScore = false;
         }
     }
 
